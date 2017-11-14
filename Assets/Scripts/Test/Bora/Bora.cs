@@ -21,6 +21,8 @@ public class Bora : MonoBehaviour
     #region variable
 
     [SerializeField] float _speed_Sec = 2.0f;
+    [SerializeField] GameObject _enemy = null;  // TODO : Enemy取得どうする？
+    private ActionManager _actionManager = null;
 
     #endregion
 
@@ -35,7 +37,7 @@ public class Bora : MonoBehaviour
     /// </summary>  
     void Awake()
     {
-
+        _actionManager = GetComponent<ActionManager>();
     }  
   
     /// <summary>  
@@ -51,8 +53,7 @@ public class Bora : MonoBehaviour
     /// </summary>  
     void Update ()   
     {
-
-#if !UNITY_EDITOR
+//#if !UNITY_EDITOR
         if (Input.GetKey(KeyCode.W))
         {                                          
             transform.position += transform.forward * Time.deltaTime * _speed_Sec;
@@ -69,28 +70,30 @@ public class Bora : MonoBehaviour
         {
             transform.position -= transform.right * Time.deltaTime * _speed_Sec;
         }
-#endif
+//#endif
         // 攻撃選択＆選択時攻撃
         if (Input.GetKeyDown(KeyCode.Return))
         {
-
+            _actionManager.OnSelect();
         }
         // 行動キャンセル
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
-
+            _actionManager.Cancel();
         }
         // 武器スロット右回り
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-
+            _actionManager.Change(true);
         }
         // 武器スロット左回り
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-
+            _actionManager.Change(false);
         }
 
+        // 敵の向きを常に見る
+        transform.LookAt(new Vector3 (_enemy.transform.position.x, transform.position.y, _enemy.transform.position.z));
     }  
   
 #endregion

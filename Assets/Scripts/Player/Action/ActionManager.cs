@@ -15,15 +15,28 @@ public class ActionManager : MonoBehaviour
 {
     #region define
 
+    enum eActionType
+    {
+        Juggling = 0,
+        RideBall,
+        TotemJump,
+        Bagpipe,
+        Max,
+    };
+
     #endregion
 
     #region variable
 
-    private bool _isAction = false; // 現在何か行動中かどうか
-    private int _nowAction = -1;    // 現在行動中のアクション番号
+    private bool _isAction = false;                     // 現在何か行動中かどうか
+    private eActionType _nowAction = eActionType.Max;   // 現在行動中のアクション番号
 
-    private int _nowSelect = 0;     // 0.ジャグリング, 1.玉乗り, 2.トーテムジャンプ, 3.バグパイプ
-    private int _maxSelect = 0;     // 初期化時にステージ番号を取得し、最大値を決定
+    private eActionType _nowSelect = (eActionType)0;    // 0.ジャグリング, 1.玉乗り, 2.トーテムジャンプ, 3.バグパイプ
+    private int _maxSelect = 0;                         // 初期化時にステージ番号を取得し、最大値を決定
+
+    // TODO : 仮でここにプレハブを登録
+    [SerializeField] GameObject _enemy = null;  // TODO : Enemy取得どうする？
+    [SerializeField] GameObject _jugglingPrefab = null;
 
     #endregion
 
@@ -40,7 +53,7 @@ public class ActionManager : MonoBehaviour
             // 攻撃実行
             if (_nowAction == _nowSelect)
             {
-
+                OnAtack();
             }
             // 行動変更
             else
@@ -59,10 +72,10 @@ public class ActionManager : MonoBehaviour
     /// <summary>
     /// 行動中の行動をキャンセルする
     /// </summary>
-    public void Cancle()
+    public void Cancel()
     {
         _isAction = false;
-        _nowAction = -1;
+        _nowAction = eActionType.Max;
     }
 
     /// <summary>
@@ -73,7 +86,7 @@ public class ActionManager : MonoBehaviour
         if(_isRight)
         {
             _nowSelect++;
-            if(_nowSelect > _maxSelect)
+            if((int)_nowSelect > _maxSelect)
             {
                 _nowSelect = 0;
             }
@@ -83,8 +96,37 @@ public class ActionManager : MonoBehaviour
             _nowSelect--;
             if(_nowSelect < 0)
             {
-                _nowSelect = _maxSelect;
+                _nowSelect = (eActionType)_maxSelect;
             }
+        }
+    }
+
+    /// <summary>
+    /// 攻撃処理
+    /// </summary> 
+    private void OnAtack()
+    {
+        switch(_nowAction)
+        {
+            case eActionType.Juggling:
+                GameObject obj = Instantiate(_jugglingPrefab, transform.position, transform.rotation);
+                StartCoroutine(obj.GetComponent<JugglingAtack>().Run(_enemy));
+                break;
+
+            case eActionType.RideBall:
+
+                break;
+
+            case eActionType.TotemJump:
+
+                break;
+
+            case eActionType.Bagpipe:
+
+                break;
+
+            default:
+                break;
         }
     }
 
