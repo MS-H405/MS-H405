@@ -30,4 +30,6 @@ public class BezierCurve
 		float z = (1 - bez.time) * (1 - bez.time) * bez.start.z + 2 * (1 - bez.time) * bez.time * bez.middle.z + bez.time * bez.time * bez.end.z;
 		return new Vector3 (x, y, z);
 	}
+
+
 }
