@@ -62,12 +62,14 @@
      <Compile Include="Assets\Scripts\Movie\MovieManager.cs" />
      <Compile Include="Assets\Scripts\Movie\SP_Jug.cs" />
      <Compile Include="Assets\Scripts\Movie\SP_JugChild.cs" />
+     <Compile Include="Assets\Scripts\Movie\Special_1Manager.cs" />
      <Compile Include="Assets\Scripts\Player\Action\ActionManager.cs" />
      <Compile Include="Assets\Scripts\Player\Action\JugglingAtack.cs" />
      <Compile Include="Assets\Scripts\Test\Bora\Bora.cs" />
      <Compile Include="Assets\Scripts\Test\Tatsuo\TatsuoTest_Enemy.cs" />
      <Compile Include="Assets\Scripts\Utility\BezierCurve.cs" />
      <Compile Include="Assets\Scripts\Utility\GameSetting.cs" />
+     <Compile Include="Assets\Scripts\Utility\SortingLayer.cs" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />

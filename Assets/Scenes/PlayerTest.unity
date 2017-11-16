@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5dacb721cc4cf4cbaf2659ebb63d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CON_fPlayerFollowRate: 0.15
   PlayerObj: {fileID: 1983962505}
   EnemyObj: {fileID: 724528568}
   SubCameraObj: {fileID: 1729400622}
