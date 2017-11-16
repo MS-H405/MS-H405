@@ -23,8 +23,7 @@ public class BezierCurve
 	}
 
 	static public Vector3 CulcBez(tBez bez, bool bZ) 
-{
-
+	{
 		float x = (1 - bez.time) * (1 - bez.time) * bez.start.x + 2 * (1 - bez.time) * bez.time * bez.middle.x + bez.time * bez.time * bez.end.x;
 		float y = (1 - bez.time) * (1 - bez.time) * bez.start.y + 2 * (1 - bez.time) * bez.time * bez.middle.y + bez.time * bez.time * bez.end.y;
 		float z = (1 - bez.time) * (1 - bez.time) * bez.start.z + 2 * (1 - bez.time) * bez.time * bez.middle.z + bez.time * bez.time * bez.end.z;

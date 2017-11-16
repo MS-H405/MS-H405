@@ -16,7 +16,7 @@ public class GameCamera : MonoBehaviour
 	// readonlyも結局定数みたいなものなので　CON_　をつけている。
 	// 一部GameCamera_Sub.csも同じ値を使っているので、こっちを変更したらそっちも変えておく。
 	
-	const float			CON_fPlayerFollowRate = 0.6f;									// プレイヤーへの追従率(視点の移動)
+	[SerializeField] float	CON_fPlayerFollowRate = 0.15f;									// プレイヤーへの追従率(視点の移動)
 	const float			CON_fDistance = 5.0f;											// プレイヤーとの距離
 	readonly Vector2	CON_vFollowRate = new Vector2(1.0f, 0.05f);						// 敵・俯瞰プレイヤーの追従率(注視点の移動)(x : 遊び範囲外、y : 遊び範囲内)
 	readonly Vector4	CON_vEnemyFollowRect = new Vector4(0.4f, 0.6f, 0.5f, 0.7f);		// 遊びの範囲(敵用)
@@ -38,7 +38,6 @@ public class GameCamera : MonoBehaviour
 	GameObject Strage;		// EnemyObjの保管場所
 	_CameraMode CameraMode;	// カメラの挙動
 	
-
 	Camera camera;									// 自身のカメラ
 	Vector2 rot;									// カメラの角度
 	Vector3 vLookAtPos;								// 注視点

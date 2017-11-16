@@ -7,18 +7,16 @@ public class SP_JugChild : MonoBehaviour
 
 	#region 定数
 
-	float DIR_SPEED = 10.0f;			// 1秒間に進む距離
-	float ROTATE_TIME = 0.6f;		// ピンが1回転するのにかかる時間
-	float LIFE = 1.0f;				// 生存時間
+	
 
 	#endregion
 
 	[SerializeField] GameObject PinObj;			// 子のピン
-	[SerializeField] GameObject HunnsyaObj;		// 子の噴射
 
-	Vector3 vDir;					// 進行方向
-	Vector3 vRotate;				// 1秒で回る回転角度
-	float fLife = 0.0f;				// 生成されてからたった時間
+	BezierCurve.tBez tbezier;
+	float fSecTime;
+	float fRotate;
+	Vector3 vRotateAxis;			// 回転軸(startとendを含む平面に垂直なベクトル)
 
 
 	// Use this for initialization
@@ -31,32 +29,39 @@ public class SP_JugChild : MonoBehaviour
 		// --------------------
 	}
 	
-	// Update is called once per frame
-	void Update ()
+	// ピン展開
+	public void Update_Expansion(float time)
 	{
-		transform.position += vDir * DIR_SPEED * Time.deltaTime;
-		PinObj.transform.Rotate(vRotate * Time.deltaTime);
+		tbezier.time = time;
+		transform.position = BezierCurve.CulcBez(tbezier, true);
+		transform.Rotate(Vector3.right, fRotate * Time.deltaTime, Space.Self);	
+	}
 
-		fLife += Time.deltaTime;
-		if(fLife > LIFE)
-			Destroy(this.gameObject);
+	// 敵のほうを向く
+	public void LookAtEnemy(Vector3 pos)
+	{
+		transform.LookAt(pos);
+		transform.eulerAngles += new Vector3(90.0f, 0.0f, 0.0f);	// 頭を敵のほうにむける
 	}
 
 	// 進行方向と、回転軸を設定してもらう
-	public void SetParam(Vector3 dir, bool side)
+	public void SetParam(BezierCurve.tBez bezier, float sectime, float rotate)
 	{
-		vDir = dir;
+		tbezier = bezier;
+		fSecTime = sectime;
+		fRotate = rotate;
 		
-		// 角度
-		if(side)
-		{// Y軸回転(横投げ)
-			PinObj.transform.eulerAngles = new Vector3(0.0f, Random.Range(0.0f, 360.0f), 90.0f);
-			vRotate = new Vector3(360.0f / ROTATE_TIME, 0.0f, 0.0f);
-		}
-		else
-		{// X軸回転(縦投げ)
-			PinObj.transform.eulerAngles = new Vector3(Random.Range(0.0f, 360.0f), 0.0f, 0.0f);
-			vRotate = new Vector3(360.0f / ROTATE_TIME, 0.0f, 0.0f);
-		}
+		// 初期角度は、startとendのxとy座標の差から角度を計算して出現した時にz軸回転させておく。
+		// そしてupdateではローカルx軸回転させたら、いい感じになる。
+		Vector2 XY = tbezier.end - tbezier.start;
+		XY = XY.normalized;
+		float sita = Mathf.Acos(Vector2.Dot(Vector2.right, XY));
+		sita = ((Mathf.PI / 2.0f) - sita) * -1 * Mathf.Rad2Deg;
+		transform.eulerAngles = new Vector3(0.0f, 0.0f, sita);
 	}
+
+	
+
+	// 敵に突撃する
+
 }
