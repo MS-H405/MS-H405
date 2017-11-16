@@ -234,12 +234,16 @@
     <Compile Include="Assets\HARATA\script\Enemy.cs" />
     <Compile Include="Assets\HARATA\script\GameCamera.cs" />
     <Compile Include="Assets\HARATA\script\GameCamera_Sub.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
     <Compile Include="Assets\Scripts\Player\Action\ActionManager.cs" />
     <Compile Include="Assets\Scripts\Player\Action\JugglingAtack.cs" />
+    <Compile Include="Assets\Scripts\Player\Action\RideBallMove.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\Test\Bora\Bora.cs" />
     <Compile Include="Assets\Scripts\Utility\AutoRotation.cs" />
     <Compile Include="Assets\Scripts\Utility\BezierCurve.cs" />
     <Compile Include="Assets\Scripts\Utility\GameSetting.cs" />
+    <Compile Include="Assets\Scripts\Utility\SingletonMonoBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\UniRx\ReadMe.txt" />
