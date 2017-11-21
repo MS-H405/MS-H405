@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4839899278818266}
   - component: {fileID: 135391003580892550}
-  - component: {fileID: 54012513045806018}
+  - component: {fileID: 54911034258270422}
   - component: {fileID: 114151507824491852}
   m_Layer: 0
   m_Name: Juggling
@@ -115,7 +115,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1909312092723256}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54012513045806018
+--- !u!54 &54911034258270422
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -153,7 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f416791d65d0c459f1b09bc483c2a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _atackSpeed: 10
+  _dropPointEffect: {fileID: 1027433823529848, guid: 48df82625b421144fb0bd6cdb8b7cf75,
+    type: 2}
 --- !u!135 &135391003580892550
 SphereCollider:
   m_ObjectHideFlags: 1
