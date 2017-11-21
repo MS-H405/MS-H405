@@ -236,6 +236,7 @@
     <Compile Include="Assets\HARATA\script\GameCamera_Sub.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
     <Compile Include="Assets\Scripts\Player\Action\ActionManager.cs" />
+    <Compile Include="Assets\Scripts\Player\Action\BagpipeFire.cs" />
     <Compile Include="Assets\Scripts\Player\Action\JugglingAtack.cs" />
     <Compile Include="Assets\Scripts\Player\Action\RideBallMove.cs" />
     <Compile Include="Assets\Scripts\Player\Action\TotemJump.cs" />
