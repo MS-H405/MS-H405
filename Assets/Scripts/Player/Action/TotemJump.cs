@@ -110,6 +110,5 @@ public class TotemJump : MonoBehaviour
         }
     }
 
-
     #endregion
 }  

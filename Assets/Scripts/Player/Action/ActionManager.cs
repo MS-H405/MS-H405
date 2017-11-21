@@ -39,6 +39,7 @@ public class ActionManager : MonoBehaviour
     private PlayerMove _playerMove = null;
     private RideBallMove _rideBallMove = null;
     private TotemJump _totemJump = null;
+    [SerializeField] GameObject _bagpipeFirePrefab = null;
 
     #endregion
 
@@ -170,8 +171,8 @@ public class ActionManager : MonoBehaviour
                 if (JugglingAtack.NowJugglingAmount >= 3)
                     return;
 
-                GameObject obj = Instantiate(_jugglingPrefab, transform.position, transform.rotation);
-                obj.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy);
+                GameObject jug = Instantiate(_jugglingPrefab, transform.position, transform.rotation);
+                jug.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy);
                 break;
 
             case eActionType.RideBall:
@@ -183,7 +184,8 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case eActionType.Bagpipe:
-
+                GameObject bag = Instantiate(_bagpipeFirePrefab, transform.position + new Vector3(0,1,0), transform.rotation);
+                bag.GetComponent<BagpipeFire>().Run(transform.forward);
                 break;
 
             default:
