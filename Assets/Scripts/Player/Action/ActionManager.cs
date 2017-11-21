@@ -34,8 +34,11 @@ public class ActionManager : MonoBehaviour
     private eActionType _nowSelect = (eActionType)0;    // 0.ジャグリング, 1.玉乗り, 2.トーテムジャンプ, 3.バグパイプ
     private int _maxSelect = 3;                         // 初期化時にステージ番号を取得し、最大値を決定
 
-    // TODO : 仮でここにプレハブを登録
+    // TODO : 仮でここにプレハブなどを登録
     [SerializeField] GameObject _jugglingPrefab = null;
+    private PlayerMove _playerMove = null;
+    private RideBallMove _rideBallMove = null;
+    private TotemJump _totemJump = null;
 
     #endregion
 
@@ -57,6 +60,7 @@ public class ActionManager : MonoBehaviour
             // 行動変更
             else
             {
+                Cancel();   // 先にキャンセル
                 ChangeAction();
             }
         }
@@ -81,8 +85,8 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case eActionType.RideBall:
-                GetComponent<PlayerMove>().enabled = true;
-                GetComponent<RideBallMove>().enabled = false;
+                _playerMove.enabled = true;
+                _rideBallMove.enabled = false;
                 break;
 
             case eActionType.TotemJump:
@@ -128,6 +132,7 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     public void ChangeAction()
     {
+        _isAction = true;
         _nowAction = _nowSelect;
         switch (_nowAction)
         {
@@ -136,12 +141,12 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case eActionType.RideBall:
-                GetComponent<PlayerMove>().enabled = false;
-                GetComponent<RideBallMove>().enabled = true;
+                _playerMove.enabled = false;
+                _rideBallMove.enabled = true;
                 break;
 
             case eActionType.TotemJump:
-
+                StartCoroutine(_totemJump.Run());
                 break;
 
             case eActionType.Bagpipe:
@@ -151,6 +156,7 @@ public class ActionManager : MonoBehaviour
             default:
                 break;
         }
+        OnAtack();
     }
 
     /// <summary>
@@ -161,8 +167,11 @@ public class ActionManager : MonoBehaviour
         switch(_nowAction)
         {
             case eActionType.Juggling:
+                if (JugglingAtack.NowJugglingAmount >= 3)
+                    return;
+
                 GameObject obj = Instantiate(_jugglingPrefab, transform.position, transform.rotation);
-                StartCoroutine(obj.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy));
+                obj.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy);
                 break;
 
             case eActionType.RideBall:
@@ -170,7 +179,7 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case eActionType.TotemJump:
-
+                StartCoroutine(_totemJump.Run());
                 break;
 
             case eActionType.Bagpipe:
@@ -191,6 +200,11 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        _playerMove = GetComponent<PlayerMove>();
+        _rideBallMove = GetComponent<RideBallMove>();
+        _totemJump = GetComponent<TotemJump>();
+
+        // TODO : デバッグ表示
         Text selectText = GameObject.Find("SelectText").GetComponent<Text>();
         Text actionText = GameObject.Find("ActionText").GetComponent<Text>();
         this.UpdateAsObservable()

@@ -91,7 +91,7 @@ public class PlayerMove : MonoBehaviour
         {
             Acceleration(eDirection.Back);
         }
-        else if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
             Acceleration(eDirection.Right);
         }
