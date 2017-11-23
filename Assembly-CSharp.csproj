@@ -61,8 +61,12 @@
      <Compile Include="Assets\Scripts\Movie\MovieFade.cs" />
      <Compile Include="Assets\Scripts\Movie\MovieManager.cs" />
      <Compile Include="Assets\Scripts\Movie\SP_Jug.cs" />
+     <Compile Include="Assets\Scripts\Movie\SP_JugBig.cs" />
      <Compile Include="Assets\Scripts\Movie\SP_JugChild.cs" />
+     <Compile Include="Assets\Scripts\Movie\Special_1Ball.cs" />
+     <Compile Include="Assets\Scripts\Movie\Special_1Camera.cs" />
      <Compile Include="Assets\Scripts\Movie\Special_1Manager.cs" />
+     <Compile Include="Assets\Scripts\Movie\Special_1Player.cs" />
      <Compile Include="Assets\Scripts\Player\Action\ActionManager.cs" />
      <Compile Include="Assets\Scripts\Player\Action\JugglingAtack.cs" />
      <Compile Include="Assets\Scripts\Test\Bora\Bora.cs" />
