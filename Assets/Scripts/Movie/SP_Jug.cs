@@ -6,13 +6,28 @@ using System.Collections.Generic;
 public class SP_Jug : MonoBehaviour
 {
 	#region 定数
+
 	int MAX_PIN = 10;			// なんとなく10本投げる
 	float THROW_DIS = 1.0f;		// ピンの、プレイヤーからの出現距離
-	float MOVE_TIME = 1.0f;		// ピンの移動時間
+	float MOVE_TIME = 1.0f;		// ピンの展開時間
 	float ENEMY_DIS = 5.0f;		// 展開されたピンが静止する、敵からの距離
+	float GOENEMY_TIME = 0.6f;	// ピンの突撃時間
+
+	int MAX_BIGPIN = 2;				// 大きいピンは2本
+	float GOENEMY_TIME_BIG = 0.6f;	// デカピンの突撃時間
+	float BIG_ROTATE_Z = 45.0f;		// デカピンの傾き(プラスとマイナス)
+
+	float WAIT_EXPANSION = 0.8f;	// ピン展開までの待ち時間(プレイヤーのモーションと合わせる)
+	float WAIT_GOENEMY = 0.2f;		// ピン突撃までの待ち時間
+	float WAIT_GOENEMY_BIG = 0.2f;	// デカピン突撃までの待ち時間
+
 	#endregion
 
+	#region 変数
+
 	[SerializeField] GameObject PinObj;		// 投げるピン
+	[SerializeField] GameObject[] BigPinObjArray = new GameObject[2];	// 投げるデカピン
+	SP_JugBig[] cs_SPJugBig = new SP_JugBig[2];
 	[SerializeField] GameObject PlayerObj;
 	GameObject EnemyObj;
 
@@ -22,14 +37,21 @@ public class SP_Jug : MonoBehaviour
 	float fSecTime;					// 1秒あたりに増加するfTime
 	float[] fRotate;				// 1秒あたりに回転する角度
 
-	float time = 0.0f;
+	float fPinTime = 0.0f;
+	float fBigPinTime = 0.0f;
+
+	// Special_Manager関係
+	float fWait = 0.0f;		// 待ち時間
+	float fWaitBig = 0.0f;	// 待ち時間(デカピン)
+
+	#endregion
 
 	// Use this for initialization
 	void Start ()
 	{
-		EnemyObj = GameObject.Find("Enemy");
+		EnemyObj = GameObject.Find("Special_1Enemy");
 
-
+		// ----- 普通のピン -----
 		tbezier = new BezierCurve.tBez[MAX_PIN];
 		fRotate = new float[MAX_PIN];
 
@@ -57,36 +79,135 @@ public class SP_Jug : MonoBehaviour
 			fSecTime = 1.0f / MOVE_TIME;
 			fRotate[i] = Random.Range(1000.0f, 2000.0f);
 		}
-	}
-	
-	
-	public bool Update_Expansion ()
-	{
-		time += fSecTime * Time.deltaTime;
-		if(time > 1.0f)
-		{// 移動終了
-			time = 1.0f;
-			for(int i = 0 ; i < PinList.Count ; i ++)
-				PinList[i].LookAtEnemy(EnemyObj.transform.position);		// 敵のほうを向く
 
-			return true;
+
+
+		// ----- デカピン -----
+		for(int i = 0 ; i < MAX_BIGPIN ; i ++)
+		{
+			cs_SPJugBig[i] = BigPinObjArray[i].GetComponent<SP_JugBig>();
 		}
-
-		for (int i = 0; i < PinList.Count; i++)
-			PinList[i].Update_Expansion(time);								// 展開移動
-
-		return false;
 	}
+
 
 
 	// ピン展開
-	public void Jug_ThrowExpansion()
+	public bool Jug_ThrowExpansion()
 	{
-		for(int i = 0 ; i < MAX_PIN ; i ++)
+		// すぐに投げると変なので、少し待つ
+		fWait += Time.deltaTime;
+		if(fWait < WAIT_EXPANSION)
+			return false;
+
+		for (int i = 0; i < MAX_PIN; i++)
 		{
 			GameObject obj = Instantiate(PinObj as GameObject, PlayerObj.transform.position + PlayerObj.transform.forward * THROW_DIS, Quaternion.identity);
 			obj.GetComponent<SP_JugChild>().SetParam(tbezier[i], fSecTime, fRotate[i]);
 			PinList.Add(obj.GetComponent<SP_JugChild>());
 		}
+
+		fWait = 0.0f;
+		StartCoroutine("Jug_Expansion");
+
+		return true;
+	}
+
+	// ピン展開移動(完了を待つ必要はないのでコルーチン)
+	private IEnumerator Jug_Expansion()
+	{
+		while(true)
+		{
+			fPinTime += fSecTime * Time.deltaTime;
+			if (fPinTime > 1.0f)
+			{// 移動終了
+				fPinTime = 0.0f;
+				for (int i = 0; i < MAX_PIN; i++)
+					PinList[i].LookAtEnemy(EnemyObj.transform.position);		// 敵のほうを向く
+
+				break;
+			}
+
+			for (int i = 0; i < MAX_PIN; i++)
+				PinList[i].Update_Expansion(fPinTime);							// 展開移動
+
+			yield return null;
+		}
+	}
+
+	// ピン敵に突撃
+	public bool GoEnemy()
+	{
+		fWait += Time.deltaTime;
+		if(fWait < WAIT_GOENEMY)
+			return false;
+
+		fPinTime += Time.deltaTime / GOENEMY_TIME;
+
+		if(fPinTime > 1.0f)
+		{
+			fPinTime = 0.0f;
+			for (int i = 0; i < MAX_PIN; i++)
+				PinList[i].PinDestroy();		// ここで大きいのを1発かますか、PinDestroy()で個々に出すか
+
+			fWait = 0.0f;
+
+			return true;
+		}
+
+		for (int i = 0; i < MAX_PIN; i++)
+			PinList[i].GoEnemy(fPinTime, EnemyObj.transform.position);
+
+		return false;
+	}
+
+
+	// デカピン出現
+	public void JugBig_Appear()
+	{
+		for (int i = 0; i < MAX_BIGPIN; i++)
+		{
+			cs_SPJugBig[i].JugBig_Appear();
+		}
+	}
+
+	// デカピン投げる
+	public void JugBig_Throw()
+	{
+		float rotateZ;
+
+		for (int i = 0; i < MAX_BIGPIN; i++)
+		{
+			if(i == 0)
+				rotateZ = BIG_ROTATE_Z;		// 左
+			else
+				rotateZ = -BIG_ROTATE_Z;	// 右
+			cs_SPJugBig[i].JugBig_Throw(rotateZ);
+		}
+	}
+
+	// デカピン移動
+	public bool GoEnemy_Big()
+	{
+		fWaitBig += Time.deltaTime;
+		if(fWaitBig < WAIT_GOENEMY_BIG)
+			return false;
+
+		fBigPinTime += Time.deltaTime / GOENEMY_TIME_BIG;
+
+		if (fBigPinTime > 1.0f)
+		{
+			fBigPinTime = 0.0f;
+			for (int i = 0; i < MAX_BIGPIN; i++)
+				cs_SPJugBig[i].PinDestroy();		// ここで大きいのを1発かますか、PinDestroy()で個々に出すか
+
+			fWaitBig = 0.0f;
+
+			return true;
+		}
+
+		for (int i = 0; i < MAX_BIGPIN; i++)
+			cs_SPJugBig[i].GoEnemy_Big(fBigPinTime, EnemyObj.transform.position);
+
+		return false;
 	}
 }

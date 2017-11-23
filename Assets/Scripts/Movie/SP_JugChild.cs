@@ -11,30 +11,24 @@ public class SP_JugChild : MonoBehaviour
 
 	#endregion
 
+	#region 変数
+
 	[SerializeField] GameObject PinObj;			// 子のピン
 
 	BezierCurve.tBez tbezier;
 	float fSecTime;
 	float fRotate;
-	Vector3 vRotateAxis;			// 回転軸(startとendを含む平面に垂直なベクトル)
+	Vector3 vStartPos = Vector3.zero;			// 突撃し始めた座標
+
+	#endregion
 
 
-	// Use this for initialization
-	void Start ()
-	{
-		// ----- デバッグ -----
-
-
-
-		// --------------------
-	}
-	
 	// ピン展開
 	public void Update_Expansion(float time)
 	{
 		tbezier.time = time;
 		transform.position = BezierCurve.CulcBez(tbezier, true);
-		transform.Rotate(Vector3.right, fRotate * Time.deltaTime, Space.Self);	
+		transform.Rotate(Vector3.right, fRotate * Time.deltaTime, Space.Self);
 	}
 
 	// 敵のほうを向く
@@ -60,8 +54,19 @@ public class SP_JugChild : MonoBehaviour
 		transform.eulerAngles = new Vector3(0.0f, 0.0f, sita);
 	}
 
-	
-
 	// 敵に突撃する
+	public void GoEnemy(float time, Vector3 targetpos)
+	{
+		// 移動開始座標を保存
+		if(vStartPos == Vector3.zero)
+			vStartPos = transform.position;
 
+		transform.position = Vector3.Lerp(vStartPos, targetpos, time);
+	}
+
+	// 死ぬ
+	public void PinDestroy()
+	{
+		Destroy(this.gameObject);
+	}
 }
