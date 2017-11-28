@@ -167,18 +167,25 @@ public class EffekseerSystem : MonoBehaviour
 	private static EffekseerSystem instance = null;
 	public static EffekseerSystem Instance
 	{
-		get {
-			if (instance == null) {
+		get
+		{
+			if (instance == null)
+			{
 				// Find instance when is not set static variable
 				var system = GameObject.FindObjectOfType<EffekseerSystem>();
-				if (system != null) {
+				if (system != null)
+				{
 					// Sets static variable when instance is found
 					instance = system;
-				} else {
+				}
+				else
+				{
 					// Create instance when instance is not found
 					var go = GameObject.Find("Effekseer");
-					if (go == null) {
+					if (go == null)
+					{
 						go = new GameObject("Effekseer");
+						DontDestroyOnLoad(go);
 					}
 					instance = go.AddComponent<EffekseerSystem>();
 				}

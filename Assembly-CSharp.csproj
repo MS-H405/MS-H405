@@ -60,6 +60,8 @@
      <Compile Include="Assets\Scripts\GameCamera\GameCamera_Sub.cs" />
      <Compile Include="Assets\Scripts\Movie\MovieFade.cs" />
      <Compile Include="Assets\Scripts\Movie\MovieManager.cs" />
+     <Compile Include="Assets\Scripts\Movie\SetEffekseerObject.cs" />
+     <Compile Include="Assets\Scripts\Movie\SP_Enemy.cs" />
      <Compile Include="Assets\Scripts\Movie\SP_Jug.cs" />
      <Compile Include="Assets\Scripts\Movie\SP_JugBig.cs" />
      <Compile Include="Assets\Scripts\Movie\SP_JugChild.cs" />
