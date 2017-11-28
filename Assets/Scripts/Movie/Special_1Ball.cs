@@ -6,7 +6,7 @@ public class Special_1Ball : MonoBehaviour
 {
 	#region 定数
 
-	const float CON_ROTATION_WAIT = 0.5f;		// 回転を開始するまでの時間
+	const float CON_ROTATION_WAIT = 0.8f;		// 回転を開始するまでの時間
 	const float CON_ROTATION_TIME = 1.0f;		// 最大回転速度になるまでの時間
 	readonly Vector3 CON_MAX_ROTATION = new Vector3(1800.0f, 0.0f, 0.0f);	// 最大回転速度　なんとなく秒間5回転
 
@@ -14,11 +14,17 @@ public class Special_1Ball : MonoBehaviour
 
 	#region 変数
 
+	GameObject BallObj;
 	MeshRenderer meshrenderer;
 
 	float fTime;
 	float fWait;
 	Vector3 vRotate;
+
+	// Effekseer関係
+	SetEffekseerObject cs_SetEffekseerObject;
+	bool bSP_ball_move;
+	bool bSP_ball_speedup;
 
 	#endregion
 
@@ -27,11 +33,17 @@ public class Special_1Ball : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		meshrenderer = GetComponent<MeshRenderer>();
+		BallObj = GameObject.Find("Ball");
+		meshrenderer = BallObj.GetComponent<MeshRenderer>();
 		meshrenderer.enabled = false;
 
 		fTime = 0.0f;
 		fWait = 0.0f;
+
+		// Effekseer関係
+		cs_SetEffekseerObject = GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>();
+		bSP_ball_move = true;
+		bSP_ball_speedup = true;
 	}
 
 
@@ -53,12 +65,14 @@ public class Special_1Ball : MonoBehaviour
 		fTime += Time.deltaTime / CON_ROTATION_TIME;
 		if(fTime >= 1.0f)
 		{
-			transform.Rotate(CON_MAX_ROTATION * Time.deltaTime);
 			return true;
 		}
 
-		Vector3 temp = Vector3.Lerp(Vector3.zero, CON_MAX_ROTATION, fTime);
-		transform.Rotate(temp * Time.deltaTime);
+		if(bSP_ball_speedup)
+		{
+			cs_SetEffekseerObject.NewEffect(9);
+			bSP_ball_speedup = false;
+		}
 
 		return false;
 	}
@@ -66,6 +80,14 @@ public class Special_1Ball : MonoBehaviour
 	// 玉回転
 	public void Rotation()
 	{
-		transform.Rotate(CON_MAX_ROTATION * Time.deltaTime);
+		// 玉移動エフェクト
+		if(bSP_ball_move)
+		{
+			cs_SetEffekseerObject.NewEffect(8);		// 玉移動
+			cs_SetEffekseerObject.NewEffect(10);	// 玉発射
+			bSP_ball_move = false;
+		}
+
+		BallObj.transform.Rotate(CON_MAX_ROTATION * Time.deltaTime);
 	}
 }

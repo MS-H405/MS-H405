@@ -44,6 +44,10 @@ public class SP_Jug : MonoBehaviour
 	float fWait = 0.0f;		// 待ち時間
 	float fWaitBig = 0.0f;	// 待ち時間(デカピン)
 
+	// Effekseer関係
+	bool bSP_pin_hit;		// 展開ピンヒットエフェクト
+	bool bSP_big_hit;		// デカピンヒットエフェクト
+
 	#endregion
 
 	// Use this for initialization
@@ -87,6 +91,11 @@ public class SP_Jug : MonoBehaviour
 		{
 			cs_SPJugBig[i] = BigPinObjArray[i].GetComponent<SP_JugBig>();
 		}
+
+
+		// Effekseer関係
+		bSP_pin_hit = true;
+		bSP_big_hit = true;
 	}
 
 
@@ -108,6 +117,9 @@ public class SP_Jug : MonoBehaviour
 
 		fWait = 0.0f;
 		StartCoroutine("Jug_Expansion");
+
+		// ピン展開エフェクト
+		GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>().NewEffect(11);
 
 		return true;
 	}
@@ -157,6 +169,14 @@ public class SP_Jug : MonoBehaviour
 		for (int i = 0; i < MAX_PIN; i++)
 			PinList[i].GoEnemy(fPinTime, EnemyObj.transform.position);
 
+		if(bSP_pin_hit)
+		{
+			// 展開ピンヒットエフェクト
+			GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>().NewEffect(1);
+
+			bSP_pin_hit = false;
+		}
+
 		return false;
 	}
 
@@ -183,6 +203,9 @@ public class SP_Jug : MonoBehaviour
 				rotateZ = -BIG_ROTATE_Z;	// 右
 			cs_SPJugBig[i].JugBig_Throw(rotateZ);
 		}
+
+		// デカピン投擲エフェクト
+		GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>().NewEffect(0);
 	}
 
 	// デカピン移動
@@ -198,9 +221,17 @@ public class SP_Jug : MonoBehaviour
 		{
 			fBigPinTime = 0.0f;
 			for (int i = 0; i < MAX_BIGPIN; i++)
-				cs_SPJugBig[i].PinDestroy();		// ここで大きいのを1発かますか、PinDestroy()で個々に出すか
+				cs_SPJugBig[i].PinDestroy();
 
 			fWaitBig = 0.0f;
+
+			if (bSP_big_hit)
+			{
+				// 展開ピンヒットエフェクト
+				GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>().NewEffect(2);
+
+				bSP_big_hit = false;
+			}
 
 			return true;
 		}

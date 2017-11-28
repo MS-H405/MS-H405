@@ -16,13 +16,16 @@ public class Special_1Player : MonoBehaviour
 //	const float CON_RIDEBALL_ACCELE_Y = -20.0f;	// 玉に乗るときの加速度Y
 	const float CON_PLAYER_HEIGHT2 = 1.0f;		// プレイヤーの高さの半分の長さ
 
-	const float CON_GOENEMY_SPEED = 70.0f;		// 突撃時のスピード(最初から最後までいっしょ)
+	const float CON_GOENEMY_SPEED = 70.0f;		// 突撃時のスピード(最初から最後までいっしょ)	86f
+	const float CON_ENEMY_LUG = 130.0f;			// 敵を引きずる距離
+	const float CON_END_DISTANCE = 180.0f;		// 必殺技終了の判定に使う移動した距離
 
 	#endregion
 
 	#region 変数
 
 	GameObject BallObj;
+	GameObject EnemyObj;
 
 	bool bInit;
 	float fTime;
@@ -36,6 +39,9 @@ public class Special_1Player : MonoBehaviour
 	bool bHarf;				// カメラが切り替わる場所まで進んだかどうか
 	bool bEnd;				// 突撃が終わったかどうか
 
+	// Effekseer関係
+	SetEffekseerObject cs_SetEffekseerObject;
+
 	#endregion
 
 
@@ -43,6 +49,7 @@ public class Special_1Player : MonoBehaviour
 	void Start ()
 	{
 		BallObj = GameObject.Find("Special_1Ball");
+		EnemyObj = GameObject.Find("Special_1Enemy");
 
 		bInit = true;
 		fTime = 0.0f;
@@ -51,6 +58,9 @@ public class Special_1Player : MonoBehaviour
 		fMovedDis = 0.0f;
 		bHarf = false;
 		bEnd = false;
+
+		// Effekseer関係
+		cs_SetEffekseerObject = GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>();
 	}
 
 
@@ -72,6 +82,10 @@ public class Special_1Player : MonoBehaviour
 
 			vStartPos = transform.position;
 			vSpeed = CON_BACKJAMP_SPEED;
+
+			// ジャンプエフェクト
+			cs_SetEffekseerObject.NewEffect(5);
+			cs_SetEffekseerObject.NewEffect(6);
 
 			bInit = false;
 		}
@@ -95,48 +109,17 @@ public class Special_1Player : MonoBehaviour
 
 		return false;
 	}
-	
-	// 玉に乗る
-	public bool BallRide()
-	{
-//		// 初期化処理
-//		if (bInit)
-//		{
-//			// 0.8秒で加速度-20なら、-6.4m移動する
-//			// 一瞬だけ空のオブジェクトを作り、それを自分の足元に設定して親とし、その親の座標をいじる。
-//			Parent = new GameObject().GetComponent<Transform>();
-//			Parent.position = new Vector3(transform.position.x, transform.position.y - CON_PLAYER_HEIGHT2, transform.position.z);
-//			transform.parent = Parent;
-//
-//			vSpeed = CON_RIDEBALL_SPEED;
-//
-//			bInit = false;
-//		}
-//
-//		// 終了判定
-//		fTime += Time.deltaTime;
-//		if (fTime > CON_RIDEBALL_TIME)
-//		{
-//			fTime = 0.0f;
-//			bInit = true;
-//		
-//			return true;
-//		}
-//
-//		// 移動
-//		vSpeed.y += CON_RIDEBALL_ACCELE_Y * Time.deltaTime;
-//		Parent.position += vSpeed * Time.deltaTime;
-//
-		return false;
-	}
+
 
 	// 仮親を削除し、玉を子とする
 	public void ParentConf()
 	{
 		transform.parent = null;										// 仮親との親子関係解除
 		Destroy(Parent.gameObject);										// 仮親削除
+		transform.position = new Vector3(transform.position.x, 5.0f + CON_PLAYER_HEIGHT2, transform.position.z);
 		GameObject.Find("Special_1Ball").transform.parent = transform;	// 玉を子とする
 	}
+
 
 	// 敵に突撃
 	public bool GoEnemy()
@@ -145,13 +128,18 @@ public class Special_1Player : MonoBehaviour
 		transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + temp);
 		fMovedDis += temp;
 
+		// 移動距離により、いろいろ判定
 		if(fMovedDis >= 50.0f && !bHarf)
-		{
+		{// カメラ敵背後へ移動
 			bHarf = true;
 			return true;
 		}
-		else if(fMovedDis > 130.0f && !bEnd)
-		{
+		else if(100.0f <= fMovedDis && fMovedDis < CON_ENEMY_LUG)
+		{// 敵引きずり
+			EnemyObj.transform.position = new Vector3(EnemyObj.transform.position.x, EnemyObj.transform.position.y, transform.position.z + 2.5f);	// 玉の大きさ分ずらす
+		}
+		else if (fMovedDis > CON_END_DISTANCE && !bEnd)
+		{// 必殺技終了
 			bEnd = true;
 			return true;
 		}

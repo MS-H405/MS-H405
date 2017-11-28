@@ -3,15 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections.Generic;
 
-// 注視点を使っての角度移動のほうがいいときもあると思う。
-
-// スピードという概念を入れる。
-// 速度には時間と距離が関係している
-// 前の座標との距離10を1秒で移動する時は、速度10
-// その次の区間が速度5の時は
-// 
-// 
-// 
 
 
 public class Special_1Camera : MonoBehaviour
@@ -31,7 +22,7 @@ public class Special_1Camera : MonoBehaviour
 	readonly Vector3 CON_BACKJAMP_OFFSET = new Vector3(0.0f, 0.0f, 1.3f);	// 後方ジャンプ時の、注視点
 	const float CON_BACKJAMP_FOLLOWRATE = 0.1f;		// 後方ジャンプ時の追従率
 	const float CON_BALLRIDE_FOLLOWRATE = 0.1f;		// 玉に乗りに行く時の追従率
-	const float CON_GOENEMY_FOLLOWRATE = 0.1f;		// 敵突撃時の注視点の追従率
+	const float CON_GOENEMY_FOLLOWRATE = 0.05f;		// 敵突撃時の注視点の追従率
 	const float CON_SHOULDER_FOLLOWRATE = 0.1f;		// 敵の肩越しにいるときの追従率
 
 	#endregion
@@ -60,6 +51,11 @@ public class Special_1Camera : MonoBehaviour
 	//float fAccele;		// 加速度
 	//bool  bHarf;		// 移動の前半か
 
+	// Effekseer関係
+	SetEffekseerObject cs_SetEffekseerObject;
+	bool bSP_big_appear;
+	bool bSP_player_land;
+
 	#endregion
 
 
@@ -81,6 +77,11 @@ public class Special_1Camera : MonoBehaviour
 		bInit = true;
 
 		bBigPinAppear = false;
+
+		// Effekseer関係
+		cs_SetEffekseerObject = GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>();
+		bSP_big_appear = true;
+		bSP_player_land = true;
 	}
 
 	void Update()
@@ -102,13 +103,22 @@ public class Special_1Camera : MonoBehaviour
 			tbez3.time = 0.0f;
 			tbez3.start = CameraMoveList[0].vPos;
 			tbez3.middle1 = new Vector3(-5.0f, 2.0f, -10.0f);
-			tbez3.middle2 = new Vector3(-1.4f, 1.2f, -7.7f);
+			tbez3.middle2 = new Vector3(-2.6f, 1.2f, -6.7f);
 			tbez3.end = CameraMoveList[1].vPos;
 
 			bInit = false;
 		}
 
 		fWait += Time.deltaTime;
+
+		// デカピン出現エフェクト
+		if(fWait > 1.0f && bSP_big_appear)
+		{
+			cs_SetEffekseerObject.NewEffect(3);
+			cs_SetEffekseerObject.NewEffect(4);
+			bSP_big_appear = false;
+		}
+
 		if (fWait < CameraMoveList[1].fWait)
 			return false;
 
@@ -165,8 +175,8 @@ public class Special_1Camera : MonoBehaviour
 		{
 			tbez3.time = 0.0f;
 			tbez3.start = CameraMoveList[2].vPos;
-			tbez3.middle1 = new Vector3(1.4f, 1.2f, -7.7f);
-			tbez3.middle2 = new Vector3(3.6f, 2.1f, -13.0f);
+			tbez3.middle1 = new Vector3(2.6f, 1.2f, -7.7f);
+			tbez3.middle2 = new Vector3(4.6f, 2.1f, -13.0f);
 			tbez3.end = CameraMoveList[3].vPos;
 
 			bInit = false;
@@ -216,19 +226,31 @@ public class Special_1Camera : MonoBehaviour
 		}
 		else
 		{
-			fTime += Time.deltaTime / CameraMoveList[5].fTime;
+			//fTime += Time.deltaTime / CameraMoveList[5].fTime;
+			//
+			//transform.position = Vector3.Lerp(transform.position, PlayerObj.transform.position - CameraMoveList[5].vPos, CON_BALLRIDE_FOLLOWRATE);
+			//Vector3 temp = Vector3.Lerp(transform.position + transform.forward * 10.0f, BallObj.transform.position, CON_BALLRIDE_FOLLOWRATE);
+			//transform.LookAt(temp);
+			//vLookAt2 = temp;
 
-			transform.position = Vector3.Lerp(transform.position, PlayerObj.transform.position - CameraMoveList[5].vPos, CON_BALLRIDE_FOLLOWRATE);
-			Vector3 temp = Vector3.Lerp(transform.position + transform.forward * 10.0f, BallObj.transform.position, CON_BALLRIDE_FOLLOWRATE);
-			transform.LookAt(temp);
-			vLookAt2 = temp;
+			// 今の追従移動をやめて、ワープにする
+			transform.position = BallObj.transform.position + new Vector3(0.0f, BallObj.transform.localScale.y / 2.0f, 0.0f) - CameraMoveList[5].vPos;
+			vLookAt2 = BallObj.transform.position + new Vector3(0.0f, BallObj.transform.localScale.y / 2.0f, 0.0f);
+			transform.LookAt(vLookAt2);
+
+			// 着地エフェクト
+			if (bSP_player_land)
+			{
+				cs_SetEffekseerObject.NewEffect(7);
+				bSP_player_land = false;
+			}
 		}
 	}
 
 	// 玉発射
 	public void Camera_GoEnemy()
 	{// 視点は動かずに、注視点だけ追従
-		vLookAt2 = Vector3.Lerp(vLookAt2, BallObj.transform.position, CON_GOENEMY_FOLLOWRATE);
+		vLookAt2 = Vector3.Lerp(vLookAt2, BallObj.transform.position + new Vector3(0.0f, BallObj.transform.localScale.y / 2.0f, 0.0f), CON_GOENEMY_FOLLOWRATE);
 		transform.LookAt(vLookAt2);
 	}
 
@@ -319,7 +341,7 @@ public class Special_1Camera : MonoBehaviour
 		CameraMoveList.Add(temp);
 
 		// 1
-		temp.vPos	= new Vector3(-0.7f, 1.2f, 2.3f);		// プレイヤーを見る
+		temp.vPos	= new Vector3(-1.3f, 1.2f, 3.3f);		// プレイヤーを見る
 		temp.vLook	= new Vector3(2.0f, -0.7f, -17.1f);
 		temp.vEuler	= new Vector3(10.8f, 163.4f, 0.0f);
 		temp.fTime	= 0.6f;
@@ -328,7 +350,7 @@ public class Special_1Camera : MonoBehaviour
 		CameraMoveList.Add(temp);
 
 		// 2
-		temp.vPos	= new Vector3(0.7f, 1.2f, 2.3f);		// プレイヤーを見る
+		temp.vPos	= new Vector3(1.3f, 1.2f, 3.3f);		// プレイヤーを見る
 		temp.vLook	= new Vector3(0.0f, 0.4f, -5.0f);
 		temp.vEuler = new Vector3(10.8f, 196.6f, 0.0f);
 		temp.fTime	= 1.0f;
@@ -350,12 +372,13 @@ public class Special_1Camera : MonoBehaviour
 		temp.vLook	= new Vector3(-5.3f, 1.6f, -12.8f);
 		temp.vEuler = new Vector3(352.9f, 232.2f, 0.0f);
 		temp.fTime	= 0.0f;
-		temp.fWait	= 1.5f;
+		temp.fWait	= 2.7f;
 		temp.vPos	+= PlayerObj.transform.position;
 		CameraMoveList.Add(temp);
 
 		// 5
-		temp.vPos	= new Vector3(10.6f, -2.8f, -7.0f);		// 敵の肩越し
+		//temp.vPos	= new Vector3(10.6f, -2.8f, -7.0f);		// 後方ジャンプ追従(玉が(0.0f, 0.0f, -100.0f)ならこの位置)
+		temp.vPos	= new Vector3(10.6f, 0.0f, -7.0f);		// 後方ジャンプ追従(玉が(0.0f, 0.0f, -100.0f)ならこの位置)
 		temp.vLook	= new Vector3(-2.5f, 5.2f, 2.5f);
 		temp.vEuler	= new Vector3(21.4f, 119.0f, 0.0f);
 		temp.fTime	= 1.0f;	// 角度だけ時間で移動
@@ -363,7 +386,7 @@ public class Special_1Camera : MonoBehaviour
 		CameraMoveList.Add(temp);
 
 		// 6
-		temp.vPos	= new Vector3(4.6f, 3.4f, 6.5f);		// 後方ジャンプ追従(玉が(0.0f, 0.0f, -100.0f)ならこの位置)
+		temp.vPos	= new Vector3(4.6f, 3.4f, 6.5f);		// 敵の肩越し
 		temp.vLook	= new Vector3(1.0f, 1.1f, -2.6f);
 		temp.vEuler	= new Vector3(13.4f, 201.8f, 0.0f);
 		temp.fTime	= 0.0f;

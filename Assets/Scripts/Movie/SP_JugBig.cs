@@ -29,6 +29,7 @@ public class SP_JugBig : MonoBehaviour
 	public void JugBig_Appear()
 	{
 		MyPinObj.SetActive(true);
+		GetComponent<EffekseerEmitter>().Play();
 	}
 	
 	// デカピンを投げる
