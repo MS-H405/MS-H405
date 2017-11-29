@@ -16,7 +16,7 @@ public class GameCamera : MonoBehaviour
 	// readonlyも結局定数みたいなものなので　CON_　をつけている。
 	// 一部GameCamera_Sub.csも同じ値を使っているので、こっちを変更したらそっちも変えておく。
 	
-	[SerializeField] float	CON_fPlayerFollowRate = 0.15f;									// プレイヤーへの追従率(視点の移動)
+	[SerializeField] float	CON_fPlayerFollowRate = 0.15f;								// プレイヤーへの追従率(視点の移動)
 	const float			CON_fDistance = 5.0f;											// プレイヤーとの距離
 	readonly Vector2	CON_vFollowRate = new Vector2(1.0f, 0.05f);						// 敵・俯瞰プレイヤーの追従率(注視点の移動)(x : 遊び範囲外、y : 遊び範囲内)
 	readonly Vector4	CON_vEnemyFollowRect = new Vector4(0.4f, 0.6f, 0.5f, 0.7f);		// 遊びの範囲(敵用)
@@ -34,8 +34,6 @@ public class GameCamera : MonoBehaviour
 	#region 変数
 
 	[SerializeField] GameObject PlayerObj;
-	[SerializeField] GameObject EnemyObj;
-	GameObject Strage;		// EnemyObjの保管場所
 	_CameraMode CameraMode;	// カメラの挙動
 	
 	Camera camera;									// 自身のカメラ
@@ -60,11 +58,10 @@ public class GameCamera : MonoBehaviour
 	{
 		camera = GetComponent<Camera>();
 
-		Strage = null;												// EnemyObjの保管場所
 		CameraMode = _CameraMode.LOCKON;							// 最初はロックオン
 
 		rot = new Vector2(Mathf.PI * 1.5f, Mathf.PI * 0.25f);		// カメラの初期角度
-		vLookAtPos = EnemyObj.transform.position;					// 注視点
+		vLookAtPos = EnemyManager.Instance.transform.position;
 		
 		cs_GameCamera_Sub = SubCameraObj.GetComponent<GameCamera_Sub>();	// 俯瞰→通常時のスクリーン座標計算用カメラ
 		SubCameraObj.SetActive(false);										// 重さ軽減のため
@@ -83,7 +80,7 @@ public class GameCamera : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.R))
 		{
-			if (EnemyObj)
+			if (EnemyManager.Instance)
 			{// ターゲットロスト
 				CameraChengeTop();
 			}
@@ -123,11 +120,11 @@ public class GameCamera : MonoBehaviour
 		float	fFollowRate;		// プレイヤーへの追従率
 		Vector3	vTargetPos;			// 注視点、角度の計算に使う
 
-		vDiffPos = CheckPlaySpace(EnemyObj.transform.position);		// 遊びの範囲からのはみ出した距離を計算
+		vDiffPos = CheckPlaySpace(EnemyManager.Instance.transform.position);		// 遊びの範囲からのはみ出した距離を計算
 		if(vDiffPos == Vector3.zero)
 		{// 範囲内
 			fFollowRate = CON_vFollowRate.y;			// 追従率低め
-			vTargetPos = EnemyObj.transform.position;
+			vTargetPos = EnemyManager.Instance.transform.position;
 		}
 		else
 		{// 範囲外
@@ -135,7 +132,7 @@ public class GameCamera : MonoBehaviour
 			//vTargetPos = vLookAtPos + vDiffPos;
 			
 			float fPaternA = Vector3.Distance(Vector3.zero, vDiffPos) * CON_vFollowRate.x;									// vDiffPosを1.0fで追うパターン
-			float fPaternB = Vector3.Distance(vLookAtPos, (EnemyObj.transform.position - vDiffPos)) * CON_vFollowRate.y;	// 遊び範囲ギリギリを0.05fで追うパターン
+			float fPaternB = Vector3.Distance(vLookAtPos, (EnemyManager.Instance.transform.position - vDiffPos)) * CON_vFollowRate.y;	// 遊び範囲ギリギリを0.05fで追うパターン
 
 			if (fPaternA > fPaternB)
 			{
@@ -145,12 +142,12 @@ public class GameCamera : MonoBehaviour
 			else
 			{
 				fFollowRate = CON_vFollowRate.y;		// 追従率低め
-				vTargetPos = EnemyObj.transform.position;	// - vDiffを追加
+				vTargetPos = EnemyManager.Instance.transform.position;	// - vDiffを追加
 			}
 		}
 
 		// ここでvLookAtPos + vDiffPosを1.0fで追った方が早いか、
-		// EnemyObj.transform.positionを0.05fで追った方が早いかを計算し、数値が高いほうを適用する。
+		// EnemyManager.Instance.transform.positionを0.05fで追った方が早いかを計算し、数値が高いほうを適用する。
 		// と考えたところまでしかやってない。
 
 		// 範囲内ならパターンB
@@ -345,7 +342,7 @@ public class GameCamera : MonoBehaviour
 				work.y = Screen.height * CON_vEnemyFollowRect.z;
 			else if (Screen.height * CON_vEnemyFollowRect.w < vScreenPos.y)			// 遊びの範囲内から、上に飛び出した
 				work.y = Screen.height * CON_vEnemyFollowRect.w;
-			//vDiffPos = EnemyObj.transform.position - camera.ScreenToWorldPoint(work);
+			//vDiffPos = EnemyManager.Instance.transform.position - camera.ScreenToWorldPoint(work);
 			vDiffPos = vPos - camera.ScreenToWorldPoint(work);
 		}
 
@@ -356,9 +353,6 @@ public class GameCamera : MonoBehaviour
 	// 通常視点から俯瞰視点へ変更
 	public void CameraChengeTop()
 	{
-		Strage = EnemyObj;
-		EnemyObj = null;
-
 		CameraMode = _CameraMode.TOP;
 		fTopParameter = 0.0f;				// 移動割合初期化
 
@@ -373,11 +367,8 @@ public class GameCamera : MonoBehaviour
 	// 俯瞰視点から通常視点へ変更
 	public void CameraChangeNormal()
 	{
-		EnemyObj = Strage;
-		Strage = null;
-
 		SubCameraObj.SetActive(true);					// 俯瞰→通常時のみサブカメラのスクリーン座標が必要なのでアクティブに
-		cs_GameCamera_Sub.Init(PlayerObj, EnemyObj);	// 注視点・角度を初期化
+		cs_GameCamera_Sub.Init(PlayerObj);				// 注視点・角度を初期化
 
 		CameraMode = _CameraMode.BACKPLAYER;
 		fTopParameter = 0.0f;				// 移動割合初期化

@@ -56,6 +56,7 @@
      <Compile Include="Assets\Effekseer\Plugins\EffekseerPlayableAsset.cs" />
      <Compile Include="Assets\Effekseer\Plugins\EffekseerPlayableBehaviour.cs" />
      <Compile Include="Assets\Effekseer\Plugins\EffekseerSystem.cs" />
+     <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
      <Compile Include="Assets\Scripts\GameCamera\GameCamera.cs" />
      <Compile Include="Assets\Scripts\GameCamera\GameCamera_Sub.cs" />
      <Compile Include="Assets\Scripts\Movie\MovieFade.cs" />
@@ -70,11 +71,17 @@
      <Compile Include="Assets\Scripts\Movie\Special_1Manager.cs" />
      <Compile Include="Assets\Scripts\Movie\Special_1Player.cs" />
      <Compile Include="Assets\Scripts\Player\Action\ActionManager.cs" />
+     <Compile Include="Assets\Scripts\Player\Action\BagpipeFire.cs" />
      <Compile Include="Assets\Scripts\Player\Action\JugglingAtack.cs" />
+     <Compile Include="Assets\Scripts\Player\Action\RideBallMove.cs" />
+     <Compile Include="Assets\Scripts\Player\Action\TotemJump.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\Test\Bora\Bora.cs" />
      <Compile Include="Assets\Scripts\Test\Tatsuo\TatsuoTest_Enemy.cs" />
+     <Compile Include="Assets\Scripts\Utility\AutoRotation.cs" />
      <Compile Include="Assets\Scripts\Utility\BezierCurve.cs" />
      <Compile Include="Assets\Scripts\Utility\GameSetting.cs" />
+     <Compile Include="Assets\Scripts\Utility\SingletonMonoBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utility\SortingLayer.cs" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
