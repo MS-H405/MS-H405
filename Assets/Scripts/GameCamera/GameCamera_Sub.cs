@@ -35,16 +35,16 @@ public class GameCamera_Sub : MonoBehaviour
 		float fFollowRate;			// プレイヤーへの追従率
 		Vector3 vTargetPos;			// 注視点、角度の計算に使う
 
-		vDiffPos = CheckPlaySpace(EnemyManager.Instance.transform.position);		// 遊びの範囲からのはみ出した距離を計算
+		vDiffPos = CheckPlaySpace(EnemyManager.Instance.BossEnemy.transform.position);		// 遊びの範囲からのはみ出した距離を計算
 		if (vDiffPos == Vector3.zero)
 		{// 範囲内
 			fFollowRate = CON_vFollowRate.y;			// 追従率低め
-			vTargetPos = EnemyManager.Instance.transform.position;
+			vTargetPos = EnemyManager.Instance.BossEnemy.transform.position;
 		}
 		else
 		{// 範囲外
 			float fPaternA = Vector3.Distance(Vector3.zero, vDiffPos) * CON_vFollowRate.x;									// vDiffPosを1.0fで追うパターン
-			float fPaternB = Vector3.Distance(vLookAtPos, (EnemyManager.Instance.transform.position - vDiffPos)) * CON_vFollowRate.y;	// 遊び範囲ギリギリを0.05fで追うパターン
+			float fPaternB = Vector3.Distance(vLookAtPos, (EnemyManager.Instance.BossEnemy.transform.position - vDiffPos)) * CON_vFollowRate.y;	// 遊び範囲ギリギリを0.05fで追うパターン
 
 			if (fPaternA > fPaternB)
 			{
@@ -54,7 +54,7 @@ public class GameCamera_Sub : MonoBehaviour
 			else
 			{
 				fFollowRate = CON_vFollowRate.y;		// 追従率低め
-				vTargetPos = EnemyManager.Instance.transform.position;
+				vTargetPos = EnemyManager.Instance.BossEnemy.transform.position;
 			}
 		}
 
@@ -148,7 +148,7 @@ public class GameCamera_Sub : MonoBehaviour
 				work.y = Screen.height * CON_vEnemyFollowRect.z;
 			else if (Screen.height * CON_vEnemyFollowRect.w < vScreenPos.y)			// 遊びの範囲内から、上に飛び出した
 				work.y = Screen.height * CON_vEnemyFollowRect.w;
-			//vDiffPos = EnemyManager.Instance.transform.position - camera.ScreenToWorldPoint(work);
+			//vDiffPos = EnemyManager.Instance.BossEnemytransform.position - camera.ScreenToWorldPoint(work);
 			vDiffPos = vPos - camera.ScreenToWorldPoint(work);
 		}
 
@@ -162,7 +162,7 @@ public class GameCamera_Sub : MonoBehaviour
 		if(camera    == null)	camera    = GetComponent<Camera>();
 		if(PlayerObj == null)	PlayerObj = PObj;
 
-		vLookAtPos = EnemyManager.Instance.transform.position;
+		vLookAtPos = EnemyManager.Instance.BossEnemy.transform.position;
 
 		#region 角度の計算
 		// スクリーン座標計算前に1度はやっておかないと

@@ -61,7 +61,7 @@ public class GameCamera : MonoBehaviour
 		CameraMode = _CameraMode.LOCKON;							// 最初はロックオン
 
 		rot = new Vector2(Mathf.PI * 1.5f, Mathf.PI * 0.25f);		// カメラの初期角度
-		vLookAtPos = EnemyManager.Instance.transform.position;
+		vLookAtPos = EnemyManager.Instance.BossEnemy.transform.position;
 		
 		cs_GameCamera_Sub = SubCameraObj.GetComponent<GameCamera_Sub>();	// 俯瞰→通常時のスクリーン座標計算用カメラ
 		SubCameraObj.SetActive(false);										// 重さ軽減のため
@@ -72,28 +72,21 @@ public class GameCamera : MonoBehaviour
 	{
 		//----- デバッグ機能 ---------------------------------------
 
-		// プレイヤーからの距離調整
-//		if (Input.GetKey(KeyCode.O))
-//			CON_fDistance += 0.1f;
-//		if (Input.GetKey(KeyCode.P))
-//			CON_fDistance -= 0.1f;
-
-		if (Input.GetKeyDown(KeyCode.R))
-		{
-			if (EnemyManager.Instance)
-			{// ターゲットロスト
-				CameraChengeTop();
-			}
-			else
-			{// ターゲット補足
-				CameraChangeNormal();
-			}
-		}
-
 		if (Input.GetKeyDown(KeyCode.O))
 			MovieManager.Instance.MovieStart(MovieManager.MOVIE_SCENE.SPECIAL_1);
 
 		//---------------------------------------------------------
+
+
+		if (!EnemyManager.Instance.BossEnemy)
+		{// ターゲットロスト
+			CameraChengeTop();
+		}
+		else
+		{// ターゲット補足
+			CameraChangeNormal();
+		}
+
 
 		switch(CameraMode)
 		{
@@ -120,11 +113,11 @@ public class GameCamera : MonoBehaviour
 		float	fFollowRate;		// プレイヤーへの追従率
 		Vector3	vTargetPos;			// 注視点、角度の計算に使う
 
-		vDiffPos = CheckPlaySpace(EnemyManager.Instance.transform.position);		// 遊びの範囲からのはみ出した距離を計算
+		vDiffPos = CheckPlaySpace(EnemyManager.Instance.BossEnemy.transform.position);		// 遊びの範囲からのはみ出した距離を計算
 		if(vDiffPos == Vector3.zero)
 		{// 範囲内
 			fFollowRate = CON_vFollowRate.y;			// 追従率低め
-			vTargetPos = EnemyManager.Instance.transform.position;
+			vTargetPos = EnemyManager.Instance.BossEnemy.transform.position;
 		}
 		else
 		{// 範囲外
@@ -132,7 +125,7 @@ public class GameCamera : MonoBehaviour
 			//vTargetPos = vLookAtPos + vDiffPos;
 			
 			float fPaternA = Vector3.Distance(Vector3.zero, vDiffPos) * CON_vFollowRate.x;									// vDiffPosを1.0fで追うパターン
-			float fPaternB = Vector3.Distance(vLookAtPos, (EnemyManager.Instance.transform.position - vDiffPos)) * CON_vFollowRate.y;	// 遊び範囲ギリギリを0.05fで追うパターン
+			float fPaternB = Vector3.Distance(vLookAtPos, (EnemyManager.Instance.BossEnemy.transform.position - vDiffPos)) * CON_vFollowRate.y;	// 遊び範囲ギリギリを0.05fで追うパターン
 
 			if (fPaternA > fPaternB)
 			{
@@ -142,12 +135,12 @@ public class GameCamera : MonoBehaviour
 			else
 			{
 				fFollowRate = CON_vFollowRate.y;		// 追従率低め
-				vTargetPos = EnemyManager.Instance.transform.position;	// - vDiffを追加
+				vTargetPos = EnemyManager.Instance.BossEnemy.transform.position;	// - vDiffを追加
 			}
 		}
 
 		// ここでvLookAtPos + vDiffPosを1.0fで追った方が早いか、
-		// EnemyManager.Instance.transform.positionを0.05fで追った方が早いかを計算し、数値が高いほうを適用する。
+		// EnemyManager.Instance.BossEnemy.transform.positionを0.05fで追った方が早いかを計算し、数値が高いほうを適用する。
 		// と考えたところまでしかやってない。
 
 		// 範囲内ならパターンB
@@ -342,7 +335,7 @@ public class GameCamera : MonoBehaviour
 				work.y = Screen.height * CON_vEnemyFollowRect.z;
 			else if (Screen.height * CON_vEnemyFollowRect.w < vScreenPos.y)			// 遊びの範囲内から、上に飛び出した
 				work.y = Screen.height * CON_vEnemyFollowRect.w;
-			//vDiffPos = EnemyManager.Instance.transform.position - camera.ScreenToWorldPoint(work);
+			//vDiffPos = EnemyManager.Instance.BossEnemy.transform.position - camera.ScreenToWorldPoint(work);
 			vDiffPos = vPos - camera.ScreenToWorldPoint(work);
 		}
 
@@ -353,6 +346,9 @@ public class GameCamera : MonoBehaviour
 	// 通常視点から俯瞰視点へ変更
 	public void CameraChengeTop()
 	{
+		if(CameraMode == _CameraMode.TOP)
+			return;
+
 		CameraMode = _CameraMode.TOP;
 		fTopParameter = 0.0f;				// 移動割合初期化
 
@@ -367,6 +363,9 @@ public class GameCamera : MonoBehaviour
 	// 俯瞰視点から通常視点へ変更
 	public void CameraChangeNormal()
 	{
+		if (CameraMode == _CameraMode.BACKPLAYER)
+			return;
+
 		SubCameraObj.SetActive(true);					// 俯瞰→通常時のみサブカメラのスクリーン座標が必要なのでアクティブに
 		cs_GameCamera_Sub.Init(PlayerObj);				// 注視点・角度を初期化
 
