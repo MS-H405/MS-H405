@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UniRx.Triggers;
-  
+
 public class JugglingAtack : MonoBehaviour
 {
     #region define
@@ -19,32 +19,32 @@ public class JugglingAtack : MonoBehaviour
 
     #region variable
 
+    static private int _nowJugglingAmount = 0;
+    static public int NowJugglingAmount { get { return _nowJugglingAmount; } }
     static private float _commonAtackSpeed = 1.0f;  // 共有する攻撃スピード
     private readonly float MaxAtackSpeed = 2.0f;    // 最大スピード
 
-    private GameObject _targetObj = null;       // 
-    [SerializeField] float _atackSpeed = 0.0f;  // 攻撃スピード
-    private bool _isReflect = false;            // 反射判定
+    private GameObject _targetObj = null;           // 
+    private float _atackSpeed = 0.0f;               // 攻撃スピード
 
-    private bool _isEnd = false;    // このオブジェクトの生存判定
+    private bool _isReflect = false;                // 反射判定
+    private bool _isCatch = false;                  // このオブジェクトの生存判定
+
+    [SerializeField] GameObject _dropPointEffect = null;
 
     #endregion
 
     #region method
 
-    public IEnumerator Run(GameObject target)
+    public void Run(GameObject target)
     {
         // 初期化処理
         _targetObj = target;
-        _atackSpeed *= _commonAtackSpeed;
+        _atackSpeed = 10.0f * _commonAtackSpeed;
         transform.LookAt(_targetObj.transform.position);
 
         // アクション実行
-        var actionCourutine = StartCoroutine(ActionFlow());
-        yield return actionCourutine;
-
-        // 破棄処理
-        Destroy(gameObject);
+        StartCoroutine(ActionFlow());
     }
 
     /// <summary>
@@ -60,11 +60,8 @@ public class JugglingAtack : MonoBehaviour
         {
             Vector3 moveAmount = transform.forward * _atackSpeed * Time.deltaTime;
             transform.position += moveAmount;
-
-            if (_isEnd)
-            {
-                yield break;
-            }
+            
+            // TODO : 地形外判定
 
             atackTime += Time.deltaTime;
             yield return null;
@@ -72,32 +69,63 @@ public class JugglingAtack : MonoBehaviour
 
         // 反射したので適当な位置を落下地として設定
         Vector3 dropPoint = startPos;   // TODO : ランダム算出を実装予定
+        dropPoint.y = 0.0f;
+        GameObject effect = Instantiate(_dropPointEffect, dropPoint, Quaternion.identity);
 
         // 跳ね返り処理
         BezierCurve.tBez bez = new BezierCurve.tBez();  // 曲線移動のためベジエ曲線を使用
         bez.start = transform.position;
-        bez.middle = Vector3.Lerp(transform.position, dropPoint, 0.5f) + new Vector3(0,atackTime * 10.0f,0); // 中間地点を指定
+        bez.middle = Vector3.Lerp(transform.position, dropPoint, 0.5f) + new Vector3(0,atackTime * 15.0f,0);
         bez.end = dropPoint;
 
-        while (!_isEnd)
+        while (1.0f > bez.time && !_isCatch)
         {
             transform.position = BezierCurve.CulcBez(bez, true);
-            bez.time += Time.deltaTime * (1.0f / atackTime);
-            _isEnd = 1.0f <= bez.time;
+            bez.time += Time.deltaTime * (0.5f / atackTime);
             yield return null;
         }
+        
+        // キャッチ判定
+        if (_isCatch)
+        {
+            // 速度アップ
+            if (_commonAtackSpeed < MaxAtackSpeed)
+            {
+                _commonAtackSpeed += 0.1f;
+            }
+            // 次生成
+            GameObject obj = Instantiate(gameObject, startPos, transform.rotation);
+            obj.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy);
+            Debug.Log("キャッチ！");
+        }
+        else
+        {
+            // 速度初期化
+            _commonAtackSpeed = 1.0f;
+            Debug.Log("落とした！");
+        }
+
+        // 破棄処理
+        Destroy(effect);
+        Destroy();
+    }
+
+    private void Destroy()
+    {
+        _nowJugglingAmount--;
+        Destroy(gameObject);
     }
 
     #endregion
 
     #region unity_event
 
-    /// <summary>
-    /// 更新処理
-    /// </summary>
-    private void Update()
+    /// <summary>  
+    /// 初期化処理  
+    /// </summary>  
+    void Awake()
     {
-        transform.GetChild(0).eulerAngles += new Vector3(720 * Time.deltaTime, 0, 0);
+        _nowJugglingAmount++;
     }
 
     /// <summary>
@@ -105,10 +133,17 @@ public class JugglingAtack : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter (Collider col)
     {
-        if (col.tag != "Enemy")
+        if (col.tag == "Enemy")
+        {
+            _isReflect = true;
             return;
+        }
 
-        _isReflect = true;
+        if (col.tag == "Player" && _isReflect)
+        {
+            _isCatch = true;
+            return;
+        }
     }
 
     #endregion

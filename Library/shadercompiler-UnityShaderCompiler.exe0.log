@@ -1,5 +1,6 @@
 Base path: C:/Users/nhs40200/Desktop/HAL/Unity/Unity2017.2.0f3/Editor/Data
 Cmd: initializeCompiler
+<<<<<<< HEAD
 Cmd: preprocess
   insize=9581 outsize=1784 ok=1
 Cmd: compileSnippet
@@ -884,3 +885,5 @@ Cmd: compileSnippet
   api=4 type=1 insize=834 outsize=354 kw= pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME ok=1
 Cmd: preprocess
   insize=5642 outsize=760 ok=1
+=======
+>>>>>>> 0f9d08e5520a519a59bafa99a94ecdad0b99173a
