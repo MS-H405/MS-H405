@@ -17,7 +17,7 @@ public class Special_1Player : MonoBehaviour
 	const float CON_PLAYER_HEIGHT2 = 1.0f;		// プレイヤーの高さの半分の長さ
 
 	const float CON_GOENEMY_SPEED = 70.0f;		// 突撃時のスピード(最初から最後までいっしょ)	86f
-	const float CON_ENEMY_LUG = 130.0f;			// 敵を引きずる距離
+	const float CON_ENEMY_FLY = 130.0f;			// 敵を引きずる距離
 	const float CON_END_DISTANCE = 180.0f;		// 必殺技終了の判定に使う移動した距離
 
 	#endregion
@@ -37,6 +37,7 @@ public class Special_1Player : MonoBehaviour
 
 	float fMovedDis;		// 突撃時に進んだ距離
 	bool bHarf;				// カメラが切り替わる場所まで進んだかどうか
+	bool bEnemyFly;			// 敵を吹き飛ばしたかどうか
 	bool bEnd;				// 突撃が終わったかどうか
 
 	// Effekseer関係
@@ -57,6 +58,7 @@ public class Special_1Player : MonoBehaviour
 
 		fMovedDis = 0.0f;
 		bHarf = false;
+		bEnemyFly = false;
 		bEnd = false;
 
 		// Effekseer関係
@@ -134,9 +136,14 @@ public class Special_1Player : MonoBehaviour
 			bHarf = true;
 			return true;
 		}
-		else if(100.0f <= fMovedDis && fMovedDis < CON_ENEMY_LUG)
+		else if(100.0f <= fMovedDis && fMovedDis < CON_ENEMY_FLY)
 		{// 敵引きずり
 			EnemyObj.transform.position = new Vector3(EnemyObj.transform.position.x, EnemyObj.transform.position.y, transform.position.z + 2.5f);	// 玉の大きさ分ずらす
+		}
+		else if(CON_ENEMY_FLY <= fMovedDis && fMovedDis < CON_END_DISTANCE && !bEnemyFly)
+		{// 敵吹き飛ばし
+			EnemyObj.GetComponent<SP_Enemy>().StartFly();
+			bEnemyFly = true;
 		}
 		else if (fMovedDis > CON_END_DISTANCE && !bEnd)
 		{// 必殺技終了
