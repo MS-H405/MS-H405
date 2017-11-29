@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SetEffekseerObject : MonoBehaviour 
+public class SetEffekseerObject : SingletonMonoBehaviour<SetEffekseerObject> 
 {
 
     [SerializeField, Header("Effekseerのプレハブをセット\n")]
@@ -34,21 +34,8 @@ public class SetEffekseerObject : MonoBehaviour
             m_Effect[i] = Effectlist[i].GetComponent<EffekseerEmitter>();
         }
 	}
-	
-	// Update is called once per frame
-	void Update () 
-    {
-    	// すべて実行テスト用
-    	// 今回のテストはElementの数を4つでやっているため
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            NewEffect(0);
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            NewEffect(1);
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            NewEffect(2);
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            NewEffect(3);
-	}
+
+
     //********************************************************
     // 下の関数は連続して出すと最新のエフェクトしか作用しない
     //--------------------------------------------------------

@@ -59,8 +59,8 @@ public class MovieManager : MonoBehaviour
 	// デバッグ用
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.P))
-			MovieFinish();
+		//if (Input.GetKeyDown(KeyCode.P))
+		//	MovieFinish();
 	}
 
 
@@ -100,7 +100,7 @@ public class MovieManager : MonoBehaviour
 
 		// フェードイン
 		bool bFadeIn = false;
-		MovieFade.Instance.FadeIn( () =>
+		MovieFade.Instance.FadeIn(true, () =>
 		{
 			bFadeIn = true;
 		});
@@ -173,7 +173,7 @@ public class MovieManager : MonoBehaviour
 		yield return new WaitForSeconds(0.2f);
 
 		// フェードアウト
-		MovieFade.Instance.FadeOut( () =>
+		MovieFade.Instance.FadeOut(true, () =>
 		{
 			isFading = false;		// フェード終了
 		});
@@ -183,7 +183,7 @@ public class MovieManager : MonoBehaviour
 	{
 		// フェードイン
 		bool bFadeIn = false;
-		MovieFade.Instance.FadeIn(() =>
+		MovieFade.Instance.FadeIn(false, () =>
 		{
 			bFadeIn = true;
 		});
@@ -205,7 +205,7 @@ public class MovieManager : MonoBehaviour
 		yield return new WaitForSeconds(0.2f);
 
 		// フェードアウト
-		MovieFade.Instance.FadeOut(() =>
+		MovieFade.Instance.FadeOut(false, () =>
 		{
 			isFading = false;		// フェード終了
 		});

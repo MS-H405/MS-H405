@@ -9,6 +9,7 @@ public class SP_Jug : MonoBehaviour
 
 	int MAX_PIN = 10;			// なんとなく10本投げる
 	float THROW_DIS = 1.0f;		// ピンの、プレイヤーからの出現距離
+	float WAIT_TIME = 0.5f;		// ピン展開までの待ち時間
 	float MOVE_TIME = 1.0f;		// ピンの展開時間
 	float ENEMY_DIS = 5.0f;		// 展開されたピンが静止する、敵からの距離
 	float GOENEMY_TIME = 0.6f;	// ピンの突撃時間
@@ -43,6 +44,8 @@ public class SP_Jug : MonoBehaviour
 	// Special_Manager関係
 	float fWait = 0.0f;		// 待ち時間
 	float fWaitBig = 0.0f;	// 待ち時間(デカピン)
+	bool bInit = true;		// Time.unscaledDeltaTimeが初回から2.3とかの値を突っ込むので、それを防ぐ処理のフラグ
+	float fFirstWait;		// 最初にTime.unscaledDeltaTimeから受け取った時間
 
 	// Effekseer関係
 	bool bSP_pin_hit;		// 展開ピンヒットエフェクト
@@ -96,6 +99,8 @@ public class SP_Jug : MonoBehaviour
 		// Effekseer関係
 		bSP_pin_hit = true;
 		bSP_big_hit = true;
+
+		float a = Time.unscaledDeltaTime;
 	}
 
 
@@ -104,8 +109,14 @@ public class SP_Jug : MonoBehaviour
 	public bool Jug_ThrowExpansion()
 	{
 		// すぐに投げると変なので、少し待つ
-		fWait += Time.deltaTime;
-		if(fWait < WAIT_EXPANSION)
+		fWait += Time.unscaledDeltaTime;
+		if(bInit)
+		{
+			fFirstWait = fWait;
+			bInit = false;
+		}
+
+		if ((fWait - fFirstWait) < WAIT_EXPANSION)
 			return false;
 
 		for (int i = 0; i < MAX_PIN; i++)
@@ -149,11 +160,11 @@ public class SP_Jug : MonoBehaviour
 	// ピン敵に突撃
 	public bool GoEnemy()
 	{
-		fWait += Time.deltaTime;
+		fWait += Time.unscaledDeltaTime;
 		if(fWait < WAIT_GOENEMY)
 			return false;
 
-		fPinTime += Time.deltaTime / GOENEMY_TIME;
+		fPinTime += Time.unscaledDeltaTime / GOENEMY_TIME;
 
 		if(fPinTime > 1.0f)
 		{
@@ -211,11 +222,11 @@ public class SP_Jug : MonoBehaviour
 	// デカピン移動
 	public bool GoEnemy_Big()
 	{
-		fWaitBig += Time.deltaTime;
+		fWaitBig += Time.unscaledDeltaTime;
 		if(fWaitBig < WAIT_GOENEMY_BIG)
 			return false;
 
-		fBigPinTime += Time.deltaTime / GOENEMY_TIME_BIG;
+		fBigPinTime += Time.unscaledDeltaTime / GOENEMY_TIME_BIG;
 
 		if (fBigPinTime > 1.0f)
 		{

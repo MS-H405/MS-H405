@@ -18,7 +18,7 @@ public class Special_1Player : MonoBehaviour
 
 	const float CON_GOENEMY_SPEED = 70.0f;		// 突撃時のスピード(最初から最後までいっしょ)	86f
 	const float CON_ENEMY_FLY = 130.0f;			// 敵を引きずる距離
-	const float CON_END_DISTANCE = 180.0f;		// 必殺技終了の判定に使う移動した距離
+	const float CON_END_DISTANCE = 200.0f;		// 必殺技終了の判定に使う移動した距離
 
 	#endregion
 
@@ -70,7 +70,7 @@ public class Special_1Player : MonoBehaviour
 	public bool BackJamp()
 	{
 		// 移動待ち
-		fWait += Time.deltaTime;
+		fWait += Time.unscaledDeltaTime;
 		if (fWait < CON_WAIT_BACKJAMP)
 			return false;
 
@@ -93,7 +93,7 @@ public class Special_1Player : MonoBehaviour
 		}
 
 		// 終了判定
-		fTime += Time.deltaTime;
+		fTime += Time.unscaledDeltaTime;
 		if (fTime > CON_TIME_BACKJAMP)
 		{
 			fTime = 0.0f;
@@ -106,8 +106,8 @@ public class Special_1Player : MonoBehaviour
 		}
 
 		// 移動
-		vSpeed.y += CON_BACKJAMP_ACCELE_Y * Time.deltaTime;
-		Parent.position += vSpeed * Time.deltaTime;
+		vSpeed.y += CON_BACKJAMP_ACCELE_Y * Time.unscaledDeltaTime;
+		Parent.position += vSpeed * Time.unscaledDeltaTime;
 
 		return false;
 	}
@@ -126,7 +126,7 @@ public class Special_1Player : MonoBehaviour
 	// 敵に突撃
 	public bool GoEnemy()
 	{// カメラの位置変更のため、半分くらい行ったら1回trueを返す
-		float temp = CON_GOENEMY_SPEED * Time.deltaTime;
+		float temp = CON_GOENEMY_SPEED * Time.unscaledDeltaTime;
 		transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + temp);
 		fMovedDis += temp;
 
