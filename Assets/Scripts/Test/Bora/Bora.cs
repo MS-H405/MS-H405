@@ -71,7 +71,7 @@ public class Bora : MonoBehaviour
         {
             _actionManager.ChangeSelect(false);
         }
-    }  
-  
-#endregion
+    }
+
+    #endregion
 }  

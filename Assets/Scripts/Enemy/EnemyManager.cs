@@ -20,7 +20,20 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     #region variable
 
     [SerializeField] GameObject _bossEnemy = null;
-    public GameObject BossEnemy{ get { return _bossEnemy; } private set { _bossEnemy = value; } }
+    public GameObject BossEnemy
+    {
+        get
+        {
+            if (!_isActive)
+                return null;
+
+            return _bossEnemy;
+        }
+        private set { _bossEnemy = value; }
+    }
+
+    private bool _isActive = true;
+    public bool Active { get { return _isActive; } set { _isActive = value; } }
 
     #endregion
 

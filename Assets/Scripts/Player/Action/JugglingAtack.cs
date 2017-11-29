@@ -38,7 +38,15 @@ public class JugglingAtack : MonoBehaviour
 
     public void Run(GameObject target)
     {
+        // ターゲットがいなければ消す
+        if(!target)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         // 初期化処理
+        _nowJugglingAmount++;
         _targetObj = target;
         _atackSpeed = 10.0f * _commonAtackSpeed;
         transform.LookAt(_targetObj.transform.position);
@@ -119,14 +127,6 @@ public class JugglingAtack : MonoBehaviour
     #endregion
 
     #region unity_event
-
-    /// <summary>  
-    /// 初期化処理  
-    /// </summary>  
-    void Awake()
-    {
-        _nowJugglingAmount++;
-    }
 
     /// <summary>
     /// 当たり判定

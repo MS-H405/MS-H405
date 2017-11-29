@@ -103,6 +103,10 @@ public class PlayerMove : MonoBehaviour
 
         Move();
         Deceleration();
+
+        if (!EnemyManager.Instance.BossEnemy)
+            return;
+
         Vector3 enemyPos = EnemyManager.Instance.BossEnemy.transform.position;
         transform.LookAt(new Vector3(enemyPos.x, transform.position.y, enemyPos.z));
     }

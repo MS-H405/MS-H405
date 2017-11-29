@@ -37,7 +37,6 @@ public class BezierCurve
 		return new Vector3 (x, y, z);
 	}
 
-<<<<<<< HEAD
 	static public Vector3 CulcBez3(tBez3 bez)
 	{
 		float x = Mathf.Pow((1 - bez.time), 3) * bez.start.x +
@@ -54,7 +53,4 @@ public class BezierCurve
 					Mathf.Pow(bez.time, 3) * bez.end.z;
 		return new Vector3 (x, y, z);
 	}
-=======
-
->>>>>>> 0f9d08e5520a519a59bafa99a94ecdad0b99173a
 }
