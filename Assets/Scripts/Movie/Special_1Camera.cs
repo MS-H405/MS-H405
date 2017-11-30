@@ -44,12 +44,7 @@ public class Special_1Camera : MonoBehaviour
 
 	Vector3 vLookAt;			// 注視点
 	Vector3 vLookAt2;			// 注視点
-	
-	//Vector3 vKijunPos;	// 基準座標
-	//float fStartSpeed;	// 初速度
-	//float fEndSpeed;	// 最終速度
-	//float fAccele;		// 加速度
-	//bool  bHarf;		// 移動の前半か
+
 
 	// Effekseer関係
 	SetEffekseerObject cs_SetEffekseerObject;
@@ -102,8 +97,8 @@ public class Special_1Camera : MonoBehaviour
 		{
 			tbez3.time = 0.0f;
 			tbez3.start = CameraMoveList[0].vPos;
-			tbez3.middle1 = new Vector3(-5.0f, 2.0f, -10.0f);
-			tbez3.middle2 = new Vector3(-2.6f, 1.2f, -6.7f);
+			tbez3.middle1 = new Vector3(9995.0f, 2.0f, -10.0f);
+			tbez3.middle2 = new Vector3(9997.4f, 1.2f, -6.7f);
 			tbez3.end = CameraMoveList[1].vPos;
 
 			bInit = false;
@@ -175,8 +170,8 @@ public class Special_1Camera : MonoBehaviour
 		{
 			tbez3.time = 0.0f;
 			tbez3.start = CameraMoveList[2].vPos;
-			tbez3.middle1 = new Vector3(2.6f, 1.2f, -7.7f);
-			tbez3.middle2 = new Vector3(4.6f, 2.1f, -13.0f);
+			tbez3.middle1 = new Vector3(10002.6f, 1.2f, -7.7f);
+			tbez3.middle2 = new Vector3(10004.6f, 2.1f, -13.0f);
 			tbez3.end = CameraMoveList[3].vPos;
 
 			bInit = false;
@@ -333,7 +328,7 @@ public class Special_1Camera : MonoBehaviour
 
 		// 0
 		temp.vPos	= new Vector3(-3.7f, 2.9f, -2.8f);		// ピン展開
-		temp.vLook	= new Vector3(1.4f, -0.1f, -4.7f);
+		temp.vLook	= new Vector3(10000.4f, -0.1f, -4.7f);
 		temp.vEuler	= new Vector3(17.5f, 32.2f, 0.0f);
 		temp.fTime	= 0.0f;
 		temp.fWait	= 0.0f;
@@ -342,7 +337,7 @@ public class Special_1Camera : MonoBehaviour
 
 		// 1
 		temp.vPos	= new Vector3(-1.3f, 1.2f, 3.3f);		// プレイヤーを見る
-		temp.vLook	= new Vector3(2.0f, -0.7f, -17.1f);
+		temp.vLook	= new Vector3(10002.0f, -0.7f, -17.1f);
 		temp.vEuler	= new Vector3(10.8f, 163.4f, 0.0f);
 		temp.fTime	= 0.6f;
 		temp.fWait	= 2.0f;
@@ -351,7 +346,7 @@ public class Special_1Camera : MonoBehaviour
 
 		// 2
 		temp.vPos	= new Vector3(1.3f, 1.2f, 3.3f);		// プレイヤーを見る
-		temp.vLook	= new Vector3(0.0f, 0.4f, -5.0f);
+		temp.vLook	= new Vector3(10000.0f, 0.4f, -5.0f);
 		temp.vEuler = new Vector3(10.8f, 196.6f, 0.0f);
 		temp.fTime	= 1.0f;
 		temp.fWait	= 0.0f;
@@ -360,7 +355,7 @@ public class Special_1Camera : MonoBehaviour
 
 		// 3
 		temp.vPos	= new Vector3(0.0f, 3.0f, -4.7f);		// デカピン投げる　→　ピン着弾
-		temp.vLook	= new Vector3(-5.1f, 0.7f, -13.0f);		// 円を描くように素早く
+		temp.vLook	= new Vector3(9994.9f, 0.7f, -13.0f);		// 円を描くように素早く
 		temp.vEuler = new Vector3(15.1f, 360.0f, 0.0f);		// 0度だとバグるので360度
 		temp.fTime	= 0.4f;
 		temp.fWait	= 0.0f;
@@ -369,7 +364,7 @@ public class Special_1Camera : MonoBehaviour
 
 		// 4
 		temp.vPos	= new Vector3(2.5f, 0.4f, 3.3f);		// 後方ジャンプ
-		temp.vLook	= new Vector3(-5.3f, 1.6f, -12.8f);
+		temp.vLook	= new Vector3(9994.7f, 1.6f, -12.8f);
 		temp.vEuler = new Vector3(352.9f, 232.2f, 0.0f);
 		temp.fTime	= 0.0f;
 		temp.fWait	= 2.7f;
@@ -379,15 +374,15 @@ public class Special_1Camera : MonoBehaviour
 		// 5
 		//temp.vPos	= new Vector3(10.6f, -2.8f, -7.0f);		// 後方ジャンプ追従(玉が(0.0f, 0.0f, -100.0f)ならこの位置)
 		temp.vPos	= new Vector3(10.6f, 0.0f, -7.0f);		// 後方ジャンプ追従(玉が(0.0f, 0.0f, -100.0f)ならこの位置)
-		temp.vLook	= new Vector3(-2.5f, 5.2f, 2.5f);
+		temp.vLook	= new Vector3(9997.5f, 5.2f, 2.5f);
 		temp.vEuler	= new Vector3(21.4f, 119.0f, 0.0f);
 		temp.fTime	= 1.0f;	// 角度だけ時間で移動
 		temp.fWait	= 1.5f;
 		CameraMoveList.Add(temp);
 
 		// 6
-		temp.vPos	= new Vector3(4.6f, 3.4f, 6.5f);		// 敵の肩越し
-		temp.vLook	= new Vector3(1.0f, 1.1f, -2.6f);
+		temp.vPos	= new Vector3(10004.6f, 3.4f, 6.5f);		// 敵の肩越し
+		temp.vLook	= new Vector3(10001.0f, 1.1f, -2.6f);
 		temp.vEuler	= new Vector3(13.4f, 201.8f, 0.0f);
 		temp.fTime	= 0.0f;
 		temp.fWait	= 0.0f;

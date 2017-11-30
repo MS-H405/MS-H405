@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class MovieFade : MonoBehaviour
 {
-	const float MOVIE_FADE_TIME = 0.3f;
+	const float MOVIE_FADE_TIME_START = 0.3f;	// 必殺技始まりのフェード時間
+	const float MOVIE_FADE_TIME_END	  = 0.8f;	// 必殺技終わりのフェード時間
 
 	private static MovieFade instance;
 	Image image;
@@ -44,7 +45,7 @@ public class MovieFade : MonoBehaviour
 		fAlpha = 0.0f;
 	}
 
-	IEnumerator FadeoutCoroutine(System.Action action)
+	IEnumerator FadeoutCoroutine(float fFadeTime, System.Action action)
 	{
 		fAlpha = 1.0f;
 		image.color = new Color(image.color.r, image.color.g, image.color.b, fAlpha);
@@ -53,7 +54,7 @@ public class MovieFade : MonoBehaviour
 
 		while (fAlpha >= 0.0f)
 		{
-			fAlpha -= Time.deltaTime / MOVIE_FADE_TIME;
+			fAlpha -= Time.unscaledDeltaTime / fFadeTime;
 			if (fAlpha < 0.0f)
 			{
 				image.color = new Color(image.color.r, image.color.g, image.color.b, 0.0f);
@@ -70,7 +71,7 @@ public class MovieFade : MonoBehaviour
 		}
 	}
 
-	IEnumerator FadeinCoroutine(System.Action action)
+	IEnumerator FadeinCoroutine(float fFadeTime, System.Action action)
 	{
 		fAlpha = 0.0f;
 		image.color = new Color(image.color.r, image.color.g, image.color.b, fAlpha);
@@ -79,7 +80,7 @@ public class MovieFade : MonoBehaviour
 
 		while (fAlpha <= 1.0f)
 		{
-			fAlpha += Time.deltaTime / MOVIE_FADE_TIME;
+			fAlpha += Time.unscaledDeltaTime / fFadeTime;
 			if(fAlpha > 1.0f)
 			{
 				image.color = new Color(image.color.r, image.color.g, image.color.b, 1.0f);
@@ -96,25 +97,53 @@ public class MovieFade : MonoBehaviour
 		}
 	}
 
-	public Coroutine FadeOut(System.Action action)
+
+	// 必殺技開始か終わりかで、フェードの色と時間を変える
+	public Coroutine FadeOut(bool bStartSP, System.Action action)
 	{
+		float fSPTime;
+
+		if(bStartSP)
+		{// 必殺技始まり
+			image.color = Color.black;
+			fSPTime = MOVIE_FADE_TIME_START;
+		}
+		else
+		{// 必殺技終わり
+			image.color = Color.white;
+			fSPTime = MOVIE_FADE_TIME_END;
+		}
+
 		StopAllCoroutines();
-		return StartCoroutine(FadeoutCoroutine(action));
+		return StartCoroutine(FadeoutCoroutine(fSPTime, action));
 	}
 
-	public Coroutine FadeOut()
+	public Coroutine FadeOut(bool bStartSP)
 	{
-		return FadeOut(null);
+		return FadeOut(bStartSP, null);
 	}
 
-	public Coroutine FadeIn(System.Action action)
+	public Coroutine FadeIn(bool bStartSP, System.Action action)
 	{
+		float fSPTime;
+
+		if (bStartSP)
+		{// 必殺技始まり
+			image.color = Color.black;
+			fSPTime = MOVIE_FADE_TIME_START;
+		}
+		else
+		{// 必殺技終わり
+			image.color = Color.white;
+			fSPTime = MOVIE_FADE_TIME_END;
+		}
+
 		StopAllCoroutines();
-		return StartCoroutine(FadeinCoroutine(action));
+		return StartCoroutine(FadeinCoroutine(fSPTime, action));
 	}
 
-	public Coroutine FadeIn()
+	public Coroutine FadeIn(bool bStartSP)
 	{
-		return FadeIn(null);
+		return FadeIn(bStartSP, null);
 	}
 }

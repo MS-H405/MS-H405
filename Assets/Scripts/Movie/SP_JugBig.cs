@@ -47,7 +47,7 @@ public class SP_JugBig : MonoBehaviour
 			vStartPos = transform.position;
 
 		transform.position = Vector3.Lerp(vStartPos, targetpos, time);
-		transform.Rotate(Vector3.right, ROTATE * Time.deltaTime, Space.Self);	
+		transform.Rotate(Vector3.right, ROTATE * Time.unscaledDeltaTime, Space.Self);	
 	}
 
 	// 死ぬ
