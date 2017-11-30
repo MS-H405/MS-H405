@@ -31,6 +31,10 @@ public class GameCamera_Sub : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		// 敵がいなければ処理しない
+		if(!EnemyManager.Instance.BossEnemy)
+			return;
+
 		Vector3 vDiffPos;			// 遊びの範囲からのはみ出した距離
 		float fFollowRate;			// プレイヤーへの追従率
 		Vector3 vTargetPos;			// 注視点、角度の計算に使う
@@ -207,6 +211,7 @@ public class GameCamera_Sub : MonoBehaviour
 		if (NewRotY < -Mathf.PI / 2.0f) NewRotY = -Mathf.PI / 2.0f;	//角度補正
 
 		rot = new Vector2(NewRotX, NewRotY);
+
 		#endregion
 	}
 
