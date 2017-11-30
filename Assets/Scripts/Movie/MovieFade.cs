@@ -12,6 +12,9 @@ public class MovieFade : MonoBehaviour
 	Image image;
 	float fAlpha;
 
+	bool bInit;
+	float fFirstAlpha;
+
 	public static MovieFade Instance
 	{
 		get
@@ -45,25 +48,35 @@ public class MovieFade : MonoBehaviour
 		fAlpha = 0.0f;
 	}
 
-	IEnumerator FadeoutCoroutine(float fFadeTime, System.Action action)
+
+
+	// フェードイン(消える方 0 -> 1)
+	IEnumerator FadeinCoroutine(float fFadeTime, System.Action action)
 	{
-		fAlpha = 1.0f;
-		image.color = new Color(image.color.r, image.color.g, image.color.b, fAlpha);
+		bInit = true;
+		fAlpha = 0.0f;
+		fFirstAlpha = 0.0f;
+		image.color = new Color(image.color.r, image.color.g, image.color.b, 0.0f);
 
-		var endFrame = new WaitForEndOfFrame();
+		//var endFrame = new WaitForEndOfFrame();
 
-		while (fAlpha >= 0.0f)
+		while (fAlpha - fFirstAlpha < 1.0f)
 		{
-			fAlpha -= Time.unscaledDeltaTime / fFadeTime;
-			if (fAlpha < 0.0f)
+			fAlpha += Time.unscaledDeltaTime / fFadeTime;
+			if (bInit)
 			{
-				image.color = new Color(image.color.r, image.color.g, image.color.b, 0.0f);
-				break;
+				Debug.Log("フェードイン開始");
+				fFirstAlpha = fAlpha;
+				bInit = false;
 			}
+			Debug.Log(fAlpha - fFirstAlpha);
 
-			image.color = new Color(image.color.r, image.color.g, image.color.b, fAlpha);
-			yield return endFrame;
+			image.color = new Color(image.color.r, image.color.g, image.color.b, fAlpha - fFirstAlpha);
+			yield return null;
 		}
+
+		image.color = new Color(image.color.r, image.color.g, image.color.b, 1.0f);
+		Debug.Log("フェードイン終了");
 
 		if (action != null)
 		{
@@ -71,25 +84,34 @@ public class MovieFade : MonoBehaviour
 		}
 	}
 
-	IEnumerator FadeinCoroutine(float fFadeTime, System.Action action)
+	// フェードアウト(見えてくる方 1 -> 0)
+	IEnumerator FadeoutCoroutine(float fFadeTime, System.Action action)
 	{
+		bInit = true;
 		fAlpha = 0.0f;
-		image.color = new Color(image.color.r, image.color.g, image.color.b, fAlpha);
+		fFirstAlpha = 0.0f;
+		image.color = new Color(image.color.r, image.color.g, image.color.b, 1.0f);
 
-		var endFrame = new WaitForEndOfFrame();
+		//var endFrame = new WaitForEndOfFrame();
 
-		while (fAlpha <= 1.0f)
+		while (fAlpha - fFirstAlpha < 1.0)
 		{
 			fAlpha += Time.unscaledDeltaTime / fFadeTime;
-			if(fAlpha > 1.0f)
+			if (bInit)
 			{
-				image.color = new Color(image.color.r, image.color.g, image.color.b, 1.0f);
-				break;
+				Debug.Log("フェードアウト開始");
+				fFirstAlpha = fAlpha;
+				bInit = false;
 			}
 
-			image.color = new Color(image.color.r, image.color.g, image.color.b, fAlpha);
-			yield return endFrame;
+			Debug.Log(1 - fAlpha - fFirstAlpha);
+
+			image.color = new Color(image.color.r, image.color.g, image.color.b, 1 - fAlpha - fFirstAlpha);
+			yield return null;
 		}
+
+		image.color = new Color(image.color.r, image.color.g, image.color.b, 0.0f);
+		Debug.Log("フェードアウト終了");
 
 		if (action != null)
 		{

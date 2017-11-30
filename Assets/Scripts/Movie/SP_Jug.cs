@@ -140,7 +140,7 @@ public class SP_Jug : MonoBehaviour
 	{
 		while(true)
 		{
-			fPinTime += fSecTime * Time.deltaTime;
+			fPinTime += fSecTime * Time.unscaledDeltaTime;
 			if (fPinTime > 1.0f)
 			{// 移動終了
 				fPinTime = 0.0f;

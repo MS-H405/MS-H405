@@ -57,12 +57,12 @@ public class Special_1Ball : MonoBehaviour
 	public bool StartRotation()
 	{
 		// 待ち時間
-		fWait += Time.deltaTime;
+		fWait += Time.unscaledDeltaTime;
 		if(fWait < CON_ROTATION_WAIT)
 			return false;
 
 		// 加速
-		fTime += Time.deltaTime / CON_ROTATION_TIME;
+		fTime += Time.unscaledDeltaTime / CON_ROTATION_TIME;
 		if(fTime >= 1.0f)
 		{
 			return true;
@@ -88,6 +88,6 @@ public class Special_1Ball : MonoBehaviour
 			bSP_ball_move = false;
 		}
 
-		BallObj.transform.Rotate(CON_MAX_ROTATION * Time.deltaTime);
+		BallObj.transform.Rotate(CON_MAX_ROTATION * Time.unscaledDeltaTime);
 	}
 }

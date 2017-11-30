@@ -25,6 +25,10 @@ public class MovieManager : MonoBehaviour
 	private List<GameObject> ObjList = new List<GameObject>();
 	private string MovieSceneName;
 
+	private float fTime;
+	private float fFirstTime;
+	private bool bInit;
+
 
 	public static MovieManager Instance
 	{
@@ -59,8 +63,7 @@ public class MovieManager : MonoBehaviour
 	// デバッグ用
 	void Update()
 	{
-		//if (Input.GetKeyDown(KeyCode.P))
-		//	MovieFinish();
+
 	}
 
 
@@ -96,6 +99,7 @@ public class MovieManager : MonoBehaviour
 	private IEnumerator Col_MovieStart(MOVIE_SCENE scene)
 	{
 		// 最初にGameMain.sceneの全てのオブジェクトの更新を停止させる関数を呼ぶ
+
 
 
 		// フェードイン
@@ -158,7 +162,6 @@ public class MovieManager : MonoBehaviour
 				break;
 		}
 		#endregion
-
 		
 		//yield return new WaitForEndOfFrame();	// こっちにすると、1フレームの間カメラが無いって言われる
 		yield return null;						// こっちにすると、1フレームの間audiolistenerが2つあるって言われる
@@ -170,7 +173,20 @@ public class MovieManager : MonoBehaviour
 		SceneManager.SetActiveScene(SceneManager.GetSceneByName(MovieSceneName));
 
 		// ロード時間とりあえず今回は時間で判定
-		yield return new WaitForSeconds(0.2f);
+		bInit = true;
+		fTime = 0.0f;
+		fFirstTime = 0.0f;
+		while(fTime - fFirstTime > 0.2f)
+		{
+			fTime += Time.unscaledDeltaTime;
+			if(bInit)
+			{
+				fFirstTime = fTime;
+				bInit = false;
+			}
+			yield return null;
+		}
+		//yield return new WaitForSeconds(0.2f);		// こっち使うと、timescaleを0にした場合止まってしまう。
 
 		// フェードアウト
 		MovieFade.Instance.FadeOut(true, () =>
@@ -202,7 +218,20 @@ public class MovieManager : MonoBehaviour
 		AllObjectControl(true);
 
 		// ロード時間とりあえず今回は時間で判定
-		yield return new WaitForSeconds(0.2f);
+		bInit = true;
+		fTime = 0.0f;
+		fFirstTime = 0.0f;
+		while (fTime - fFirstTime > 0.2f)
+		{
+			fTime += Time.unscaledDeltaTime;
+			if (bInit)
+			{
+				fFirstTime = fTime;
+				bInit = false;
+			}
+			yield return null;
+		}
+		//yield return new WaitForSeconds(0.2f);		// こっち使うと、timescaleを0にした場合止まってしまう。
 
 		// フェードアウト
 		MovieFade.Instance.FadeOut(false, () =>
