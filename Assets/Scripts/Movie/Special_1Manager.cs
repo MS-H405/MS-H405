@@ -60,7 +60,6 @@ public class Special_1Manager : MonoBehaviour
 		}
 
 
-
 		// --------------------
 
 		switch(State)
