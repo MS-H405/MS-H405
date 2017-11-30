@@ -265,6 +265,8 @@
     <Compile Include="Assets\Scripts\Utility\GameSetting.cs" />
     <Compile Include="Assets\Scripts\Utility\SingletonMonoBehaviour.cs" />
     <Compile Include="Assets\Scripts\Utility\SortingLayer.cs" />
+    <Compile Include="Assets\Scripts\Utility\StaticCoroutine.cs" />
+    <Compile Include="Assets\Scripts\Utility\WaitForSecondsRealtime.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\UniRx\ReadMe.txt" />
