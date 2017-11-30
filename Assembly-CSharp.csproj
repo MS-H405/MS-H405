@@ -121,7 +121,9 @@
      <Compile Include="Assets\Effekseer\Plugins\EffekseerPlayableAsset.cs" />
      <Compile Include="Assets\Effekseer\Plugins\EffekseerPlayableBehaviour.cs" />
      <Compile Include="Assets\Effekseer\Plugins\EffekseerSystem.cs" />
+     <Compile Include="Assets\Scripts\Enemy\ChildTotem.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
+     <Compile Include="Assets\Scripts\Enemy\Totem.cs" />
      <Compile Include="Assets\Scripts\GameCamera\GameCamera.cs" />
      <Compile Include="Assets\Scripts\GameCamera\GameCamera_Sub.cs" />
      <Compile Include="Assets\Scripts\Movie\MovieFade.cs" />
@@ -148,6 +150,8 @@
      <Compile Include="Assets\Scripts\Utility\GameSetting.cs" />
      <Compile Include="Assets\Scripts\Utility\SingletonMonoBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utility\SortingLayer.cs" />
+     <Compile Include="Assets\Scripts\Utility\StaticCoroutine.cs" />
+     <Compile Include="Assets\Scripts\Utility\WaitForSecondsRealtime.cs" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
