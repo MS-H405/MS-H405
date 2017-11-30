@@ -19,8 +19,10 @@ public class Totem : MonoBehaviour
 
     #region variable
 
-    [SerializeField] float _childTotemSpeed = 1.0f;
-    [SerializeField] int _childTotemAmount = 6;              // 子分トーテムの数
+    [SerializeField] float _oneBlockSize = 1.0f;
+
+    [SerializeField] float _upSpeed = 0.25f;
+    [SerializeField] int _childTotemAmount = 5;              // 子分トーテムの数
     [SerializeField] GameObject _childTotemPrefab = null;    // 子分トーテムのプレハブ
 
     // 子分トーテムのリスト
@@ -35,40 +37,140 @@ public class Totem : MonoBehaviour
     /// </summary>
     private IEnumerator Run()
     {
-        // TODO : 自分を隠す処理
-        transform.position = new Vector3(0, -100, 0);
-        EnemyManager.Instance.Active = false;
-
-        // 通常攻撃処理
-        int index = 0;
-        while(index < _childTotemList.Count)
+        while (true)
         {
-            _childTotemList[index].gameObject.SetActive(true);
-            StartCoroutine(_childTotemList[index].NormalAtack(_childTotemSpeed));
-            index++;
+            // 通常攻撃１
+            yield return TotemPushUp();
 
-            yield return new WaitForSeconds(_childTotemSpeed * 4.5f);
+            // 通常攻撃２
+            yield return ChildTotemPushUp();
+
+            // 奥義処理
+            /*for (int i = 0; i < _childTotemList.Count; i++)
+            {
+                StartCoroutine(_childTotemList[i].SpecialAtack());
+            }
+            // TODO : 自分の処理も
+            yield return new WaitForSeconds(10.0f);
+
+            // 子分トーテム消す
+            for (int i = 0; i < _childTotemAmount; i++)
+            {
+                _childTotemList[i].gameObject.SetActive(false);
+            }
+            // 自分も消す
+            transform.position = new Vector3(0.0f, -100.0f, 0.0f);
+            */
+            yield return null;
         }
+    }
 
-        // TODO : 自分生える処理
-        transform.position = new Vector3(0.0f, 1.5f, 0.0f);
-        EnemyManager.Instance.Active = true;
-
-        // 奥義処理
-        for (int i = 0; i < _childTotemList.Count; i++)
+    /// <summary>
+    /// 突き上げ攻撃処理
+    /// </summary>
+    private IEnumerator TotemPushUp()
+    {   
+        int amount = 0;
+        while (amount < 3)
         {
-            StartCoroutine(_childTotemList[i].SpecialAtack());
-        }
-        // TODO : 自分の処理も
-        yield return new WaitForSeconds(10.0f);
+            amount++;
+            transform.position = new Vector3(Random.Range(-10.0f, 10.0f), -_oneBlockSize * 3.0f, Random.Range(-10.0f, 10.0f));
 
-        // 子分トーテム消す
+            float time = 0.0f;
+            while (time < amount)
+            {
+                transform.position += new Vector3(0, _oneBlockSize * (Time.deltaTime / _upSpeed), 0);
+                time += Time.deltaTime / _upSpeed;
+                yield return null;
+            }
+            Vector3 pos = transform.position;
+            pos.y = (-_oneBlockSize * 3.0f) + (_oneBlockSize * amount);
+            transform.position = pos; 
+
+            // 待機
+            EnemyManager.Instance.Active = true;
+            yield return new WaitForSeconds(2.0f);
+            EnemyManager.Instance.Active = false;
+
+            while (time > 0.0f && amount < 3)
+            {
+                transform.position -= new Vector3(0, _oneBlockSize * (Time.deltaTime / _upSpeed), 0);
+                time -= Time.deltaTime / _upSpeed;
+                yield return null;
+            }
+
+            // 待機
+            yield return new WaitForSeconds(2.0f);
+        }
+    }
+
+    /// <summary>
+    /// 子分と同時突き上げ処理
+    /// </summary>
+    private IEnumerator ChildTotemPushUp()
+    {
+        // 子分の突き上げ処理
         for (int i = 0; i < _childTotemAmount; i++)
         {
-            _childTotemList[i].gameObject.SetActive(false);
+            StartCoroutine(_childTotemList[i].PushUp(_upSpeed));
+            yield return new WaitForSeconds(_upSpeed * 0.75f);
         }
-        // 自分も消す
-        transform.position = new Vector3(0.0f, -100.0f, 0.0f);
+
+        // 本体突き上げ処理
+        transform.position = new Vector3(Random.Range(-10.0f, 10.0f), -_oneBlockSize * 3.0f, Random.Range(-10.0f, 10.0f));
+
+        float time = 0.0f;
+        while (time < 3.0f)
+        {
+            transform.position += new Vector3(0, _oneBlockSize * (Time.deltaTime / _upSpeed), 0);
+            time += Time.deltaTime / _upSpeed;
+            yield return null;
+        }
+
+        // TODO : 補正処理
+        Vector3 pos = transform.position;
+        pos.y = 0.0f;
+        transform.position = pos;
+    }
+
+    /// <summary>
+    /// 特殊攻撃処理
+    /// </summary>
+    private IEnumerator SpecialAtack()
+    {
+        // 子分を潜らせる
+        for (int i = 0; i < _childTotemAmount; i++)
+        {
+            StartCoroutine(_childTotemList[i].Dive(_upSpeed));
+        }
+
+        // 本体も潜らせる
+        float time = 0.0f;
+        while (time < 3.0f)
+        {
+            transform.position -= new Vector3(0, _oneBlockSize * (Time.deltaTime / _upSpeed), 0);
+            time += Time.deltaTime / _upSpeed;
+            yield return null;
+        }
+
+        // 子分に特殊攻撃の実行を通知
+        for (int i = 0; i < _childTotemAmount; i++)
+        {
+            StartCoroutine(_childTotemList[i].SpecialAtack(_upSpeed));
+        }
+
+        // 本体も特殊攻撃を実行
+        Vector3 topPos = transform.position;
+        topPos.y = 50.0f;
+        Vector3 underPos = transform.position;
+
+        // TODO : 続きここから
+        while (time > 0.0f)
+        {
+            transform.position += new Vector3(0, _oneBlockSize * (Time.deltaTime / _upSpeed), 0);
+            time -= Time.deltaTime / _upSpeed;
+            yield return null;
+        }
     }
 
     #endregion

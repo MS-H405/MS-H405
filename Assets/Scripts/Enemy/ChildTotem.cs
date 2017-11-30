@@ -29,30 +29,36 @@ public class ChildTotem : MonoBehaviour
     /// <summary>
     /// 通常攻撃処理
     /// </summary>
-    public IEnumerator NormalAtack(float speed)
+    public IEnumerator PushUp(float speed)
     {
         // ランダムな位置に移動
-        transform.position = new Vector3(Random.Range(-10.0f, 10.0f), -5.0f, Random.Range(-10.0f, 10.0f));
+        transform.position = new Vector3(Random.Range(-10.0f, 10.0f), -_oneBlockSize * 3.0f, Random.Range(-10.0f, 10.0f));
 
-        int amount = 0;
-        while(amount < 3)
+        // 突き上げ処理
+        float time = 0.0f;
+        while (time < 3.0f)
         {
-            amount++;
+            transform.position += new Vector3(0, _oneBlockSize * (Time.deltaTime / speed), 0);
+            time += Time.deltaTime / speed;
+            yield return null;
+        }
 
-            float time = 0.0f;
-            while(time < amount * speed)
-            {
-                transform.position += new Vector3(0, _oneBlockSize * (Time.deltaTime / speed), 0);
-                time += Time.deltaTime;
-                yield return null;
-            }
+        // TODO : 補正処理
+        Vector3 pos = transform.position;
+        pos.y = 0.0f;
+        transform.position = pos;
+    }
 
-            while (time > 0.0f && amount < 3)
-            {
-                transform.position -= new Vector3(0, _oneBlockSize * (Time.deltaTime / speed), 0);
-                time -= Time.deltaTime;
-                yield return null;
-            }
+    /// <summary>
+    /// 出ているトーテムを潜らせる処理
+    /// </summary>
+    public IEnumerator Dive(float speed)
+    {
+        float time = 0.0f;
+        while (time < 3.0f)
+        {
+            transform.position -= new Vector3(0, _oneBlockSize * (Time.deltaTime / speed), 0);
+            time += Time.deltaTime / speed;
             yield return null;
         }
     }
@@ -60,8 +66,12 @@ public class ChildTotem : MonoBehaviour
     /// <summary>
     /// 特殊攻撃処理
     /// </summary>
-    public IEnumerator SpecialAtack()
+    public IEnumerator SpecialAtack(float speed)
     {
+        // ※認識違いにより修正
+        // TODO : 飛び出てばらばらにおちる処理
+
+
         // TODO : 一気に落下するのを防止
         yield return new WaitForSeconds(Random.Range(0.0f, 2.0f));
 
@@ -70,7 +80,7 @@ public class ChildTotem : MonoBehaviour
         for(int i = 0; i < transform.childCount; i++)
         {
             // 位置を保存
-            initPos[i] = transform.localPosition;
+            initPos[i] = transform.GetChild(i).localPosition;
 
             // ランダムな位置に移動
             transform.GetChild(i).position = new Vector3(Random.Range(-10.0f, 10.0f), 50.0f, Random.Range(-10.0f, 10.0f));
@@ -86,9 +96,8 @@ public class ChildTotem : MonoBehaviour
         _rigidbody.useGravity = false;
         for (int i = 0; i < transform.childCount; i++)
         {
-            transform.GetChild(i).position = initPos[i];
+            transform.GetChild(i).localPosition = initPos[i];
         }
-
     }
 
     #endregion
