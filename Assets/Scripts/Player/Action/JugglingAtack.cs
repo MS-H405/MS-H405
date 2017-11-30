@@ -52,7 +52,7 @@ public class JugglingAtack : MonoBehaviour
         transform.LookAt(_targetObj.transform.position);
 
         // アクション実行
-        StartCoroutine(ActionFlow());
+        StaticCoroutine.Instance.StartStaticCoroutine(ActionFlow());
     }
 
     /// <summary>

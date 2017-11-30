@@ -66,16 +66,22 @@ public class ChildTotem : MonoBehaviour
     /// <summary>
     /// 特殊攻撃処理
     /// </summary>
-    public IEnumerator SpecialAtack(float speed)
+    public IEnumerator SpecialAtack(float speed, float fallHeight)
     {
-        // ※認識違いにより修正
-        // TODO : 飛び出てばらばらにおちる処理
+        // 上に飛び出る処理
+        Vector3 topPos = transform.position;
+        topPos.y = fallHeight;
+        Vector3 underPos = transform.position;
 
+        float time = 0.0f;
+        while (time < 1.0f)
+        {
+            transform.position = Vector3.Lerp(underPos, topPos, time);
+            time += Time.deltaTime;
+            yield return null;
+        }
 
-        // TODO : 一気に落下するのを防止
-        yield return new WaitForSeconds(Random.Range(0.0f, 2.0f));
-
-        _rigidbody.useGravity = true;
+        // 落下位置
         Vector3[] initPos = new Vector3[3];
         for(int i = 0; i < transform.childCount; i++)
         {
@@ -83,12 +89,22 @@ public class ChildTotem : MonoBehaviour
             initPos[i] = transform.GetChild(i).localPosition;
 
             // ランダムな位置に移動
-            transform.GetChild(i).position = new Vector3(Random.Range(-10.0f, 10.0f), 50.0f, Random.Range(-10.0f, 10.0f));
+            transform.GetChild(i).position = new Vector3(Random.Range(-10.0f, 10.0f), fallHeight, Random.Range(-10.0f, 10.0f));
+        }
+
+        // TODO : 一気に落下するのを防止
+        time = 0.0f;
+        float waitTime = Random.Range(0.0f, 2.0f);
+        while (time < waitTime)
+        {
+            time += Time.deltaTime;
+            yield return null;
         }
 
         // 落下を待つ
-        while(transform.GetChild(0).position.y > 0.0f)
+        while (transform.position.y > -10.0f)
         {
+            _rigidbody.AddForce(0.0f, -9.8f, 0.0f);
             yield return null;
         }
 
@@ -98,6 +114,8 @@ public class ChildTotem : MonoBehaviour
         {
             transform.GetChild(i).localPosition = initPos[i];
         }
+        _rigidbody.velocity = Vector3.zero;
+        gameObject.SetActive(false);
     }
 
     #endregion
@@ -110,7 +128,6 @@ public class ChildTotem : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _rigidbody.useGravity = false;
     }
 
     #endregion

@@ -147,7 +147,7 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case eActionType.TotemJump:
-                StartCoroutine(_totemJump.Run());
+                StaticCoroutine.Instance.StartStaticCoroutine(_totemJump.Run());
                 break;
 
             case eActionType.Bagpipe:
@@ -180,7 +180,7 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case eActionType.TotemJump:
-                StartCoroutine(_totemJump.Run());
+                StaticCoroutine.Instance.StartStaticCoroutine(_totemJump.Run());
                 break;
 
             case eActionType.Bagpipe:
