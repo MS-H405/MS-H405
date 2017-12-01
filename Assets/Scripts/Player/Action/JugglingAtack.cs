@@ -38,18 +38,23 @@ public class JugglingAtack : MonoBehaviour
 
     public void Run(GameObject target)
     {
+        // 使用中の個数を増加
+        _nowJugglingAmount++;
+
         // ターゲットがいなければ消す
-        if(!target)
+        if (!target)
         {
-            Destroy(gameObject);
+            Destroy();
             return;
         }
 
         // 初期化処理
-        _nowJugglingAmount++;
         _targetObj = target;
         _atackSpeed = 10.0f * _commonAtackSpeed;
-        transform.LookAt(_targetObj.transform.position);
+
+        Vector3 lookPos = _targetObj.transform.position;
+        lookPos.y = 1.0f;
+        transform.LookAt(lookPos);
 
         // アクション実行
         StaticCoroutine.Instance.StartStaticCoroutine(ActionFlow());
@@ -142,6 +147,12 @@ public class JugglingAtack : MonoBehaviour
         if (col.tag == "Player" && _isReflect)
         {
             _isCatch = true;
+            return;
+        }
+
+        if(col.tag == "Field")
+        {
+            Destroy();
             return;
         }
     }
