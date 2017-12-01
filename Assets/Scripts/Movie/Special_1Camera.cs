@@ -45,6 +45,8 @@ public class Special_1Camera : MonoBehaviour
 	Vector3 vLookAt;			// 注視点
 	Vector3 vLookAt2;			// 注視点
 
+	ShakeCamera cs_ShakeCamera;		// カメラ揺れ
+	bool bShake = false;
 
 	// Effekseer関係
 	SetEffekseerObject cs_SetEffekseerObject;
@@ -61,6 +63,7 @@ public class Special_1Camera : MonoBehaviour
 		cs_SP_Jug = GameObject.Find("Special_Juggling").GetComponent<SP_Jug>();
 		PlayerObj = GameObject.Find("Special_1Player");
 		BallObj = GameObject.Find("Special_1Ball");
+		cs_ShakeCamera = GetComponent<ShakeCamera>();
 
 		SetPosEulerTime();
 
@@ -275,6 +278,17 @@ public class Special_1Camera : MonoBehaviour
 		if(transform.eulerAngles.x > CameraMoveList[6].vEuler.x)
 			transform.eulerAngles = new Vector3(CameraMoveList[6].vEuler.x, transform.eulerAngles.y, transform.eulerAngles.z);
 	}
+
+
+
+
+
+	// カメラ揺れる
+	public void shakeCamera()
+	{
+		cs_ShakeCamera.Shake();
+	}
+
 
 
 

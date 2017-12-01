@@ -65,18 +65,15 @@ public class MovieFade : MonoBehaviour
 			fAlpha += Time.unscaledDeltaTime / fFadeTime;
 			if (bInit)
 			{
-				Debug.Log("フェードイン開始");
 				fFirstAlpha = fAlpha;
 				bInit = false;
 			}
-			Debug.Log(fAlpha - fFirstAlpha);
 
 			image.color = new Color(image.color.r, image.color.g, image.color.b, fAlpha - fFirstAlpha);
 			yield return null;
 		}
 
 		image.color = new Color(image.color.r, image.color.g, image.color.b, 1.0f);
-		Debug.Log("フェードイン終了");
 
 		if (action != null)
 		{
@@ -99,19 +96,15 @@ public class MovieFade : MonoBehaviour
 			fAlpha += Time.unscaledDeltaTime / fFadeTime;
 			if (bInit)
 			{
-				Debug.Log("フェードアウト開始");
 				fFirstAlpha = fAlpha;
 				bInit = false;
 			}
-
-			Debug.Log(1 - fAlpha - fFirstAlpha);
 
 			image.color = new Color(image.color.r, image.color.g, image.color.b, 1 - fAlpha - fFirstAlpha);
 			yield return null;
 		}
 
 		image.color = new Color(image.color.r, image.color.g, image.color.b, 0.0f);
-		Debug.Log("フェードアウト終了");
 
 		if (action != null)
 		{
