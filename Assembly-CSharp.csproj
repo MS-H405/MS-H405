@@ -121,6 +121,8 @@
      <Compile Include="Assets\Effekseer\Plugins\EffekseerPlayableAsset.cs" />
      <Compile Include="Assets\Effekseer\Plugins\EffekseerPlayableBehaviour.cs" />
      <Compile Include="Assets\Effekseer\Plugins\EffekseerSystem.cs" />
+     <Compile Include="Assets\Prefabs\TotemStart\TS_TotemChild_PA.cs" />
+     <Compile Include="Assets\Prefabs\TotemStart\TS_TotemChild_PB.cs" />
      <Compile Include="Assets\Scripts\Enemy\ChildTotem.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
      <Compile Include="Assets\Scripts\Enemy\Totem.cs" />
@@ -145,9 +147,12 @@
      <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\Test\Bora\Bora.cs" />
      <Compile Include="Assets\Scripts\Test\Tatsuo\TatsuoTest_Enemy.cs" />
+     <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PA.cs" />
+     <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PB.cs" />
      <Compile Include="Assets\Scripts\Utility\AutoRotation.cs" />
      <Compile Include="Assets\Scripts\Utility\BezierCurve.cs" />
      <Compile Include="Assets\Scripts\Utility\GameSetting.cs" />
+     <Compile Include="Assets\Scripts\Utility\ShakeCamera.cs" />
      <Compile Include="Assets\Scripts\Utility\SingletonMonoBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utility\SortingLayer.cs" />
      <Compile Include="Assets\Scripts\Utility\StaticCoroutine.cs" />
