@@ -20,7 +20,15 @@ MonoBehaviour:
   timeAreaPlayRange: {x: 3.4028235e+38, y: 3.4028235e+38}
   m_Keys:
   - {fileID: 114809266321964728, guid: 18ef55fdd418f2e4984dd7c036e0eaab, type: 2}
+  - {fileID: 114862499411703508, guid: 18ef55fdd418f2e4984dd7c036e0eaab, type: 2}
+  - {fileID: 114199962174998480, guid: 18ef55fdd418f2e4984dd7c036e0eaab, type: 2}
   m_Vals:
+  - collapsed: 0
+    showInlineCurves: 0
+    inlineAnimationCurveHeight: 100
+  - collapsed: 0
+    showInlineCurves: 0
+    inlineAnimationCurveHeight: 100
   - collapsed: 0
     showInlineCurves: 0
     inlineAnimationCurveHeight: 100
