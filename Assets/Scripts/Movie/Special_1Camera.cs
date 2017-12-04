@@ -209,6 +209,7 @@ public class Special_1Camera : MonoBehaviour
 
 		fTime = 0.0f;
 		fWait = 0.0f;
+
 		return true;
 	}
 
