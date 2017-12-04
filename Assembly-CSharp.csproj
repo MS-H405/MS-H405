@@ -121,9 +121,9 @@
      <Compile Include="Assets\Effekseer\Plugins\EffekseerPlayableAsset.cs" />
      <Compile Include="Assets\Effekseer\Plugins\EffekseerPlayableBehaviour.cs" />
      <Compile Include="Assets\Effekseer\Plugins\EffekseerSystem.cs" />
-     <Compile Include="Assets\Scripts\Enemy\ChildTotem.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
-     <Compile Include="Assets\Scripts\Enemy\Totem.cs" />
+     <Compile Include="Assets\Scripts\Enemy\Totem\ChildTotem.cs" />
+     <Compile Include="Assets\Scripts\Enemy\Totem\Totem.cs" />
      <Compile Include="Assets\Scripts\GameCamera\GameCamera.cs" />
      <Compile Include="Assets\Scripts\GameCamera\GameCamera_Sub.cs" />
      <Compile Include="Assets\Scripts\Movie\MovieFade.cs" />
