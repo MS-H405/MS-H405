@@ -240,6 +240,7 @@ public class SP_Jug : MonoBehaviour
 			{
 				// 展開ピンヒットエフェクト
 				GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>().NewEffect(2);
+				GameObject.Find("Special_1Camera").GetComponent<Special_1Camera>().shakeCamera();
 
 				bSP_big_hit = false;
 			}
