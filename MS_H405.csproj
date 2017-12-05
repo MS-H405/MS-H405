@@ -301,6 +301,7 @@
     <Compile Include="Assets\Effekseer\Plugins\EffekseerPlayableAsset.cs" />
     <Compile Include="Assets\Effekseer\Plugins\EffekseerPlayableBehaviour.cs" />
     <Compile Include="Assets\Effekseer\Plugins\EffekseerSystem.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyBase.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\Totem\ChildTotem.cs" />
     <Compile Include="Assets\Scripts\Enemy\Totem\Totem.cs" />
