@@ -11,7 +11,7 @@ using System.Linq;
 using UniRx;
 using UniRx.Triggers;
   
-public class Totem : MonoBehaviour
+public class Totem : EnemyBase
 {
     #region define
 
@@ -29,7 +29,7 @@ public class Totem : MonoBehaviour
 
     // トーテムの現在の状態を保持
     private eAction _action = eAction.TotemPushUp;
-    private int _headAmount = 2;
+    private int _headAmount = 3;
 
     [SerializeField] float _oneBlockSize = 1.0f;
     [SerializeField] float _oneBlockUpSpeed = 0.25f;         // 頭ひとつぶんの飛び出る
