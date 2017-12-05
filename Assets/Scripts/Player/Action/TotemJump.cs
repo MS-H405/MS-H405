@@ -56,12 +56,12 @@ public class TotemJump : MonoBehaviour
         while(time < 1.0f)
         {
             time += Time.deltaTime / _pushTime;
+            transform.position += new Vector3(0, _pushAmount * Time.deltaTime / _pushTime, 0);
             _totemObj.transform.position += new Vector3(0, _pushAmount * Time.deltaTime / _pushTime, 0);
             yield return null;
         }
 
-        _rigidBody.AddForce(new Vector3(0, _addUpPower, 0));
-        _rigidBody.AddForce(transform.forward * _addForwardPower);
+        _rigidBody.AddForce(new Vector3(0, _addUpPower, 0) + (transform.forward * _addForwardPower));
 
         while (!_isGround)
         {

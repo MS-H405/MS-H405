@@ -24,10 +24,16 @@ public class RideBallMove : PlayerMove
 
     #region variable
 
+    // 演算用変数
     private float _nowAcceForward = 0.0f;    // 前方加速率
     private float _nowAcceBack    = 0.0f;    // 後方加速率
     private float _nowAcceRight   = 0.0f;    // 右方加速率
     private float _nowAcceLeft    = 0.0f;    // 左方加速率
+
+    // 演出用変数
+    private bool _isRigor = false;                  // 硬直判定
+    private Rigidbody _rigidbody = null;            // 
+    [SerializeField] GameObject _ballPrefab = null; // 玉乗りボールオブジェクト
 
     #endregion
 
@@ -38,6 +44,10 @@ public class RideBallMove : PlayerMove
     /// </summary>
     protected override void Move()
     {
+        // 硬直時は処理しない
+        if (_isRigor)
+            return;
+
         // 全方位の加速度を元に移動量を算出
         _moveAmount = Vector3.zero;
         _moveAmount += transform.forward * _nowAcceForward;
@@ -152,6 +162,72 @@ public class RideBallMove : PlayerMove
         }
     }
 
+
+    /// <summary>  
+    /// 終了処理  
+    /// </summary>
+    public void End()
+    {
+        StaticCoroutine.Instance.StartStaticCoroutine(RideOff());
+    }
+
+    #endregion
+
+    #region Coroutine
+
+    /// <summary>  
+    /// 乗る時の演出処理  
+    /// </summary>
+    private IEnumerator RideOn()
+    {
+        // 行動停止
+        _isRigor = true;
+
+        // 上に飛ばし、玉より超えたら玉出現
+        while (transform.position.y < 2.25f)
+        {
+            _rigidbody.AddForce(0.0f, 9.8f * 2.5f, 0.0f);
+            //_rigidbody.AddForce(-transform.forward * 4.9f);
+            yield return null;
+
+        }
+        Vector3 stopVelocity = _rigidbody.velocity;
+        stopVelocity.x = stopVelocity.z = 0.0f;
+        _rigidbody.velocity = stopVelocity;
+        
+        GameObject ball = Instantiate(_ballPrefab);
+        ball.transform.SetParent(transform);
+        ball.transform.localPosition = new Vector3(0.0f, -1.5f, 0.0f);
+
+        // 乗るまで待つ
+        while(_rigidbody.velocity.y != 0.0f)
+        {
+            yield return null;
+        }
+
+        // 行動再開
+        _isRigor = false;
+    }
+
+    /// <summary>  
+    /// 降りる時の演出処理  
+    /// </summary>
+    private IEnumerator RideOff()
+    {
+        // 行動停止
+        _isRigor = true;
+
+        // 降りる処理
+        Destroy(transform.Find("RideBall(Clone)").gameObject);
+        while (_isRigor)
+        {
+            yield return null;
+        }
+        
+        GetComponent<PlayerMove>().enabled = true;
+        this.enabled = false;
+    }
+
     #endregion
 
     #region unity_event  
@@ -159,20 +235,34 @@ public class RideBallMove : PlayerMove
     /// <summary>  
     /// 初期化処理  
     /// </summary>  
-    void Awake()
+    private void Awake()
     {
         MaxAcceleration = _speed_Sec * 2.0f;
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     /// <summary>  
     /// アクティブ変更時の初期化処理  
     /// </summary>  
-    void OnEnable()
+    private void OnEnable()
     {
         _nowAcceForward = 0.0f;
         _nowAcceBack = 0.0f;
         _nowAcceRight = 0.0f;
         _nowAcceLeft = 0.0f;
+
+        StaticCoroutine.Instance.StartStaticCoroutine(RideOn());
+    }
+
+    /// <summary>
+    /// 地形との接地判定処理
+    /// </summary>
+    private void OnCollisionEnter(Collision col)
+    {
+        if (col.transform.tag == "Field")
+        {
+            _isRigor = false;
+        }
     }
 
     #endregion

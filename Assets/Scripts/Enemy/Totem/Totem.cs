@@ -200,7 +200,7 @@ public class Totem : EnemyBase
         // 子分を潜らせる
         for (int i = 0; i < _childTotemAmount; i++)
         {
-            StartCoroutine(_childTotemList[i].Dive(_oneBlockUpSpeed));
+            StaticCoroutine.Instance.StartStaticCoroutine(_childTotemList[i].Dive(_oneBlockUpSpeed));
         }
 
         // 待機
@@ -214,7 +214,7 @@ public class Totem : EnemyBase
         // 子分に特殊攻撃の実行を通知
         for (int i = 0; i < _childTotemAmount; i++)
         {
-            StartCoroutine(_childTotemList[i].SpecialAtack(_oneBlockUpSpeed, _fallHeight));
+            StaticCoroutine.Instance.StartStaticCoroutine(_childTotemList[i].SpecialAtack(_oneBlockUpSpeed, _fallHeight));
         }
 
         // 待機
@@ -279,7 +279,7 @@ public class Totem : EnemyBase
         }
 
         // 行動開始
-        StartCoroutine(Run());
+        StaticCoroutine.Instance.StartStaticCoroutine(Run());
     }
 
     #endregion
