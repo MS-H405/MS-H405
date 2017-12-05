@@ -41,20 +41,18 @@ public class JugglingAtack : MonoBehaviour
         // 使用中の個数を増加
         _nowJugglingAmount++;
 
-        // ターゲットがいなければ消す
-        if (!target)
-        {
-            Destroy();
-            return;
-        }
-
         // 初期化処理
-        _targetObj = target;
         _atackSpeed = 10.0f * _commonAtackSpeed;
-
-        Vector3 lookPos = _targetObj.transform.position;
-        lookPos.y = 1.0f;
-        transform.LookAt(lookPos);
+        if (target)
+        {
+            _targetObj = target;
+            Vector3 lookPos = _targetObj.transform.position;
+            lookPos.y = 1.0f;
+            transform.LookAt(lookPos);
+        }
+        Vector3 initPos = transform.position;
+        initPos.y += 0.5f;
+        transform.position = initPos;
 
         // アクション実行
         StaticCoroutine.Instance.StartStaticCoroutine(ActionFlow());
@@ -63,7 +61,7 @@ public class JugglingAtack : MonoBehaviour
     /// <summary>
     /// 攻撃命令から地面に落ちるまでの処理フロー
     /// </summary>
-    IEnumerator ActionFlow()
+    private IEnumerator ActionFlow()
     {
         Vector3 startPos = transform.position; // 投げてから当たるまでの距離を計算するため
         float atackTime = 0.0f;
@@ -73,14 +71,12 @@ public class JugglingAtack : MonoBehaviour
         {
             Vector3 moveAmount = transform.forward * _atackSpeed * Time.deltaTime;
             transform.position += moveAmount;
-            
-            // TODO : 地形外判定
 
             atackTime += Time.deltaTime;
             yield return null;
         }
 
-        // 反射したので適当な位置を落下地として設定
+        // 反射したので適当な位置を落下地点として設定
         Vector3 dropPoint = startPos;   // TODO : ランダム算出を実装予定
         dropPoint.y = 0.0f;
         GameObject effect = Instantiate(_dropPointEffect, dropPoint, Quaternion.identity);
@@ -120,12 +116,38 @@ public class JugglingAtack : MonoBehaviour
 
         // 破棄処理
         Destroy(effect);
-        Destroy();
+        PinDestroy(!_isCatch);
     }
 
-    private void Destroy()
+    /// <summary>
+    /// ピンのリロード処理
+    /// </summary>
+    private IEnumerator Reload()
     {
+        float time = 0.0f;
+        while(time < 4.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
         _nowJugglingAmount--;
+    }
+
+    /// <summary>
+    /// 破棄処理
+    /// 引数 : すぐにピンを補充しない場合Trueを入れる
+    /// </summary>
+    private void PinDestroy(bool isReload)
+    {
+        if (isReload)
+        {
+            StaticCoroutine.Instance.StartStaticCoroutine(Reload());
+        }
+        else
+        {
+            _nowJugglingAmount--;
+        }
         Destroy(gameObject);
     }
 
@@ -138,21 +160,18 @@ public class JugglingAtack : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter (Collider col)
     {
-        if (col.tag == "Enemy")
+        // 敵にあたった場合、ダメージ処理をして跳ね返す
+        // Field外に行ってしまったら跳ね返す
+        if (col.tag == "Enemy" || col.tag == "Field")
         {
             _isReflect = true;
             return;
         }
 
+        // 跳ね返り中のピンにPlayerが触れたらキャッチ判定
         if (col.tag == "Player" && _isReflect)
         {
             _isCatch = true;
-            return;
-        }
-
-        if(col.tag == "Field")
-        {
-            Destroy();
             return;
         }
     }
