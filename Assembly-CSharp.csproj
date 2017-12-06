@@ -145,6 +145,8 @@
      <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\Test\Bora\Bora.cs" />
      <Compile Include="Assets\Scripts\Test\Tatsuo\TatsuoTest_Enemy.cs" />
+     <Compile Include="Assets\Scripts\TotemStart\TS_Boss_PA.cs" />
+     <Compile Include="Assets\Scripts\TotemStart\TS_Boss_PB.cs" />
      <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild.cs" />
      <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PA.cs" />
      <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PB.cs" />
