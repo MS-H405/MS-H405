@@ -86,8 +86,7 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case eActionType.RideBall:
-                _playerMove.enabled = true;
-                _rideBallMove.enabled = false;
+                _rideBallMove.End();
                 break;
 
             case eActionType.TotemJump:
@@ -138,7 +137,6 @@ public class ActionManager : MonoBehaviour
         switch (_nowAction)
         {
             case eActionType.Juggling:
-
                 break;
 
             case eActionType.RideBall:
@@ -147,17 +145,17 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case eActionType.TotemJump:
-                StaticCoroutine.Instance.StartStaticCoroutine(_totemJump.Run());
                 break;
 
             case eActionType.Bagpipe:
-
                 break;
 
             default:
                 break;
         }
-        OnAtack();
+
+        // 選択した瞬間に攻撃する?
+        //OnAtack();
     }
 
     /// <summary>
@@ -215,22 +213,6 @@ public class ActionManager : MonoBehaviour
                 selectText.text = "選択してるの : " + _nowSelect;
                 actionText.text = "行動してるの : " + _nowAction;
             });
-    }
-
-    /// <summary>
-    /// 更新前処理
-    /// </summary>
-    private void Start ()
-    {
-
-    }
-
-    /// <summary>
-    /// 更新処理
-    /// </summary>
-    private void Update ()
-    {
-
     }
 
     #endregion

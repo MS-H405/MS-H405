@@ -39,5 +39,29 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 
     #region method
 
+    /// <summary>
+    /// 初期化処理
+    /// </summary>
+    private void Awake()
+    {
+        if (_bossEnemy)
+            return;
+
+        // 登録が無ければ探索
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject obj in objs)
+        {
+            if (!obj.GetComponent<EnemyBase>())
+                continue;
+
+            _bossEnemy = obj;
+            return;
+        }
+
+        // 
+        Debug.LogError("BossEnemyがいません");
+    }
+
     #endregion
 }  

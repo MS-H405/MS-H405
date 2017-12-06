@@ -11,7 +11,7 @@ using System.Linq;
 using UniRx;
 using UniRx.Triggers;
   
-public class Totem : MonoBehaviour
+public class Totem : EnemyBase
 {
     #region define
 
@@ -29,7 +29,7 @@ public class Totem : MonoBehaviour
 
     // トーテムの現在の状態を保持
     private eAction _action = eAction.TotemPushUp;
-    private int _headAmount = 2;
+    private int _headAmount = 3;
 
     [SerializeField] float _oneBlockSize = 1.0f;
     [SerializeField] float _oneBlockUpSpeed = 0.25f;         // 頭ひとつぶんの飛び出る
@@ -200,7 +200,7 @@ public class Totem : MonoBehaviour
         // 子分を潜らせる
         for (int i = 0; i < _childTotemAmount; i++)
         {
-            StartCoroutine(_childTotemList[i].Dive(_oneBlockUpSpeed));
+            StaticCoroutine.Instance.StartStaticCoroutine(_childTotemList[i].Dive(_oneBlockUpSpeed));
         }
 
         // 待機
@@ -214,7 +214,7 @@ public class Totem : MonoBehaviour
         // 子分に特殊攻撃の実行を通知
         for (int i = 0; i < _childTotemAmount; i++)
         {
-            StartCoroutine(_childTotemList[i].SpecialAtack(_oneBlockUpSpeed, _fallHeight));
+            StaticCoroutine.Instance.StartStaticCoroutine(_childTotemList[i].SpecialAtack(_oneBlockUpSpeed, _fallHeight));
         }
 
         // 待機
@@ -279,7 +279,7 @@ public class Totem : MonoBehaviour
         }
 
         // 行動開始
-        StartCoroutine(Run());
+        StaticCoroutine.Instance.StartStaticCoroutine(Run());
     }
 
     #endregion
