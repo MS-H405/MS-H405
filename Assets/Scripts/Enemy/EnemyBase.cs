@@ -50,40 +50,15 @@ public class EnemyBase : MonoBehaviour
     public void SpecialDamage()
     {
         _mainHp--;
+    }
 
-        if (_mainHp > 0)
-            return;
-
-        // TODO : 死亡処理
+    /// <summary>
+    /// 死亡判定
+    /// </summary>
+    public bool Death()
+    {
+        return _mainHp <= 0;
     }
 
     #endregion
-
-    #region unity_event
-
-    /// <summary>
-    /// 初期化処理
-    /// </summary>
-    private void Awake()
-    {
-        _nowStanHp = _stanHP;
-    }
-
-    /// <summary>
-    /// 更新前処理
-    /// </summary>
-    private void Start()
-    {
-
-    }
-
-    /// <summary>
-    /// 更新処理
-    /// </summary>
-    private void Update()
-    {
-
-    }
-
-    #endregion
-}  
+}
