@@ -8,8 +8,10 @@ public class TS_Totemchild_PB : PlayableBehaviour
 {
 	#region 定数
 
-	float CON_APPER_INTERVAL = 0.2f;		// ちびトーテムが出現する間隔
-	float CON_LOOKAT_BOSS = 3.5f;			// ボスのほうを向き始める時間
+	float CON_APPEAR = 1.0f;				// ちびトーテムが出現し始める時間
+	float CON_APPEAR_INTERVAL = 0.2f;		// ちびトーテムが出現する間隔
+	float CON_LOOKAT_BOSS = 4.5f;			// ボスのほうを向き始める時間
+	float CON_BACK = 10.0f;					// ひっこむ時間
 
 	#endregion
 
@@ -63,16 +65,19 @@ public class TS_Totemchild_PB : PlayableBehaviour
 	{
 		fTime += Time.deltaTime;
 
+		if(fTime < CON_APPEAR)
+			return;
+
 		// ちびトーテム出現
-		if (fTime >= CON_APPER_INTERVAL)
+		if (fTime >= CON_APPEAR_INTERVAL)
 			TotemChildList[0].Appear();
-		if (fTime >= CON_APPER_INTERVAL * 2 + 1)
+		if (fTime >= CON_APPEAR_INTERVAL * 2 + 2)	// 2 = CON_APPEAR + カメラが変わるまでの1秒
 			TotemChildList[1].Appear();
-		if (fTime >= CON_APPER_INTERVAL * 3 + 1)
+		if (fTime >= CON_APPEAR_INTERVAL * 3 + 2)
 			TotemChildList[2].Appear();
-		if (fTime >= CON_APPER_INTERVAL * 4 + 1)
+		if (fTime >= CON_APPEAR_INTERVAL * 4 + 2)
 			TotemChildList[3].Appear();
-		if (fTime >= CON_APPER_INTERVAL * 5 + 1)
+		if (fTime >= CON_APPEAR_INTERVAL * 5 + 2)
 			TotemChildList[4].Appear();
 		
 
@@ -81,6 +86,14 @@ public class TS_Totemchild_PB : PlayableBehaviour
 		{
 			for (int i = 0; i < TotemChildList.Count; i++)
 				TotemChildList[i].LookAtBoss();
+		}
+
+
+		// ひっこむ
+		if (fTime >= CON_BACK)
+		{
+			for (int i = 0; i < TotemChildList.Count; i++)
+				TotemChildList[i].Back();
 		}
 	}
 }

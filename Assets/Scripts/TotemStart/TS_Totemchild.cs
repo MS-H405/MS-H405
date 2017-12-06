@@ -7,17 +7,23 @@ public class TS_Totemchild : MonoBehaviour
 {
 	#region 定数
 
-	readonly Vector3 CON_SCALE = new Vector3(1.0f, 1.0f, 1.0f);		// 拡大率
+	readonly Vector3 CON_SCALE = new Vector3(0.035f, 0.035f, 0.035f);		// 拡大率
 	const float CON_APPEAR_TIME = 0.4f;		// 生える時間
 	const float CON_START_POSY = -2.0f;		// 初期のY座標
-	const float CON_END_POSY = 0.43f;		// 終わりのY座標
+	const float CON_END_POSY = -0.07f;		// 終わりのY座標
 
 	const float CON_LOOKAT_TIME = 1.0f;		// ボスの方向を向く時間
+
+	const float CON_BACK_TIME = 0.4f;		// ひっこむ時間
 
 	#endregion
 
 
 	#region 変数
+
+	[SerializeField]	GameObject EffectObj;
+	bool bEffect = true;		// 生えるエフェクトを再生するかどうか
+	float fWait = 0.0f;			// 出現と、エフェクトのタイミングを合わせるためのタイマー
 
 	float fTime;				// 生えるときに使うパラメーター
 	Vector3 vStartPos;			// スタート位置
@@ -26,6 +32,9 @@ public class TS_Totemchild : MonoBehaviour
 	float fRotateTime;			// 回転するときに使うパラメーター
 	Vector3 vStartEular;		// 最初に向いてた角度
 	Vector3 vEndEular;			// ボスの角度
+
+	bool bInit = true;
+	float fBack;
 
 	#endregion
 
@@ -50,7 +59,7 @@ public class TS_Totemchild : MonoBehaviour
 		Vector2 vec = Vector2.zero;	// どうせBOSSはど真ん中にいるはず
 		vec = new Vector2(vec.x - vEndPos.x, vec.y - vEndPos.z);
 		vEndEular = new Vector3(0.0f, Mathf.Acos(Vector2.Dot(Vector2.down, vec.normalized)) * Mathf.Rad2Deg, 0.0f);
-		if(transform.position.x < GameObject.Find("TotemBoss").transform.position.x)
+		if (transform.position.x < GameObject.Find("TS_TotemBoss").transform.position.x)
 			vEndEular = new Vector3(vEndEular.x, vStartEular.y - vEndEular.y, vEndEular.z);
 		else
 			vEndEular = new Vector3(vEndEular.x, vStartEular.y + vEndEular.y, vEndEular.z);
@@ -61,6 +70,18 @@ public class TS_Totemchild : MonoBehaviour
 	// ちびトーテム生える
 	public void Appear()
 	{
+		// エフェクト発生
+		if (bEffect)
+		{
+			EffectObj.GetComponent<EffekseerEmitter>().Play();
+			bEffect = false;
+		}
+
+		// 出現と、エフェクトのタイミングを合わせる
+		fWait += Time.deltaTime;
+		if (fWait < 0.1f)
+			return;
+
 		// 移動完了済み
 		if(fTime >= 1.0f)
 			return;
@@ -88,32 +109,62 @@ public class TS_Totemchild : MonoBehaviour
 		transform.eulerAngles = temp;
 	}
 
+
+	// ひっこむ
+	public void Back()
+	{
+		if(bInit)
+		{
+			fBack = 0.0f;
+			vStartPos = transform.position;
+			vEndPos = new Vector3(transform.position.x, CON_START_POSY, transform.position.z);
+
+			bInit = false;
+		}
+
+		// 移動完了済み
+		if (fBack >= 1.0f)
+			return;
+
+		fBack += Time.deltaTime / CON_BACK_TIME;
+		if (fBack > 1.0f)
+			fBack = 1.0f;
+
+		transform.localPosition = Vector3.Lerp(vStartPos, vEndPos, fBack);
+	}
+
+
+
+
+
+
+
 	// Timelineのせいでよくバグって位置が(0.0f, 0.0f, 0.0f)になって再配置がめんどくさいので無理やり設定しておく
 	private void SetStartPos()
 	{
 		switch(transform.name)
 		{
-			case "TotemChild1":
+			case "TS_TotemChild1":
 				transform.position = new Vector3(-5.25f, 0.0f, -1.97f);
 				transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
 				break;
 
-			case "TotemChild2":
+			case "TS_TotemChild2":
 				transform.position = new Vector3(-2.97f, 0.0f, 2.78f);
 				transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
 				break;
 
-			case "TotemChild3":
+			case "TS_TotemChild3":
 				transform.position = new Vector3(1.58f, 0.0f, 4.6f);
 				transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
 				break;
 
-			case "TotemChild4":
+			case "TS_TotemChild4":
 				transform.position = new Vector3(3.93f, 0.0f, 1.21f);
 				transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
 				break;
 
-			case "TotemChild5":
+			case "TS_TotemChild5":
 				transform.position = new Vector3(5.62f, 0.0f, -1.69f);
 				transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
 				break;
