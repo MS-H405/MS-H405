@@ -27,6 +27,7 @@ public class TS_Boss_PB : PlayableBehaviour
 	const float CON_SECONDWAIT = 2.2f;		// 待ち時間2
 
 	const float CON_BACK_TIME = 0.4f;		// 潜るのにかける時間
+	const float CON_FADESTART_TIME = 0.2f;	// 潜るのを開始してから、何秒でフェードを開始するか
 
 	#endregion
 
@@ -50,6 +51,9 @@ public class TS_Boss_PB : PlayableBehaviour
 	bool bEffect;
 
 	float fWait = 0.0f;	// ボスの出現と、エフェクトのタイミングを合わせるためのタイマー
+
+	bool bFade = true;			// フェードを呼び出すかどうか
+	float fFadeTime = 0.0f;		// フェード用タイマー
 
 	#endregion
 
@@ -214,6 +218,14 @@ public class TS_Boss_PB : PlayableBehaviour
 
 
 		fTime += Time.deltaTime / CON_BACK_TIME;
+
+		// フェード
+		fFadeTime += Time.deltaTime;
+		if(fFadeTime > CON_FADESTART_TIME && bFade)
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_1);
+			bFade = false;
+		}
 
 		// 終了判定
 		if (fTime > 1.0f)

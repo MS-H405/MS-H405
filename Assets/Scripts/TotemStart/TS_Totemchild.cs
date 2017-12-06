@@ -7,7 +7,7 @@ public class TS_Totemchild : MonoBehaviour
 {
 	#region 定数
 
-	readonly Vector3 CON_SCALE = new Vector3(0.035f, 0.035f, 0.035f);		// 拡大率
+	readonly Vector3 CON_SCALE = new Vector3(0.2f, 0.2f, 0.2f);		// 拡大率
 	const float CON_APPEAR_TIME = 0.4f;		// 生える時間
 	const float CON_START_POSY = -2.0f;		// 初期のY座標
 	const float CON_END_POSY = -0.07f;		// 終わりのY座標
