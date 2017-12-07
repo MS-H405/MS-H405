@@ -43,6 +43,9 @@ public class JugglingAtack : MonoBehaviour
 
         // 初期化処理
         _atackSpeed = 10.0f * _commonAtackSpeed;
+        Vector3 initPos = transform.position;
+        initPos.y = 1.0f;
+        transform.position = initPos;
         if (target)
         {
             _targetObj = target;
@@ -50,9 +53,12 @@ public class JugglingAtack : MonoBehaviour
             lookPos.y = 1.0f;
             transform.LookAt(lookPos);
         }
-        Vector3 initPos = transform.position;
-        initPos.y += 0.5f;
-        transform.position = initPos;
+        else
+        {
+            // TODO : 対象がいない場合、Playerから見た前方に飛ばす
+            Vector3 lookPos = transform.position + Player.instance.transform.forward;
+            transform.LookAt(lookPos);
+        }
 
         // アクション実行
         StaticCoroutine.Instance.StartStaticCoroutine(ActionFlow());
@@ -161,8 +167,23 @@ public class JugglingAtack : MonoBehaviour
     private void OnTriggerEnter (Collider col)
     {
         // 敵にあたった場合、ダメージ処理をして跳ね返す
+        if (col.tag == "Enemy")
+        {
+            if (_isReflect)
+                return;
+
+            GameObject obj = col.gameObject;
+            while(obj.transform.parent)
+            {
+                obj = obj.transform.parent.gameObject;
+            }
+            obj.GetComponent<EnemyBase>().Damage();
+            _isReflect = true;
+            return;
+        }
+
         // Field外に行ってしまったら跳ね返す
-        if (col.tag == "Enemy" || col.tag == "Field")
+        if (col.tag == "Field")
         {
             _isReflect = true;
             return;

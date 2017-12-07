@@ -15,7 +15,7 @@ public class ActionManager : MonoBehaviour
 {
     #region define
 
-    enum eActionType
+    public enum eActionType
     {
         Juggling = 0,
         RideBall,
@@ -34,7 +34,7 @@ public class ActionManager : MonoBehaviour
     private eActionType _nowSelect = (eActionType)0;    // 0.ジャグリング, 1.玉乗り, 2.トーテムジャンプ, 3.バグパイプ
     private int _maxSelect = 3;                         // 初期化時にステージ番号を取得し、最大値を決定
 
-    // TODO : 仮でここにプレハブなどを登録
+    // ここに生成するプレハブなどを登録
     [SerializeField] GameObject _jugglingPrefab = null;
     private PlayerMove _playerMove = null;
     private RideBallMove _rideBallMove = null;
@@ -111,20 +111,21 @@ public class ActionManager : MonoBehaviour
     {
         if (_isRight)
         {
-            _nowSelect++;
-            if ((int)_nowSelect > _maxSelect)
-            {
-                _nowSelect = 0;
-            }
-        }
-        else
-        {
             _nowSelect--;
             if (_nowSelect < 0)
             {
                 _nowSelect = (eActionType)_maxSelect;
             }
         }
+        else
+        {
+            _nowSelect++;
+            if ((int)_nowSelect > _maxSelect)
+            {
+                _nowSelect = 0;
+            }
+        }
+        Debug.Log(_nowSelect);
     }
 
     /// <summary>
@@ -204,15 +205,8 @@ public class ActionManager : MonoBehaviour
         _rideBallMove = GetComponent<RideBallMove>();
         _totemJump = GetComponent<TotemJump>();
 
-        // TODO : デバッグ表示
-        Text selectText = GameObject.Find("SelectText").GetComponent<Text>();
-        Text actionText = GameObject.Find("ActionText").GetComponent<Text>();
-        this.UpdateAsObservable()
-            .Subscribe(_ =>
-            {
-                selectText.text = "選択してるの : " + _nowSelect;
-                actionText.text = "行動してるの : " + _nowAction;
-            });
+        // ステージ番号を取得
+        _maxSelect = StageData.Instance.StageNumber;
     }
 
     #endregion
