@@ -10,15 +10,20 @@ using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UniRx.Triggers;
+
+/// <summary>
+/// TODO : 跳ね返り処理と速度に応じたダメージ処理
+/// </summary>
   
 public class RideBallMove : PlayerMove
 {
     #region define
 
-    readonly float AcceRate = 1.05f;        // 加速率 
+    readonly float AcceRate = 1.15f;        // 加速率 
     readonly float DeceRate = 0.98f;        // 減衰率 
     readonly float MinAcceleration = 0.05f; // 最低加速度（それ以下を0とみなして処理する）
-    private  float MaxAcceleration = 0.0f;  // 最大速度。通常の移動速度が静的でないため初期化時に指定
+    private float MaxAcceleration = 0.0f;   // 最大速度。通常の移動速度が静的でないため初期化時に指定
+    private float InitAcceleration = 0.0f;  // 初期速度。通常の移動速度が静的でないため初期化時に指定
 
     #endregion
 
@@ -68,7 +73,7 @@ public class RideBallMove : PlayerMove
             case eDirection.Forward:
                 if(_nowAcceForward == 0.0f)
                 {
-                    _nowAcceForward = AcceRate;
+                    _nowAcceForward = InitAcceleration;
                 }
 
                 _nowAcceForward *= AcceRate;
@@ -82,7 +87,7 @@ public class RideBallMove : PlayerMove
             case eDirection.Back:
                 if (_nowAcceBack == 0.0f)
                 {
-                    _nowAcceBack = AcceRate;
+                    _nowAcceBack = InitAcceleration;
                 }
 
                 _nowAcceBack *= AcceRate;
@@ -96,7 +101,7 @@ public class RideBallMove : PlayerMove
             case eDirection.Right:
                 if (_nowAcceRight == 0.0f)
                 {
-                    _nowAcceRight = AcceRate;
+                    _nowAcceRight = InitAcceleration;
                 }
 
                 _nowAcceRight *= AcceRate;
@@ -110,7 +115,7 @@ public class RideBallMove : PlayerMove
             case eDirection.Left:
                 if (_nowAcceLeft == 0.0f)
                 {
-                    _nowAcceLeft = AcceRate;
+                    _nowAcceLeft = InitAcceleration;
                 }
 
                 _nowAcceLeft *= AcceRate;
@@ -162,6 +167,16 @@ public class RideBallMove : PlayerMove
         }
     }
 
+    /// <summary>
+    /// 加速リセット処理
+    /// </summary>
+    private void AcceReset()
+    {
+        _nowAcceForward = 0.0f;
+        _nowAcceBack = 0.0f;
+        _nowAcceRight = 0.0f;
+        _nowAcceLeft = 0.0f;
+    }
 
     /// <summary>  
     /// 終了処理  
@@ -237,7 +252,8 @@ public class RideBallMove : PlayerMove
     /// </summary>  
     private void Awake()
     {
-        MaxAcceleration = _speed_Sec * 2.0f;
+        InitAcceleration = _speed_Sec * 0.2f;
+        MaxAcceleration = _speed_Sec * 1.7f;
         _rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -246,11 +262,7 @@ public class RideBallMove : PlayerMove
     /// </summary>  
     private void OnEnable()
     {
-        _nowAcceForward = 0.0f;
-        _nowAcceBack = 0.0f;
-        _nowAcceRight = 0.0f;
-        _nowAcceLeft = 0.0f;
-
+        AcceReset();
         StaticCoroutine.Instance.StartStaticCoroutine(RideOn());
     }
 
@@ -262,6 +274,29 @@ public class RideBallMove : PlayerMove
         if (col.transform.tag == "Field")
         {
             _isRigor = false;
+        }
+
+        if(col.transform.tag == "Enemy")
+        {
+            // ダメージ処理がある場合はダメージ処理
+            if (_nowAcceForward >= _speed_Sec)
+            {
+                GameObject obj = col.gameObject;
+                while (obj.transform.parent)
+                {
+                    obj = obj.transform.parent.gameObject;
+                }
+
+                // 最高速の場合のみ3ダメージ
+                obj.GetComponent<EnemyBase>().Damage(_nowAcceForward >= (MaxAcceleration * DeceRate - 0.1f) ? 3 : 1);
+            }
+
+            // 跳ね返り処理
+            _isRigor = true;
+            Vector3 reflectPower = -transform.forward * _nowAcceForward * 5.0f;
+            reflectPower += new Vector3(0.0f, 200.0f, 0.0f);
+            _rigidbody.AddForce(reflectPower);
+            AcceReset();
         }
     }
 

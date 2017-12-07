@@ -125,7 +125,7 @@ public class ActionManager : MonoBehaviour
                 _nowSelect = 0;
             }
         }
-        Debug.Log(_nowSelect);
+        //Debug.Log(_nowSelect);
     }
 
     /// <summary>

@@ -39,7 +39,7 @@ public class PlayerMove : MonoBehaviour
     /// </summary>
     protected virtual void Move()
     {
-        transform.position += _moveAmount * Time.deltaTime * _speed_Sec;
+        transform.position += _moveAmount * Time.deltaTime;
     }
 
     /// <summary>
@@ -50,16 +50,16 @@ public class PlayerMove : MonoBehaviour
         switch (dir)
         {
             case eDirection.Forward:
-                _moveAmount += transform.forward;
+                _moveAmount += transform.forward * _speed_Sec;
                 break;
             case eDirection.Back:
-                _moveAmount -= transform.forward;
+                _moveAmount -= transform.forward * _speed_Sec;
                 break;
             case eDirection.Right:
-                _moveAmount += transform.right;
+                _moveAmount += transform.right * _speed_Sec;
                 break;
             case eDirection.Left:
-                _moveAmount -= transform.right;
+                _moveAmount -= transform.right * _speed_Sec;
                 break;
         }
     }

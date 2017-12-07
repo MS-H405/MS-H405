@@ -60,6 +60,7 @@ public class PlayerLifeManager : SingletonMonoBehaviour<PlayerLifeManager>
 
                 if (time >= 1.0f)
                 {
+                    // TODO : MissingError
                     lifeImage.sprite = _lifeSpriteArray[i];
                 }
 
