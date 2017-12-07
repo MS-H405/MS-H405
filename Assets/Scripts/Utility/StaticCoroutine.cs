@@ -28,11 +28,11 @@ public class StaticCoroutine : SingletonMonoBehaviour<StaticCoroutine>
     /// <summary>
     /// コルーチン実行処理処理
     /// </summary>
-    public IEnumerator StartStaticCoroutine(IEnumerator coroutine)
+    public Coroutine StartStaticCoroutine(IEnumerator coroutine)
     {
         _courutineList.Add(coroutine);
-        Instance.StartCoroutine(coroutine);
-        return coroutine;
+        return Instance.StartCoroutine(coroutine);
+       // return coroutine;
     }
 
 
