@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4876020501304590}
-  - component: {fileID: 114419741613734700}
   - component: {fileID: 54632649733457616}
+  - component: {fileID: 114419741613734700}
   m_Layer: 9
   m_Name: ChildTotem
   m_TagString: Untagged
@@ -287,6 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _oneBlockSize: 2
+  _appearEffectName: TS_totem_appear
 --- !u!136 &136386662830177502
 CapsuleCollider:
   m_ObjectHideFlags: 1

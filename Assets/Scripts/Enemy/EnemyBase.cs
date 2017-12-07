@@ -19,11 +19,11 @@ public class EnemyBase : MonoBehaviour
 
     #region variable
 
-    private int _mainHp = 0;        // 死亡までの敵HP
+    [SerializeField] int _mainHp = 0;           // 死亡までの敵HP
 
-    private int _nowStanHp = 0;     // 気絶までの現在HP
-    private int _stanHP = 0;        // 気絶までの初期HP
-    protected bool _isStan = false; // 気絶フラグ
+    protected int _nowStanHp = 0;               // 気絶までの現在HP
+    [SerializeField] int _stanHP = 0;           // 気絶までの初期HP
+    public bool IsStan { get; private set; }    // 気絶フラグ
 
     #endregion
 
@@ -32,16 +32,23 @@ public class EnemyBase : MonoBehaviour
     /// <summary>
     /// ダメージ処理
     /// </summary>
-    public void Damage(int amount)
+    public void Damage(int amount = 1)
     {
+        if (IsStan)
+            return;
+
+        if(_nowStanHp <= 0)
+        {
+            _nowStanHp = _stanHP;
+        }
+
         _nowStanHp -= amount;
 
         if (_nowStanHp > 0)
             return;
 
         // スタン状態にする
-        _isStan = true;
-        _nowStanHp = _stanHP;
+        IsStan = true;
     }
 
     /// <summary>
@@ -50,6 +57,7 @@ public class EnemyBase : MonoBehaviour
     public void SpecialDamage()
     {
         _mainHp--;
+        IsStan = false;
     }
 
     /// <summary>
