@@ -55,30 +55,40 @@ public class EffekseerEmitter : MonoBehaviour
 		effectName = name;
 		Play();
 	}
-	
-	/// <summary xml:lang="en">
-	/// Plays the effect that has been set.
-	/// </summary>
-	/// <summary xml:lang="ja">
-	/// 設定されているエフェクトを再生
-	/// </summary>
-	public void Play()
-	{
-		var h = EffekseerSystem.PlayEffect(effectName, transform.position);
-		h.SetRotation(transform.rotation);
-		h.SetScale(transform.localScale);
-		handle = h;
-	}
-	
-	/// <summary xml:lang="en">
-	/// Stops the played effect.
-	/// All nodes will be destroyed.
-	/// </summary>
-	/// <summary xml:lang="ja">
-	/// 再生中のエフェクトを停止
-	/// 全てのノードが即座に消える
-	/// </summary>
-	public void Stop()
+
+
+    /// <summary>
+    /// 座標を自分で指定してエフェクト再生
+    /// </summary> 
+    public void Play(Vector3 position)
+    {
+        transform.position = position;
+        Play();
+    }
+
+    /// <summary xml:lang="en">
+    /// Plays the effect that has been set.
+    /// </summary>
+    /// <summary xml:lang="ja">
+    /// 設定されているエフェクトを再生
+    /// </summary>
+    public void Play()
+    {
+        var h = EffekseerSystem.PlayEffect(effectName, transform.position);
+        h.SetRotation(transform.rotation);
+        h.SetScale(transform.localScale);
+        handle = h;
+    }
+
+    /// <summary xml:lang="en">
+    /// Stops the played effect.
+    /// All nodes will be destroyed.
+    /// </summary>
+    /// <summary xml:lang="ja">
+    /// 再生中のエフェクトを停止
+    /// 全てのノードが即座に消える
+    /// </summary>
+    public void Stop()
 	{
 		if (handle.HasValue) {
 			handle.Value.Stop();
