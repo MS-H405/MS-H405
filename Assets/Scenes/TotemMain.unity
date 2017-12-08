@@ -702,7 +702,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ca4f55d38ec0e41ac58b3552f58b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 5
+  _hp: 6
+  _backPower: 75
+  _upPower: 200
 --- !u!23 &476421131
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -962,7 +964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92c6c06f59d62ef47a82809e7567278c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bossEnemy: {fileID: 2120984649}
+  _bossEnemy: {fileID: 0}
 --- !u!4 &605366800
 Transform:
   m_ObjectHideFlags: 0
@@ -2648,7 +2650,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1967934187120978, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
       propertyPath: m_Name
-      value: Totem (1)
+      value: Totem_Freeze
+      objectReference: {fileID: 0}
+    - target: {fileID: 1967934187120978, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114582321539782110, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
