@@ -11,10 +11,6 @@ using System.Linq;
 using UniRx;
 using UniRx.Triggers;
 
-/// <summary>
-/// TODO : 跳ね返り処理と速度に応じたダメージ処理
-/// </summary>
-  
 public class RideBallMove : PlayerMove
 {
     #region define
@@ -36,7 +32,6 @@ public class RideBallMove : PlayerMove
     private float _nowAcceLeft    = 0.0f;    // 左方加速率
 
     // 演出用変数
-    private bool _isRigor = false;                  // 硬直判定
     private Rigidbody _rigidbody = null;            // 
     [SerializeField] GameObject _ballPrefab = null; // 玉乗りボールオブジェクト
 
@@ -68,6 +63,10 @@ public class RideBallMove : PlayerMove
     /// </summary>
     protected override void Acceleration(eDirection dir)
     {
+        // 硬直時は処理しない
+        if (_isRigor)
+            return;
+
         switch (dir)
         {
             case eDirection.Forward:
@@ -269,12 +268,9 @@ public class RideBallMove : PlayerMove
     /// <summary>
     /// 地形との接地判定処理
     /// </summary>
-    private void OnCollisionEnter(Collision col)
+    protected override void OnCollisionEnter(Collision col)
     {
-        if (col.transform.tag == "Field")
-        {
-            _isRigor = false;
-        }
+        base.OnCollisionEnter(col);
 
         if(col.transform.tag == "Enemy")
         {
