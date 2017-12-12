@@ -22,12 +22,13 @@ public class MovieManager : MonoBehaviour
 	private static MovieManager instance;
 
 	private bool isFading = false;  // フェード中かどうか
-	private List<GameObject> ObjList = new List<GameObject>();
+	private List<MonoBehaviour> _monoList = new List<MonoBehaviour>();
 	private string MovieSceneName;
 
 	private float fTime;
 	private float fFirstTime;
 	private bool bInit;
+    private GameObject _mainCamera = null;
 
 
 	public static MovieManager Instance
@@ -58,6 +59,9 @@ public class MovieManager : MonoBehaviour
 		}
 
 		DontDestroyOnLoad(this.gameObject);
+
+        // TODO : 開始演出入れた際、要デバッグ
+        _mainCamera = Camera.main.gameObject;
 	}
 
 	// デバッグ用
@@ -250,10 +254,13 @@ public class MovieManager : MonoBehaviour
 	{
 		if(!flg)
 		{
-			foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType(typeof(GameObject)))
+			foreach (MonoBehaviour mono in UnityEngine.Object.FindObjectsOfType(typeof(MonoBehaviour)))
 			{
+                if (!mono.enabled)
+                    continue;
+
 				// DontDestroyOnLoadにあるオブジェクトはfalseにしないようにする
-				GameObject RootObj = obj.transform.root.gameObject;
+				GameObject RootObj = mono.transform.root.gameObject;
 
 				Scene scene = SceneManager.GetActiveScene();
 				foreach (var sceneRootObject in scene.GetRootGameObjects())
@@ -264,8 +271,8 @@ public class MovieManager : MonoBehaviour
 						//if(obj.name == "Main Camera")
 						//	obj.GetComponent<AudioListener>().enabled = false;
 
-						ObjList.Add(obj);
-						obj.SetActive(false);
+						_monoList.Add(mono);
+						mono.enabled = false;
 					}
 				}
 			}
@@ -276,14 +283,21 @@ public class MovieManager : MonoBehaviour
 		}
 		else
 		{
-			for(int i = 0 ; i < ObjList.Count ; i ++)
+			for(int i = 0 ; i < _monoList.Count ; i ++)
 			{
-				ObjList[i].SetActive(true);
+                if (_monoList[i] == null)
+                    continue;
+
+				_monoList[i].enabled = true;
 
 				// GameMainシーンにあるaudiolistenerをtrueに戻しておく。
 				//if (ObjList[i].name == "Main Camera")
 				//	ObjList[i].GetComponent<AudioListener>().enabled = true;
 			}
 		}
-	}
+
+        // Camera停止
+        _mainCamera.SetActive(flg);
+
+    }
 }

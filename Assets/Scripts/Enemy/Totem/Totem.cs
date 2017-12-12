@@ -46,6 +46,7 @@ public class Totem : EnemyBase
 
     // 演出用変数
     private ShakeCamera _shakeCamera = null;
+    private Animator _animator = null;
     [SerializeField] string _appearEffectName = "TS_boss_appear";
 
     #endregion
@@ -62,19 +63,19 @@ public class Totem : EnemyBase
         while (true)
         {
             // 行動ルーチン実行
-            Coroutine coroutine = null;
+            IEnumerator enumerator = null;
             switch (_action)
             {
                 case eAction.TotemPushUp:
-                    coroutine = StaticCoroutine.Instance.StartStaticCoroutine(TotemPushUp());
+                    enumerator = StaticCoroutine.Instance.StartStaticCoroutine(TotemPushUp());
                     break;
 
                 case eAction.ChildTotemPushUp:
-                    coroutine = StaticCoroutine.Instance.StartStaticCoroutine(ChildTotemPushUp());
+                    enumerator = StaticCoroutine.Instance.StartStaticCoroutine(ChildTotemPushUp());
                     break;
 
                 case eAction.SpecialAtack:
-                    coroutine = StaticCoroutine.Instance.StartStaticCoroutine(SpecialAtack());
+                    enumerator = StaticCoroutine.Instance.StartStaticCoroutine(SpecialAtack());
                     break;
 
                 default:
@@ -83,23 +84,32 @@ public class Totem : EnemyBase
 
             // 終わるまで待機する
             oldAction = _action;
-            while (_action == oldAction && !IsStan)
-            {     
-                yield return null;
-            }
-
-            // スタン状態なら一時停止
-            if(IsStan)
+            while (_action == oldAction)
             {
-                StopCoroutine(coroutine);
-                
-                while(IsStan)
+                // DEBUG : デバッグコマンド 
+                if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    // TODO : スタン演出実装 仮でMaterial色変更
-                    transform.eulerAngles += new Vector3(0,360,0) * Time.deltaTime;
-                    yield return null;
+                    IsStan = true;
                 }
-                yield return new WaitForSeconds(1.0f);
+
+                // スタン状態なら一時停止
+                if (IsStan)
+                {
+                    StopCoroutine(enumerator);
+
+                    while (IsStan)
+                    {
+                        // スタン演出
+                        _animator.SetBool("IsStan", true);
+                        yield return null;
+                    }
+                    _animator.SetBool("IsStan", false);
+                    yield return new WaitForSeconds(1.0f);
+
+                    StartCoroutine(enumerator);
+                }
+
+                yield return null;
             }
 
             // 一周してたらループさせる
@@ -144,7 +154,7 @@ public class Totem : EnemyBase
                 {
                     EnemyManager.Instance.Active = true;
                 }
-
+                
                 yield return null;
             }
             Vector3 pos = transform.position;
@@ -339,9 +349,10 @@ public class Totem : EnemyBase
     /// </summary>
     private void Awake()
     {
-        // 
+        // 必要コンポーネントの取得
         _rigidbody = GetComponent<Rigidbody>();
         _shakeCamera = Camera.main.GetComponent<ShakeCamera>();
+        _animator = GetComponent<Animator>();
 
         // 子分トーテムの生成処理
         for (int i = 0; i < _childTotemAmount; i++)
