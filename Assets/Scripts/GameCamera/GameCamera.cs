@@ -73,7 +73,7 @@ public class GameCamera : MonoBehaviour
 		//----- デバッグ機能 ---------------------------------------
 
 		if (Input.GetKeyDown(KeyCode.O))
-			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.SPECIAL_1);
+			MovieManager.Instance.MovieStart(MovieManager.MOVIE_SCENE.SPECIAL_1);
 
 		//---------------------------------------------------------
 

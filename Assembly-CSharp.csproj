@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Effect\GameEffectManager.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyBase.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
      <Compile Include="Assets\Scripts\Enemy\Totem\ChildTotem.cs" />
@@ -73,8 +74,13 @@
      <Compile Include="Assets\Scripts\Player\Action\JugglingAtack.cs" />
      <Compile Include="Assets\Scripts\Player\Action\RideBallMove.cs" />
      <Compile Include="Assets\Scripts\Player\Action\TotemJump.cs" />
+     <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
-     <Compile Include="Assets\Scripts\Test\Bora\Bora.cs" />
+     <Compile Include="Assets\Scripts\Player\UI\AtackIcon\AtackIcon.cs" />
+     <Compile Include="Assets\Scripts\Player\UI\AtackIcon\AtackIconManager.cs" />
+     <Compile Include="Assets\Scripts\Player\UI\Life\PlayerLifeManager.cs" />
+     <Compile Include="Assets\Scripts\Stage\StageData.cs" />
+     <Compile Include="Assets\Scripts\Test\Bora\TestEffecseer.cs" />
      <Compile Include="Assets\Scripts\Test\Tatsuo\TatsuoTest_Enemy.cs" />
      <Compile Include="Assets\Scripts\TotemDeath\TD_Effect_PA.cs" />
      <Compile Include="Assets\Scripts\TotemDeath\TD_Effect_PB.cs" />

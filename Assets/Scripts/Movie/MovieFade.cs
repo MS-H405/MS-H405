@@ -5,21 +5,8 @@ using UnityEngine.UI;
 
 public class MovieFade : MonoBehaviour
 {
-	#region 定数
-
-	public enum _FADE_PATERN
-	{
-		NORMAL,		// 普通の黒フェード
-		CUTIN,		// カットイン。必殺技を撃つとき
-		WHITE		// ゆっくり白フェード。必殺技終わるとき
-	}
-
-	const float NORMAL_FADE_TIME = 0.4f;		// 普通の黒フェードの時間。始まりのイン・アウト、終わりのイン・アウトも全部この時間
-	const float CUTIN_FADE_TIME = 0.4f;			// 必殺技始まりのフェード時間。フェードイン・アウト両方ともこの時間
-	const float WHITE_FADE_TIME = 0.8f;			// 必殺技終わりの白フェード時間。フェードイン・アウト両方ともこの時間
-
-	#endregion
-
+	const float MOVIE_FADE_TIME_START = 0.3f;	// 必殺技始まりのフェード時間
+	const float MOVIE_FADE_TIME_END	  = 0.8f;	// 必殺技終わりのフェード時間
 
 	private static MovieFade instance;
 	Image image;
@@ -64,7 +51,7 @@ public class MovieFade : MonoBehaviour
 
 
 	// フェードイン(消える方 0 -> 1)
-	IEnumerator SpecialFadein(float fFadeTime, System.Action action)
+	IEnumerator FadeinCoroutine(float fFadeTime, System.Action action)
 	{
 		bInit = true;
 		fAlpha = 0.0f;
@@ -95,7 +82,7 @@ public class MovieFade : MonoBehaviour
 	}
 
 	// フェードアウト(見えてくる方 1 -> 0)
-	IEnumerator SpecialFadeout(float fFadeTime, System.Action action)
+	IEnumerator FadeoutCoroutine(float fFadeTime, System.Action action)
 	{
 		bInit = true;
 		fAlpha = 0.0f;
@@ -106,8 +93,7 @@ public class MovieFade : MonoBehaviour
 
 		while (fAlpha - fFirstAlpha < 1.0)
 		{
-			//fAlpha += Time.unscaledDeltaTime / fFadeTime;
-			fAlpha += Time.deltaTime / fFadeTime;
+			fAlpha += Time.unscaledDeltaTime / fFadeTime;
 			if (bInit)
 			{
 				fFirstAlpha = fAlpha;
@@ -128,63 +114,51 @@ public class MovieFade : MonoBehaviour
 
 
 	// 必殺技開始か終わりかで、フェードの色と時間を変える
-	public Coroutine FadeOut(_FADE_PATERN fade, System.Action action)
+	public Coroutine FadeOut(bool bStartSP, System.Action action)
 	{
-		float fSPTime = 0.0f;
+		float fSPTime;
 
-		if (fade == _FADE_PATERN.NORMAL)
-		{// 普通の黒フェード
+		if(bStartSP)
+		{// 必殺技始まり
 			image.color = Color.black;
-			fSPTime = NORMAL_FADE_TIME;
+			fSPTime = MOVIE_FADE_TIME_START;
 		}
-		else if (fade == _FADE_PATERN.CUTIN)
-		{// カットイン
-			image.color = Color.black;			// とりあえず黒にしているけど、カットインなら別のコルーチンを作る必要がある。
-			fSPTime = CUTIN_FADE_TIME;
-		}
-		else if (fade == _FADE_PATERN.WHITE)
-		{
+		else
+		{// 必殺技終わり
 			image.color = Color.white;
-			fSPTime = WHITE_FADE_TIME;
+			fSPTime = MOVIE_FADE_TIME_END;
 		}
 
 		StopAllCoroutines();
-		return StartCoroutine(SpecialFadeout(fSPTime, action));
+		return StartCoroutine(FadeoutCoroutine(fSPTime, action));
 	}
 
-	public Coroutine FadeIn(_FADE_PATERN fade, System.Action action)
+	public Coroutine FadeOut(bool bStartSP)
 	{
-		float fSPTime = 0.0f;
+		return FadeOut(bStartSP, null);
+	}
 
-		if (fade == _FADE_PATERN.NORMAL)
-		{// 普通の黒フェード
+	public Coroutine FadeIn(bool bStartSP, System.Action action)
+	{
+		float fSPTime;
+
+		if (bStartSP)
+		{// 必殺技始まり
 			image.color = Color.black;
-			fSPTime = NORMAL_FADE_TIME;
+			fSPTime = MOVIE_FADE_TIME_START;
 		}
-		else if (fade == _FADE_PATERN.CUTIN)
-		{// カットイン
-			image.color = Color.black;			// とりあえず黒にしているけど、カットインなら別のコルーチンを作る必要がある。
-			fSPTime = CUTIN_FADE_TIME;
-		}
-		else if (fade == _FADE_PATERN.WHITE)
-		{
+		else
+		{// 必殺技終わり
 			image.color = Color.white;
-			fSPTime = WHITE_FADE_TIME;
+			fSPTime = MOVIE_FADE_TIME_END;
 		}
 
 		StopAllCoroutines();
-		return StartCoroutine(SpecialFadein(fSPTime, action));
+		return StartCoroutine(FadeinCoroutine(fSPTime, action));
 	}
 
-
-
-	//public Coroutine FadeOut(bool bStartSP)
-	//{
-	//	return FadeOut(bStartSP, null);
-	//}
-	//
-	//public Coroutine FadeIn(bool bStartSP)
-	//{
-	//	return FadeIn(bStartSP, null);
-	//}
+	public Coroutine FadeIn(bool bStartSP)
+	{
+		return FadeIn(bStartSP, null);
+	}
 }
