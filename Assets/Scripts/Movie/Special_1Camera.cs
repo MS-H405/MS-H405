@@ -287,7 +287,7 @@ public class Special_1Camera : MonoBehaviour
 	// カメラ揺れる
 	public void shakeCamera()
 	{
-		cs_ShakeCamera.Shake();
+		cs_ShakeCamera.DontMoveShake();
 	}
 
 

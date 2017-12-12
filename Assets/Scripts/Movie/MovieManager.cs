@@ -37,6 +37,9 @@ public class MovieManager : MonoBehaviour
 	private bool bInit;
     private GameObject _mainCamera = null;
 
+	MOVIE_SCENE NowSpecial;	// 今やっていた必殺技
+	bool bGoDeath;			// 死んで死亡シーンにいくのか、敵がまだ死んでいなくてゲームメインに戻るのか
+
 
 	public static MovieManager Instance
 	{
@@ -66,9 +69,6 @@ public class MovieManager : MonoBehaviour
 		}
 
 		DontDestroyOnLoad(this.gameObject);
-
-        // TODO : 開始演出入れた際、要デバッグ
-        _mainCamera = Camera.main.gameObject;
 	}
 
 	// デバッグ用
@@ -105,12 +105,19 @@ public class MovieManager : MonoBehaviour
 		   scene == MOVIE_SCENE.MECHA_START)
 		{
 			StartCoroutine("Col_SceneMove", scene);
+
+			Debug.Log(scene);
 		}
 		else if(
 			scene == MOVIE_SCENE.SPECIAL_1 ||
 			scene == MOVIE_SCENE.SPECIAL_2 ||
 			scene == MOVIE_SCENE.SPECIAL_3)
 		{
+			// TODO : 開始演出入れた際、要デバッグ
+			_mainCamera = Camera.main.gameObject;
+
+			bGoDeath = EnemyManager.Instance.BossEnemy.Death();		// 死んだかどうかを記録しておく
+			NowSpecial = scene;										// 今撃った必殺技
 			StartCoroutine("Col_SpecialStart", scene);
 		}
 		else
@@ -127,8 +134,11 @@ public class MovieManager : MonoBehaviour
 
 		isFading = true;
 
-		StartCoroutine(Col_SpecialFinish());
-	}
+		if (bGoDeath)
+			StartCoroutine(Col_SpecialFinish_Next());	// 敵が死んだので、対応する死亡シーンへ
+		else
+			StartCoroutine(Col_SpecialFinish());		// 敵がまだ死んでいないので、もう一回ゲームメインへ
+		}
 
     // 普通のシーン遷移
 	// 遷移先が必殺技シーン以外の時
@@ -149,11 +159,11 @@ public class MovieManager : MonoBehaviour
 		switch (scene)
 		{
 			case MOVIE_SCENE.TITLE:
-				SceneManager.LoadScene("a");
+				SceneManager.LoadScene("Title");
 				break;
 
 			case MOVIE_SCENE.STAGE_1:
-				SceneManager.LoadScene("PlayerTest");
+				SceneManager.LoadScene("TotemMain");
 				break;
 
 			case MOVIE_SCENE.STAGE_2:
@@ -335,6 +345,66 @@ public class MovieManager : MonoBehaviour
 
 		// 最後にGameMain.sceneの全てのオブジェクトの更新を再開させる関数を呼ぶ
 	}
+
+	// 必殺技が終わって、敵が死に、次のシーンに行く時
+	private IEnumerator Col_SpecialFinish_Next()
+	{
+		// フェードイン
+		bool bFadeIn = false;
+		MovieFade.Instance.FadeIn(MovieFade._FADE_PATERN.WHITE, () =>
+		{
+			bFadeIn = true;
+		});
+
+		// フェードインが終わるまではここで処理ストップ
+		while (!bFadeIn)
+			yield return null;
+
+		#region シーンを読み込む
+		switch (NowSpecial)
+		{
+			case MOVIE_SCENE.SPECIAL_1:
+				SceneManager.LoadScene("TotemDeath");
+				break;
+
+			case MOVIE_SCENE.SPECIAL_2:
+				SceneManager.LoadScene("a");
+				break;
+
+			case MOVIE_SCENE.SPECIAL_3:
+				SceneManager.LoadScene("a");
+				break;
+		}
+		#endregion
+
+		// audiolistenerが2個あるって言われないように、1フレーム待つ
+		//yield return null;
+
+		// ロード時間とりあえず今回は時間で判定
+		bInit = true;
+		fTime = 0.0f;
+		fFirstTime = 0.0f;
+		while (fTime - fFirstTime < 0.2f)
+		{
+			fTime += Time.unscaledDeltaTime;
+			if (bInit)
+			{
+				fFirstTime = fTime;
+				bInit = false;
+			}
+			yield return null;
+		}
+		//yield return new WaitForSeconds(0.2f);		// こっち使うと、timescaleを0にした場合止まってしまう。
+
+		// フェードアウト
+		MovieFade.Instance.FadeOut(MovieFade._FADE_PATERN.WHITE, () =>
+		{
+			isFading = false;		// フェード終了
+		});
+
+		// 最後にGameMain.sceneの全てのオブジェクトの更新を再開させる関数を呼ぶ
+	}
+
 
 
 

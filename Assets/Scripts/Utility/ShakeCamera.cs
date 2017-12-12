@@ -13,31 +13,47 @@ public class ShakeCamera : MonoBehaviour
     private Quaternion originRotation;  // 元の角度
     private float fShakeIntensity;
 
+	bool bMove = true;
+
     void Update()
     {
         if (fShakeIntensity > 0)
         {
-            // ランダムに位置と角度を移動
-            //transform.position = originPosition + Random.insideUnitSphere * fShakeIntensity;
-            //transform.rotation = new Quaternion(originRotation.x + Random.Range(-fShakeIntensity, fShakeIntensity),
-            //                                    originRotation.y + Random.Range(-fShakeIntensity, fShakeIntensity),
-            //                                    originRotation.z + Random.Range(-fShakeIntensity, fShakeIntensity),
-            //                                    originRotation.w + Random.Range(-fShakeIntensity, fShakeIntensity));
-
-			transform.position = transform.position + Random.insideUnitSphere * fShakeIntensity;
-			transform.rotation = new Quaternion(transform.rotation.x + Random.Range(-fShakeIntensity, fShakeIntensity),
-												transform.rotation.y + Random.Range(-fShakeIntensity, fShakeIntensity),
-												transform.rotation.z + Random.Range(-fShakeIntensity, fShakeIntensity),
-												transform.rotation.w + Random.Range(-fShakeIntensity, fShakeIntensity));
+			if(!bMove)
+			{// カメラが動かない時の揺れ
+				// ランダムに位置と角度を移動
+				transform.position = originPosition + Random.insideUnitSphere * fShakeIntensity;
+				transform.rotation = new Quaternion(originRotation.x + Random.Range(-fShakeIntensity, fShakeIntensity),
+				                                    originRotation.y + Random.Range(-fShakeIntensity, fShakeIntensity),
+				                                    originRotation.z + Random.Range(-fShakeIntensity, fShakeIntensity),
+				                                    originRotation.w + Random.Range(-fShakeIntensity, fShakeIntensity));
+			}
+			else
+			{// カメラが動くときの揺れ
+				transform.position = transform.position + Random.insideUnitSphere * fShakeIntensity;
+				transform.rotation = new Quaternion(transform.rotation.x + Random.Range(-fShakeIntensity, fShakeIntensity),
+													transform.rotation.y + Random.Range(-fShakeIntensity, fShakeIntensity),
+													transform.rotation.z + Random.Range(-fShakeIntensity, fShakeIntensity),
+													transform.rotation.w + Random.Range(-fShakeIntensity, fShakeIntensity));
+			}
 
             fShakeIntensity -= fShakeDecay;
         }
     }
 
+	// カメラが動くときのの揺れ
     public void Shake()
     {
+		bMove = true;
+        fShakeIntensity = fCoefShakeIntensity;
+    }
+
+	// カメラが動かない時の揺れ
+	public void DontMoveShake()
+	{
+		bMove = false;
         originPosition = transform.position;
         originRotation = transform.rotation;
         fShakeIntensity = fCoefShakeIntensity;
-    }  
+	}
 }

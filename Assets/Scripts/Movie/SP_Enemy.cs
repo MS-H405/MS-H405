@@ -9,11 +9,13 @@ public class SP_Enemy : MonoBehaviour
 	readonly Vector3 CON_FLY_SPEED = new Vector3(-10.0f, 35.0f, 30.0f);	// ぶっ飛ばされる時のスピード
 	const float CON_FLY_ACCELE_Y = -20.0f;								// ぶっ飛ばされるときの加速度Y
 	const float CON_DELETE_TIME = 1.0f;									// 吹っ飛んでから消えるまでの時間
-	readonly Vector3 CON_FLY_ROTATE = new Vector3(720.0f, 0.0f, 0.0f);	// 吹っ飛び時の回転速度
+	readonly Vector3 CON_FLY_ROTATE = new Vector3(-720.0f, 0.0f, 0.0f);	// 吹っ飛び時の回転速度
 
 	#endregion
 
 	#region 変数
+
+	[SerializeField]	Material mat;
 
 	// Effekseer関係
 	SetEffekseerObject cs_SetEffekseerObject;
@@ -24,7 +26,7 @@ public class SP_Enemy : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-
+		mat.color = Color.white;
 	}
 
 	// 吹っ飛び開始
@@ -53,6 +55,5 @@ public class SP_Enemy : MonoBehaviour
 
 		// 消滅エフェクトを出す
 		SetEffekseerObject.Instance.NewEffect(12);
-		GetComponent<MeshRenderer>().enabled = false;
 	}
 }

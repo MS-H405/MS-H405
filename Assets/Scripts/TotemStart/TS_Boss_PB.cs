@@ -27,6 +27,7 @@ public class TS_Boss_PB : PlayableBehaviour
 	const float CON_SECONDWAIT = 2.2f;		// 待ち時間2
 
 	const float CON_BACK_TIME = 0.4f;		// 潜るのにかける時間
+	const float CON_FADESTART_TIME = 0.2f;	// 潜るのが始まってから、フェードが開始される時間
 
 	#endregion
 
@@ -50,6 +51,8 @@ public class TS_Boss_PB : PlayableBehaviour
 	bool bEffect;
 
 	float fWait = 0.0f;	// ボスの出現と、エフェクトのタイミングを合わせるためのタイマー
+
+	bool bFade = true;
 
 	#endregion
 
@@ -142,7 +145,7 @@ public class TS_Boss_PB : PlayableBehaviour
 		if (bEffect)
 		{
 			BossAppearObj.GetComponent<EffekseerEmitter>().Play();
-			GameObject.Find("ShakeCameraObj").GetComponent<ShakeCamera>().Shake();		// Timelineで制御しているせいで、カメラが揺れない
+			GameObject.Find("ShakeCameraObj").GetComponent<ShakeCamera>().DontMoveShake();		// Timelineで制御しているせいで、カメラが揺れない
 			bEffect = false;
 		}
 
@@ -214,6 +217,13 @@ public class TS_Boss_PB : PlayableBehaviour
 
 
 		fTime += Time.deltaTime / CON_BACK_TIME;
+
+		// ゲームメインへシーン遷移
+		if(fTime > CON_FADESTART_TIME && bFade)
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_1);
+			bFade = false;
+		}
 
 		// 終了判定
 		if (fTime > 1.0f)

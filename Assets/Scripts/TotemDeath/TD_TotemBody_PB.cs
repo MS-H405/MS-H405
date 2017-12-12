@@ -13,6 +13,7 @@ public class TD_TotemBody_PB : PlayableBehaviour
 	const float CON_GRAY_TIME = 2.0f;			// 灰色になる時間
 	const float CON_OUT_START = 6.3f;			// 消え始める時間
 	const float CON_OUT_TIME = 1.5f;			// 消える時間
+	const float CON_FADE_TIME = 12.0f;			// フェードを開始する時間
 
 	#endregion
 
@@ -30,6 +31,8 @@ public class TD_TotemBody_PB : PlayableBehaviour
 
 	float fTotemColor = 1.0f;		// マテリアルのカラー
 	float fTotemEmission = 0.0f;	// マテリアルのエミッション		α値を0.0にするのでは消えないので、こっちで白くして消す
+
+	bool bFade = true;
 
 	#endregion
 
@@ -54,7 +57,6 @@ public class TD_TotemBody_PB : PlayableBehaviour
 	public override void OnBehaviourPlay(Playable playable, FrameData info)
 	{
 		animator.speed = 0.5f / CON_MOUTHMAX_TIME;	// ちょうど真ん中で口が全開になるはずなので、1.0f / 2.0fを計算して0.5fにしてある
-		Debug.Log(animator.speed);
 	}
 
 
@@ -73,6 +75,14 @@ public class TD_TotemBody_PB : PlayableBehaviour
 		}
 
 		SetColor();
+
+
+		// フェード
+		if(fTime > CON_FADE_TIME && bFade)
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TITLE);
+			bFade = false;
+		}
 	}
 
 	// マテリアルを操作する
