@@ -82,6 +82,7 @@
      <Compile Include="Assets\Scripts\Stage\StageData.cs" />
      <Compile Include="Assets\Scripts\Test\Bora\TestEffecseer.cs" />
      <Compile Include="Assets\Scripts\Test\Tatsuo\TatsuoTest_Enemy.cs" />
+     <Compile Include="Assets\Scripts\Title\PushStart.cs" />
      <Compile Include="Assets\Scripts\TotemDeath\TD_Effect_PA.cs" />
      <Compile Include="Assets\Scripts\TotemDeath\TD_Effect_PB.cs" />
      <Compile Include="Assets\Scripts\TotemDeath\TD_Totem_PA.cs" />
