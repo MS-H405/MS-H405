@@ -19,8 +19,8 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 
     #region variable
 
-    [SerializeField] GameObject _bossEnemy = null;
-    public GameObject BossEnemy
+    [SerializeField] EnemyBase _bossEnemy = null;
+    public EnemyBase BossEnemy
     {
         get
         {
@@ -55,7 +55,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
             if (!obj.GetComponent<EnemyBase>())
                 continue;
 
-            _bossEnemy = obj;
+            _bossEnemy = obj.GetComponent<EnemyBase>();
             return;
         }
 

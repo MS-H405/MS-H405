@@ -104,7 +104,7 @@ public class JugglingAtack : MonoBehaviour
             }
             // 次生成
             GameObject obj = Instantiate(gameObject, startPos, transform.rotation);
-            obj.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy);
+            obj.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy.gameObject);
             Debug.Log("キャッチ！");
         }
         else
