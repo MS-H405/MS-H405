@@ -74,7 +74,7 @@ public class GameCamera : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.O))
         {
-            MovieManager.Instance.MovieStart(MovieManager.MOVIE_SCENE.SPECIAL_1);
+            MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.SPECIAL_1);
             Debug.Log("MovieStart");
         }
 
