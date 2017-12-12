@@ -35,31 +35,15 @@ public class StaticCoroutine : SingletonMonoBehaviour<StaticCoroutine>
         return enumerator;
     }
 
-
     /// <summary>
-    /// 登録コルーチン停止処理
+    /// 登録コルーチン再開処理
     /// </summary>
-    /*private void AllStopCoroutine()
-    {
-        foreach (IEnumerator enumerator in _enumeratorList)
-        {
-            Instance.StopCoroutine(enumerator);
-        }
-    }*/
-
-    #endregion
-
-    #region unity_event
-
-    /// <summary>
-    /// アクティブ変更時処理
-    /// </summary>
-    private void OnEnable()
+    public void AllStartCoroutine()
     {
         List<IEnumerator> _removeList = new List<IEnumerator>();
-        foreach(IEnumerator enumerator in _enumeratorList)
+        foreach (IEnumerator enumerator in _enumeratorList)
         {
-            if(!enumerator.MoveNext())
+            if (!enumerator.MoveNext())
             {
                 _removeList.Add(enumerator);
                 continue;
@@ -74,12 +58,32 @@ public class StaticCoroutine : SingletonMonoBehaviour<StaticCoroutine>
         }
     }
 
-    private void OnDisable()
+    /// <summary>
+    /// 登録コルーチン停止処理
+    /// </summary>
+    public void AllStopCoroutine()
     {
         foreach (IEnumerator enumerator in _enumeratorList)
         {
             Instance.StopCoroutine(enumerator);
         }
+    }
+
+    #endregion
+
+    #region unity_event
+
+    /// <summary>
+    /// アクティブ変更時処理
+    /// </summary>
+    private void OnEnable()
+    {
+        AllStartCoroutine();
+    }
+
+    private void OnDisable()
+    {
+        AllStopCoroutine();
     }
 
     #endregion

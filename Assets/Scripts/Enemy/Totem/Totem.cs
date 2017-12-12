@@ -63,24 +63,7 @@ public class Totem : EnemyBase
         while (true)
         {
             // 行動ルーチン実行
-            IEnumerator enumerator = null;
-            switch (_action)
-            {
-                case eAction.TotemPushUp:
-                    enumerator = StaticCoroutine.Instance.StartStaticCoroutine(TotemPushUp());
-                    break;
-
-                case eAction.ChildTotemPushUp:
-                    enumerator = StaticCoroutine.Instance.StartStaticCoroutine(ChildTotemPushUp());
-                    break;
-
-                case eAction.SpecialAtack:
-                    enumerator = StaticCoroutine.Instance.StartStaticCoroutine(SpecialAtack());
-                    break;
-
-                default:
-                    break;
-            }
+            IEnumerator enumerator = RunAction();
 
             // 終わるまで待機する
             oldAction = _action;
@@ -95,18 +78,17 @@ public class Totem : EnemyBase
                 // スタン状態なら一時停止
                 if (IsStan)
                 {
-                    StopCoroutine(enumerator);
+                    _animator.SetBool("IsStan", true);
+                    StaticCoroutine.Instance.StopCoroutine(enumerator);
 
                     while (IsStan)
                     {
                         // スタン演出
-                        _animator.SetBool("IsStan", true);
                         yield return null;
                     }
+
                     _animator.SetBool("IsStan", false);
                     yield return new WaitForSeconds(1.0f);
-
-                    StartCoroutine(enumerator);
                 }
 
                 yield return null;
@@ -118,6 +100,28 @@ public class Totem : EnemyBase
                 _action = eAction.TotemPushUp;
             }
         }
+    }
+    
+    /// <summary>
+    /// 行動開始処理
+    /// </summary>
+    private IEnumerator RunAction()
+    {
+        switch (_action)
+        {
+            case eAction.TotemPushUp:
+                return StaticCoroutine.Instance.StartStaticCoroutine(TotemPushUp());
+
+            case eAction.ChildTotemPushUp:
+                return StaticCoroutine.Instance.StartStaticCoroutine(ChildTotemPushUp());
+
+            case eAction.SpecialAtack:
+                return StaticCoroutine.Instance.StartStaticCoroutine(SpecialAtack());
+
+            default:
+                break;
+        }
+        return null;
     }
 
     /// <summary>
