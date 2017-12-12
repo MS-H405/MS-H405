@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/TotemStart.unity
+- path: Assets/Scenes/TotemDeath.unity
   isLoaded: 1
   isActive: 1

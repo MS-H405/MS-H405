@@ -51,50 +51,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineBasicMultiChannelPerlinEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineBlenderSettingsEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineBlendListCameraEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineBrainEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineClearShotEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineColliderEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineComposerEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineConfinerEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineExternalCameraEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineFramingTransposerEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineFreeLookEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineGroupComposerEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineHardLockToTargetEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineHardLookAtEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineMixingCameraEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineOrbitalTransposerEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachinePathEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachinePOVEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineScreenComposerGuides.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineSmoothPathEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineStateDrivenCameraEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineTargetGroupEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineTrackedDollyEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineTransposerEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineVirtualCameraBaseEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Editors\CinemachineVirtualCameraEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Menus\CinemachineMenu.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\PropertyDrawers\CinemachineBlendDefinitionPropertyDrawer.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\PropertyDrawers\CinemachineTagFieldPropertyDrawer.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\PropertyDrawers\GetSetDrawer.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\PropertyDrawers\LensSettingsPropertyDrawer.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\PropertyDrawers\MinDrawer.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Utility\BaseEditor.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Utility\EmbeddedAssetHelpers.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Utility\SaveDuringPlay.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Utility\ScriptableObjectUtility.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Utility\SerializedPropertyHelper.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Windows\AboutWindow.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Windows\CinemachineColliderPrefs.cs" />
-     <Compile Include="Assets\Cinemachine\Base\Editor\Windows\CinemachineSettings.cs" />
-     <Compile Include="Assets\Cinemachine\Blackboard\Editor\ReactorEditor.cs" />
-     <Compile Include="Assets\Cinemachine\PostFX\Editor\CinemachinePostProcessingEditor.cs" />
-     <Compile Include="Assets\Cinemachine\PostFX\Editor\PostFXAutoImport.cs" />
-     <Compile Include="Assets\Cinemachine\Timeline\Editor\CinemachineShotEditor.cs" />
      <Compile Include="Assets\Effekseer\Editor\EffekseerAssetBundleBuilder.cs" />
      <Compile Include="Assets\Effekseer\Editor\EffekseerAssetInspector.cs" />
      <Compile Include="Assets\Effekseer\Editor\EffekseerAssetPostProcessor.cs" />
@@ -123,7 +79,7 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Apply.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\frag_ao.cginc" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\DepthOfField34.shader" />
-     <None Include="Assets\Cinemachine\ReleaseNotes.txt" />
+     <None Include="Assets\Plugins\Cinemachine\ReleaseNotes.txt" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBlur.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\SSAOShader.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ConvertDepth.shader" />
@@ -143,6 +99,7 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlur.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\DLAA.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseAndGrainDX11.shader" />
+     <None Include="Assets\Shader\Standard_Custom.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter2.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\SeparableBlur.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\MotionBlurClear.shader" />
