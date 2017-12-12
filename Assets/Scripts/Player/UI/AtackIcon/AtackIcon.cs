@@ -22,6 +22,8 @@ public class AtackIcon : MonoBehaviour
 
     #region variable
 
+    [SerializeField] ActionManager.eActionType _actionType;
+
     #endregion
 
     #region method
@@ -51,6 +53,18 @@ public class AtackIcon : MonoBehaviour
     #endregion
 
     #region unity_event
+
+    /// <summary>
+    /// 初期化処理
+    /// </summary>
+    private void Awake()
+    {
+        if (StageData.Instance.StageNumber >= (int)_actionType)
+            return;
+
+        // TODO : 使えないアイコンの処理
+        GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+    }
 
     /// <summary>
     /// 更新処理
