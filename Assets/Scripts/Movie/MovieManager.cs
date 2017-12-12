@@ -127,7 +127,7 @@ public class MovieManager : MonoBehaviour
 
 		isFading = true;
 
-		StartCoroutine("Col_MovieFinish");
+		StartCoroutine(Col_SpecialFinish());
 	}
 
     // 普通のシーン遷移

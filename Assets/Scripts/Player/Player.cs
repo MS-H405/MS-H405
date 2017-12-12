@@ -67,7 +67,6 @@ public class Player : MonoBehaviour
         Vector3 velocity = -transform.forward * _backPower;
         velocity.y = _upPower;
         _rigidBody.AddForce(velocity);
-
     }
 
     #endregion
@@ -101,7 +100,7 @@ public class Player : MonoBehaviour
                     if(Input.GetKeyDown(KeyCode.Return))
                     {
                         enemyBase.SpecialDamage();
-                        MovieManager.Instance.MovieStart(MovieManager.MOVIE_SCENE.SPECIAL_1);
+                        MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.SPECIAL_1);
                     }
                 }
                 else
@@ -130,7 +129,8 @@ public class Player : MonoBehaviour
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.Q))
+                // DEBUG : デバッグコマンド
+                if (Input.GetKeyDown(KeyCode.Z))
                 {
                     Damage();
                 }
