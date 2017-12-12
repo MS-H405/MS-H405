@@ -36,10 +36,17 @@ public class JugglingAtack : MonoBehaviour
 
     #region method
 
-    public void Run(GameObject target)
+    public void Run(EnemyBase target)
     {
         // 使用中の個数を増加
         _nowJugglingAmount++;
+
+        // スタン中ならキャンセル
+        if (target.IsStan)
+        {
+            PinDestroy(false);
+            return;
+        }
 
         // 初期化処理
         _atackSpeed = 10.0f * _commonAtackSpeed;
@@ -48,7 +55,7 @@ public class JugglingAtack : MonoBehaviour
         transform.position = initPos;
         if (target)
         {
-            _targetObj = target;
+            _targetObj = target.gameObject;
             Vector3 lookPos = _targetObj.transform.position;
             lookPos.y = 1.0f;
             transform.LookAt(lookPos);
@@ -104,7 +111,7 @@ public class JugglingAtack : MonoBehaviour
             }
             // 次生成
             GameObject obj = Instantiate(gameObject, startPos, transform.rotation);
-            obj.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy.gameObject);
+            obj.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy);
             Debug.Log("キャッチ！");
         }
         else

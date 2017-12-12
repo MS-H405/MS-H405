@@ -24,7 +24,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     {
         get
         {
-            if (!_isActive)
+            if (!_isActive && !_bossEnemy.IsStan)
                 return null;
 
             return _bossEnemy;
@@ -38,6 +38,18 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     #endregion
 
     #region method
+
+    /// <summary>
+    /// 死亡判定
+    /// </summary>
+    public bool Death()
+    {
+        return _bossEnemy.Death();
+    }
+
+    #endregion
+
+    #region unity_event
 
     /// <summary>
     /// 初期化処理
