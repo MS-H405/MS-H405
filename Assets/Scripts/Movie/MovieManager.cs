@@ -8,12 +8,19 @@ public class MovieManager : MonoBehaviour
 {
 	public enum MOVIE_SCENE
 	{
+		TITLE,			// タイトル
+		STAGE_1,		// ステージ1
+		STAGE_2,		// ステージ2
+		STAGE_3,		// ステージ3
+		RESULT,			// リザルト
+
 		TOTEM_START,	// トーテムポールの登場
 		TOTEM_DEATH,	// トーテムポールの死亡
 		BAGPIPE_START,	// バグパイプの登場
 		BAGPIPE_DEATH,	// バグパイプの死亡
 		MECHA_START,	// メカ大道芸人の登場
 		MECHA_DEATH,	// メカ大道芸人の死亡
+
 		SPECIAL_1,		// 必殺技1
 		SPECIAL_2,		// 必殺技2
 		SPECIAL_3,		// 必殺技3
@@ -75,14 +82,38 @@ public class MovieManager : MonoBehaviour
 
 
 	// ムービーシーンを呼び出す
-	public void MovieStart(MOVIE_SCENE scene)
+	public void FadeStart(MOVIE_SCENE scene)
 	{
 		if(isFading)
 			return;
 
 		isFading = true;
 
-		StartCoroutine("Col_MovieStart", scene);
+		if(scene == MOVIE_SCENE.TITLE ||
+		   scene == MOVIE_SCENE.STAGE_1 ||
+		   scene == MOVIE_SCENE.STAGE_2 ||
+		   scene == MOVIE_SCENE.STAGE_3 ||
+		   scene == MOVIE_SCENE.RESULT ||
+		   scene == MOVIE_SCENE.TOTEM_START ||
+		   scene == MOVIE_SCENE.TOTEM_DEATH ||
+		   scene == MOVIE_SCENE.BAGPIPE_DEATH ||
+		   scene == MOVIE_SCENE.BAGPIPE_START ||
+		   scene == MOVIE_SCENE.MECHA_DEATH ||
+		   scene == MOVIE_SCENE.MECHA_START)
+		{
+			StartCoroutine("Col_SceneMove", scene);
+		}
+		else if(
+			scene == MOVIE_SCENE.SPECIAL_1 ||
+			scene == MOVIE_SCENE.SPECIAL_2 ||
+			scene == MOVIE_SCENE.SPECIAL_3)
+		{
+			StartCoroutine("Col_SpecialStart", scene);
+		}
+		else
+		{
+			Debug.Log("そのシーン遷移作ってないです");
+		}
 	}
 
 	// ムービーシーン終了されたら呼ばれる
@@ -93,18 +124,17 @@ public class MovieManager : MonoBehaviour
 
 		isFading = true;
 
-		StartCoroutine("Col_MovieFinish");
+		StartCoroutine("Col_SpecialFinish");
 	}
 
-	private IEnumerator Col_MovieStart(MOVIE_SCENE scene)
+
+	// 普通のシーン遷移
+	// 遷移先が必殺技シーン以外の時
+	private IEnumerator Col_SceneMove(MOVIE_SCENE scene)
 	{
-		// 最初にGameMain.sceneの全てのオブジェクトの更新を停止させる関数を呼ぶ
-
-
-
 		// フェードイン
 		bool bFadeIn = false;
-		MovieFade.Instance.FadeIn(true, () =>
+		MovieFade.Instance.FadeIn(MovieFade._FADE_PATERN.NORMAL, () =>
 		{
 			bFadeIn = true;
 		});
@@ -112,53 +142,113 @@ public class MovieManager : MonoBehaviour
 		// フェードインが終わるまではここで処理ストップ
 		while (!bFadeIn)
 			yield return null;
-	
+
 		#region シーンを読み込む
 		switch (scene)
 		{
+			case MOVIE_SCENE.TITLE:
+				SceneManager.LoadScene("a");
+				break;
+
+			case MOVIE_SCENE.STAGE_1:
+				SceneManager.LoadScene("PlayerTest");
+				break;
+
+			case MOVIE_SCENE.STAGE_2:
+				SceneManager.LoadScene("a");
+				break;
+
+			case MOVIE_SCENE.STAGE_3:
+				SceneManager.LoadScene("a");
+				break;
+
+			case MOVIE_SCENE.RESULT:
+				SceneManager.LoadScene("a");
+				break;
+
 			case MOVIE_SCENE.TOTEM_START:
-				SceneManager.LoadScene("a", LoadSceneMode.Additive);
-				MovieSceneName = "a";
+				SceneManager.LoadScene("TotemStart");
 				break;
 
 			case MOVIE_SCENE.TOTEM_DEATH:
-				SceneManager.LoadScene("a", LoadSceneMode.Additive);
-				MovieSceneName = "a";
+				SceneManager.LoadScene("TotemDeath");
 				break;
 
 			case MOVIE_SCENE.BAGPIPE_START:
-				SceneManager.LoadScene("a", LoadSceneMode.Additive);
-				MovieSceneName = "a";
+				SceneManager.LoadScene("a");
 				break;
 
 			case MOVIE_SCENE.BAGPIPE_DEATH:
-				SceneManager.LoadScene("a", LoadSceneMode.Additive);
-				MovieSceneName = "a";
+				SceneManager.LoadScene("a");
 				break;
 
 			case MOVIE_SCENE.MECHA_START:
-				SceneManager.LoadScene("a", LoadSceneMode.Additive);
-				MovieSceneName = "a";
+				SceneManager.LoadScene("a");
 				break;
 
 			case MOVIE_SCENE.MECHA_DEATH:
-				SceneManager.LoadScene("a", LoadSceneMode.Additive);
-				MovieSceneName = "a";
+				SceneManager.LoadScene("a");
 				break;
+		}
+		#endregion
 
+		// ロード時間とりあえず今回は時間で判定
+		bInit = true;
+		fTime = 0.0f;
+		fFirstTime = 0.0f;
+		while (fTime - fFirstTime < 0.2f)
+		{
+			fTime += Time.unscaledDeltaTime;
+			if (bInit)
+			{
+				fFirstTime = fTime;
+				bInit = false;
+			}
+			yield return null;
+		}
+
+		// フェードアウト
+		MovieFade.Instance.FadeOut(MovieFade._FADE_PATERN.NORMAL, () =>
+		{
+			isFading = false;		// フェード終了
+		});
+	}
+
+
+	// 必殺技始まり
+	private IEnumerator Col_SpecialStart(MOVIE_SCENE scene)
+	{
+		// 最初にGameMain.sceneの全てのオブジェクトの更新を停止させる関数を呼ぶ
+
+
+
+		// フェードイン
+		bool bFadeIn = false;
+		MovieFade.Instance.FadeIn(MovieFade._FADE_PATERN.CUTIN, () =>
+		{
+			bFadeIn = true;
+		});
+
+		// フェードインが終わるまではここで処理ストップ
+		while (!bFadeIn)
+			yield return null;
+
+		#region シーンを読み込む
+		switch (scene)
+		{
 			case MOVIE_SCENE.SPECIAL_1:
 				SceneManager.LoadScene("Special_1", LoadSceneMode.Additive);
 				MovieSceneName = "Special_1";
 				break;
 
 			case MOVIE_SCENE.SPECIAL_2:
-				SceneManager.LoadScene("a", LoadSceneMode.Additive);
-				MovieSceneName = "a";
+				SceneManager.LoadScene("Special_2", LoadSceneMode.Additive);
+				MovieSceneName = "Special_2";
 				break;
 
 			case MOVIE_SCENE.SPECIAL_3:
-				SceneManager.LoadScene("a", LoadSceneMode.Additive);
-				MovieSceneName = "a";
+				SceneManager.LoadScene("Special_3", LoadSceneMode.Additive);
+				MovieSceneName = "Special_3";
 				break;
 		}
 		#endregion
@@ -176,7 +266,7 @@ public class MovieManager : MonoBehaviour
 		bInit = true;
 		fTime = 0.0f;
 		fFirstTime = 0.0f;
-		while(fTime - fFirstTime > 0.2f)
+		while(fTime - fFirstTime < 0.2f)
 		{
 			fTime += Time.unscaledDeltaTime;
 			if(bInit)
@@ -189,17 +279,19 @@ public class MovieManager : MonoBehaviour
 		//yield return new WaitForSeconds(0.2f);		// こっち使うと、timescaleを0にした場合止まってしまう。
 
 		// フェードアウト
-		MovieFade.Instance.FadeOut(true, () =>
+		MovieFade.Instance.FadeOut(MovieFade._FADE_PATERN.CUTIN, () =>
 		{
 			isFading = false;		// フェード終了
 		});
 	}
 
-	private IEnumerator Col_MovieFinish()
+
+	// 必殺技シーン終わり
+	private IEnumerator Col_SpecialFinish()
 	{
 		// フェードイン
 		bool bFadeIn = false;
-		MovieFade.Instance.FadeIn(false, () =>
+		MovieFade.Instance.FadeIn(MovieFade._FADE_PATERN.WHITE, () =>
 		{
 			bFadeIn = true;
 		});
@@ -221,7 +313,7 @@ public class MovieManager : MonoBehaviour
 		bInit = true;
 		fTime = 0.0f;
 		fFirstTime = 0.0f;
-		while (fTime - fFirstTime > 0.2f)
+		while (fTime - fFirstTime < 0.2f)
 		{
 			fTime += Time.unscaledDeltaTime;
 			if (bInit)
@@ -234,7 +326,7 @@ public class MovieManager : MonoBehaviour
 		//yield return new WaitForSeconds(0.2f);		// こっち使うと、timescaleを0にした場合止まってしまう。
 
 		// フェードアウト
-		MovieFade.Instance.FadeOut(false, () =>
+		MovieFade.Instance.FadeOut(MovieFade._FADE_PATERN.WHITE, () =>
 		{
 			isFading = false;		// フェード終了
 		});

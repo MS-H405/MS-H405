@@ -21,7 +21,6 @@ public class TS_Totemchild_PB : PlayableBehaviour
 	private List<GameObject> _TotemChildObjList = new List<GameObject>();
 	public GameObject TotemChildObj
 	{
-		get { return _TotemChildObjList[0]; }
 		set { _TotemChildObjList.Add(value); }
 	}
 
