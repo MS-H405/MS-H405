@@ -18,11 +18,18 @@ public class ShakeCamera : MonoBehaviour
         if (fShakeIntensity > 0)
         {
             // ランダムに位置と角度を移動
-            transform.position = originPosition + Random.insideUnitSphere * fShakeIntensity;
-            transform.rotation = new Quaternion(originRotation.x + Random.Range(-fShakeIntensity, fShakeIntensity),
-                                                originRotation.y + Random.Range(-fShakeIntensity, fShakeIntensity),
-                                                originRotation.z + Random.Range(-fShakeIntensity, fShakeIntensity),
-                                                originRotation.w + Random.Range(-fShakeIntensity, fShakeIntensity));
+            //transform.position = originPosition + Random.insideUnitSphere * fShakeIntensity;
+            //transform.rotation = new Quaternion(originRotation.x + Random.Range(-fShakeIntensity, fShakeIntensity),
+            //                                    originRotation.y + Random.Range(-fShakeIntensity, fShakeIntensity),
+            //                                    originRotation.z + Random.Range(-fShakeIntensity, fShakeIntensity),
+            //                                    originRotation.w + Random.Range(-fShakeIntensity, fShakeIntensity));
+
+			transform.position = transform.position + Random.insideUnitSphere * fShakeIntensity;
+			transform.rotation = new Quaternion(transform.rotation.x + Random.Range(-fShakeIntensity, fShakeIntensity),
+												transform.rotation.y + Random.Range(-fShakeIntensity, fShakeIntensity),
+												transform.rotation.z + Random.Range(-fShakeIntensity, fShakeIntensity),
+												transform.rotation.w + Random.Range(-fShakeIntensity, fShakeIntensity));
+
             fShakeIntensity -= fShakeDecay;
         }
     }

@@ -50,6 +50,7 @@ public class GameCamera : MonoBehaviour
 
 	[SerializeField] GameObject SubCameraObj;		// 俯瞰→通常時のスクリーン座標計算用カメラ
 	GameCamera_Sub cs_GameCamera_Sub;
+
 	#endregion
 
 
@@ -212,6 +213,7 @@ public class GameCamera : MonoBehaviour
 		float temp_y = Mathf.Lerp(transform.position.y, NewPos.y, CON_fPlayerFollowRate);
 		float temp_z = Mathf.Lerp(transform.position.z, NewPos.z, CON_fPlayerFollowRate);
 		transform.position = new Vector3(temp_x, temp_y, temp_z);															// 移動
+
 		#endregion
 	}
 
