@@ -11,7 +11,7 @@ using System.Linq;
 using UniRx;
 using UniRx.Triggers;
   
-public class Player : MonoBehaviour   
+public class Player : MonoBehaviour
 {
     #region define
 
@@ -21,9 +21,13 @@ public class Player : MonoBehaviour
 
     [SerializeField] int _hp = 6;
     private ActionManager _actionManager = null;
+    private PlayerMove _playerMove = null;
+    private RideBallMove _rideBallMove = null;
 
-    // TODO : 変更したい
-    static public GameObject instance = null;
+    // ダメージ処理演出用変数
+    private Rigidbody _rigidBody = null;
+    [SerializeField] float _backPower = 75.0f;
+    [SerializeField] float _upPower = 200.0f;
 
     #endregion
 
@@ -35,12 +39,34 @@ public class Player : MonoBehaviour
     public void Damage()
     {
         _hp--;
+        DamageStan();
         PlayerLifeManager.Instance.DamageEffect();
 
         if (_hp > 0)
             return;
 
         // TODO : 死亡処理 
+    }
+
+    /// <summary>
+    /// ダメージ時のスタン演出処理
+    /// </summary>
+    private void DamageStan()
+    {
+        // 玉乗り中なら玉乗りを強制キャンセル
+        if(_rideBallMove.enabled)
+        {
+            _actionManager.Cancel();
+            _rideBallMove.End();
+        }
+        else
+        {
+            _playerMove.OnRigor();
+        }
+
+        Vector3 velocity = -transform.forward * _backPower;
+        velocity.y = _upPower;
+        _rigidBody.AddForce(velocity);
     }
 
     #endregion
@@ -53,8 +79,16 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _actionManager = GetComponent<ActionManager>();
-        instance = gameObject;
+        _playerMove = GetComponent<PlayerMove>();
+        _rideBallMove = GetComponent<RideBallMove>();
+        _rigidBody = GetComponent<Rigidbody>();
+    }
 
+    /// <summary> 
+    /// 更新前処理  
+    /// </summary>  
+    private void Start()
+    {
         // PlayerInputのUpdate
         EnemyBase enemyBase = EnemyManager.Instance.BossEnemy.GetComponent<EnemyBase>();
         this.UpdateAsObservable()
@@ -66,7 +100,7 @@ public class Player : MonoBehaviour
                     if(Input.GetKeyDown(KeyCode.Return))
                     {
                         enemyBase.SpecialDamage();
-                        MovieManager.Instance.MovieStart(MovieManager.MOVIE_SCENE.SPECIAL_1);
+                        MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.SPECIAL_1);
                     }
                 }
                 else
@@ -95,9 +129,10 @@ public class Player : MonoBehaviour
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.Q))
+                // DEBUG : デバッグコマンド
+                if (Input.GetKeyDown(KeyCode.Z))
                 {
-                    PlayerLifeManager.Instance.DamageEffect();
+                    Damage();
                 }
             });
     }

@@ -1,4 +1,5 @@
-﻿// ---------------------------------------------------------
+﻿
+// ---------------------------------------------------------
 // AtackIconManager.cs
 // 概要 : 
 // 作成者: Shota_Obora
@@ -26,6 +27,8 @@ public class AtackIconManager : SingletonMonoBehaviour<AtackIconManager>
 
     private ActionManager.eActionType _nowAction = 0;
     private AtackIcon[] _atackIconList = new AtackIcon[IconAmount];
+
+    public Sprite SpecialIconSprite { get; private set; }
 
     #endregion
 
@@ -77,7 +80,7 @@ public class AtackIconManager : SingletonMonoBehaviour<AtackIconManager>
     private void ActionChange(bool isRight)
     {
         // 現在選択中のを縮小
-        ScaleChange((int)_nowAction, false);
+        ChangeScale((int)_nowAction, false);
 
         // 選択アイコン変更処理
         if (isRight)
@@ -100,16 +103,16 @@ public class AtackIconManager : SingletonMonoBehaviour<AtackIconManager>
         }
 
         // 新しく選択したのを拡大
-        ScaleChange((int)_nowAction, true);
+        ChangeScale((int)_nowAction, true);
     }
 
     /// <summary>
     /// アイコンの拡縮命令処理
     /// </summary>
-    private void ScaleChange(int index, bool isAdd)
+    private void ChangeScale(int index, bool isAdd)
     {
-        _atackIconList[index    ].ScaleChange(isAdd, _rotSpeed);
-        _atackIconList[index + 4].ScaleChange(isAdd, _rotSpeed);
+        _atackIconList[index    ].ChangeScale(isAdd, _rotSpeed);
+        _atackIconList[index + 4].ChangeScale(isAdd, _rotSpeed);
     }
 
     #endregion
@@ -122,11 +125,21 @@ public class AtackIconManager : SingletonMonoBehaviour<AtackIconManager>
     private void Awake()
     {
         IsChange = true;
+        SpecialIconSprite = Resources.Load<Sprite>("Sprite/GameUI/Special");
 
-        for(int i = 0; i < IconAmount; i++)
+        for (int i = 0; i < IconAmount; i++)
         {
             _atackIconList[i] = transform.GetChild(i).GetComponent<AtackIcon>();
         }
+
+        // スタン状態の変更時の演出処理
+        EnemyBase enemyBase = EnemyManager.Instance.BossEnemy.GetComponent<EnemyBase>();
+        this.ObserveEveryValueChanged(_ => enemyBase.IsStan)
+            .Subscribe(_ =>
+            {
+                _atackIconList[(int)_nowAction    ].ChangeSpecialIcon(enemyBase.IsStan);
+                _atackIconList[(int)_nowAction + 4].ChangeSpecialIcon(enemyBase.IsStan);
+            });
     }
 
     #endregion

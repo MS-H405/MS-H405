@@ -71,10 +71,13 @@ public class GameCamera : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		//----- デバッグ機能 ---------------------------------------
+        //----- デバッグ機能 ---------------------------------------
 
-		if (Input.GetKeyDown(KeyCode.O))
-			MovieManager.Instance.MovieStart(MovieManager.MOVIE_SCENE.SPECIAL_1);
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.SPECIAL_1);
+            Debug.Log("MovieStart");
+        }
 
 		//---------------------------------------------------------
 

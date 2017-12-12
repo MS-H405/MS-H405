@@ -125,7 +125,7 @@ public class ActionManager : MonoBehaviour
                 _nowSelect = 0;
             }
         }
-        Debug.Log(_nowSelect);
+        //Debug.Log(_nowSelect);
     }
 
     /// <summary>
@@ -171,7 +171,7 @@ public class ActionManager : MonoBehaviour
                     return;
 
                 GameObject jug = Instantiate(_jugglingPrefab, transform.position, transform.rotation);
-                jug.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy);
+                jug.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy.gameObject);
                 break;
 
             case eActionType.RideBall:

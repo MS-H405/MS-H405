@@ -53,12 +53,6 @@ public class JugglingAtack : MonoBehaviour
             lookPos.y = 1.0f;
             transform.LookAt(lookPos);
         }
-        else
-        {
-            // TODO : 対象がいない場合、Playerから見た前方に飛ばす
-            Vector3 lookPos = transform.position + Player.instance.transform.forward;
-            transform.LookAt(lookPos);
-        }
 
         // アクション実行
         StaticCoroutine.Instance.StartStaticCoroutine(ActionFlow());
@@ -110,7 +104,7 @@ public class JugglingAtack : MonoBehaviour
             }
             // 次生成
             GameObject obj = Instantiate(gameObject, startPos, transform.rotation);
-            obj.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy);
+            obj.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy.gameObject);
             Debug.Log("キャッチ！");
         }
         else
@@ -193,6 +187,7 @@ public class JugglingAtack : MonoBehaviour
         if (col.tag == "Player" && _isReflect)
         {
             _isCatch = true;
+            transform.rotation = col.transform.rotation;
             return;
         }
     }

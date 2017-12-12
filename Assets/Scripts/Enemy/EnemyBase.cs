@@ -23,7 +23,7 @@ public class EnemyBase : MonoBehaviour
 
     protected int _nowStanHp = 0;               // 気絶までの現在HP
     [SerializeField] int _stanHP = 0;           // 気絶までの初期HP
-    public bool IsStan { get; private set; }    // 気絶フラグ
+    public bool IsStan { get; /*privateに戻す*/protected set; }    // 気絶フラグ
 
     #endregion
 

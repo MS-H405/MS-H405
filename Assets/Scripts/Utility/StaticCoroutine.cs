@@ -19,7 +19,7 @@ public class StaticCoroutine : SingletonMonoBehaviour<StaticCoroutine>
 
     #region variable
 
-    private List<IEnumerator> _courutineList = new List<IEnumerator>();
+    private List<IEnumerator> _enumeratorList = new List<IEnumerator>();
 
     #endregion
 
@@ -28,22 +28,44 @@ public class StaticCoroutine : SingletonMonoBehaviour<StaticCoroutine>
     /// <summary>
     /// コルーチン実行処理処理
     /// </summary>
-    public Coroutine StartStaticCoroutine(IEnumerator coroutine)
+    public IEnumerator StartStaticCoroutine(IEnumerator enumerator)
     {
-        _courutineList.Add(coroutine);
-        return Instance.StartCoroutine(coroutine);
-       // return coroutine;
+        _enumeratorList.Add(enumerator);
+        Instance.StartCoroutine(enumerator);
+        return enumerator;
     }
 
+    /// <summary>
+    /// 登録コルーチン再開処理
+    /// </summary>
+    public void AllStartCoroutine()
+    {
+        List<IEnumerator> _removeList = new List<IEnumerator>();
+        foreach (IEnumerator enumerator in _enumeratorList)
+        {
+            if (!enumerator.MoveNext())
+            {
+                _removeList.Add(enumerator);
+                continue;
+            }
+
+            Instance.StartCoroutine(enumerator);
+        }
+
+        foreach (IEnumerator enumerator in _removeList)
+        {
+            _enumeratorList.Remove(enumerator);
+        }
+    }
 
     /// <summary>
-    /// アクティブ変更時処理
+    /// 登録コルーチン停止処理
     /// </summary>
     public void AllStopCoroutine()
     {
-        for (int i = 0; i < _courutineList.Count; i++)
+        foreach (IEnumerator enumerator in _enumeratorList)
         {
-            Instance.StopCoroutine(_courutineList[i]);
+            Instance.StopCoroutine(enumerator);
         }
     }
 
@@ -56,10 +78,12 @@ public class StaticCoroutine : SingletonMonoBehaviour<StaticCoroutine>
     /// </summary>
     private void OnEnable()
     {
-        for(int i = 0; i < _courutineList.Count; i++)
-        {
-            Instance.StartCoroutine(_courutineList[i]);
-        }
+        AllStartCoroutine();
+    }
+
+    private void OnDisable()
+    {
+        AllStopCoroutine();
     }
 
     #endregion
