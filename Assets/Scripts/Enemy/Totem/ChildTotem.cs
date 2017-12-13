@@ -135,7 +135,6 @@ public class ChildTotem : MonoBehaviour
         while (transform.position.y > 0.0f)
         {
             _rigidbody.AddForce(0.0f, -9.8f, 0.0f);
-            //transform.eulerAngles += new Vector3(0, 360, 0) * 0.5f;
             yield return null;
         }
         _isAtack = false;

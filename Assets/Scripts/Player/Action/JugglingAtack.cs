@@ -42,7 +42,7 @@ public class JugglingAtack : MonoBehaviour
         _nowJugglingAmount++;
 
         // スタン中ならキャンセル
-        if (target.IsStan)
+        if (target && target.IsStan)
         {
             PinDestroy(false);
             return;
