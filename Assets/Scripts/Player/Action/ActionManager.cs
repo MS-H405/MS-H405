@@ -171,7 +171,7 @@ public class ActionManager : MonoBehaviour
                     return;
 
                 GameObject jug = Instantiate(_jugglingPrefab, transform.position, transform.rotation);
-                jug.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy.gameObject);
+                jug.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy);
                 break;
 
             case eActionType.RideBall:

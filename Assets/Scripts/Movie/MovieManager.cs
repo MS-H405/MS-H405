@@ -116,7 +116,7 @@ public class MovieManager : MonoBehaviour
 			// TODO : 開始演出入れた際、要デバッグ
 			_mainCamera = Camera.main.gameObject;
 
-			bGoDeath = EnemyManager.Instance.BossEnemy.Death();		// 死んだかどうかを記録しておく
+			bGoDeath = EnemyManager.Instance.Death();	        	// 死んだかどうかを記録しておく
 			NowSpecial = scene;										// 今撃った必殺技
 			StartCoroutine("Col_SpecialStart", scene);
 		}
