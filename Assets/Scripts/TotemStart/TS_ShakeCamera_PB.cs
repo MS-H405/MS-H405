@@ -11,7 +11,8 @@ public class TS_ShakeCamera_PB : PlayableBehaviour
 	const float CON_CHILDSHAKE_FIRST_TIME = 0.5f;		// 最初に1個生えてくる子トーテムの揺れを始める時間
 	const float CON_CHILDSHAKE_SECOND_TIME = 2.1f;		// 4つ連続で生えてくる子トーテムの揺れを始める時間
 	const float CON_SHILDSHAKE_STOP_TIME = 3.0f;		// 減衰率を入れる時間
-	const float CON_BOSSSHAKE_TIME = 5.9f;				// ボストーテムの揺れを始める時間
+	const float CON_BOSSSHAKE_TIME = 6.9f;				// ボストーテムの揺れを始める時間
+	const float CON_DIVESHAKE_TIME = 15.0f;				// トーテムが潜るときの揺れを始める時間
 
 	#endregion
 
@@ -33,7 +34,7 @@ public class TS_ShakeCamera_PB : PlayableBehaviour
 	public override void OnGraphStart(Playable playable)
 	{
 		cs_ShakeCamera = ShakeCameraObj.GetComponent<ShakeCamera>();
-		for(int i = 0 ; i < 4 ; i ++)
+		for(int i = 0 ; i < 5 ; i ++)
 			bUse.Add(true);
 	}
 
@@ -64,7 +65,6 @@ public class TS_ShakeCamera_PB : PlayableBehaviour
 			cs_ShakeCamera.SetParam(0.02f, 0.001f);
 			cs_ShakeCamera.DontMoveShake();			// ShakeCameraObjは動いていないのでこっちの関数
 			bUse[0] = false;
-			Debug.Log(123);
 		}
 		if (bUse[1] && fTime >= CON_CHILDSHAKE_SECOND_TIME)
 		{
@@ -79,9 +79,15 @@ public class TS_ShakeCamera_PB : PlayableBehaviour
 		}
 		if (bUse[3] && fTime >= CON_BOSSSHAKE_TIME)
 		{
-			cs_ShakeCamera.SetParam(0.03f, 0.0008f);
+			cs_ShakeCamera.SetParam(0.03f, 0.0005f);
 			cs_ShakeCamera.DontMoveShake();
 			bUse[3] = false;
+		}
+		if (bUse[4] && fTime >= CON_DIVESHAKE_TIME)
+		{
+			cs_ShakeCamera.SetParam(0.007f, 0.0002f);
+			cs_ShakeCamera.DontMoveShake();
+			bUse[4] = false;
 		}
 	}
 }
