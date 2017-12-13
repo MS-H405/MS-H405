@@ -84,7 +84,7 @@ public class JugglingAtack : MonoBehaviour
         }
 
         // 反射したので適当な位置を落下地点として設定
-        Vector3 dropPoint = startPos;   // TODO : ランダム算出を実装予定
+        Vector3 dropPoint = RandomDropPoint(startPos);
         dropPoint.y = 0.0f;
         GameObject effect = Instantiate(_dropPointEffect, dropPoint, Quaternion.identity);
 
@@ -110,7 +110,7 @@ public class JugglingAtack : MonoBehaviour
                 _commonAtackSpeed += 0.1f;
             }
             // 次生成
-            GameObject obj = Instantiate(gameObject, startPos, transform.rotation);
+            GameObject obj = Instantiate(gameObject, transform.position, transform.rotation);
             obj.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy);
             Debug.Log("キャッチ！");
         }
@@ -124,6 +124,15 @@ public class JugglingAtack : MonoBehaviour
         // 破棄処理
         Destroy(effect);
         PinDestroy(!_isCatch);
+    }
+
+    /// <summary>
+    /// ランダムな落下位置を返す
+    /// </summary>
+    private Vector3 RandomDropPoint(Vector3 dropPoint)
+    {
+        Vector3 rand = new Vector3(Random.Range(-2.0f, 2.0f), 0.0f, Random.Range(-2.0f, 2.0f));
+        return dropPoint + rand;
     }
 
     /// <summary>
@@ -194,6 +203,7 @@ public class JugglingAtack : MonoBehaviour
         if (col.tag == "Player" && _isReflect)
         {
             _isCatch = true;
+            transform.position = col.transform.position;
             transform.rotation = col.transform.rotation;
             return;
         }
