@@ -16,6 +16,7 @@ MonoBehaviour:
   - {fileID: 114809266321964728}
   - {fileID: 114199962174998480}
   - {fileID: 114582821113430934}
+  - {fileID: 114228406286812020}
   m_FixedDuration: 0
   m_EditorSettings:
     fps: 60
@@ -182,19 +183,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -222,19 +211,7 @@ MonoBehaviour:
     m_BlendOutDuration: 0
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -274,6 +251,40 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: Cinemachima_Virtual_Camera_4
+    m_Version: 1
+  - m_Start: 4.666666666666667
+    m_ClipIn: 0
+    m_Asset: {fileID: 114430167283973024}
+    m_UnderlyingAsset: {fileID: 114430167283973024}
+    m_Duration: 8.333333333332334
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 114199962174998480}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 0.9999999999999991
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
       m_Curve:
       - serializedVersion: 2
         time: 0
@@ -299,18 +310,36 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: Cinemachima_Virtual_Camera_4
+    m_DisplayName: Cinemachima_Virtual_Camera_5
     m_Version: 1
-  - m_Start: 4.666666666666667
+--- !u!114 &114228406286812020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778877366, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
+  m_Name: Playable Track2
+  m_EditorClassIdentifier: 
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_AnimClip: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips:
+  - m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: 114430167283973024}
-    m_UnderlyingAsset: {fileID: 114430167283973024}
-    m_Duration: 8.333333333332334
+    m_Asset: {fileID: 114958950616663224}
+    m_UnderlyingAsset: {fileID: 114958950616663224}
+    m_Duration: 13
     m_TimeScale: 1
-    m_ParentTrack: {fileID: 114199962174998480}
+    m_ParentTrack: {fileID: 114228406286812020}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 0.9999999999999991
+    m_BlendInDuration: -1
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
@@ -357,7 +386,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: Cinemachima_Virtual_Camera_5
+    m_DisplayName: TS_ShakeCamera_PA
     m_Version: 1
 --- !u!114 &114332978461713728
 MonoBehaviour:
@@ -614,4 +643,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VirtualCamera:
     exposedName: 9afbeba9a09d1f645b8a83faca6eaa03
+    defaultValue: {fileID: 0}
+--- !u!114 &114958950616663224
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ad78aa6d9886d7439d90bd698716828, type: 3}
+  m_Name: TS_ShakeCamera_PA
+  m_EditorClassIdentifier: 
+  ShakeCameraObj:
+    exposedName: 50b3fcf685c1d784197eb3eaddbafeaa
     defaultValue: {fileID: 0}

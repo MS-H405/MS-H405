@@ -91,6 +91,8 @@
      <Compile Include="Assets\Scripts\TotemDeath\TD_TotemBody_PB.cs" />
      <Compile Include="Assets\Scripts\TotemStart\TS_Boss_PA.cs" />
      <Compile Include="Assets\Scripts\TotemStart\TS_Boss_PB.cs" />
+     <Compile Include="Assets\Scripts\TotemStart\TS_ShakeCamera_PA.cs" />
+     <Compile Include="Assets\Scripts\TotemStart\TS_ShakeCamera_PB.cs" />
      <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild.cs" />
      <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PA.cs" />
      <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PB.cs" />
