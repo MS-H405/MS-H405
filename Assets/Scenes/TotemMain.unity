@@ -946,6 +946,7 @@ GameObject:
   m_Component:
   - component: {fileID: 605366800}
   - component: {fileID: 605366801}
+  - component: {fileID: 605366802}
   - component: {fileID: 605366799}
   m_Layer: 0
   m_Name: GameController
@@ -993,6 +994,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stageNumber: 1
+--- !u!114 &605366802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 605366798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d949608b40093d9409cc3e889f733b0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 0}
 --- !u!1 &633647204
 GameObject:
   m_ObjectHideFlags: 0
@@ -1752,35 +1765,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 114097555248322722, guid: 756c1f99629816e40859ff6ff9affb30,
-        type: 2}
-      propertyPath: _appearEffectName
-      value: TS_boss_appear
-      objectReference: {fileID: 0}
-    - target: {fileID: 114097555248322722, guid: 756c1f99629816e40859ff6ff9affb30,
-        type: 2}
-      propertyPath: _mainHp
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1967934187120978, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 95943922058362072, guid: 756c1f99629816e40859ff6ff9affb30,
-        type: 2}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 45a8e770fff986546afd7b4556785b98, type: 2}
-    - target: {fileID: 4071520533003786, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4071520533003786, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114582321539782110, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1066123123
@@ -2678,7 +2663,7 @@ Prefab:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 114582321539782110, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
+    - {fileID: 0}
     - {fileID: 114097555248322722, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
   m_IsPrefabParent: 0

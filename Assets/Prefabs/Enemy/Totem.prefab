@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33470478782490552}
   - component: {fileID: 23099586810342572}
   - component: {fileID: 136810317194033102}
+  - component: {fileID: 114238780591579852}
   m_Layer: 9
   m_Name: sita2
   m_TagString: Enemy
@@ -40,6 +41,7 @@ GameObject:
   - component: {fileID: 33618750564843106}
   - component: {fileID: 23124273719195094}
   - component: {fileID: 136964598163032672}
+  - component: {fileID: 114021212797698486}
   m_Layer: 9
   m_Name: naka2
   m_TagString: Enemy
@@ -58,6 +60,7 @@ GameObject:
   - component: {fileID: 33885611259149468}
   - component: {fileID: 23447341999577110}
   - component: {fileID: 136515507031128592}
+  - component: {fileID: 114958596229811472}
   m_Layer: 9
   m_Name: ue2
   m_TagString: Enemy
@@ -76,7 +79,6 @@ GameObject:
   - component: {fileID: 95943922058362072}
   - component: {fileID: 54531499570861706}
   - component: {fileID: 114097555248322722}
-  - component: {fileID: 114582321539782110}
   m_Layer: 9
   m_Name: Totem
   m_TagString: Enemy
@@ -94,9 +96,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4938142039479418}
   - {fileID: 4368674304318244}
   - {fileID: 4366080844274098}
-  - {fileID: 4938142039479418}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
@@ -106,12 +108,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1035258683387630}
-  m_LocalRotation: {x: -0, y: -0.005050025, z: -0, w: 0.99998724}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
   m_Father: {fileID: 4071520533003786}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4368674304318244
 Transform:
@@ -119,12 +121,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1574225438334816}
-  m_LocalRotation: {x: -0, y: -0.005050025, z: -0, w: 0.99998724}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
   m_Father: {fileID: 4071520533003786}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4938142039479418
 Transform:
@@ -132,12 +134,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1690052732056992}
-  m_LocalRotation: {x: -0, y: -0.005050025, z: -0, w: 0.99998724}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
   m_Father: {fileID: 4071520533003786}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23099586810342572
 MeshRenderer:
@@ -286,7 +288,7 @@ Animator:
   m_GameObject: {fileID: 1967934187120978}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 4a2b27fa07e77e64cb5d3cd888d201e6, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 45a8e770fff986546afd7b4556785b98, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -294,6 +296,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114021212797698486
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1574225438334816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0eb453298f191e429d2c2f98767c500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114097555248322722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -305,28 +318,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b6ba63a62c248d4ba5228daf9f19088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainHp: 3
+  _mainHp: 1
   _stanHP: 1
   _oneBlockSize: 3
   _oneBlockUpSpeed: 0.25
   _childTotemAmount: 5
   _childTotemPrefab: {fileID: 1317445268974252, guid: 0aac8fd4d8fa14644b2d9a03c04b2f54,
     type: 2}
-  _apeearEffect: {fileID: 114582321539782110}
---- !u!114 &114582321539782110
+  _appearEffectName: TS_boss_appear
+--- !u!114 &114238780591579852
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1967934187120978}
+  m_GameObject: {fileID: 1035258683387630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50091075b6bce714bbcd73abc4eee722, type: 3}
+  m_Script: {fileID: 11500000, guid: c0eb453298f191e429d2c2f98767c500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectName: TS_totem_appear
-  playOnStart: 0
-  loop: 0
+--- !u!114 &114958596229811472
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1690052732056992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0eb453298f191e429d2c2f98767c500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136515507031128592
 CapsuleCollider:
   m_ObjectHideFlags: 1

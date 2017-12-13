@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 33535963016819090}
   - component: {fileID: 23319516768499270}
   - component: {fileID: 136386662830177502}
+  - component: {fileID: 114444802826967694}
   m_Layer: 9
   m_Name: ue2
   m_TagString: Untagged
@@ -57,6 +58,7 @@ GameObject:
   - component: {fileID: 33365262257160518}
   - component: {fileID: 23621144559891952}
   - component: {fileID: 136839035490133530}
+  - component: {fileID: 114507355029019506}
   m_Layer: 9
   m_Name: sita2
   m_TagString: Untagged
@@ -75,6 +77,7 @@ GameObject:
   - component: {fileID: 33697484366847914}
   - component: {fileID: 23340139445032640}
   - component: {fileID: 136511114764145322}
+  - component: {fileID: 114103544929755832}
   m_Layer: 9
   m_Name: naka2
   m_TagString: Untagged
@@ -88,7 +91,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1629071607263168}
-  m_LocalRotation: {x: -0, y: 0.99998724, z: -0, w: 0.005050025}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.0065, y: 0.0065, z: 0.0065}
   m_Children: []
@@ -101,7 +104,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1967445728306728}
-  m_LocalRotation: {x: -0, y: 0.99998724, z: -0, w: 0.005050025}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.0065, y: 0.0065, z: 0.0065}
   m_Children: []
@@ -114,7 +117,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1317445268974252}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 7.18, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -123,14 +126,14 @@ Transform:
   - {fileID: 4266584339746146}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4876853675245072
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1920398884287122}
-  m_LocalRotation: {x: -0, y: 0.99998724, z: -0, w: 0.005050025}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.0065, y: 0.0065, z: 0.0065}
   m_Children: []
@@ -275,6 +278,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 90
   m_CollisionDetection: 0
+--- !u!114 &114103544929755832
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1967445728306728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0eb453298f191e429d2c2f98767c500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114419741613734700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -288,6 +302,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _oneBlockSize: 2
   _appearEffectName: TS_totem_appear
+  _dropPointEffect: {fileID: 0}
+--- !u!114 &114444802826967694
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1629071607263168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0eb453298f191e429d2c2f98767c500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114507355029019506
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1920398884287122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0eb453298f191e429d2c2f98767c500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136386662830177502
 CapsuleCollider:
   m_ObjectHideFlags: 1
