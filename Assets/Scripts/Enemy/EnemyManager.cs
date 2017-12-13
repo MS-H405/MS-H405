@@ -71,8 +71,8 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
             return;
         }
 
-        // 
-        Debug.LogError("BossEnemyがいません");
+        // 警告文 : これが出てたらゲーム成立しない
+        Debug.LogError("Bossが存在しません");
     }
 
     #endregion

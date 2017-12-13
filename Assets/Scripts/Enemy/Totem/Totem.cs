@@ -48,6 +48,7 @@ public class Totem : EnemyBase
     private ShakeCamera _shakeCamera = null;
     private Animator _animator = null;
     [SerializeField] string _appearEffectName = "TS_boss_appear";
+    List<ManualRotation> _totemHeadList = new List<ManualRotation>();
 
     #endregion
 
@@ -134,7 +135,8 @@ public class Totem : EnemyBase
         while (amount < _headAmount)
         {
             amount++;
-            transform.position = new Vector3(Random.Range(-10.0f, 10.0f), -_oneBlockSize * 3.0f, Random.Range(-10.0f, 10.0f));
+            transform.position = new Vector3(Random.Range(-10.0f, 10.0f), -_oneBlockSize * _headAmount, Random.Range(-10.0f, 10.0f));
+            transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
 
             // 土煙を出す
             AppearEffect();
@@ -148,9 +150,11 @@ public class Totem : EnemyBase
             time = 0.0f;
             _isAtack = true;
             AppearEffect();
+            TotemRot(true, amount);
+            Vector3 initPos = transform.position;
             while (time < amount)
             {
-                transform.position += new Vector3(0, _oneBlockSize * (Time.deltaTime / _oneBlockUpSpeed), 0);
+                transform.position = Vector3.Lerp(initPos, initPos + new Vector3(0, _oneBlockSize * amount, 0), time / amount);
                 time += Time.deltaTime / _oneBlockUpSpeed;
 
                 // 半分出たところで通常視点に戻す
@@ -161,9 +165,6 @@ public class Totem : EnemyBase
                 
                 yield return null;
             }
-            Vector3 pos = transform.position;
-            pos.y = (-_oneBlockSize * 3.0f) + (_oneBlockSize * amount);
-            transform.position = pos;
             _isAtack = false;
 
             // 待機
@@ -177,6 +178,7 @@ public class Totem : EnemyBase
 
             // 潜る処理
             AppearEffect();
+            TotemRot(false, amount);
             while (time > 0.0f)
             {
                 transform.position -= new Vector3(0, _oneBlockSize * (Time.deltaTime / _oneBlockUpSpeed), 0);
@@ -221,6 +223,7 @@ public class Totem : EnemyBase
 
         // 本体突き上げ処理
         transform.position = new Vector3(Random.Range(-10.0f, 10.0f), -_oneBlockSize * 3.0f, Random.Range(-10.0f, 10.0f));
+        transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
 
         // 土煙を出す
         AppearEffect();
@@ -234,9 +237,11 @@ public class Totem : EnemyBase
         time = 0.0f;
         _isAtack = true;
         AppearEffect();
+        TotemRot(true, _headAmount);
+        Vector3 initPos = transform.position;
         while (time < _headAmount)
         {
-            transform.position += new Vector3(0, _oneBlockSize * (Time.deltaTime / _oneBlockUpSpeed), 0);
+            transform.position = Vector3.Lerp(initPos, initPos + new Vector3(0, _oneBlockSize * _headAmount, 0), time / _headAmount);
             time += Time.deltaTime / _oneBlockUpSpeed;
 
             // 半分出たところで通常視点に戻す
@@ -248,11 +253,6 @@ public class Totem : EnemyBase
             yield return null;
         }
         _isAtack = false;
-
-        // TODO : 補正処理
-        Vector3 pos = transform.position;
-        pos.y = -_oneBlockSize * 3.0f + _oneBlockSize * _headAmount;
-        transform.position = pos;
 
         // 次の行動へ
         _action += 1;
@@ -315,6 +315,7 @@ public class Totem : EnemyBase
         // 本体も潜らせる
         time = 0.0f;
         AppearEffect();
+        TotemRot(false, _headAmount);
         while (time < _headAmount)
         {
             transform.position -= new Vector3(0, _oneBlockSize * (Time.deltaTime / _oneBlockUpSpeed), 0);
@@ -344,6 +345,27 @@ public class Totem : EnemyBase
         GameEffectManager.Instance.PlayOnHeightZero(_appearEffectName, transform.position);
     }
 
+    /// <summary>
+    /// トーテムの回転処理
+    /// </summary>
+    private void TotemRot(bool isUp, int headAmount)
+    {
+        float speed = _oneBlockUpSpeed * headAmount;
+        Vector3 rotAmount = new Vector3(0, 360, 0) * headAmount;
+        if(isUp)
+        {
+            rotAmount *= -1;
+        }
+
+        // 回転実行
+        foreach (ManualRotation rot in _totemHeadList)
+        {
+            Debug.Log(rotAmount);
+            rot.Run(rotAmount, speed);
+            rotAmount *= -1;
+        }
+    }
+
     #endregion
 
     #region unity_event
@@ -364,6 +386,12 @@ public class Totem : EnemyBase
             ChildTotem instance = Instantiate(_childTotemPrefab).GetComponent<ChildTotem>();
             instance.gameObject.SetActive(false);
             _childTotemList.Add(instance);
+        }
+
+        // トーテムの顔ごとの回転処理用コンポーネントを取得
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            _totemHeadList.Add(transform.GetChild(i).GetComponent<ManualRotation>());
         }
     }
 
