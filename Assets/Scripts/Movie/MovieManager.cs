@@ -105,8 +105,6 @@ public class MovieManager : MonoBehaviour
 		   scene == MOVIE_SCENE.MECHA_START)
 		{
 			StartCoroutine("Col_SceneMove", scene);
-
-			Debug.Log(scene);
 		}
 		else if(
 			scene == MOVIE_SCENE.SPECIAL_1 ||

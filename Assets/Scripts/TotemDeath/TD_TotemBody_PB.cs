@@ -12,8 +12,8 @@ public class TD_TotemBody_PB : PlayableBehaviour
 
 	const float CON_GRAY_TIME = 2.0f;			// 灰色になる時間
 	const float CON_OUT_START = 6.3f;			// 消え始める時間
-	const float CON_OUT_TIME = 1.5f;			// 消える時間
-	const float CON_FADE_TIME = 12.0f;			// フェードを開始する時間
+	const float CON_OUT_TIME = 2.5f;			// 消える時間
+	const float CON_FADE_TIME = 20.0f;			// フェードを開始する時間
 
 	#endregion
 

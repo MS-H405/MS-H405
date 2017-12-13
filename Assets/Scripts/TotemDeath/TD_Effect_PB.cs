@@ -14,6 +14,7 @@ public class TD_Effect_PB : PlayableBehaviour
 	const float CON_EFFECT_NAKA = 4.8f;		// トーテム中用の土埃を発生させる時間
 	const float CON_EFFECT_POWERUP = 6.3f;	// パワーアップのエフェクトを出す時間
 	const float CON_EFFECT_FLUSH = 6.3f;	// フラッシュを出す時間
+	const float CON_EFFECT_PLAYER_POWERUP = 17.0f;	// プレイヤーパワーアップエフェクト
 
 
 	#endregion
@@ -43,7 +44,7 @@ public class TD_Effect_PB : PlayableBehaviour
 		cs_SetEffekseerObject = SetEffekseerObj.GetComponent<SetEffekseerObject>();
 
 		// 今発生させるエフェクトの個数分用意する
-		for(int i = 0 ; i < 6 ; i ++)
+		for(int i = 0 ; i < 7 ; i ++)
 			bEffectList.Add(true);
 	}
 
@@ -109,6 +110,11 @@ public class TD_Effect_PB : PlayableBehaviour
 		{
 			cs_SetEffekseerObject.NewEffect(7);
 			bEffectList[5] = false;
+		}
+		if (bEffectList[6] && fTime >= CON_EFFECT_PLAYER_POWERUP)		// プレイヤーパワーアップ
+		{
+			cs_SetEffekseerObject.NewEffect(8);
+			bEffectList[6] = false;
 		}
 	}
 }

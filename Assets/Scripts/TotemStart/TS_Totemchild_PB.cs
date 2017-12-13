@@ -11,7 +11,7 @@ public class TS_Totemchild_PB : PlayableBehaviour
 	float CON_APPEAR = 1.0f;				// ちびトーテムが出現し始める時間
 	float CON_APPEAR_INTERVAL = 0.2f;		// ちびトーテムが出現する間隔
 	float CON_LOOKAT_BOSS = 4.5f;			// ボスのほうを向き始める時間
-	float CON_BACK = 10.0f;					// ひっこむ時間
+	float CON_BACK = 20.0f;					// ひっこむ時間
 
 	#endregion
 

@@ -8,6 +8,9 @@ public class TS_Boss_PA : PlayableAsset
 {
 	[SerializeField]	ExposedReference<GameObject> BossObj;
 	[SerializeField]	ExposedReference<GameObject> BossAppearObj;
+	[SerializeField]	ExposedReference<GameObject> BossRoarObj;
+	[SerializeField]	ExposedReference<GameObject> BossDiveObj;
+	[SerializeField]	Material TotemMaterial;
 
 
 	// Factory method that generates a playable based on this asset
@@ -17,6 +20,9 @@ public class TS_Boss_PA : PlayableAsset
 
 		behaviour.BossObj = BossObj.Resolve(graph.GetResolver());
 		behaviour.BossAppearObj = BossAppearObj.Resolve(graph.GetResolver());
+		behaviour.BossRoarObj = BossRoarObj.Resolve(graph.GetResolver());
+		behaviour.BossDiveObj = BossDiveObj.Resolve(graph.GetResolver());
+		behaviour.mat = TotemMaterial;
 
 		return ScriptPlayable<TS_Boss_PB>.Create(graph, behaviour);
 	}
