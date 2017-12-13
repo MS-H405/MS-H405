@@ -18,6 +18,8 @@ public class TS_Boss_PB : PlayableBehaviour
 		FIN
 	}
 
+	const float CON_FIRSTSHAKE_TIME = 0.4f;	// ちびトーテム登場のために揺れるまでの待機時間
+
 	const float CON_FIRSTWAIT = 7.0f;		// 待ち時間
 
 	const float CON_APPEAR_TIME = 0.5f;		// 生える時間
@@ -145,7 +147,6 @@ public class TS_Boss_PB : PlayableBehaviour
 		if (bEffect)
 		{
 			BossAppearObj.GetComponent<EffekseerEmitter>().Play();
-			GameObject.Find("ShakeCameraObj").GetComponent<ShakeCamera>().DontMoveShake();		// Timelineで制御しているせいで、カメラが揺れない
 			bEffect = false;
 		}
 

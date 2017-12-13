@@ -56,4 +56,11 @@ public class ShakeCamera : MonoBehaviour
         originRotation = transform.rotation;
         fShakeIntensity = fCoefShakeIntensity;
 	}
+
+	// 揺れの強さを設定する
+	public void SetParam(float fIntensity, float fDecay)
+	{
+		fCoefShakeIntensity = fIntensity;
+		fShakeDecay = fDecay;
+	}
 }
