@@ -28,7 +28,7 @@ public class SP_JugChild : MonoBehaviour
 	{
 		tbezier.time = time;
 		transform.position = BezierCurve.CulcBez(tbezier, true);
-		transform.Rotate(Vector3.right, fRotate * Time.unscaledDeltaTime, Space.Self);
+		transform.Rotate(Vector3.right, fRotate * Time.deltaTime, Space.Self);
 	}
 
 	// 敵のほうを向く

@@ -8,7 +8,8 @@ public class Special_1Ball : MonoBehaviour
 
 	const float CON_ROTATION_WAIT = 0.8f;		// 回転を開始するまでの時間
 	const float CON_ROTATION_TIME = 1.0f;		// 最大回転速度になるまでの時間
-	readonly Vector3 CON_MAX_ROTATION = new Vector3(1800.0f, 0.0f, 0.0f);	// 最大回転速度　なんとなく秒間5回転
+	//readonly Vector3 CON_MAX_ROTATION = new Vector3(1800.0f, 0.0f, 0.0f);	// 最大回転速度　なんとなく秒間5回転
+	readonly Vector3 CON_MAX_ROTATION = new Vector3(360.0f, 0.0f, 0.0f);	// 最大回転速度　なんとなく秒間5回転
 
 	#endregion
 
@@ -57,12 +58,12 @@ public class Special_1Ball : MonoBehaviour
 	public bool StartRotation()
 	{
 		// 待ち時間
-		fWait += Time.unscaledDeltaTime;
+		fWait += Time.deltaTime;
 		if(fWait < CON_ROTATION_WAIT)
 			return false;
 
 		// 加速
-		fTime += Time.unscaledDeltaTime / CON_ROTATION_TIME;
+		fTime += Time.deltaTime / CON_ROTATION_TIME;
 		if(fTime >= 1.0f)
 		{
 			return true;
@@ -88,6 +89,6 @@ public class Special_1Ball : MonoBehaviour
 			bSP_ball_move = false;
 		}
 
-		BallObj.transform.Rotate(CON_MAX_ROTATION * Time.unscaledDeltaTime);
+		BallObj.transform.eulerAngles += (CON_MAX_ROTATION * Time.deltaTime);
 	}
 }

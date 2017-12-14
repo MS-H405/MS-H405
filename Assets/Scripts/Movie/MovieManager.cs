@@ -208,7 +208,7 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while (fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.unscaledDeltaTime;
+			fTime += Time.deltaTime;
 			if (bInit)
 			{
 				fFirstTime = fTime;
@@ -278,7 +278,7 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while(fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.unscaledDeltaTime;
+			fTime += Time.deltaTime;
 			if(bInit)
 			{
 				fFirstTime = fTime;
@@ -325,7 +325,7 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while (fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.unscaledDeltaTime;
+			fTime += Time.deltaTime;
 			if (bInit)
 			{
 				fFirstTime = fTime;
@@ -384,7 +384,7 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while (fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.unscaledDeltaTime;
+			fTime += Time.deltaTime;
 			if (bInit)
 			{
 				fFirstTime = fTime;
