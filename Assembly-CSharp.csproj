@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\Movie\Special_1Camera.cs" />
      <Compile Include="Assets\Scripts\Movie\Special_1Manager.cs" />
      <Compile Include="Assets\Scripts\Movie\Special_1Player.cs" />
+     <Compile Include="Assets\Scripts\Movie\Special_1PlayerMotion.cs" />
      <Compile Include="Assets\Scripts\Player\Action\ActionManager.cs" />
      <Compile Include="Assets\Scripts\Player\Action\BagpipeFire.cs" />
      <Compile Include="Assets\Scripts\Player\Action\JugglingAtack.cs" />
