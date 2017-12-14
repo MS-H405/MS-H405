@@ -30,7 +30,10 @@ public class SP_Jug : MonoBehaviour
 	[SerializeField] GameObject[] BigPinObjArray = new GameObject[2];	// 投げるデカピン
 	SP_JugBig[] cs_SPJugBig = new SP_JugBig[2];
 	[SerializeField] GameObject PlayerObj;
-	GameObject EnemyObj;
+	[SerializeField] GameObject EnemyObj;
+	[SerializeField] GameObject SetEffekseerObj;
+	SetEffekseerObject cs_SetEffekseerObject;
+	[SerializeField] GameObject MainCameraObj;
 
 	List<SP_JugChild> PinList = new List<SP_JugChild>();	// 投げたピン
 
@@ -56,8 +59,6 @@ public class SP_Jug : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		EnemyObj = GameObject.Find("Special_1Enemy");
-
 		// ----- 普通のピン -----
 		tbezier = new BezierCurve.tBez[MAX_PIN];
 		fRotate = new float[MAX_PIN];
@@ -108,6 +109,8 @@ public class SP_Jug : MonoBehaviour
 	// ピン展開
 	public bool Jug_ThrowExpansion()
 	{
+		cs_SetEffekseerObject = SetEffekseerObj.GetComponent<SetEffekseerObject>();
+
 		// すぐに投げると変なので、少し待つ
 		fWait += Time.unscaledDeltaTime;
 		if(bInit)
@@ -130,7 +133,7 @@ public class SP_Jug : MonoBehaviour
 		StartCoroutine("Jug_Expansion");
 
 		// ピン展開エフェクト
-		GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>().NewEffect(11);
+		cs_SetEffekseerObject.NewEffect(11);
 
 		return true;
 	}
@@ -183,7 +186,7 @@ public class SP_Jug : MonoBehaviour
 		if(bSP_pin_hit)
 		{
 			// 展開ピンヒットエフェクト
-			GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>().NewEffect(1);
+			cs_SetEffekseerObject.NewEffect(1);
 
 			bSP_pin_hit = false;
 		}
@@ -216,7 +219,7 @@ public class SP_Jug : MonoBehaviour
 		}
 
 		// デカピン投擲エフェクト
-		GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>().NewEffect(0);
+		cs_SetEffekseerObject.NewEffect(0);
 	}
 
 	// デカピン移動
@@ -239,8 +242,8 @@ public class SP_Jug : MonoBehaviour
 			if (bSP_big_hit)
 			{
 				// 展開ピンヒットエフェクト
-				GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>().NewEffect(2);
-				GameObject.Find("Special_1Camera").GetComponent<Special_1Camera>().shakeCamera();
+				cs_SetEffekseerObject.NewEffect(2);
+				MainCameraObj.GetComponent<Special_1Camera>().shakeCamera();
 
 				bSP_big_hit = false;
 			}

@@ -30,9 +30,16 @@ public class Special_1Manager : MonoBehaviour
 	bool bInitializ = true;					// 初期化フラグ(trueの時に初期化する)
 	List<bool> bFlgs = new List<bool>();	// 各処理が終わったかどうかのフラグ
 
+	[SerializeField] GameObject MainCameraObj;
 	Special_1Camera cs_Camera;
+
+	[SerializeField] GameObject Special_JugglingObj;
 	SP_Jug cs_Jug;
+	
+	[SerializeField] GameObject PlayerObj;
 	Special_1Player cs_Player;
+	
+	[SerializeField] GameObject BallObj;
 	Special_1Ball	cs_Ball;
 
 	#endregion
@@ -43,10 +50,10 @@ public class Special_1Manager : MonoBehaviour
 	{
 		State = State_Special1.JUG_EXPANSION;
 
-		cs_Camera = GameObject.Find("Special_1Camera").GetComponent<Special_1Camera>();
-		cs_Jug = GameObject.Find("Special_Juggling").GetComponent<SP_Jug>();
-		cs_Player = GameObject.Find("Special_1Player").GetComponent<Special_1Player>();
-		cs_Ball = GameObject.Find("Special_1Ball").GetComponent<Special_1Ball>();
+		cs_Camera = MainCameraObj.GetComponent<Special_1Camera>();
+		cs_Jug = Special_JugglingObj.GetComponent<SP_Jug>();
+		cs_Player = PlayerObj.GetComponent<Special_1Player>();
+		cs_Ball = BallObj.GetComponent<Special_1Ball>();
 	}
 	
 	// Update is called once per frame

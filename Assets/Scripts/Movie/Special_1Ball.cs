@@ -14,7 +14,7 @@ public class Special_1Ball : MonoBehaviour
 
 	#region 変数
 
-	GameObject BallObj;
+	[SerializeField] GameObject BallObj;
 	MeshRenderer meshrenderer;
 
 	float fTime;
@@ -22,6 +22,7 @@ public class Special_1Ball : MonoBehaviour
 	Vector3 vRotate;
 
 	// Effekseer関係
+	[SerializeField] GameObject SetEffekseerObj;
 	SetEffekseerObject cs_SetEffekseerObject;
 	bool bSP_ball_move;
 	bool bSP_ball_speedup;
@@ -33,7 +34,6 @@ public class Special_1Ball : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		BallObj = GameObject.Find("Ball");
 		meshrenderer = BallObj.GetComponent<MeshRenderer>();
 		meshrenderer.enabled = false;
 
@@ -41,7 +41,7 @@ public class Special_1Ball : MonoBehaviour
 		fWait = 0.0f;
 
 		// Effekseer関係
-		cs_SetEffekseerObject = GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>();
+		cs_SetEffekseerObject = SetEffekseerObj.GetComponent<SetEffekseerObject>();
 		bSP_ball_move = true;
 		bSP_ball_speedup = true;
 	}

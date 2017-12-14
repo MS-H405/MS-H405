@@ -24,8 +24,8 @@ public class Special_1Player : MonoBehaviour
 
 	#region 変数
 
-	GameObject BallObj;
-	GameObject EnemyObj;
+	[SerializeField] GameObject BallObj;
+	[SerializeField] GameObject EnemyObj;
 
 	bool bInit;
 	float fTime;
@@ -41,6 +41,7 @@ public class Special_1Player : MonoBehaviour
 	bool bEnd;				// 突撃が終わったかどうか
 
 	// Effekseer関係
+	[SerializeField] GameObject SetEffekseerObj;
 	SetEffekseerObject cs_SetEffekseerObject;
 
 	#endregion
@@ -49,9 +50,6 @@ public class Special_1Player : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		BallObj = GameObject.Find("Special_1Ball");
-		EnemyObj = GameObject.Find("Special_1Enemy");
-
 		bInit = true;
 		fTime = 0.0f;
 		fWait = 0.0f;
@@ -62,7 +60,7 @@ public class Special_1Player : MonoBehaviour
 		bEnd = false;
 
 		// Effekseer関係
-		cs_SetEffekseerObject = GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>();
+		cs_SetEffekseerObject = SetEffekseerObj.GetComponent<SetEffekseerObject>();
 	}
 
 
@@ -119,7 +117,7 @@ public class Special_1Player : MonoBehaviour
 		transform.parent = null;										// 仮親との親子関係解除
 		Destroy(Parent.gameObject);										// 仮親削除
 		transform.position = new Vector3(transform.position.x, 5.0f + CON_PLAYER_HEIGHT2, transform.position.z);
-		GameObject.Find("Special_1Ball").transform.parent = transform;	// 玉を子とする
+		BallObj.transform.parent = transform;	// 玉を子とする
 	}
 
 

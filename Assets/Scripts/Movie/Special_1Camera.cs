@@ -36,11 +36,12 @@ public class Special_1Camera : MonoBehaviour
 	bool bInit;		// 初期化フラグ
 	BezierCurve.tBez3 tbez3;	// プレイヤー正面②からデカピン投擲位置へ移動するときに使う
 
+	[SerializeField] GameObject Special_1JugglingObj;
 	bool bBigPinAppear;			// デカピンを出現させたかどうか
 	SP_Jug cs_SP_Jug;
 
-	GameObject PlayerObj;
-	GameObject BallObj;
+	[SerializeField] GameObject PlayerObj;
+	[SerializeField] GameObject BallObj;
 
 	Vector3 vLookAt;			// 注視点
 	Vector3 vLookAt2;			// 注視点
@@ -60,9 +61,7 @@ public class Special_1Camera : MonoBehaviour
 	void Start ()
 	{
 
-		cs_SP_Jug = GameObject.Find("Special_Juggling").GetComponent<SP_Jug>();
-		PlayerObj = GameObject.Find("Special_1Player");
-		BallObj = GameObject.Find("Special_1Ball");
+		cs_SP_Jug = Special_1JugglingObj.GetComponent<SP_Jug>();
 		cs_ShakeCamera = GetComponent<ShakeCamera>();
 
 		SetPosEulerTime();
