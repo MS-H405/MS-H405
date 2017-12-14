@@ -75,6 +75,7 @@
      <Compile Include="Assets\Scripts\Player\Action\RideBallMove.cs" />
      <Compile Include="Assets\Scripts\Player\Action\TotemJump.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\Player\UI\AtackIcon\AtackIcon.cs" />
      <Compile Include="Assets\Scripts\Player\UI\AtackIcon\AtackIconManager.cs" />
@@ -99,11 +100,11 @@
      <Compile Include="Assets\Scripts\Utility\AutoRotation.cs" />
      <Compile Include="Assets\Scripts\Utility\BezierCurve.cs" />
      <Compile Include="Assets\Scripts\Utility\GameSetting.cs" />
+     <Compile Include="Assets\Scripts\Utility\ManualRotation.cs" />
      <Compile Include="Assets\Scripts\Utility\ShakeCamera.cs" />
      <Compile Include="Assets\Scripts\Utility\SingletonMonoBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utility\SortingLayer.cs" />
      <Compile Include="Assets\Scripts\Utility\StaticCoroutine.cs" />
-     <Compile Include="Assets\Scripts\Utility\WaitForSecondsRealtime.cs" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
