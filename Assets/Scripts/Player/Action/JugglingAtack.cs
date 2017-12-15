@@ -131,6 +131,7 @@ public class JugglingAtack : MonoBehaviour
         Vector3 dropPoint = RandomDropPoint(startPos);
         dropPoint.y = 0.0f;
         GameObject effect = Instantiate(_dropPointEffect, dropPoint, _dropPointEffect.transform.rotation);
+        //ParticleLifeTimer[] particleLifeTimerArray = effect.GetComponentsInChildren<ParticleLifeTimer>();
 
         // 跳ね返り処理
         BezierCurve.tBez bez = new BezierCurve.tBez();  // 曲線移動のためベジエ曲線を使用
@@ -142,6 +143,12 @@ public class JugglingAtack : MonoBehaviour
         {
             transform.position = BezierCurve.CulcBez(bez, true);
             bez.time += Time.deltaTime * (0.35f / atackTime);
+
+            /*foreach(ParticleLifeTimer lifeTimer in particleLifeTimerArray)
+            {
+                lifeTimer.ChangeLifeTime(1.0f - bez.time);
+            }*/
+
             yield return null;
         }
         
