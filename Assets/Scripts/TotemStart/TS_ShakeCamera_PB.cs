@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityStandardAssets.ImageEffects;
 
 // A behaviour that is attached to a playable
 public class TS_ShakeCamera_PB : PlayableBehaviour
@@ -14,6 +15,9 @@ public class TS_ShakeCamera_PB : PlayableBehaviour
 	const float CON_BOSSSHAKE_TIME = 6.9f;				// ボストーテムの揺れを始める時間
 	const float CON_DIVESHAKE_TIME = 15.0f;				// トーテムが潜るときの揺れを始める時間
 
+	const float CON_BLUR_START_TIME = 15.5f;			// ボストーテム咆哮の時のブラーを始める時間
+	const float CON_BLUR_END_TIME = 17.2f;				// ボストーテム咆哮の時のブラーをやめる時間
+
 	#endregion
 
 
@@ -22,6 +26,10 @@ public class TS_ShakeCamera_PB : PlayableBehaviour
 	private GameObject _ShakeCameraObj;
 	public GameObject ShakeCameraObj { get; set; }
 	private ShakeCamera cs_ShakeCamera;
+
+	private GameObject _MainCameraObj;
+	public GameObject MainCameraObj { get; set; }
+	BlurOptimized cs_BlurOptimized;
 
 	float fTime = 0.0f;
 	List<bool> bUse = new List<bool>();		// エフェクトを発生させたらfalseにする
@@ -34,8 +42,11 @@ public class TS_ShakeCamera_PB : PlayableBehaviour
 	public override void OnGraphStart(Playable playable)
 	{
 		cs_ShakeCamera = ShakeCameraObj.GetComponent<ShakeCamera>();
-		for(int i = 0 ; i < 5 ; i ++)
+		for(int i = 0 ; i < 7 ; i ++)
 			bUse.Add(true);
+
+		cs_BlurOptimized = MainCameraObj.GetComponent<BlurOptimized>();
+		cs_BlurOptimized.enabled = false;
 	}
 
 
@@ -88,6 +99,18 @@ public class TS_ShakeCamera_PB : PlayableBehaviour
 			cs_ShakeCamera.SetParam(0.007f, 0.0002f);
 			cs_ShakeCamera.DontMoveShake();
 			bUse[4] = false;
+		}
+
+		// ブラー
+		if (bUse[5] && fTime >= CON_BLUR_START_TIME)
+		{
+			cs_BlurOptimized.enabled = true;
+			bUse[5] = false;
+		}
+		if (bUse[6] && fTime >= CON_BLUR_END_TIME)
+		{
+			cs_BlurOptimized.enabled = false;
+			bUse[6] = false;
 		}
 	}
 }

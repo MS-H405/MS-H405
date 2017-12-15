@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityStandardAssets.ImageEffects;
 
 
 
@@ -54,6 +55,9 @@ public class Special_1Camera : MonoBehaviour
 	bool bSP_big_appear;
 	bool bSP_player_land;
 
+	BlurOptimized cs_BlurOptimized;
+	bool bBlur = true;
+
 	#endregion
 
 
@@ -79,6 +83,9 @@ public class Special_1Camera : MonoBehaviour
 		cs_SetEffekseerObject = GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>();
 		bSP_big_appear = true;
 		bSP_player_land = true;
+
+		cs_BlurOptimized = GetComponent<BlurOptimized>();
+		cs_BlurOptimized.enabled = false;		// 最初はブラーなし
 	}
 
 	void Update()
@@ -119,13 +126,22 @@ public class Special_1Camera : MonoBehaviour
 		if (fWait < CameraMoveList[1].fWait)
 			return false;
 
+		if(bBlur)
+		{
+			cs_BlurOptimized.enabled = true;
+			bBlur = false;
+		}
+
 		tbez3.time += Time.deltaTime / CameraMoveList[1].fTime;
 		if (tbez3.time > 1.0f)
 		{
 			tbez3.time = 1.0f;
 			BezierMove(tbez3, CameraMoveList[0], CameraMoveList[1], 1.0f);
 
+			cs_BlurOptimized.enabled = false;
+
 			bInit = true;
+			bBlur = true;
 
 			return true;
 		}
@@ -176,6 +192,8 @@ public class Special_1Camera : MonoBehaviour
 			tbez3.middle2 = new Vector3(10004.6f, 2.1f, -13.0f);
 			tbez3.end = CameraMoveList[3].vPos;
 
+			cs_BlurOptimized.enabled = true;
+
 			bInit = false;
 		}
 
@@ -184,6 +202,8 @@ public class Special_1Camera : MonoBehaviour
 		{
 			tbez3.time = 1.0f;
 			BezierMove(tbez3, CameraMoveList[2], CameraMoveList[3], 1.0f);
+
+			cs_BlurOptimized.enabled = false;
 
 			bInit = true;
 
@@ -343,7 +363,7 @@ public class Special_1Camera : MonoBehaviour
 		// 0
 		temp.vPos	= new Vector3(-3.7f, 2.9f, -2.8f);		// ピン展開
 		temp.vLook	= new Vector3(10000.4f, -0.1f, -4.7f);
-		temp.vEuler	= new Vector3(17.5f, 32.2f, 0.0f);
+		temp.vEuler	= new Vector3(6.29f, 32.2f, 0.0f);		// 17.5
 		temp.fTime	= 0.0f;
 		temp.fWait	= 0.0f;
 		temp.vPos	+= PlayerObj.transform.position;// プレイヤーが(0.0f, 0.0f, -10.0f)にいなかった時のため

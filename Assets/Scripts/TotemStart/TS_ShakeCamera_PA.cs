@@ -7,6 +7,7 @@ using UnityEngine.Playables;
 public class TS_ShakeCamera_PA : PlayableAsset
 {
 	[SerializeField]	ExposedReference<GameObject> ShakeCameraObj;
+	[SerializeField]	ExposedReference<GameObject> MainCameraObj;
 
 	// Factory method that generates a playable based on this asset
 	public override Playable CreatePlayable(PlayableGraph graph, GameObject go)
@@ -14,6 +15,7 @@ public class TS_ShakeCamera_PA : PlayableAsset
 		var behaviour = new TS_ShakeCamera_PB();
 
 		behaviour.ShakeCameraObj = ShakeCameraObj.Resolve(graph.GetResolver());
+		behaviour.MainCameraObj = MainCameraObj.Resolve(graph.GetResolver());
 
 		return ScriptPlayable<TS_ShakeCamera_PB>.Create(graph, behaviour);
 	}
