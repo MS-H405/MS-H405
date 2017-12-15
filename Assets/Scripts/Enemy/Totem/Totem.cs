@@ -135,7 +135,7 @@ public class Totem : EnemyBase
         while (amount < _headAmount)
         {
             amount++;
-            transform.position = RandomPos(amount);
+            transform.position = RandomPos();
             transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
 
             // 土煙を出す
@@ -222,7 +222,7 @@ public class Totem : EnemyBase
         }
 
         // 本体突き上げ処理
-        transform.position = RandomPos(_headAmount);
+        transform.position = RandomPos();
         transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
 
         // 土煙を出す
@@ -368,10 +368,10 @@ public class Totem : EnemyBase
     /// <summary>
     /// ランダムな座標を返す
     /// </summary>
-    private Vector3 RandomPos(int amount)
+    private Vector3 RandomPos()
     {
         float x = Random.Range(-StageData.FieldSize, StageData.FieldSize);
-        float y = -_oneBlockSize * amount;
+        float y = -_oneBlockSize * _headAmount;
         float z = Random.Range(-StageData.FieldSize, StageData.FieldSize);
         return new Vector3(x,y,z);
     }
@@ -385,6 +385,9 @@ public class Totem : EnemyBase
     /// </summary>
     private void Awake()
     {
+        // 座標を初期化
+        transform.position = new Vector3(0.0f, -_oneBlockSize * _headAmount, 0.0f);
+
         // 必要コンポーネントの取得
         _rigidbody = GetComponent<Rigidbody>();
         _shakeCamera = Camera.main.GetComponent<ShakeCamera>();
