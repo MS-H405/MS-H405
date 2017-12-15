@@ -8,8 +8,8 @@ public class SP_Jug : MonoBehaviour
 	#region 定数
 
 	int MAX_PIN = 10;			// なんとなく10本投げる
-	float THROW_DIS = 1.0f;		// ピンの、プレイヤーからの出現距離
-	float WAIT_TIME = 0.5f;		// ピン展開までの待ち時間
+	Vector3 THROW_OFFSET = new Vector3(0.0f, 1.0f, 0.7f);	// プレイヤーの座標(足元)から、展開ピンのオフセット値
+	float WAIT_TIME = 0.4f;		// ピン展開までの待ち時間
 	float MOVE_TIME = 1.0f;		// ピンの展開時間
 	float ENEMY_DIS = 5.0f;		// 展開されたピンが静止する、敵からの距離
 	float GOENEMY_TIME = 0.6f;	// ピンの突撃時間
@@ -30,7 +30,10 @@ public class SP_Jug : MonoBehaviour
 	[SerializeField] GameObject[] BigPinObjArray = new GameObject[2];	// 投げるデカピン
 	SP_JugBig[] cs_SPJugBig = new SP_JugBig[2];
 	[SerializeField] GameObject PlayerObj;
-	GameObject EnemyObj;
+	[SerializeField] GameObject EnemyObj;
+	[SerializeField] GameObject SetEffekseerObj;
+	SetEffekseerObject cs_SetEffekseerObject;
+	[SerializeField] GameObject MainCameraObj;
 
 	List<SP_JugChild> PinList = new List<SP_JugChild>();	// 投げたピン
 
@@ -44,8 +47,8 @@ public class SP_Jug : MonoBehaviour
 	// Special_Manager関係
 	float fWait = 0.0f;		// 待ち時間
 	float fWaitBig = 0.0f;	// 待ち時間(デカピン)
-	bool bInit = true;		// Time.unscaledDeltaTimeが初回から2.3とかの値を突っ込むので、それを防ぐ処理のフラグ
-	float fFirstWait;		// 最初にTime.unscaledDeltaTimeから受け取った時間
+	bool bInit = true;		// Time.deltaTimeが初回から2.3とかの値を突っ込むので、それを防ぐ処理のフラグ
+	float fFirstWait;		// 最初にTime.deltaTimeから受け取った時間
 
 	// Effekseer関係
 	bool bSP_pin_hit;		// 展開ピンヒットエフェクト
@@ -56,8 +59,6 @@ public class SP_Jug : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		EnemyObj = GameObject.Find("Special_1Enemy");
-
 		// ----- 普通のピン -----
 		tbezier = new BezierCurve.tBez[MAX_PIN];
 		fRotate = new float[MAX_PIN];
@@ -75,7 +76,7 @@ public class SP_Jug : MonoBehaviour
 				rot.y = Mathf.PI / 3.0f;	// 60度(上にあるほう)
 
 			tbezier[i].time = 0.0f;
-			tbezier[i].start = PlayerObj.transform.position + PlayerObj.transform.forward * THROW_DIS;						// start座標も若干ずらしたほうがいいのかもしれない。
+			tbezier[i].start = PlayerObj.transform.position + THROW_OFFSET;						// start座標も若干ずらしたほうがいいのかもしれない。
 			tbezier[i].end = new Vector3(EnemyObj.transform.position.x + ENEMY_DIS * Mathf.Cos(rot.x) * Mathf.Cos(rot.y),
 										 EnemyObj.transform.position.y + ENEMY_DIS * Mathf.Sin(rot.y),
 										 EnemyObj.transform.position.z + ENEMY_DIS * Mathf.Sin(rot.x) * Mathf.Cos(rot.y));
@@ -100,7 +101,7 @@ public class SP_Jug : MonoBehaviour
 		bSP_pin_hit = true;
 		bSP_big_hit = true;
 
-		float a = Time.unscaledDeltaTime;
+		float a = Time.deltaTime;
 	}
 
 
@@ -108,8 +109,10 @@ public class SP_Jug : MonoBehaviour
 	// ピン展開
 	public bool Jug_ThrowExpansion()
 	{
+		cs_SetEffekseerObject = SetEffekseerObj.GetComponent<SetEffekseerObject>();
+
 		// すぐに投げると変なので、少し待つ
-		fWait += Time.unscaledDeltaTime;
+		fWait += Time.deltaTime;
 		if(bInit)
 		{
 			fFirstWait = fWait;
@@ -121,7 +124,7 @@ public class SP_Jug : MonoBehaviour
 
 		for (int i = 0; i < MAX_PIN; i++)
 		{
-			GameObject obj = Instantiate(PinObj as GameObject, PlayerObj.transform.position + PlayerObj.transform.forward * THROW_DIS, Quaternion.identity);
+			GameObject obj = Instantiate(PinObj as GameObject, PlayerObj.transform.position + THROW_OFFSET, Quaternion.identity);
 			obj.GetComponent<SP_JugChild>().SetParam(tbezier[i], fSecTime, fRotate[i]);
 			PinList.Add(obj.GetComponent<SP_JugChild>());
 		}
@@ -130,7 +133,7 @@ public class SP_Jug : MonoBehaviour
 		StartCoroutine("Jug_Expansion");
 
 		// ピン展開エフェクト
-		GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>().NewEffect(11);
+		cs_SetEffekseerObject.NewEffect(11);
 
 		return true;
 	}
@@ -140,7 +143,7 @@ public class SP_Jug : MonoBehaviour
 	{
 		while(true)
 		{
-			fPinTime += fSecTime * Time.unscaledDeltaTime;
+			fPinTime += fSecTime * Time.deltaTime;
 			if (fPinTime > 1.0f)
 			{// 移動終了
 				fPinTime = 0.0f;
@@ -160,11 +163,11 @@ public class SP_Jug : MonoBehaviour
 	// ピン敵に突撃
 	public bool GoEnemy()
 	{
-		fWait += Time.unscaledDeltaTime;
+		fWait += Time.deltaTime;
 		if(fWait < WAIT_GOENEMY)
 			return false;
 
-		fPinTime += Time.unscaledDeltaTime / GOENEMY_TIME;
+		fPinTime += Time.deltaTime / GOENEMY_TIME;
 
 		if(fPinTime > 1.0f)
 		{
@@ -183,7 +186,7 @@ public class SP_Jug : MonoBehaviour
 		if(bSP_pin_hit)
 		{
 			// 展開ピンヒットエフェクト
-			GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>().NewEffect(1);
+			cs_SetEffekseerObject.NewEffect(1);
 
 			bSP_pin_hit = false;
 		}
@@ -216,17 +219,17 @@ public class SP_Jug : MonoBehaviour
 		}
 
 		// デカピン投擲エフェクト
-		GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>().NewEffect(0);
+		cs_SetEffekseerObject.NewEffect(0);
 	}
 
 	// デカピン移動
 	public bool GoEnemy_Big()
 	{
-		fWaitBig += Time.unscaledDeltaTime;
+		fWaitBig += Time.deltaTime;
 		if(fWaitBig < WAIT_GOENEMY_BIG)
 			return false;
 
-		fBigPinTime += Time.unscaledDeltaTime / GOENEMY_TIME_BIG;
+		fBigPinTime += Time.deltaTime / GOENEMY_TIME_BIG;
 
 		if (fBigPinTime > 1.0f)
 		{
@@ -239,8 +242,8 @@ public class SP_Jug : MonoBehaviour
 			if (bSP_big_hit)
 			{
 				// 展開ピンヒットエフェクト
-				GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>().NewEffect(2);
-				GameObject.Find("Special_1Camera").GetComponent<Special_1Camera>().shakeCamera();
+				cs_SetEffekseerObject.NewEffect(2);
+				MainCameraObj.GetComponent<Special_1Camera>().shakeCamera();
 
 				bSP_big_hit = false;
 			}

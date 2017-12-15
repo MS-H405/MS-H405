@@ -12,22 +12,27 @@ public class TS_Boss_PB : PlayableBehaviour
 	{
 		FIRSTWAIT,		// 待ち時間
 		APPEAR,			// 生える
-		SECONDWAIT,		// 待ち時間2
+		SECONDWAIT,		// 待ち時間2(咆哮)
 		BACK,			// ひっこむ
 
 		FIN
 	}
 
-	const float CON_FIRSTWAIT = 7.0f;		// 待ち時間
+	const float CON_FIRSTSHAKE_TIME = 0.4f;	// ちびトーテム登場のために揺れるまでの待機時間
+
+	const float CON_FIRSTWAIT = 8.0f;		// 待ち時間
 
 	const float CON_APPEAR_TIME = 0.5f;		// 生える時間
 	const float CON_START_POSY = -6.0f;		// 初期のY座標
 	const float CON_END_POSY = 0.0f;		// 終わりのY座標
 
-	const float CON_SECONDWAIT = 2.2f;		// 待ち時間2
+	const float CON_SECONDWAIT = 11.0f;		// 待ち時間2
+	const float CON_ROAR_START = 6.5f;		// 口が開き始める時間
+	const float CON_ROAR_END = 8.5f;		// 口が閉じ始める時間
+	const float CON_MOUTHMAX_TIME = 0.3f;	// 口が全開になるのにかかる時間
 
-	const float CON_BACK_TIME = 0.4f;		// 潜るのにかける時間
-	const float CON_FADESTART_TIME = 0.2f;	// 潜るのが始まってから、フェードが開始される時間
+	const float CON_BACK_TIME = 1.0f;		// 潜るのにかける時間
+	const float CON_FADESTART_TIME = 0.6f;	// 潜るのが始まってから、フェードが開始される時間
 
 	#endregion
 
@@ -39,10 +44,21 @@ public class TS_Boss_PB : PlayableBehaviour
 
 
 	private GameObject _BossObj;
-	public GameObject BossObj{get; set;}
+	public GameObject BossObj { get; set; }
 
 	private GameObject _BossAppearObj;
-	public GameObject BossAppearObj{get; set;}
+	public GameObject BossAppearObj { get; set; }
+
+	private GameObject _BossRoarObj;
+	public GameObject BossRoarObj { get; set; }
+
+	private GameObject _BossDiveObj;
+	public GameObject BossDiveObj { get; set; }
+
+	private Material _mat;
+	public Material mat{get;set;}
+
+	private Animator animator;
 
 
 	float fTime;				// タイマー
@@ -54,6 +70,9 @@ public class TS_Boss_PB : PlayableBehaviour
 
 	bool bFade = true;
 
+	bool bRoarStart = true;
+	bool bRoarEnd = true;
+
 	#endregion
 
 
@@ -64,6 +83,10 @@ public class TS_Boss_PB : PlayableBehaviour
 		vStartPos = BossObj.transform.position;
 		vEndPos = new Vector3(BossObj.transform.position.x, CON_END_POSY, BossObj.transform.position.z);
 		bEffect = true;
+
+		mat.color = Color.white;
+		animator = BossObj.GetComponent<Animator>();
+		animator.speed = 0.0f;		// 最初はアニメーションしない
 	}
 
 
@@ -145,7 +168,6 @@ public class TS_Boss_PB : PlayableBehaviour
 		if (bEffect)
 		{
 			BossAppearObj.GetComponent<EffekseerEmitter>().Play();
-			GameObject.Find("ShakeCameraObj").GetComponent<ShakeCamera>().DontMoveShake();		// Timelineで制御しているせいで、カメラが揺れない
 			bEffect = false;
 		}
 
@@ -179,6 +201,22 @@ public class TS_Boss_PB : PlayableBehaviour
 		}
 
 		fTime += Time.deltaTime;
+		if(fTime >= CON_ROAR_START && bRoarStart)
+		{
+			BossRoarObj.GetComponent<EffekseerEmitter>().Play();
+			animator.speed = 0.5f / CON_MOUTHMAX_TIME;			// 咆哮開始(口を開け始める)
+			bRoarStart = false;
+		}
+		else if( (fTime >= CON_ROAR_START + CON_MOUTHMAX_TIME*1.8) && (fTime < CON_ROAR_END) )
+		{
+			animator.speed = 0.0f;								// アニメーションストップ(口が全開のときに止める)
+		}
+		if(fTime >=CON_ROAR_END)
+		{
+			animator.speed = 0.5f / CON_MOUTHMAX_TIME;			// 咆哮終了(口を閉じ始める)
+		}
+
+
 		if (fTime >= CON_SECONDWAIT)
 		{
 			BossMode = _TSBOSSMODE.BACK;
@@ -197,6 +235,8 @@ public class TS_Boss_PB : PlayableBehaviour
 
 			vStartPos = BossObj.transform.localPosition;
 			vEndPos = new Vector3(BossObj.transform.localPosition.x, CON_START_POSY, BossObj.transform.localPosition.z);
+
+			BossDiveObj.GetComponent<EffekseerEmitter>().Play();	// 潜るエフェクト
 
 			bEffect = true;
 			bInit = false;

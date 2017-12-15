@@ -105,8 +105,6 @@ public class MovieManager : MonoBehaviour
 		   scene == MOVIE_SCENE.MECHA_START)
 		{
 			StartCoroutine("Col_SceneMove", scene);
-
-			Debug.Log(scene);
 		}
 		else if(
 			scene == MOVIE_SCENE.SPECIAL_1 ||
@@ -210,7 +208,7 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while (fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.unscaledDeltaTime;
+			fTime += Time.deltaTime;
 			if (bInit)
 			{
 				fFirstTime = fTime;
@@ -280,7 +278,7 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while(fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.unscaledDeltaTime;
+			fTime += Time.deltaTime;
 			if(bInit)
 			{
 				fFirstTime = fTime;
@@ -327,7 +325,7 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while (fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.unscaledDeltaTime;
+			fTime += Time.deltaTime;
 			if (bInit)
 			{
 				fFirstTime = fTime;
@@ -386,7 +384,7 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while (fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.unscaledDeltaTime;
+			fTime += Time.deltaTime;
 			if (bInit)
 			{
 				fFirstTime = fTime;

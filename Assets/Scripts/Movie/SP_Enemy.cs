@@ -41,12 +41,12 @@ public class SP_Enemy : MonoBehaviour
 		Vector3 vStartScale = transform.localScale;
 		Vector3 vSpeed = CON_FLY_SPEED;
 	
-		for(float fTime = 0.0f ; fTime < CON_DELETE_TIME ; fTime += Time.unscaledDeltaTime)
+		for(float fTime = 0.0f ; fTime < CON_DELETE_TIME ; fTime += Time.deltaTime)
 		{
-			vSpeed.y += CON_FLY_ACCELE_Y * Time.unscaledDeltaTime;			// 移動
-			transform.position += vSpeed * Time.unscaledDeltaTime;
+			vSpeed.y += CON_FLY_ACCELE_Y * Time.deltaTime;			// 移動
+			transform.position += vSpeed * Time.deltaTime;
 
-			transform.Rotate(CON_FLY_ROTATE * Time.unscaledDeltaTime);		// 回転
+			transform.Rotate(CON_FLY_ROTATE * Time.deltaTime);		// 回転
 
 			transform.localScale = Vector3.Lerp(vStartScale, Vector3.zero, fTime / CON_DELETE_TIME);		// 拡大率
 

@@ -14,7 +14,6 @@ public class Special_1Player : MonoBehaviour
 //	const float CON_RIDEBALL_TIME = 0.8f;		// 玉に乗るときの時間
 //	readonly Vector3 CON_RIDEBALL_SPEED = new Vector3(0.0f, 0.0f, -10.0f);	// 玉に乗るときのスピード
 //	const float CON_RIDEBALL_ACCELE_Y = -20.0f;	// 玉に乗るときの加速度Y
-	const float CON_PLAYER_HEIGHT2 = 1.0f;		// プレイヤーの高さの半分の長さ
 
 	const float CON_GOENEMY_SPEED = 70.0f;		// 突撃時のスピード(最初から最後までいっしょ)	86f
 	const float CON_ENEMY_FLY = 130.0f;			// 敵を引きずる距離
@@ -24,8 +23,8 @@ public class Special_1Player : MonoBehaviour
 
 	#region 変数
 
-	GameObject BallObj;
-	GameObject EnemyObj;
+	[SerializeField] GameObject BallObj;
+	[SerializeField] GameObject EnemyObj;
 
 	bool bInit;
 	float fTime;
@@ -33,7 +32,7 @@ public class Special_1Player : MonoBehaviour
 
 	Vector3 vSpeed;
 	Vector3 vStartPos;
-	Transform Parent;		// 玉乗り着地用の親オブジェクト
+	Transform Parent;		// プレイヤー回転用のオブジェクト
 
 	float fMovedDis;		// 突撃時に進んだ距離
 	bool bHarf;				// カメラが切り替わる場所まで進んだかどうか
@@ -41,7 +40,12 @@ public class Special_1Player : MonoBehaviour
 	bool bEnd;				// 突撃が終わったかどうか
 
 	// Effekseer関係
+	[SerializeField] GameObject SetEffekseerObj;
 	SetEffekseerObject cs_SetEffekseerObject;
+
+	Special_1PlayerMotion cs_Special_1PlayerMotion;
+	//Vector3 vStartEular;
+	//Vector3 vEndEular;
 
 	#endregion
 
@@ -49,9 +53,6 @@ public class Special_1Player : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		BallObj = GameObject.Find("Special_1Ball");
-		EnemyObj = GameObject.Find("Special_1Enemy");
-
 		bInit = true;
 		fTime = 0.0f;
 		fWait = 0.0f;
@@ -62,7 +63,9 @@ public class Special_1Player : MonoBehaviour
 		bEnd = false;
 
 		// Effekseer関係
-		cs_SetEffekseerObject = GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>();
+		cs_SetEffekseerObject = SetEffekseerObj.GetComponent<SetEffekseerObject>();
+
+		cs_Special_1PlayerMotion = GetComponent<Special_1PlayerMotion>();
 	}
 
 
@@ -70,7 +73,7 @@ public class Special_1Player : MonoBehaviour
 	public bool BackJamp()
 	{
 		// 移動待ち
-		fWait += Time.unscaledDeltaTime;
+		fWait += Time.deltaTime;
 		if (fWait < CON_WAIT_BACKJAMP)
 			return false;
 
@@ -79,7 +82,8 @@ public class Special_1Player : MonoBehaviour
 		{
 			// 一瞬だけ空のオブジェクトを作り、それを自分の足元に設定して親とし、その親の座標をいじる。
 			Parent = new GameObject().GetComponent<Transform>();
-			Parent.position = new Vector3(transform.position.x, transform.position.y - CON_PLAYER_HEIGHT2, transform.position.z);
+			Parent.parent = transform.parent;
+			Parent.position = new Vector3(transform.position.x, transform.position.y + 0.83f, transform.position.z);
 			transform.parent = Parent;
 
 			vStartPos = transform.position;
@@ -89,25 +93,33 @@ public class Special_1Player : MonoBehaviour
 			cs_SetEffekseerObject.NewEffect(5);
 			cs_SetEffekseerObject.NewEffect(6);
 
+			cs_Special_1PlayerMotion.Backjamp_Start();	// 後方ジャンプモーション
+			//vStartEular = new Vector3(180.0f, 0.0f, 0.0f);
+			//vEndEular = new Vector3(540.0f, 0.0f, 0.0f);
+
 			bInit = false;
 		}
 
 		// 終了判定
-		fTime += Time.unscaledDeltaTime;
+		fTime += Time.deltaTime;
 		if (fTime > CON_TIME_BACKJAMP)
 		{
 			fTime = 0.0f;
 			fWait = 0.0f;
 			bInit = true;
 
-			Parent.position = new Vector3(vStartPos.x, BallObj.transform.localScale.y, vStartPos.z + CON_BACKJAMP_SPEED.z * CON_TIME_BACKJAMP);
+			transform.position = new Vector3(vStartPos.x, BallObj.transform.localScale.y, vStartPos.z + CON_BACKJAMP_SPEED.z * CON_TIME_BACKJAMP);
+			Parent.eulerAngles = Vector3.zero;
 
 			return true;
 		}
 
 		// 移動
-		vSpeed.y += CON_BACKJAMP_ACCELE_Y * Time.unscaledDeltaTime;
-		Parent.position += vSpeed * Time.unscaledDeltaTime;
+		vSpeed.y += CON_BACKJAMP_ACCELE_Y * Time.deltaTime;
+		transform.position += vSpeed * Time.deltaTime;
+
+		// 回転はモデルがモーションで動くせいでうまくできない
+		//Parent.eulerAngles = Vector3.Lerp(vStartEular, vEndEular, fTime / CON_TIME_BACKJAMP);
 
 		return false;
 	}
@@ -118,15 +130,15 @@ public class Special_1Player : MonoBehaviour
 	{
 		transform.parent = null;										// 仮親との親子関係解除
 		Destroy(Parent.gameObject);										// 仮親削除
-		transform.position = new Vector3(transform.position.x, 5.0f + CON_PLAYER_HEIGHT2, transform.position.z);
-		GameObject.Find("Special_1Ball").transform.parent = transform;	// 玉を子とする
+		transform.position = new Vector3(transform.position.x, 5.0f, transform.position.z);
+		BallObj.transform.parent = transform;	// 玉を子とする
 	}
 
 
 	// 敵に突撃
 	public bool GoEnemy()
 	{// カメラの位置変更のため、半分くらい行ったら1回trueを返す
-		float temp = CON_GOENEMY_SPEED * Time.unscaledDeltaTime;
+		float temp = CON_GOENEMY_SPEED * Time.deltaTime;
 		transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + temp);
 		fMovedDis += temp;
 

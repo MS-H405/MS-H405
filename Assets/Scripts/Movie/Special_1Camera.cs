@@ -36,11 +36,12 @@ public class Special_1Camera : MonoBehaviour
 	bool bInit;		// 初期化フラグ
 	BezierCurve.tBez3 tbez3;	// プレイヤー正面②からデカピン投擲位置へ移動するときに使う
 
+	[SerializeField] GameObject Special_1JugglingObj;
 	bool bBigPinAppear;			// デカピンを出現させたかどうか
 	SP_Jug cs_SP_Jug;
 
-	GameObject PlayerObj;
-	GameObject BallObj;
+	[SerializeField] GameObject PlayerObj;
+	[SerializeField] GameObject BallObj;
 
 	Vector3 vLookAt;			// 注視点
 	Vector3 vLookAt2;			// 注視点
@@ -60,9 +61,7 @@ public class Special_1Camera : MonoBehaviour
 	void Start ()
 	{
 
-		cs_SP_Jug = GameObject.Find("Special_Juggling").GetComponent<SP_Jug>();
-		PlayerObj = GameObject.Find("Special_1Player");
-		BallObj = GameObject.Find("Special_1Ball");
+		cs_SP_Jug = Special_1JugglingObj.GetComponent<SP_Jug>();
 		cs_ShakeCamera = GetComponent<ShakeCamera>();
 
 		SetPosEulerTime();
@@ -107,7 +106,7 @@ public class Special_1Camera : MonoBehaviour
 			bInit = false;
 		}
 
-		fWait += Time.unscaledDeltaTime;
+		fWait += Time.deltaTime;
 
 		// デカピン出現エフェクト
 		if(fWait > 1.0f && bSP_big_appear)
@@ -120,7 +119,7 @@ public class Special_1Camera : MonoBehaviour
 		if (fWait < CameraMoveList[1].fWait)
 			return false;
 
-		tbez3.time += Time.unscaledDeltaTime / CameraMoveList[1].fTime;
+		tbez3.time += Time.deltaTime / CameraMoveList[1].fTime;
 		if (tbez3.time > 1.0f)
 		{
 			tbez3.time = 1.0f;
@@ -139,11 +138,11 @@ public class Special_1Camera : MonoBehaviour
 	// プレイヤー正面①から、プレイヤー正面②へ(LookAtMove()を使うとなぜかバグる)
 	public bool CameraMove_2()
 	{
-		fWait += Time.unscaledDeltaTime;
+		fWait += Time.deltaTime;
 		if (fWait < CameraMoveList[2].fWait)
 			return false;
 
-		fTime += Time.unscaledDeltaTime / CameraMoveList[2].fTime;
+		fTime += Time.deltaTime / CameraMoveList[2].fTime;
 		if (fTime > 1.0f)
 		{
 			EulerMove(CameraMoveList[1], CameraMoveList[2], 1.0f);
@@ -180,7 +179,7 @@ public class Special_1Camera : MonoBehaviour
 			bInit = false;
 		}
 
-		tbez3.time += Time.unscaledDeltaTime / CameraMoveList[3].fTime;
+		tbez3.time += Time.deltaTime / CameraMoveList[3].fTime;
 		if (tbez3.time > 1.0f)
 		{
 			tbez3.time = 1.0f;
@@ -199,7 +198,7 @@ public class Special_1Camera : MonoBehaviour
 	// 後方ジャンプ位置へ
 	public bool CameraMove_4()
 	{
-		fWait += Time.unscaledDeltaTime;
+		fWait += Time.deltaTime;
 		if(fWait < CameraMoveList[4].fWait)
 			return false;
 		
@@ -217,7 +216,7 @@ public class Special_1Camera : MonoBehaviour
 	public void Camera_BackJamp()
 	{// この関数の終了は、プレイヤーの後方ジャンプと同時なので、こっちでは終わりは指定しない
 
-		fWait += Time.unscaledDeltaTime;
+		fWait += Time.deltaTime;
 		if(fWait < CameraMoveList[5].fWait)
 		{// まだ動かない
 			Vector3 temp = Vector3.Lerp(vLookAt, PlayerObj.transform.position + CON_BACKJAMP_OFFSET, CON_BACKJAMP_FOLLOWRATE);
@@ -225,7 +224,7 @@ public class Special_1Camera : MonoBehaviour
 		}
 		else
 		{
-			//fTime += Time.unscaledDeltaTime / CameraMoveList[5].fTime;
+			//fTime += Time.deltaTime / CameraMoveList[5].fTime;
 			//
 			//transform.position = Vector3.Lerp(transform.position, PlayerObj.transform.position - CameraMoveList[5].vPos, CON_BALLRIDE_FOLLOWRATE);
 			//Vector3 temp = Vector3.Lerp(transform.position + transform.forward * 10.0f, BallObj.transform.position, CON_BALLRIDE_FOLLOWRATE);
@@ -371,7 +370,7 @@ public class Special_1Camera : MonoBehaviour
 		// 3
 		temp.vPos	= new Vector3(0.0f, 3.0f, -4.7f);		// デカピン投げる　→　ピン着弾
 		temp.vLook	= new Vector3(9994.9f, 0.7f, -13.0f);		// 円を描くように素早く
-		temp.vEuler = new Vector3(15.1f, 360.0f, 0.0f);		// 0度だとバグるので360度
+		temp.vEuler = new Vector3(7.56f, 360.0f, 0.0f);		// 0度だとバグるので360度	15.1
 		temp.fTime	= 0.4f;
 		temp.fWait	= 0.0f;
 		temp.vPos	+= PlayerObj.transform.position;

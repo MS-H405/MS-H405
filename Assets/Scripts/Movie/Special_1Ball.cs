@@ -8,13 +8,14 @@ public class Special_1Ball : MonoBehaviour
 
 	const float CON_ROTATION_WAIT = 0.8f;		// 回転を開始するまでの時間
 	const float CON_ROTATION_TIME = 1.0f;		// 最大回転速度になるまでの時間
-	readonly Vector3 CON_MAX_ROTATION = new Vector3(1800.0f, 0.0f, 0.0f);	// 最大回転速度　なんとなく秒間5回転
+	//readonly Vector3 CON_MAX_ROTATION = new Vector3(1800.0f, 0.0f, 0.0f);	// 最大回転速度　なんとなく秒間5回転
+	readonly Vector3 CON_MAX_ROTATION = new Vector3(360.0f, 0.0f, 0.0f);	// 最大回転速度　なんとなく秒間5回転
 
 	#endregion
 
 	#region 変数
 
-	GameObject BallObj;
+	[SerializeField] GameObject BallObj;
 	MeshRenderer meshrenderer;
 
 	float fTime;
@@ -22,6 +23,7 @@ public class Special_1Ball : MonoBehaviour
 	Vector3 vRotate;
 
 	// Effekseer関係
+	[SerializeField] GameObject SetEffekseerObj;
 	SetEffekseerObject cs_SetEffekseerObject;
 	bool bSP_ball_move;
 	bool bSP_ball_speedup;
@@ -33,7 +35,6 @@ public class Special_1Ball : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		BallObj = GameObject.Find("Ball");
 		meshrenderer = BallObj.GetComponent<MeshRenderer>();
 		meshrenderer.enabled = false;
 
@@ -41,7 +42,7 @@ public class Special_1Ball : MonoBehaviour
 		fWait = 0.0f;
 
 		// Effekseer関係
-		cs_SetEffekseerObject = GameObject.Find("EffekseerObject").GetComponent<SetEffekseerObject>();
+		cs_SetEffekseerObject = SetEffekseerObj.GetComponent<SetEffekseerObject>();
 		bSP_ball_move = true;
 		bSP_ball_speedup = true;
 	}
@@ -57,12 +58,12 @@ public class Special_1Ball : MonoBehaviour
 	public bool StartRotation()
 	{
 		// 待ち時間
-		fWait += Time.unscaledDeltaTime;
+		fWait += Time.deltaTime;
 		if(fWait < CON_ROTATION_WAIT)
 			return false;
 
 		// 加速
-		fTime += Time.unscaledDeltaTime / CON_ROTATION_TIME;
+		fTime += Time.deltaTime / CON_ROTATION_TIME;
 		if(fTime >= 1.0f)
 		{
 			return true;
@@ -88,6 +89,6 @@ public class Special_1Ball : MonoBehaviour
 			bSP_ball_move = false;
 		}
 
-		BallObj.transform.Rotate(CON_MAX_ROTATION * Time.unscaledDeltaTime);
+		BallObj.transform.eulerAngles += (CON_MAX_ROTATION * Time.deltaTime);
 	}
 }

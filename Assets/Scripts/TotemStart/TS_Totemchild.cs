@@ -14,7 +14,7 @@ public class TS_Totemchild : MonoBehaviour
 
 	const float CON_LOOKAT_TIME = 1.0f;		// ボスの方向を向く時間
 
-	const float CON_BACK_TIME = 0.4f;		// ひっこむ時間
+	const float CON_BACK_TIME = 1.0f;		// ひっこむ時間
 
 	#endregion
 
@@ -22,6 +22,7 @@ public class TS_Totemchild : MonoBehaviour
 	#region 変数
 
 	[SerializeField]	GameObject EffectObj;
+	[SerializeField]	GameObject DiveObj;
 	bool bEffect = true;		// 生えるエフェクトを再生するかどうか
 	float fWait = 0.0f;			// 出現と、エフェクトのタイミングを合わせるためのタイマー
 
@@ -118,6 +119,7 @@ public class TS_Totemchild : MonoBehaviour
 			fBack = 0.0f;
 			vStartPos = transform.position;
 			vEndPos = new Vector3(transform.position.x, CON_START_POSY, transform.position.z);
+			DiveObj.GetComponent<EffekseerEmitter>().Play();
 
 			bInit = false;
 		}
