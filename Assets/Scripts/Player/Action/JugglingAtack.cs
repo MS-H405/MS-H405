@@ -114,7 +114,7 @@ public class JugglingAtack : MonoBehaviour
 
         // 投げる処理実行
         _isAtack = true;
-        Vector3 startPos = transform.position; // 投げてから当たるまでの距離を計算するため
+        Vector3 startPos = PlayerManager.Instance.PlayerObj.transform.position; // 投げてから当たるまでの距離を計算するため
         float atackTime = 0.0f;
 
         // 敵にあたって反射するか地形外に行くまで直進
@@ -135,13 +135,13 @@ public class JugglingAtack : MonoBehaviour
         // 跳ね返り処理
         BezierCurve.tBez bez = new BezierCurve.tBez();  // 曲線移動のためベジエ曲線を使用
         bez.start = transform.position;
-        bez.middle = Vector3.Lerp(transform.position, dropPoint, 0.5f) + new Vector3(0,atackTime * 15.0f,0);
+        bez.middle = Vector3.Lerp(transform.position, dropPoint, 0.5f) + new Vector3(0.0f, atackTime * 20.0f, 0.0f);
         bez.end = dropPoint;
 
         while (1.0f > bez.time && !_isCatch)
         {
             transform.position = BezierCurve.CulcBez(bez, true);
-            bez.time += Time.deltaTime * (0.5f / atackTime);
+            bez.time += Time.deltaTime * (0.35f / atackTime);
             yield return null;
         }
         
@@ -175,7 +175,8 @@ public class JugglingAtack : MonoBehaviour
     /// </summary>
     private Vector3 RandomDropPoint(Vector3 dropPoint)
     {
-        Vector3 rand = new Vector3(Random.Range(-2.0f, 2.0f), 0.0f, Random.Range(-2.0f, 2.0f));
+        Vector3 range = PlayerManager.Instance.PlayerObj.transform.right * 3.0f;
+        Vector3 rand = new Vector3(Random.Range(-range.x, range.x), 0.0f, Random.Range(-range.z, range.z));
         return dropPoint + rand;
     }
 
