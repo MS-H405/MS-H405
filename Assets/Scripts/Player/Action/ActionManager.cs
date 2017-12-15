@@ -30,8 +30,10 @@ public class ActionManager : MonoBehaviour
 
     private bool _isAction = false;                     // 現在何か行動中かどうか
     private eActionType _nowAction = eActionType.Max;   // 現在行動中のアクション番号
+    public eActionType NowAction { get { return _nowAction; } }
+    private Animator _animator = null;
 
-    private eActionType _nowSelect = (eActionType)0;    // 0.ジャグリング, 1.玉乗り, 2.トーテムジャンプ, 3.バグパイプ
+    private eActionType _nowSelect = 0;                 // 0.ジャグリング, 1.玉乗り, 2.トーテムジャンプ, 3.バグパイプ
     private int _maxSelect = 3;                         // 初期化時にステージ番号を取得し、最大値を決定
 
     // ここに生成するプレハブなどを登録
@@ -50,6 +52,10 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     public void OnSelect()
     {
+        // ダメージモーション中なら処理しない
+        if (PlayerManager.Instance.DamageAnimation())
+            return;
+
         // 行動中なら
         if (_isAction)
         {
@@ -69,6 +75,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             ChangeAction();
+            OnAtack();
         }
     }
 
@@ -154,9 +161,6 @@ public class ActionManager : MonoBehaviour
             default:
                 break;
         }
-
-        // 選択した瞬間に攻撃する?
-        //OnAtack();
     }
 
     /// <summary>
@@ -175,7 +179,7 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case eActionType.RideBall:
-                // 攻撃はない
+                // ボタン攻撃はない
                 break;
 
             case eActionType.TotemJump:
@@ -201,6 +205,7 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        _animator = GetComponent<Animator>();
         _playerMove = GetComponent<PlayerMove>();
         _rideBallMove = GetComponent<RideBallMove>();
         _totemJump = GetComponent<TotemJump>();

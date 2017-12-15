@@ -19,7 +19,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 
     #region variable
 
-    [SerializeField] EnemyBase _bossEnemy = null;
+    private EnemyBase _bossEnemy = null;
     public EnemyBase BossEnemy
     {
         get

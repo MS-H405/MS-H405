@@ -33,7 +33,7 @@ public class GameCamera : MonoBehaviour
 
 	#region 変数
 
-	[SerializeField] GameObject PlayerObj;
+	private GameObject PlayerObj;
 	_CameraMode CameraMode;	// カメラの挙動
 	
 	Camera camera;									// 自身のカメラ
@@ -57,7 +57,8 @@ public class GameCamera : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		camera = GetComponent<Camera>();
+        PlayerObj = PlayerManager.Instance.Player.gameObject;
+        camera = GetComponent<Camera>();
 
 		CameraMode = _CameraMode.LOCKON;							// 最初はロックオン
 

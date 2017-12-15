@@ -15,9 +15,8 @@ public class RideBallMove : PlayerMove
 {
     #region define
 
-    readonly float AcceRate = 1.15f;        // 加速率 
+    readonly float AcceRate = 1.1f;         // 加速率 
     readonly float DeceRate = 0.98f;        // 減衰率 
-    readonly float MinAcceleration = 0.05f; // 最低加速度（それ以下を0とみなして処理する）
     private float MaxAcceleration = 0.0f;   // 最大速度。通常の移動速度が静的でないため初期化時に指定
     private float InitAcceleration = 0.0f;  // 初期速度。通常の移動速度が静的でないため初期化時に指定
 
@@ -33,7 +32,8 @@ public class RideBallMove : PlayerMove
 
     // 演出用変数
     private Rigidbody _rigidbody = null;            // 
-    [SerializeField] GameObject _ballPrefab = null; // 玉乗りボールオブジェクト
+    private GameObject _ballObj = null;             // 玉乗りボールインスタンス
+    [SerializeField] GameObject _ballPrefab = null; // 玉乗りボールプレハブ
 
     #endregion
 
@@ -46,7 +46,10 @@ public class RideBallMove : PlayerMove
     {
         // 硬直時は処理しない
         if (_isRigor)
+        {
+            _animator.SetBool("BallWalk", false);
             return;
+        }
 
         // 全方位の加速度を元に移動量を算出
         _moveAmount = Vector3.zero;
@@ -55,7 +58,30 @@ public class RideBallMove : PlayerMove
         _moveAmount += transform.right   * _nowAcceRight;
         _moveAmount -= transform.right   * _nowAcceLeft;
 
+        // Animation更新
+        _animator.SetBool("BallWalk", _moveAmount != Vector3.zero);
+
+        // 向き更新し、移動させる
+        Vector3 oldAngle = _ballObj.transform.eulerAngles;
+        transform.LookAt(transform.position + _moveAmount);
         transform.position += _moveAmount * Time.deltaTime;
+
+        if (_moveAmount == Vector3.zero)
+        {
+            _animator.speed = 1.0f;
+            return;
+        }
+
+        float speed = Mathf.Abs(_moveAmount.x) + Mathf.Abs(_moveAmount.z);
+
+        // プレイヤーの歩行速度変更
+        _animator.speed = speed / 10.0f;
+
+        // ボールの回転
+        // _ballObj.transform.eulerAngles = oldAngle;
+        _ballObj.transform.Rotate(transform.right * _moveAmount.x, 360 * (speed / 5.0f) * Time.deltaTime);
+        //_ballObj.transform.Rotate(transform.forward * _moveAmount.z, 360 * Time.deltaTime);
+        //_ballObj.transform.eulerAngles += new Vector3(_moveAmount.z, 0.0f, -_moveAmount.x) * 5.0f * Time.deltaTime;
     }
 
     /// <summary>
@@ -135,7 +161,7 @@ public class RideBallMove : PlayerMove
         if (_nowAcceForward > 0.0f)
         {
             _nowAcceForward *= DeceRate;
-            if (_nowAcceForward < MinAcceleration)
+            if (_nowAcceForward < InitAcceleration)
             {
                 _nowAcceForward = 0.0f;
             }
@@ -143,7 +169,7 @@ public class RideBallMove : PlayerMove
         if (_nowAcceBack > 0.0f)
         {
             _nowAcceBack *= DeceRate;
-            if (_nowAcceBack < MinAcceleration)
+            if (_nowAcceBack < InitAcceleration)
             {
                 _nowAcceBack = 0.0f;
             }
@@ -151,7 +177,7 @@ public class RideBallMove : PlayerMove
         if (_nowAcceRight > 0.0f)
         {
             _nowAcceRight *= DeceRate;
-            if (_nowAcceRight < MinAcceleration)
+            if (_nowAcceRight < InitAcceleration)
             {
                 _nowAcceRight = 0.0f;
             }
@@ -159,7 +185,7 @@ public class RideBallMove : PlayerMove
         if (_nowAcceLeft > 0.0f)
         {
             _nowAcceLeft *= DeceRate;
-            if (_nowAcceLeft < MinAcceleration)
+            if (_nowAcceLeft < InitAcceleration)
             {
                 _nowAcceLeft = 0.0f;
             }
@@ -196,31 +222,27 @@ public class RideBallMove : PlayerMove
     {
         // 行動停止
         _isRigor = true;
+        _animator.SetBool("Walk", false);
+        _animator.SetTrigger("RideOn");
+        _rigidbody.useGravity = false;
 
         // 上に飛ばし、玉より超えたら玉出現
         while (transform.position.y < 2.25f)
         {
-            _rigidbody.AddForce(0.0f, 9.8f * 2.5f, 0.0f);
-            //_rigidbody.AddForce(-transform.forward * 4.9f);
+            transform.position += new Vector3(0 , 5.0f * Time.deltaTime, 0);
             yield return null;
-
         }
-        Vector3 stopVelocity = _rigidbody.velocity;
-        stopVelocity.x = stopVelocity.z = 0.0f;
-        _rigidbody.velocity = stopVelocity;
-        
-        GameObject ball = Instantiate(_ballPrefab);
-        ball.transform.SetParent(transform);
-        ball.transform.localPosition = new Vector3(0.0f, -1.5f, 0.0f);
+        _rigidbody.useGravity = true;
 
-        // 乗るまで待つ
-        while(_rigidbody.velocity.y != 0.0f)
+        _ballObj = Instantiate(_ballPrefab);
+        _ballObj.transform.SetParent(transform);
+        _ballObj.transform.localPosition = new Vector3(0.0f, -1.0f, 0.0f);
+
+        // 地面につくまでまで待つ
+        while(_isRigor)
         {
             yield return null;
         }
-
-        // 行動再開
-        _isRigor = false;
     }
 
     /// <summary>  
@@ -232,12 +254,22 @@ public class RideBallMove : PlayerMove
         _isRigor = true;
 
         // 降りる処理
-        Destroy(transform.Find("RideBall(Clone)").gameObject);
+        if (_ballObj)
+            _ballObj.SetActive(false);
+        
         while (_isRigor)
         {
             yield return null;
         }
-        
+
+        // 玉を削除
+        Destroy(_ballObj.gameObject);
+
+        // 玉乗り時に変更したアニメーションデータを初期化
+        _animator.SetBool("BallWalk", false);
+        _animator.speed = 1.0f;
+
+        // コンポーネントを切り替え
         GetComponent<PlayerMove>().enabled = true;
         this.enabled = false;
     }
@@ -254,6 +286,7 @@ public class RideBallMove : PlayerMove
         InitAcceleration = _speed_Sec * 0.2f;
         MaxAcceleration = _speed_Sec * 1.7f;
         _rigidbody = GetComponent<Rigidbody>();
+        base.Awake();
     }
 
     /// <summary>  
@@ -274,6 +307,10 @@ public class RideBallMove : PlayerMove
 
         if(col.transform.tag == "Enemy")
         {
+            // 既に攻撃判定等が発生していたら処理しない
+            if (_isRigor)
+                return;
+
             // ダメージ処理がある場合はダメージ処理
             if (_nowAcceForward >= _speed_Sec)
             {

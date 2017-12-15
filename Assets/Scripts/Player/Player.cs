@@ -25,7 +25,9 @@ public class Player : MonoBehaviour
     private RideBallMove _rideBallMove = null;
 
     // ダメージ処理演出用変数
+    private bool _isDamage = false;
     private Rigidbody _rigidBody = null;
+    private Animator _animator = null;
     [SerializeField] float _backPower = 75.0f;
     [SerializeField] float _upPower = 200.0f;
 
@@ -38,14 +40,42 @@ public class Player : MonoBehaviour
     /// </summary>  
     public void Damage()
     {
+        if (_isDamage)
+            return;
+
         _hp--;
         DamageStan();
+        _animator.SetTrigger("Damage");
         PlayerLifeManager.Instance.DamageEffect();
+        StaticCoroutine.Instance.StartStaticCoroutine(DamageWait());
 
         if (_hp > 0)
             return;
 
-        // TODO : 死亡処理 
+        // 死亡処理
+        // TODO : 演出実行
+    }
+
+    /// <summary>  
+    /// ダメージ時の無敵時間処理  
+    /// </summary>  
+    private IEnumerator DamageWait()
+    {
+        _isDamage = true;
+      
+        // 遷移を待つ
+        while (!PlayerManager.Instance.DamageAnimation())
+        {
+            yield return null;
+        }
+
+        // ダメージアニメーション終了を待つ
+        while (PlayerManager.Instance.DamageAnimation())
+        {
+            yield return null;
+        }
+
+        _isDamage = false;
     }
 
     /// <summary>
@@ -78,6 +108,7 @@ public class Player : MonoBehaviour
     /// </summary>  
     private void Awake()
     {
+        _animator = GetComponent<Animator>();
         _actionManager = GetComponent<ActionManager>();
         _playerMove = GetComponent<PlayerMove>();
         _rideBallMove = GetComponent<RideBallMove>();
@@ -135,6 +166,20 @@ public class Player : MonoBehaviour
                     Damage();
                 }
             });
+    }
+
+    /// <summary>
+    /// 地形との接地判定処理
+    /// </summary>
+    protected virtual void OnCollisionEnter(Collision col)
+    {
+        if (col.transform.tag == "Field")
+        {
+            if (!_isDamage || _hp <= 0)
+                return;
+
+            _animator.SetTrigger("Return");
+        }
     }
 
     #endregion

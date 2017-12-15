@@ -15,6 +15,8 @@ public class StageData : SingletonMonoBehaviour<StageData>
 {
     #region define
 
+    static public readonly float FieldSize = 10.0f; 
+
     #endregion
 
     #region variable

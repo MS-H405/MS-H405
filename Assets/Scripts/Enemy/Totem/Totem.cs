@@ -135,7 +135,7 @@ public class Totem : EnemyBase
         while (amount < _headAmount)
         {
             amount++;
-            transform.position = new Vector3(Random.Range(-10.0f, 10.0f), -_oneBlockSize * _headAmount, Random.Range(-10.0f, 10.0f));
+            transform.position = RandomPos(amount);
             transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
 
             // 土煙を出す
@@ -222,7 +222,7 @@ public class Totem : EnemyBase
         }
 
         // 本体突き上げ処理
-        transform.position = new Vector3(Random.Range(-10.0f, 10.0f), -_oneBlockSize * 3.0f, Random.Range(-10.0f, 10.0f));
+        transform.position = RandomPos(_headAmount);
         transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
 
         // 土煙を出す
@@ -360,10 +360,20 @@ public class Totem : EnemyBase
         // 回転実行
         foreach (ManualRotation rot in _totemHeadList)
         {
-            Debug.Log(rotAmount);
             rot.Run(rotAmount, speed);
             rotAmount *= -1;
         }
+    }
+
+    /// <summary>
+    /// ランダムな座標を返す
+    /// </summary>
+    private Vector3 RandomPos(int amount)
+    {
+        float x = Random.Range(-StageData.FieldSize, StageData.FieldSize);
+        float y = -_oneBlockSize * amount;
+        float z = Random.Range(-StageData.FieldSize, StageData.FieldSize);
+        return new Vector3(x,y,z);
     }
 
     #endregion
