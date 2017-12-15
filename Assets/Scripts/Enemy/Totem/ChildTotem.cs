@@ -39,7 +39,7 @@ public class ChildTotem : MonoBehaviour
     public IEnumerator PushUp(float speed)
     {
         // ランダムな位置に移動
-        transform.position = new Vector3(Random.Range(-10.0f, 10.0f), -_oneBlockSize * 3.0f, Random.Range(-10.0f, 10.0f));
+        transform.position = RandomPos(-_oneBlockSize * 3.0f); 
         transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
 
         // 土煙を出す
@@ -118,7 +118,7 @@ public class ChildTotem : MonoBehaviour
             initPos[i] = transform.GetChild(i).localPosition;
 
             // ランダムな位置に移動
-            transform.GetChild(i).position = new Vector3(Random.Range(-10.0f, 10.0f), fallHeight, Random.Range(-10.0f, 10.0f));
+            transform.GetChild(i).position = RandomPos(fallHeight);
         }
 
         // TODO : 一気に落下するのを防止
@@ -164,10 +164,19 @@ public class ChildTotem : MonoBehaviour
         // 回転実行
         foreach (ManualRotation rot in _totemHeadList)
         {
-            Debug.Log(rotAmount);
             rot.Run(rotAmount, speed);
             rotAmount *= -1;
         }
+    }
+
+    /// <summary>
+    /// ランダムな座標を返す
+    /// </summary>
+    private Vector3 RandomPos(float y)
+    {
+        float x = Random.Range(-StageData.FieldSize, StageData.FieldSize);
+        float z = Random.Range(-StageData.FieldSize, StageData.FieldSize);
+        return new Vector3(x, y, z);
     }
 
     #endregion
