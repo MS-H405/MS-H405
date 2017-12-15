@@ -765,7 +765,7 @@ GameObject:
   - component: {fileID: 4164126278026920}
   - component: {fileID: 95018860281165024}
   - component: {fileID: 136025543220536912}
-  - component: {fileID: 54015455626790626}
+  - component: {fileID: 54776136021043682}
   - component: {fileID: 114600916794088364}
   - component: {fileID: 114899902873179586}
   - component: {fileID: 114960468404790136}
@@ -2182,7 +2182,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1385827870675170}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54015455626790626
+--- !u!54 &54776136021043682
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2195,8 +2195,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!95 &95018860281165024
 Animator:
   serializedVersion: 3
@@ -2240,7 +2240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ca4f55d38ec0e41ac58b3552f58b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 6
+  _hp: 5
   _backPower: 75
   _upPower: 200
 --- !u!114 &114669739526133962
@@ -2254,8 +2254,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b3d87b74eb5c547be226a16c3476df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed_Sec: 7.5
-  _ballPrefab: {fileID: 1686391726934046, guid: 7818fffa675731242a8d84fa61495b40,
+  _speed_Sec: 5
+  _ballPrefab: {fileID: 1615820730091640, guid: f5c5975540fc04f40a6fe6d147debbe0,
     type: 2}
 --- !u!114 &114899902873179586
 MonoBehaviour:
@@ -2268,7 +2268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3178cc03eceaec44ca113a139b461971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed_Sec: 6
+  _speed_Sec: 5
 --- !u!114 &114960468404790136
 MonoBehaviour:
   m_ObjectHideFlags: 1

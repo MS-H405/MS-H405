@@ -249,12 +249,14 @@
     <Compile Include="Assets\Scripts\Movie\Special_1Camera.cs" />
     <Compile Include="Assets\Scripts\Movie\Special_1Manager.cs" />
     <Compile Include="Assets\Scripts\Movie\Special_1Player.cs" />
+    <Compile Include="Assets\Scripts\Movie\Special_1PlayerMotion.cs" />
     <Compile Include="Assets\Scripts\Player\Action\ActionManager.cs" />
     <Compile Include="Assets\Scripts\Player\Action\BagpipeFire.cs" />
     <Compile Include="Assets\Scripts\Player\Action\JugglingAtack.cs" />
     <Compile Include="Assets\Scripts\Player\Action\RideBallMove.cs" />
     <Compile Include="Assets\Scripts\Player\Action\TotemJump.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\Player\UI\AtackIcon\AtackIcon.cs" />
     <Compile Include="Assets\Scripts\Player\UI\AtackIcon\AtackIconManager.cs" />
@@ -271,17 +273,20 @@
     <Compile Include="Assets\Scripts\TotemDeath\TD_TotemBody_PB.cs" />
     <Compile Include="Assets\Scripts\TotemStart\TS_Boss_PA.cs" />
     <Compile Include="Assets\Scripts\TotemStart\TS_Boss_PB.cs" />
+    <Compile Include="Assets\Scripts\TotemStart\TS_ShakeCamera_PA.cs" />
+    <Compile Include="Assets\Scripts\TotemStart\TS_ShakeCamera_PB.cs" />
     <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild.cs" />
     <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PA.cs" />
     <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PB.cs" />
     <Compile Include="Assets\Scripts\Utility\AutoRotation.cs" />
     <Compile Include="Assets\Scripts\Utility\BezierCurve.cs" />
     <Compile Include="Assets\Scripts\Utility\GameSetting.cs" />
+    <Compile Include="Assets\Scripts\Utility\GetAllChildren.cs" />
+    <Compile Include="Assets\Scripts\Utility\ManualRotation.cs" />
     <Compile Include="Assets\Scripts\Utility\ShakeCamera.cs" />
     <Compile Include="Assets\Scripts\Utility\SingletonMonoBehaviour.cs" />
     <Compile Include="Assets\Scripts\Utility\SortingLayer.cs" />
     <Compile Include="Assets\Scripts\Utility\StaticCoroutine.cs" />
-    <Compile Include="Assets\Scripts\Utility\WaitForSecondsRealtime.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Cinemachine\ReleaseNotes.txt" />
