@@ -140,24 +140,22 @@ public class PlayerMove : MonoBehaviour
         }
 
         // 入力判定に応じて加速
-//#if UNITY_EDITOR
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetAxis("Vertical") > 0)
         {
             Acceleration(eDirection.Forward);
         }
-        else if (Input.GetKey(KeyCode.S))
+        else if (Input.GetAxis("Vertical") < 0)
         {
             Acceleration(eDirection.Back);
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetAxis("Horizontal") > 0)
         {
             Acceleration(eDirection.Right);
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetAxis("Horizontal") < 0)
         {
             Acceleration(eDirection.Left);
         }
-//#endif
 
         // 移動・減速処理
         Move();

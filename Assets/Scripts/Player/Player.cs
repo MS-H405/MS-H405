@@ -137,23 +137,23 @@ public class Player : MonoBehaviour
                 else
                 {
                     // 攻撃選択＆選択時攻撃
-                    if (Input.GetKeyDown(KeyCode.Return))
+                    if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Atack"))
                     {
                         _actionManager.OnSelect();
                     }
                     // 行動キャンセル
-                    if (Input.GetKeyDown(KeyCode.Backspace))
+                    if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetButtonDown("Cancel"))
                     {
                         _actionManager.Cancel();
                     }
                     // 武器スロット右回り
-                    if (Input.GetKeyDown(KeyCode.RightArrow) && AtackIconManager.Instance.IsChange)
+                    if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetButtonDown("Right")) && AtackIconManager.Instance.IsChange)
                     {
                         _actionManager.ChangeSelect(true);
                         AtackIconManager.Instance.Rot(true);
                     }
                     // 武器スロット左回り
-                    if (Input.GetKeyDown(KeyCode.LeftArrow)  && AtackIconManager.Instance.IsChange)
+                    if ((Input.GetKeyDown(KeyCode.LeftArrow)  || Input.GetButtonDown("Left"))  && AtackIconManager.Instance.IsChange)
                     { 
                         _actionManager.ChangeSelect(false);
                         AtackIconManager.Instance.Rot(false);

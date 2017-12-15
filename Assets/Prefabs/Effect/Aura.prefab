@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4744065219206416}
   - component: {fileID: 198811035360984740}
   - component: {fileID: 199405947313544468}
+  - component: {fileID: 114604503707945776}
   m_Layer: 0
   m_Name: par3
   m_TagString: Untagged
@@ -38,6 +39,7 @@ GameObject:
   - component: {fileID: 4294240459766542}
   - component: {fileID: 198124975957781458}
   - component: {fileID: 199144778495020656}
+  - component: {fileID: 114532405474633432}
   m_Layer: 0
   m_Name: Aura
   m_TagString: Untagged
@@ -52,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1730324996189536}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.77, z: 0}
+  m_LocalPosition: {x: 0, y: 1.77, z: -3.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4744065219206416}
@@ -72,6 +74,28 @@ Transform:
   m_Father: {fileID: 4294240459766542}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114532405474633432
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1730324996189536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6226f461d3800d7409945623d979ce2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114604503707945776
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1003294109450718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6226f461d3800d7409945623d979ce2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198124975957781458
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -132,7 +156,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1993933549
+  randomSeed: -1408417777
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3413,7 +3437,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1390391937
+  randomSeed: -8043916
   InitialModule:
     serializedVersion: 3
     enabled: 1
