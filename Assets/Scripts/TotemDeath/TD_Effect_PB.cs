@@ -14,7 +14,7 @@ public class TD_Effect_PB : PlayableBehaviour
 	const float CON_EFFECT_NAKA = 4.8f;		// トーテム中用の土埃を発生させる時間
 	const float CON_EFFECT_POWERUP = 6.3f;	// パワーアップのエフェクトを出す時間
 	const float CON_EFFECT_FLUSH = 6.3f;	// フラッシュを出す時間
-	const float CON_EFFECT_PLAYER_POWERUP = 17.0f;	// プレイヤーパワーアップエフェクト
+	const float CON_EFFECT_PLAYER_POWERUP = 14.3f;	// プレイヤーパワーアップエフェクト
 
 
 	#endregion
