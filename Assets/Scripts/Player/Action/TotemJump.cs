@@ -82,7 +82,7 @@ public class TotemJump : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        _totemObj = transform.Find("Totem").gameObject;
+        _totemObj = transform.Find("TotemJump").gameObject;
         _totemObj.transform.SetParent(null);
         _playerMove = GetComponent<PlayerMove>();
         _rigidBody = GetComponent<Rigidbody>();
