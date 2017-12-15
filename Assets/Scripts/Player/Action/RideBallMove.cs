@@ -15,7 +15,7 @@ public class RideBallMove : PlayerMove
 {
     #region define
 
-    readonly float AcceRate = 1.1f;         // 加速率 
+    readonly float AcceRate = 1.05f;        // 加速率 
     readonly float DeceRate = 0.98f;        // 減衰率 
     private float MaxAcceleration = 0.0f;   // 最大速度。通常の移動速度が静的でないため初期化時に指定
     private float InitAcceleration = 0.0f;  // 初期速度。通常の移動速度が静的でないため初期化時に指定
@@ -31,9 +31,12 @@ public class RideBallMove : PlayerMove
     private float _nowAcceLeft    = 0.0f;    // 左方加速率
 
     // 演出用変数
-    private Rigidbody _rigidbody = null;            // 
+    private Rigidbody _rigidbody = null;            //
+    private Vector3 _inputVec = Vector3.zero;       // 現在の入力している方向
+
     private GameObject _ballObj = null;             // 玉乗りボールインスタンス
     [SerializeField] GameObject _ballPrefab = null; // 玉乗りボールプレハブ
+    private Vector3 _oldBallAngle = Vector3.zero;
 
     #endregion
 
@@ -62,8 +65,7 @@ public class RideBallMove : PlayerMove
         _animator.SetBool("BallWalk", _moveAmount != Vector3.zero);
 
         // 向き更新し、移動させる
-        Vector3 oldAngle = _ballObj.transform.eulerAngles;
-        transform.LookAt(transform.position + _moveAmount);
+        transform.LookAt(transform.position + _inputVec);
         transform.position += _moveAmount * Time.deltaTime;
 
         if (_moveAmount == Vector3.zero)
@@ -78,8 +80,9 @@ public class RideBallMove : PlayerMove
         _animator.speed = speed / 10.0f;
 
         // ボールの回転
-        // _ballObj.transform.eulerAngles = oldAngle;
+        _ballObj.transform.eulerAngles = _oldBallAngle;
         _ballObj.transform.Rotate(transform.right * _moveAmount.x, 360 * (speed / 5.0f) * Time.deltaTime);
+        _oldBallAngle = _ballObj.transform.eulerAngles;
         //_ballObj.transform.Rotate(transform.forward * _moveAmount.z, 360 * Time.deltaTime);
         //_ballObj.transform.eulerAngles += new Vector3(_moveAmount.z, 0.0f, -_moveAmount.x) * 5.0f * Time.deltaTime;
     }
@@ -107,6 +110,8 @@ public class RideBallMove : PlayerMove
                 {
                     _nowAcceForward = MaxAcceleration;
                 }
+
+                _inputVec += transform.forward;
                 break;
 
             case eDirection.Back:
@@ -121,6 +126,8 @@ public class RideBallMove : PlayerMove
                 {
                     _nowAcceBack = MaxAcceleration;
                 }
+                
+                _inputVec -= transform.forward;
                 break;
 
             case eDirection.Right:
@@ -135,6 +142,8 @@ public class RideBallMove : PlayerMove
                 {
                     _nowAcceRight = MaxAcceleration;
                 }
+
+                _inputVec += transform.right;
                 break;
 
             case eDirection.Left:
@@ -149,6 +158,8 @@ public class RideBallMove : PlayerMove
                 {
                     _nowAcceLeft = MaxAcceleration;
                 }
+
+                _inputVec -= transform.right;
                 break;
         }
     }
@@ -190,6 +201,8 @@ public class RideBallMove : PlayerMove
                 _nowAcceLeft = 0.0f;
             }
         }
+
+        _inputVec = Vector3.zero;
     }
 
     /// <summary>
@@ -236,10 +249,11 @@ public class RideBallMove : PlayerMove
 
         _ballObj = Instantiate(_ballPrefab);
         _ballObj.transform.SetParent(transform);
-        _ballObj.transform.localPosition = new Vector3(0.0f, -1.0f, 0.0f);
+        _ballObj.transform.localPosition = new Vector3(0.0f, -0.85f, 0.0f);
+        _oldBallAngle = _ballObj.transform.eulerAngles;
 
         // 地面につくまでまで待つ
-        while(_isRigor)
+        while (_isRigor)
         {
             yield return null;
         }
