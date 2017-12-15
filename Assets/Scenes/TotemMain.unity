@@ -1358,7 +1358,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1967934187120978, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114097555248322722, guid: 756c1f99629816e40859ff6ff9affb30,
+        type: 2}
+      propertyPath: _stanHP
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
@@ -1557,8 +1562,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74aae98b4572904094feef05f6be402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fShakeDecay: 0.0006
-  fCoefShakeIntensity: 0.03
+  fShakeDecay: 0.0003
+  fCoefShakeIntensity: 0.015
 --- !u!1 &1230956033
 GameObject:
   m_ObjectHideFlags: 0
@@ -1991,7 +1996,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4071520533003786, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4071520533003786, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
       propertyPath: m_LocalRotation.x
@@ -2029,7 +2034,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1967934187120978, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -2152,6 +2157,11 @@ Prefab:
     - target: {fileID: 4164126278026920, guid: 96def8ac0fd4dfd4084e8a6cb047675a, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114669739526133962, guid: 96def8ac0fd4dfd4084e8a6cb047675a,
+        type: 2}
+      propertyPath: _speed_Sec
+      value: 7.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 96def8ac0fd4dfd4084e8a6cb047675a, type: 2}
