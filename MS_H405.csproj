@@ -267,6 +267,8 @@
     <Compile Include="Assets\Scripts\Title\PushStart.cs" />
     <Compile Include="Assets\Scripts\TotemDeath\TD_Effect_PA.cs" />
     <Compile Include="Assets\Scripts\TotemDeath\TD_Effect_PB.cs" />
+    <Compile Include="Assets\Scripts\TotemDeath\TD_Player_PA.cs" />
+    <Compile Include="Assets\Scripts\TotemDeath\TD_Player_PB.cs" />
     <Compile Include="Assets\Scripts\TotemDeath\TD_Totem_PA.cs" />
     <Compile Include="Assets\Scripts\TotemDeath\TD_Totem_PB.cs" />
     <Compile Include="Assets\Scripts\TotemDeath\TD_TotemBody_PA.cs" />
@@ -280,9 +282,12 @@
     <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PB.cs" />
     <Compile Include="Assets\Scripts\Utility\AutoRotation.cs" />
     <Compile Include="Assets\Scripts\Utility\BezierCurve.cs" />
+    <Compile Include="Assets\Scripts\Utility\FixHeight.cs" />
     <Compile Include="Assets\Scripts\Utility\GameSetting.cs" />
     <Compile Include="Assets\Scripts\Utility\GetAllChildren.cs" />
     <Compile Include="Assets\Scripts\Utility\ManualRotation.cs" />
+    <Compile Include="Assets\Scripts\Utility\Particle\ParticleLifeTimer.cs" />
+    <Compile Include="Assets\Scripts\Utility\Particle\ParticleScaler.cs" />
     <Compile Include="Assets\Scripts\Utility\ShakeCamera.cs" />
     <Compile Include="Assets\Scripts\Utility\SingletonMonoBehaviour.cs" />
     <Compile Include="Assets\Scripts\Utility\SortingLayer.cs" />

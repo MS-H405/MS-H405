@@ -279,13 +279,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="MS_H405.csproj">
-      <Project>{1E0D2BDA-13E9-BF36-3C71-45B4C4FD3462}</Project>
-      <Name>MS_H405</Name>
-    </ProjectReference>
     <ProjectReference Include="MS_H405.Plugins.csproj">
       <Project>{CBD3DD3F-E762-4FB9-6CA7-55A0CB7B0768}</Project>
       <Name>MS_H405.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="MS_H405.csproj">
+      <Project>{1E0D2BDA-13E9-BF36-3C71-45B4C4FD3462}</Project>
+      <Name>MS_H405</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
