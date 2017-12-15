@@ -1047,6 +1047,7 @@ GameObject:
   - component: {fileID: 268817838}
   - component: {fileID: 268817842}
   - component: {fileID: 268817843}
+  - component: {fileID: 268817844}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1159,6 +1160,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fShakeDecay: 0.0006
   fCoefShakeIntensity: 0.03
+--- !u!114 &268817844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 268817837}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fc6bde01469c7b4badee5362f191d96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downsample: 0
+  blurSize: 2.38
+  blurIterations: 1
+  blurType: 0
+  blurShader: {fileID: 4800000, guid: f9d5fa183cd6b45eeb1491f74863cd91, type: 3}
 --- !u!1 &303257458
 GameObject:
   m_ObjectHideFlags: 0
@@ -4917,7 +4934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74aae98b4572904094feef05f6be402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fShakeDecay: 0.0006
+  fShakeDecay: 0.001
   fCoefShakeIntensity: 0.02
 --- !u!1 &1046308817
 GameObject:
@@ -5956,6 +5973,7 @@ PlayableDirector:
   m_ExposedReferences:
     m_References:
     - 9e34bf96514ea7342a064cf7825c5d58: {fileID: 647928552}
+    - 27d8596b499d58a4ab9394f020c3d83a: {fileID: 268817837}
     - bc7de5ea91a71154b925cf2ee6497b7f: {fileID: 1885197662}
     - c57975c254806fb428b4b2febb533c23: {fileID: 2031569506}
     - e83b0d642ac32e44b9ac2a4727f85c1a: {fileID: 1129658114}

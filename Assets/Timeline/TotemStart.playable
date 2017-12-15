@@ -1049,6 +1049,9 @@ MonoBehaviour:
   ShakeCameraObj:
     exposedName: 50b3fcf685c1d784197eb3eaddbafeaa
     defaultValue: {fileID: 0}
+  MainCameraObj:
+    exposedName: 27d8596b499d58a4ab9394f020c3d83a
+    defaultValue: {fileID: 0}
 --- !u!114 &114986373557965996
 MonoBehaviour:
   m_ObjectHideFlags: 1
