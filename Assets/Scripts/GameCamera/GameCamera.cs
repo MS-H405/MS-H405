@@ -26,7 +26,7 @@ public class GameCamera : MonoBehaviour
 	const float CON_fTopTime = 0.6f;													// 俯瞰視点への移動にかかる時間(元に戻るときもこの時間で戻る)
 	const float CON_fNormalTime = 3.0f;													// 通常視点への移動にかかる時間
 	const float CON_fTopRotY = 0.7f;													// ターゲットロストして、俯瞰になった時の角度(Y)
-	const float	CON_fTopDistance = 8.0f;												// ターゲットロストして、俯瞰になった時のプレイヤーからの距離
+	const float	CON_fTopDistance = 12.0f;												// ターゲットロストして、俯瞰になった時のプレイヤーからの距離
 
 	#endregion
 	
