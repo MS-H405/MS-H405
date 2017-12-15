@@ -23,7 +23,11 @@ MonoBehaviour:
   - {fileID: 114891810639807002, guid: 71cb6a4b588236543aabbb176af0f73f, type: 2}
   - {fileID: 114308084053938768, guid: 71cb6a4b588236543aabbb176af0f73f, type: 2}
   - {fileID: 114673348577521456, guid: 71cb6a4b588236543aabbb176af0f73f, type: 2}
+  - {fileID: 114920577666383162, guid: 71cb6a4b588236543aabbb176af0f73f, type: 2}
   m_Vals:
+  - collapsed: 0
+    showInlineCurves: 0
+    inlineAnimationCurveHeight: 100
   - collapsed: 0
     showInlineCurves: 0
     inlineAnimationCurveHeight: 100

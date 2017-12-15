@@ -62,7 +62,7 @@ MonoBehaviour:
   BossDiveObj:
     exposedName: f35aae9d792f9e14dacb6cdfc087edf0
     defaultValue: {fileID: 0}
-  TotemMaterial: {fileID: 2100000, guid: 3869814e6b0a3294e8f2e564ce8c71d2, type: 2}
+  TotemMaterial: {fileID: 2100000, guid: c3ecbadb7635ee04795c8e7af972272d, type: 2}
 --- !u!114 &114128065233928454
 MonoBehaviour:
   m_ObjectHideFlags: 1
