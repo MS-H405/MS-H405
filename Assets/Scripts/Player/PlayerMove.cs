@@ -32,6 +32,10 @@ public class PlayerMove : MonoBehaviour
 
     protected bool _isRigor = false;    // 硬直判定
 
+    // animation用変数
+    protected Animator _animator = null;
+    private Vector3 _oldAngle = Vector3.zero;
+
     #endregion
 
     #region method
@@ -41,11 +45,15 @@ public class PlayerMove : MonoBehaviour
     /// </summary>
     protected virtual void Move()
     {
+        // Animation更新
+        _animator.SetBool("Walk", _moveAmount != Vector3.zero);
+
         // 硬直時は処理しない
-        if (_isRigor)
+        if (_isRigor || IsAction)
             return;
 
         transform.position += _moveAmount * Time.deltaTime;
+        transform.LookAt(transform.position + _moveAmount);
     }
 
     /// <summary>
@@ -54,7 +62,7 @@ public class PlayerMove : MonoBehaviour
     protected virtual void Acceleration(eDirection dir)
     {
         // 硬直時は処理しない
-        if (_isRigor)
+        if (_isRigor || IsAction)
             return;
 
         switch (dir)
@@ -90,17 +98,49 @@ public class PlayerMove : MonoBehaviour
         _isRigor = true;
     }
 
+    /// <summary>
+    /// 攻撃行動中かを返す
+    /// </summary>
+    private bool IsAction
+    {
+        get
+        {
+            AnimatorStateInfo animStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            return !animStateInfo.IsName("Base.Idle") && !animStateInfo.IsName("Base.Walk");
+        }
+    }
+
     #endregion
 
     #region unity_event
+
+    /// <summary>
+    /// 初期化処理
+    /// </summary>
+    protected void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
     /// <summary>
     /// 更新処理
     /// </summary>
     private void Update ()
     {
+        // 敵を前方として移動するので、移動前に敵の方に向ける
+        if (EnemyManager.Instance.BossEnemy)
+        {
+            Vector3 enemyPos = EnemyManager.Instance.BossEnemy.transform.position;
+            transform.LookAt(new Vector3(enemyPos.x, transform.position.y, enemyPos.z));
+            _oldAngle = transform.eulerAngles;
+        }
+        else
+        {
+            transform.eulerAngles = _oldAngle;
+        }
+
         // 入力判定に応じて加速
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
         if (Input.GetKey(KeyCode.W))
         {
             Acceleration(eDirection.Forward);
@@ -117,16 +157,11 @@ public class PlayerMove : MonoBehaviour
         {
             Acceleration(eDirection.Left);
         }
-#endif
+//#endif
 
+        // 移動・減速処理
         Move();
         Deceleration();
-
-        if (!EnemyManager.Instance.BossEnemy)
-            return;
-
-        Vector3 enemyPos = EnemyManager.Instance.BossEnemy.transform.position;
-        transform.LookAt(new Vector3(enemyPos.x, transform.position.y, enemyPos.z));
     }
 
     /// <summary>
