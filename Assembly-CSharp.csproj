@@ -106,6 +106,8 @@
      <Compile Include="Assets\Scripts\Utility\GameSetting.cs" />
      <Compile Include="Assets\Scripts\Utility\GetAllChildren.cs" />
      <Compile Include="Assets\Scripts\Utility\ManualRotation.cs" />
+     <Compile Include="Assets\Scripts\Utility\Particle\ParticleLifeTimer.cs" />
+     <Compile Include="Assets\Scripts\Utility\Particle\ParticleScaler.cs" />
      <Compile Include="Assets\Scripts\Utility\ShakeCamera.cs" />
      <Compile Include="Assets\Scripts\Utility\SingletonMonoBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utility\SortingLayer.cs" />
