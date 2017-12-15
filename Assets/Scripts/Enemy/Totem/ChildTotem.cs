@@ -27,7 +27,9 @@ public class ChildTotem : MonoBehaviour
     [SerializeField] string _appearEffectName = "TS_totem_appear";
     List<ManualRotation> _totemHeadList = new List<ManualRotation>();
 
-    [SerializeField] GameObject _dropPointEffect = null;
+    //[SerializeField] GameObject _dropPointEffect = null;
+    // TODO : SerializeFieldではなくする
+    [SerializeField] List<ParticleSystem> _dropParticleList = new List<ParticleSystem>();
 
     #endregion
 
@@ -39,7 +41,7 @@ public class ChildTotem : MonoBehaviour
     public IEnumerator PushUp(float speed)
     {
         // ランダムな位置に移動
-        transform.position = RandomPos(-_oneBlockSize * 3.0f); 
+        transform.position = RandomPos(-_oneBlockSize * 4.0f); 
         transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
 
         // 土煙を出す
@@ -59,7 +61,7 @@ public class ChildTotem : MonoBehaviour
         GameEffectManager.Instance.PlayOnHeightZero(_appearEffectName, transform.position);
         while (time < 3.0f)
         {
-            transform.position = Vector3.Lerp(initPos, initPos + new Vector3(0, _oneBlockSize * 3.0f, 0), time / 3.0f);
+            transform.position = Vector3.Lerp(initPos, initPos + new Vector3(0, _oneBlockSize * 4.0f, 0), time / 3.0f);
             time += Time.deltaTime / speed;
             yield return null;
         }
@@ -74,7 +76,7 @@ public class ChildTotem : MonoBehaviour
         float time = 0.0f;
         GameEffectManager.Instance.PlayOnHeightZero(_appearEffectName, transform.position);
         TotemRot(true, speed);
-        while (time < 3.0f)
+        while (time < 4.0f)
         {
             transform.position -= new Vector3(0, _oneBlockSize * (Time.deltaTime / speed), 0);
             time += Time.deltaTime / speed;
@@ -121,6 +123,11 @@ public class ChildTotem : MonoBehaviour
             transform.GetChild(i).position = RandomPos(fallHeight);
         }
 
+        foreach(ParticleSystem particle in _dropParticleList)
+        {
+            particle.gameObject.SetActive(true);
+        }
+
         // TODO : 一気に落下するのを防止
         time = 0.0f;
         float waitTime = Random.Range(0.0f, 2.0f);
@@ -132,12 +139,17 @@ public class ChildTotem : MonoBehaviour
 
         // 落下を待つ
         _isAtack = true;
-        while (transform.position.y > 0.0f)
+        while (transform.position.y > -20.0f)
         {
             _rigidbody.AddForce(0.0f, -9.8f, 0.0f);
             yield return null;
         }
         _isAtack = false;
+
+        foreach (ParticleSystem particle in _dropParticleList)
+        {
+            particle.gameObject.SetActive(false);
+        }
 
         // 初期位置に戻す
         _rigidbody.useGravity = false;
@@ -189,12 +201,14 @@ public class ChildTotem : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _totemHeadList = GetComponentsInChildren<ManualRotation>().ToList();
 
-        // トーテムの顔ごとの回転処理用コンポーネントを取得
-        for (int i = 0; i < transform.childCount; i++)
+        // 子の子に配置してあるパーティクルを取得
+        /*for (int i = 0; i < transform.childCount; i++)
         {
-            _totemHeadList.Add(transform.GetChild(i).GetComponent<ManualRotation>());
-        }
+            _dropParticleList.Add(transform.GetChild(i).GetComponentInChildren<ParticleSystem>());
+        }*/
+
     }
 
     /// <summary>

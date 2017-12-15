@@ -130,7 +130,7 @@ public class Totem : EnemyBase
     /// </summary>
     private IEnumerator TotemPushUp()
     {
-        int amount = 0;
+        int amount = 1;
         float time = 0.0f;
         while (amount < _headAmount)
         {
@@ -385,8 +385,8 @@ public class Totem : EnemyBase
     /// </summary>
     private void Awake()
     {
-        // 座標を初期化
-        transform.position = new Vector3(0.0f, -_oneBlockSize * _headAmount, 0.0f);
+        // トーテムの先端が見えてしまうので頭を一つ増やした状態で処理
+        _headAmount += 1;
 
         // 必要コンポーネントの取得
         _rigidbody = GetComponent<Rigidbody>();
