@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
                 if(enemyBase.IsStan)
                 {
                     // 必殺技実行
-                    if(Input.GetKeyDown(KeyCode.Return))
+                    if(Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Atack"))
                     {
                         enemyBase.SpecialDamage();
                         MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.SPECIAL_1);

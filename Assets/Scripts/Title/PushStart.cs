@@ -64,7 +64,7 @@ public class PushStart : MonoBehaviour
         }
 
         // TODO : ゲームパッドのインプットに対応する
-        if(Input.GetKeyDown(KeyCode.Return))
+        if(Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Atack"))
         {
             MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TOTEM_START);
             this.enabled = false;
