@@ -305,7 +305,12 @@ public class RideBallMove : PlayerMove
     {
         base.OnCollisionEnter(col);
 
-        if(col.transform.tag == "Enemy")
+        if (col.transform.tag == "Field")
+        {
+            _rigidbody.velocity = Vector3.zero;
+        }
+
+        if (col.transform.tag == "Enemy")
         {
             // 既に攻撃判定等が発生していたら処理しない
             if (_isRigor)
@@ -326,8 +331,8 @@ public class RideBallMove : PlayerMove
 
             // 跳ね返り処理
             _isRigor = true;
-            Vector3 reflectPower = -transform.forward * _nowAcceForward * 5.0f;
-            reflectPower += new Vector3(0.0f, 200.0f, 0.0f);
+            Vector3 reflectPower = -transform.forward * _nowAcceForward * 10.0f;
+            reflectPower += new Vector3(0.0f, 250.0f, 0.0f);
             _rigidbody.AddForce(reflectPower);
             AcceReset();
         }
