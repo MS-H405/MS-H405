@@ -8,6 +8,7 @@ public class TD_TotemBody_PA : PlayableAsset
 {
 	[SerializeField]	ExposedReference<GameObject> TotemBodyObj;	// トーテム親
 	[SerializeField]	Material TotemMat;		// トーテムのマテリアル
+	[SerializeField]	ExposedReference<GameObject> MainCameraObj;	// カメラ
 
 
 	// Factory method that generates a playable based on this asset
@@ -17,6 +18,7 @@ public class TD_TotemBody_PA : PlayableAsset
 
 		behaviour.TotemBodyObj = TotemBodyObj.Resolve(graph.GetResolver());
 		behaviour.TotemBodyMat = TotemMat;
+		behaviour.MainCameraObj = MainCameraObj.Resolve(graph.GetResolver());
 
 		return ScriptPlayable<TD_TotemBody_PB>.Create(graph, behaviour);
 	}
