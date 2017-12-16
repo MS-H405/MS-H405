@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UniRx.Triggers;
-  
+
 public class Player : MonoBehaviour
 {
     #region define
@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
 
     // ダメージ処理演出用変数
     private bool _isDamage = false;
+    public bool IsDamage { get { return _isDamage; } }
     private Rigidbody _rigidBody = null;
     private Animator _animator = null;
     [SerializeField] float _backPower = 75.0f;
