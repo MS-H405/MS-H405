@@ -291,6 +291,7 @@
     <Compile Include="Assets\Scripts\Utility\ShakeCamera.cs" />
     <Compile Include="Assets\Scripts\Utility\SingletonMonoBehaviour.cs" />
     <Compile Include="Assets\Scripts\Utility\SortingLayer.cs" />
+    <Compile Include="Assets\Scripts\Utility\SoundChanger.cs" />
     <Compile Include="Assets\Scripts\Utility\StaticCoroutine.cs" />
   </ItemGroup>
   <ItemGroup>
