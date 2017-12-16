@@ -29,7 +29,7 @@ public class ChildTotem : MonoBehaviour
 
     //[SerializeField] GameObject _dropPointEffect = null;
     // TODO : SerializeFieldではなくする
-    [SerializeField] List<ParticleSystem> _dropParticleList = new List<ParticleSystem>();
+    [SerializeField] List<GameObject> _dropEffectList = new List<GameObject>();
 
     #endregion
 
@@ -123,9 +123,9 @@ public class ChildTotem : MonoBehaviour
             transform.GetChild(i).position = RandomPos(fallHeight);
         }
 
-        foreach(ParticleSystem particle in _dropParticleList)
+        foreach (GameObject effect in _dropEffectList)
         {
-            particle.gameObject.SetActive(true);
+            effect.SetActive(true);
         }
 
         // TODO : 一気に落下するのを防止
@@ -146,9 +146,9 @@ public class ChildTotem : MonoBehaviour
         }
         _isAtack = false;
 
-        foreach (ParticleSystem particle in _dropParticleList)
+        foreach (GameObject effect in _dropEffectList)
         {
-            particle.gameObject.SetActive(false);
+            effect.SetActive(false);
         }
 
         // 初期位置に戻す
