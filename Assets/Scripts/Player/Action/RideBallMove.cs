@@ -251,6 +251,7 @@ public class RideBallMove : PlayerMove
         _ballObj.transform.SetParent(transform);
         _ballObj.transform.localPosition = new Vector3(0.0f, -0.85f, 0.0f);
         _oldBallAngle = _ballObj.transform.eulerAngles;
+        GameEffectManager.Instance.Play("Bohun", _ballObj.transform.position);
 
         // 地面につくまでまで待つ
         while (_isRigor)
@@ -269,7 +270,15 @@ public class RideBallMove : PlayerMove
 
         // 降りる処理
         if (_ballObj)
+        {
             _ballObj.SetActive(false);
+            GameEffectManager.Instance.Play("Bohun", _ballObj.transform.position);
+
+            if(!PlayerManager.Instance.Player.IsDamage)
+            {
+                _animator.SetTrigger("RideOn");
+            }
+        }
         
         while (_isRigor)
         {
