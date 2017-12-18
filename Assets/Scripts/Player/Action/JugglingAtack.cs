@@ -108,6 +108,7 @@ public class JugglingAtack : MonoBehaviour
         }
         transform.SetParent(null);
         transform.position = PlayerManager.Instance.GetPlayerForward() + new Vector3(0,1,0);
+        transform.position -= PlayerManager.Instance.Player.transform.right / 3.0f;
         transform.eulerAngles = PlayerManager.Instance.Player.transform.eulerAngles;
         GetComponentInChildren<AutoRotation>().enabled = true;
         StaticCoroutine.Instance.StartStaticCoroutine(ReplayWait(animStateInfo));
