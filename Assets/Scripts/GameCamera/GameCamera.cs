@@ -23,7 +23,7 @@ public class GameCamera : MonoBehaviour
 	readonly Vector2	CON_RotY = new Vector2(0.6f, 0.3853981f);						// 距離により変えるカメラの角度(Y)  元→0.7853981
 	readonly Vector2	CON_RotYDistance = new Vector2(3.0f, 12.0f);					// この距離を判定に使ってカメラの角度(Y)を変える
 
-	const float CON_fTopTime = 0.6f;													// 俯瞰視点への移動にかかる時間(元に戻るときもこの時間で戻る)
+	const float CON_fTopTime = 1.0f;													// 俯瞰視点への移動にかかる時間(元に戻るときもこの時間で戻る)
 	const float CON_fNormalTime = 3.0f;													// 通常視点への移動にかかる時間
 	const float CON_fTopRotY = 0.7f;													// ターゲットロストして、俯瞰になった時の角度(Y)
 	const float	CON_fTopDistance = 12.0f;												// ターゲットロストして、俯瞰になった時のプレイヤーからの距離
@@ -231,9 +231,9 @@ public class GameCamera : MonoBehaviour
 			fTopParameter = 1.0f;
 
 		#region 注視点の計算
-		vLookAtPos.x = Mathf.Lerp(vLookAtPos.x, PlayerObj.transform.position.x, 0.07f);		// 徐々に新しい座標に移動
-		vLookAtPos.y = Mathf.Lerp(vLookAtPos.y, PlayerObj.transform.position.y, 0.07f);
-		vLookAtPos.z = Mathf.Lerp(vLookAtPos.z, PlayerObj.transform.position.z, 0.07f);
+		vLookAtPos.x = Mathf.Lerp(vLookAtPos.x, PlayerObj.transform.position.x, fTopParameter);		// 徐々に新しい座標に移動
+		vLookAtPos.y = Mathf.Lerp(vLookAtPos.y, PlayerObj.transform.position.y, fTopParameter);
+		vLookAtPos.z = Mathf.Lerp(vLookAtPos.z, PlayerObj.transform.position.z, fTopParameter);
 		//vLookAtPos.x = Mathf.Lerp(vLookAtPos.x, 0.0f, 0.07f);		// 徐々に新しい座標に移動
 		//vLookAtPos.y = Mathf.Lerp(vLookAtPos.y, 0.0f, 0.07f);
 		//vLookAtPos.z = Mathf.Lerp(vLookAtPos.z, 0.0f, 0.07f);
@@ -242,27 +242,31 @@ public class GameCamera : MonoBehaviour
 		#endregion
 
 		#region 角度の計算
-		if (fTopParameter < 1.0f)
-			rot.y = Mathf.Lerp(rot.y, CON_fTopRotY, fTopParameter);
 		//if (fTopParameter < 1.0f)
-		//{
-		//	rot.x = Mathf.Lerp(rot.x, Mathf.PI * 1.5f, fTopParameter);
 		//	rot.y = Mathf.Lerp(rot.y, CON_fTopRotY, fTopParameter);
-		//}
+		if (fTopParameter < 1.0f)
+		{
+			rot.x = Mathf.Lerp(rot.x, Mathf.PI * 1.5f, fTopParameter);
+			rot.y = Mathf.Lerp(rot.y, CON_fTopRotY, fTopParameter);
+		}
+
+		rot.x = Mathf.Lerp(vBeforeRot.x, Mathf.PI * 1.5f, Mathf.Clamp01(fTopParameter));
+		rot.y = Mathf.Lerp(vBeforeRot.y, CON_fTopRotY, Mathf.Clamp01(fTopParameter));
+
 		#endregion
 
 		#region 視点の計算
-		float fDis = Mathf.Lerp(fBeforeDis, CON_fTopDistance, fTopParameter);	// プレイヤーから距離
+		//float fDis = Mathf.Lerp(fBeforeDis, CON_fTopDistance, fTopParameter);	// プレイヤーから距離
 
-		Vector3 NewPos = new Vector3(PlayerObj.transform.position.x + fDis * Mathf.Cos(rot.x) * Mathf.Cos(rot.y),		// 新しい座標を計算
-									 PlayerObj.transform.position.y + fDis * Mathf.Sin(rot.y),
-									 PlayerObj.transform.position.z + fDis * Mathf.Sin(rot.x) * Mathf.Cos(rot.y));
+		Vector3 NewPos = new Vector3(PlayerObj.transform.position.x + CON_fTopDistance * Mathf.Cos(rot.x) * Mathf.Cos(rot.y),		// 新しい座標を計算
+									 PlayerObj.transform.position.y + CON_fTopDistance * Mathf.Sin(rot.y),
+									 PlayerObj.transform.position.z + CON_fTopDistance * Mathf.Sin(rot.x) * Mathf.Cos(rot.y));
 		//Vector3 NewPos = new Vector3(fDis * Mathf.Cos(rot.x) * Mathf.Cos(rot.y),		// 新しい座標を計算
 		//							 fDis * Mathf.Sin(rot.y),
 		//							 fDis * Mathf.Sin(rot.x) * Mathf.Cos(rot.y));
-		float temp_x = Mathf.Lerp(transform.position.x, NewPos.x, 0.07f);												// 徐々に新しい座標に移動
-		float temp_y = Mathf.Lerp(transform.position.y, NewPos.y, 0.07f);
-		float temp_z = Mathf.Lerp(transform.position.z, NewPos.z, 0.07f);
+		float temp_x = Mathf.Lerp(transform.position.x, NewPos.x, fTopParameter);				// 徐々に新しい座標に移動
+		float temp_y = Mathf.Lerp(transform.position.y, NewPos.y, fTopParameter);
+		float temp_z = Mathf.Lerp(transform.position.z, NewPos.z, fTopParameter);//0.07
 		transform.position = new Vector3(temp_x, temp_y, temp_z);
 		#endregion
 	}

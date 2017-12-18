@@ -81,6 +81,14 @@ public class TD_TotemBody_PB : PlayableBehaviour
 
 	public override void PrepareFrame(Playable playable, FrameData info)
 	{
+		// スキップ処理
+		if (Input.GetKeyDown(KeyCode.Return) && bFade)
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TITLE);
+			bFade = false;
+		}
+
+
 		fTime += Time.deltaTime;
 		if(fTime > CON_MOUTHMAX_TIME)
 		{
