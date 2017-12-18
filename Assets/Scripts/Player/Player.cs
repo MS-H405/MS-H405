@@ -129,7 +129,7 @@ public class Player : MonoBehaviour
                 if(enemyBase.IsStan)
                 {
                     // 必殺技実行
-                    if(Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Atack"))
+                    if(Input.GetButtonDown("Atack"))
                     {
                         enemyBase.SpecialDamage();
                         MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.SPECIAL_1);
@@ -138,7 +138,7 @@ public class Player : MonoBehaviour
                 else
                 {
                     // 攻撃選択＆選択時攻撃
-                    if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Atack"))
+                    if (Input.GetButtonDown("Atack"))
                     {
                         _actionManager.OnSelect();
                     }
@@ -148,13 +148,13 @@ public class Player : MonoBehaviour
                         _actionManager.Cancel();
                     }
                     // 武器スロット右回り
-                    if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetButtonDown("Right")) && AtackIconManager.Instance.IsChange)
+                    if (Input.GetButtonDown("Right") && AtackIconManager.Instance.IsChange)
                     {
                         _actionManager.ChangeSelect(true);
                         AtackIconManager.Instance.Rot(true);
                     }
                     // 武器スロット左回り
-                    if ((Input.GetKeyDown(KeyCode.LeftArrow)  || Input.GetButtonDown("Left"))  && AtackIconManager.Instance.IsChange)
+                    if (Input.GetButtonDown("Left") && AtackIconManager.Instance.IsChange)
                     { 
                         _actionManager.ChangeSelect(false);
                         AtackIconManager.Instance.Rot(false);
