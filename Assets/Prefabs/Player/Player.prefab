@@ -2240,7 +2240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ca4f55d38ec0e41ac58b3552f58b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 5
+  _hp: 6
   _backPower: 75
   _upPower: 200
 --- !u!114 &114669739526133962
@@ -2254,7 +2254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b3d87b74eb5c547be226a16c3476df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed_Sec: 5
+  _speed_Sec: 7.5
   _ballPrefab: {fileID: 1615820730091640, guid: f5c5975540fc04f40a6fe6d147debbe0,
     type: 2}
 --- !u!114 &114899902873179586
