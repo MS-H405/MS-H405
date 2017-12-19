@@ -49,12 +49,6 @@ public class Player : MonoBehaviour
         _animator.SetTrigger("Damage");
         PlayerLifeManager.Instance.DamageEffect();
         StaticCoroutine.Instance.StartStaticCoroutine(DamageWait());
-
-        if (_hp > 0)
-            return;
-
-        // 死亡処理
-        // TODO : 演出実行
     }
 
     /// <summary>  
@@ -166,17 +160,29 @@ public class Player : MonoBehaviour
                 {
                     Damage();
                 }
+                else if (Input.GetKeyDown(KeyCode.X))
+                {
+                    Damage();
+                    _hp = 0;
+                }
             });
     }
 
     /// <summary>
     /// 地形との接地判定処理
     /// </summary>
-    protected virtual void OnCollisionEnter(Collision col)
+    private void OnCollisionEnter(Collision col)
     {
         if (col.transform.tag == "Field")
         {
-            if (!_isDamage || _hp <= 0)
+            if(_hp <= 0)
+            {
+                // 死亡処理
+                GameOver.Instance.Run();
+                return;
+            }
+
+            if (!_isDamage)
                 return;
 
             _animator.SetTrigger("Return");
