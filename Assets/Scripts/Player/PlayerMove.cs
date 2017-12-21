@@ -30,7 +30,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] protected float _speed_Sec = 7.5f;
     protected Vector3 _moveAmount = Vector3.zero;
 
-    protected bool _isRigor = false;    // 硬直判定
+    protected bool _isGround = false;    // 地面との接地判定
+    public virtual bool IsInput { get { return _isGround; } }
 
     // animation用変数
     protected Animator _animator = null;
@@ -49,7 +50,7 @@ public class PlayerMove : MonoBehaviour
         _animator.SetBool("Walk", _moveAmount != Vector3.zero);
 
         // 硬直時は処理しない
-        if (_isRigor || IsAction)
+        if (!_isGround || IsAction)
             return;
 
         transform.position += _moveAmount * Time.deltaTime;
@@ -62,7 +63,7 @@ public class PlayerMove : MonoBehaviour
     protected virtual void Acceleration(eDirection dir)
     {
         // 硬直時は処理しない
-        if (_isRigor || IsAction)
+        if (!_isGround || IsAction)
             return;
 
         switch (dir)
@@ -91,11 +92,11 @@ public class PlayerMove : MonoBehaviour
     }
 
     /// <summary>
-    /// 硬直処理
+    /// 地面離着処理
     /// </summary>
-    public void OnRigor()
+    public void OutGround()
     {
-        _isRigor = true;
+        _isGround = false;
     }
 
     /// <summary>
@@ -129,7 +130,7 @@ public class PlayerMove : MonoBehaviour
     {
         // 敵を前方として移動するので、移動前に敵の方に向ける
         if (EnemyManager.Instance.BossEnemy)
-        {
+        { 
             Vector3 enemyPos = EnemyManager.Instance.BossEnemy.transform.position;
             transform.LookAt(new Vector3(enemyPos.x, transform.position.y, enemyPos.z));
             _oldAngle = transform.eulerAngles;
@@ -169,7 +170,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (col.transform.tag == "Field")
         {
-            _isRigor = false;
+            _isGround = true;
         }
     }
 

@@ -79,19 +79,37 @@ public class Player : MonoBehaviour
     private void DamageStan()
     {
         // 玉乗り中なら玉乗りを強制キャンセル
-        if(_rideBallMove.enabled)
+        if (_rideBallMove.enabled)
         {
             _actionManager.Cancel();
-            _rideBallMove.End();
+            _rideBallMove.Off();
         }
         else
         {
-            _playerMove.OnRigor();
+            _playerMove.OutGround();
         }
 
         Vector3 velocity = -transform.forward * _backPower;
         velocity.y = _upPower;
         _rigidBody.AddForce(velocity);
+    }
+
+    /// <summary>
+    /// プレイヤーが地面についているかを判定
+    /// </summary>
+    public bool IsInput
+    {
+        get
+        {
+            if(_playerMove.enabled)
+            {
+                return _playerMove.IsInput;
+            }
+            else
+            {
+                return _rideBallMove.IsInput;
+            }
+        }
     }
 
     #endregion
@@ -120,7 +138,15 @@ public class Player : MonoBehaviour
         this.UpdateAsObservable()
             .Subscribe(_ =>
             {
-                if(enemyBase.IsStan)
+                // 入力を受け付けてよいかを判定
+                if (!IsInput)
+                    return;
+
+                // ダメージモーション中なら処理しない
+                if (PlayerManager.Instance.DamageAnimation())
+                    return;
+
+                if (enemyBase.IsStan)
                 {
                     // 必殺技実行
                     if(Input.GetButtonDown("Atack"))
@@ -137,7 +163,7 @@ public class Player : MonoBehaviour
                         _actionManager.OnSelect();
                     }
                     // 行動キャンセル
-                    if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetButtonDown("Cancel"))
+                    else if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetButtonDown("Cancel"))
                     {
                         _actionManager.Cancel();
                     }
@@ -148,7 +174,7 @@ public class Player : MonoBehaviour
                         AtackIconManager.Instance.Rot(true);
                     }
                     // 武器スロット左回り
-                    if (Input.GetButtonDown("Left") && AtackIconManager.Instance.IsChange)
+                    else if (Input.GetButtonDown("Left") && AtackIconManager.Instance.IsChange)
                     { 
                         _actionManager.ChangeSelect(false);
                         AtackIconManager.Instance.Rot(false);

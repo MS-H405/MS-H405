@@ -31,6 +31,8 @@ public class RideBallMove : PlayerMove
     private float _nowAcceLeft    = 0.0f;    // 左方加速率
 
     // 演出用変数
+    private bool _isRideAnim = false;
+    public override bool IsInput { get { return _isGround && !_isRideAnim; } }
     private Rigidbody _rigidbody = null;            //
     private Vector3 _inputVec = Vector3.zero;       // 現在の入力している方向
 
@@ -48,7 +50,7 @@ public class RideBallMove : PlayerMove
     protected override void Move()
     {
         // 硬直時は処理しない
-        if (_isRigor)
+        if (!_isGround)
         {
             _animator.SetBool("BallWalk", false);
             return;
@@ -101,7 +103,7 @@ public class RideBallMove : PlayerMove
     protected override void Acceleration(eDirection dir)
     {
         // 硬直時は処理しない
-        if (_isRigor)
+        if (!_isGround)
             return;
 
         switch (dir)
@@ -183,6 +185,7 @@ public class RideBallMove : PlayerMove
             if (_nowAcceForward < InitAcceleration)
             {
                 _nowAcceForward = 0.0f;
+                _rigidbody.velocity = Vector3.zero;
             }
         }
         if (_nowAcceBack > 0.0f)
@@ -191,6 +194,7 @@ public class RideBallMove : PlayerMove
             if (_nowAcceBack < InitAcceleration)
             {
                 _nowAcceBack = 0.0f;
+                _rigidbody.velocity = Vector3.zero;
             }
         }
         if (_nowAcceRight > 0.0f)
@@ -199,6 +203,7 @@ public class RideBallMove : PlayerMove
             if (_nowAcceRight < InitAcceleration)
             {
                 _nowAcceRight = 0.0f;
+                _rigidbody.velocity = Vector3.zero;
             }
         }
         if (_nowAcceLeft > 0.0f)
@@ -207,6 +212,7 @@ public class RideBallMove : PlayerMove
             if (_nowAcceLeft < InitAcceleration)
             {
                 _nowAcceLeft = 0.0f;
+                _rigidbody.velocity = Vector3.zero;
             }
         }
 
@@ -225,9 +231,18 @@ public class RideBallMove : PlayerMove
     }
 
     /// <summary>  
+    /// 開始処理  
+    /// </summary>
+    public void On()
+    {
+        AcceReset();
+        StaticCoroutine.Instance.StartStaticCoroutine(RideOn());
+    }
+
+    /// <summary>  
     /// 終了処理  
     /// </summary>
-    public void End()
+    public void Off()
     {
         StaticCoroutine.Instance.StartStaticCoroutine(RideOff());
     }
@@ -241,10 +256,14 @@ public class RideBallMove : PlayerMove
     /// </summary>
     private IEnumerator RideOn()
     {
+        if (_isRideAnim)
+            yield break;
+
         // 行動停止
-        _isRigor = true;
+        _isRideAnim = true;
+        _isGround = false;
         _animator.SetBool("Walk", false);
-        _animator.SetTrigger("RideOn");
+        _animator.SetTrigger("Roll");
         _rigidbody.useGravity = false;
 
         // 上に飛ばし、玉より超えたら玉出現
@@ -256,16 +275,22 @@ public class RideBallMove : PlayerMove
         _rigidbody.useGravity = true;
 
         _ballObj = Instantiate(_ballPrefab);
-        _ballObj.transform.SetParent(transform);
-        _ballObj.transform.localPosition = new Vector3(0.0f, -0.85f, 0.0f);
+        _ballObj.transform.SetParent(transform); //.Find("RideBall"));
+        _ballObj.transform.localPosition = new Vector3(0.0f, -0.9f, 0.0f);
         _oldBallAngle = _ballObj.transform.eulerAngles;
         GameEffectManager.Instance.Play("Bohun", _ballObj.transform.position);
 
-        // 地面につくまでまで待つ
-        while (_isRigor)
+        // 地面についてもアニメーションが終了していなければ待つ
+        _animator.speed = 1.0f;
+        AnimatorStateInfo animStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        while (!animStateInfo.IsName("Base.Idle"))
         {
+            _isGround = false;
+            animStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             yield return null;
         }
+        _isRideAnim = false;
+        _isGround = true;
     }
 
     /// <summary>  
@@ -273,36 +298,38 @@ public class RideBallMove : PlayerMove
     /// </summary>
     private IEnumerator RideOff()
     {
+        if (_isRideAnim)
+            yield break;
+
         // 行動停止
-        _isRigor = true;
+        _isGround = false;
+        _isRideAnim = true;
 
-        // 降りる処理
-        if (_ballObj)
+        // 
+        if (!PlayerManager.Instance.Player.IsDamage)
         {
-            _ballObj.SetActive(false);
-            GameEffectManager.Instance.Play("Bohun", _ballObj.transform.position);
-
-            if(!PlayerManager.Instance.Player.IsDamage)
-            {
-                _animator.SetTrigger("RideOn");
-            }
+            _animator.speed = 1.0f;
+            _animator.SetTrigger("Roll");
+            _rigidbody.AddForce(new Vector3(0, 100, 0));
         }
+
+        // 玉の削除処理
+        Destroy(_ballObj.gameObject);
+        GameEffectManager.Instance.Play("Bohun", _ballObj.transform.position);
         
-        while (_isRigor)
+        while (!_isGround)
         {
             yield return null;
         }
 
-        // 玉を削除
-        Destroy(_ballObj.gameObject);
-
         // 玉乗り時に変更したアニメーションデータを初期化
         _animator.SetBool("BallWalk", false);
         _animator.speed = 1.0f;
+        _isRideAnim = false;
 
         // コンポーネントを切り替え
         GetComponent<PlayerMove>().enabled = true;
-        this.enabled = false;
+        enabled = false;
     }
 
     #endregion
@@ -320,15 +347,6 @@ public class RideBallMove : PlayerMove
         base.Awake();
     }
 
-    /// <summary>  
-    /// アクティブ変更時の初期化処理  
-    /// </summary>  
-    private void OnEnable()
-    {
-        AcceReset();
-        StaticCoroutine.Instance.StartStaticCoroutine(RideOn());
-    }
-
     /// <summary>
     /// 地形との接地判定処理
     /// </summary>
@@ -344,7 +362,7 @@ public class RideBallMove : PlayerMove
         if (col.transform.tag == "Enemy")
         {
             // 既に攻撃判定等が発生していたら処理しない
-            if (_isRigor)
+            if (!_isGround || _nowAcceForward == 0.0f)
                 return;
 
             // ダメージ処理がある場合はダメージ処理
@@ -361,11 +379,13 @@ public class RideBallMove : PlayerMove
             }
 
             // 跳ね返り処理
-            _isRigor = true;
+            AcceReset();
+            _isGround = false;
             Vector3 reflectPower = -transform.forward * _nowAcceForward * 10.0f;
             reflectPower += new Vector3(0.0f, 250.0f, 0.0f);
             _rigidbody.AddForce(reflectPower);
-            AcceReset();
+            _animator.SetTrigger("Roll");
+            _animator.speed = 1.0f;
         }
     }
 

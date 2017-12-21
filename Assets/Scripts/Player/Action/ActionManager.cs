@@ -52,10 +52,6 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     public void OnSelect()
     {
-        // ダメージモーション中なら処理しない
-        if (PlayerManager.Instance.DamageAnimation())
-            return;
-
         // 行動中なら
         if (_isAction)
         {
@@ -84,6 +80,9 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     public void Cancel()
     {
+        if (!_isAction)
+            return;
+
         _isAction = false;
 
         switch(_nowAction)
@@ -93,7 +92,7 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case eActionType.RideBall:
-                _rideBallMove.End();
+                _rideBallMove.Off();
                 break;
 
             case eActionType.TotemJump:
@@ -150,6 +149,7 @@ public class ActionManager : MonoBehaviour
             case eActionType.RideBall:
                 _playerMove.enabled = false;
                 _rideBallMove.enabled = true;
+                _rideBallMove.On();
                 break;
 
             case eActionType.TotemJump:
