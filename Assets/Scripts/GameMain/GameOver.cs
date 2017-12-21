@@ -50,7 +50,7 @@ public class GameOver : SingletonMonoBehaviour<GameOver>
 
                 if(image.name.Contains("BackGround"))
                 {
-                    color.a *= 0.5f;
+                    color.a *= 0.75f;
                 }
 
                 image.color = color;
