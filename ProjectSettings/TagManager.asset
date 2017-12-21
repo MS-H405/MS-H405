@@ -8,6 +8,7 @@ TagManager:
   - Field
   - Bagpipe
   - RideBall
+  - AutoRange
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Field
   - DependenceField
   - ChildTotem
-  - 
+  - Player
   - 
   - 
   - 
