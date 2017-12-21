@@ -179,6 +179,7 @@ public class Player : MonoBehaviour
             {
                 // 死亡処理
                 GameOver.Instance.Run();
+                _rigidBody.isKinematic = true;
                 return;
             }
 
