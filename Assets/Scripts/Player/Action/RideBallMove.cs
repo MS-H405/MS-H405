@@ -64,9 +64,17 @@ public class RideBallMove : PlayerMove
         // Animation更新
         _animator.SetBool("BallWalk", _moveAmount != Vector3.zero);
 
-        // 向き更新し、移動させる
-        transform.LookAt(transform.position + _inputVec);
+        // 移動と向きを更新
         transform.position += _moveAmount * Time.deltaTime;
+
+        if (_inputVec == Vector3.zero)
+        {
+            transform.LookAt(transform.position + _moveAmount);
+        }
+        else
+        {
+            transform.LookAt(transform.position + _inputVec);
+        }
 
         if (_moveAmount == Vector3.zero)
         {
