@@ -131,6 +131,13 @@ public class TS_Boss_PB : PlayableBehaviour
 			case _TSBOSSMODE.FIN:
 				break;
 		}
+
+		// スキップ処理
+		if(Input.GetKeyDown(KeyCode.Return) && bFade)
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_1);
+			bFade = false;
+		}
 	}
 
 

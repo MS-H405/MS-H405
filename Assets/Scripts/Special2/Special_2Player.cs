@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Special_1Player : MonoBehaviour
+public class Special_2Player : MonoBehaviour
 {
 	#region 定数
 
@@ -43,7 +43,7 @@ public class Special_1Player : MonoBehaviour
 	[SerializeField] GameObject SetEffekseerObj;
 	SetEffekseerObject cs_SetEffekseerObject;
 
-	Special_1PlayerMotion cs_Special_1PlayerMotion;
+	Special_2PlayerMotion cs_Special_1PlayerMotion;
 	//Vector3 vStartEular;
 	//Vector3 vEndEular;
 
@@ -65,7 +65,7 @@ public class Special_1Player : MonoBehaviour
 		// Effekseer関係
 		cs_SetEffekseerObject = SetEffekseerObj.GetComponent<SetEffekseerObject>();
 
-		cs_Special_1PlayerMotion = GetComponent<Special_1PlayerMotion>();
+		cs_Special_1PlayerMotion = GetComponent<Special_2PlayerMotion>();
 	}
 
 

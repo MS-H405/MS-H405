@@ -42,6 +42,8 @@ public class Special_1Manager : MonoBehaviour
 	[SerializeField] GameObject BallObj;
 	Special_1Ball	cs_Ball;
 
+	bool bSkip = true;
+
 	#endregion
 
 
@@ -114,6 +116,13 @@ public class Special_1Manager : MonoBehaviour
 			case State_Special1.FIN:
 				Fin();
 				break;
+		}
+
+		// スキップ処理
+		if (Input.GetKeyDown(KeyCode.Return) && bSkip)
+		{
+			MovieManager.Instance.MovieFinish();
+			bSkip = false;
 		}
 	}
 
@@ -345,9 +354,10 @@ public class Special_1Manager : MonoBehaviour
 	// カメラ敵の肩越しに移動
 	private void Fin()
 	{
-		if (bInitializ)
+		if (bInitializ && bSkip)
 		{
 			MovieManager.Instance.MovieFinish();
+			bInitializ = false;
 		}
 
 		cs_Player.GoEnemy();						// プレイヤー(と玉)発射
