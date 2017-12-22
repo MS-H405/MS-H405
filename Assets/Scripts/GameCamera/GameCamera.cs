@@ -24,7 +24,7 @@ public class GameCamera : MonoBehaviour
 	readonly Vector2	CON_RotYDistance = new Vector2(3.0f, 12.0f);					// この距離を判定に使ってカメラの角度(Y)を変える
 
 	const float CON_fTopTime = 1.0f;													// 俯瞰視点への移動にかかる時間(元に戻るときもこの時間で戻る)
-	const float CON_fNormalTime = 3.0f;													// 通常視点への移動にかかる時間
+	const float CON_fNormalTime = 1.0f;	// 3.0												// 通常視点への移動にかかる時間
 	const float CON_fTopRotY = 0.7f;													// ターゲットロストして、俯瞰になった時の角度(Y)
 	const float	CON_fTopDistance = 12.0f;												// ターゲットロストして、俯瞰になった時のプレイヤーからの距離
 
@@ -88,7 +88,7 @@ public class GameCamera : MonoBehaviour
 			CameraChengeTop();
 		}
 		else
-		{// ターゲット補足
+		{// ターゲット捕捉
 			CameraChangeNormal();
 		}
 
@@ -373,7 +373,8 @@ public class GameCamera : MonoBehaviour
 	// 俯瞰視点から通常視点へ変更
 	public void CameraChangeNormal()
 	{
-		if (CameraMode == _CameraMode.BACKPLAYER)
+		// 俯瞰視点状態じゃないとここには来ない
+		if(CameraMode != _CameraMode.TOP)
 			return;
 
 		SubCameraObj.SetActive(true);					// 俯瞰→通常時のみサブカメラのスクリーン座標が必要なのでアクティブに
