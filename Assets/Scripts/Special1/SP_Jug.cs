@@ -243,8 +243,13 @@ public class SP_Jug : MonoBehaviour
 			{
 				// 展開ピンヒットエフェクト
 				cs_SetEffekseerObject.NewEffect(2);
-				MainCameraObj.GetComponent<Special_1Camera>().shakeCamera();
-
+				if (MainCameraObj.GetComponent<Special_1Camera>())
+					MainCameraObj.GetComponent<Special_1Camera>().shakeCamera();
+				else if (MainCameraObj.GetComponent<Special_2Camera>())
+					MainCameraObj.GetComponent<Special_2Camera>().shakeCamera();
+				//else if(MainCameraObj.GetComponent<Special_3Camera>()))
+				//	MainCameraObj.GetComponent<Special_3Camera>())
+			
 				bSP_big_hit = false;
 			}
 
