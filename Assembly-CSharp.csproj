@@ -58,6 +58,8 @@
      <Compile Include="Assets\Scripts\Enemy\Totem\Totem.cs" />
      <Compile Include="Assets\Scripts\GameCamera\GameCamera.cs" />
      <Compile Include="Assets\Scripts\GameCamera\GameCamera_Sub.cs" />
+     <Compile Include="Assets\Scripts\GameMain\GameOver.cs" />
+     <Compile Include="Assets\Scripts\GameMain\TimeManager.cs" />
      <Compile Include="Assets\Scripts\Player\Action\ActionManager.cs" />
      <Compile Include="Assets\Scripts\Player\Action\BagpipeFire.cs" />
      <Compile Include="Assets\Scripts\Player\Action\JugglingAtack.cs" />
@@ -107,12 +109,13 @@
      <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PB.cs" />
      <Compile Include="Assets\Scripts\Utility\AutoRotation.cs" />
      <Compile Include="Assets\Scripts\Utility\BezierCurve.cs" />
+     <Compile Include="Assets\Scripts\Utility\Effect\EffekseerTest.cs" />
+     <Compile Include="Assets\Scripts\Utility\Effect\ParticleLifeTimer.cs" />
+     <Compile Include="Assets\Scripts\Utility\Effect\ParticleScaler.cs" />
      <Compile Include="Assets\Scripts\Utility\FixHeight.cs" />
      <Compile Include="Assets\Scripts\Utility\GameSetting.cs" />
      <Compile Include="Assets\Scripts\Utility\GetAllChildren.cs" />
      <Compile Include="Assets\Scripts\Utility\ManualRotation.cs" />
-     <Compile Include="Assets\Scripts\Utility\Particle\ParticleLifeTimer.cs" />
-     <Compile Include="Assets\Scripts\Utility\Particle\ParticleScaler.cs" />
      <Compile Include="Assets\Scripts\Utility\ShakeCamera.cs" />
      <Compile Include="Assets\Scripts\Utility\SingletonMonoBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utility\SortingLayer.cs" />
