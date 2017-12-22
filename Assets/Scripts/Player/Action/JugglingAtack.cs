@@ -21,7 +21,8 @@ public class JugglingAtack : MonoBehaviour
 
     // 共有変数
     static private int _nowJugglingAmount = 0;
-    static public int NowJugglingAmount { get { return _nowJugglingAmount; } }
+    static public int NowJugglingAmount { get { return _nowJugglingAmount; } set { _nowJugglingAmount = value; } }
+
     static private float _commonAtackSpeed = 1.0f;  // 共有する攻撃スピード
     static private bool _isPlay = true;             // キャッチしたり投げたりできる状態かを保持
     private readonly float MaxAtackSpeed = 2.0f;    // 最大スピード
@@ -189,21 +190,6 @@ public class JugglingAtack : MonoBehaviour
     }
 
     /// <summary>
-    /// ピンのリロード処理
-    /// </summary>
-    private IEnumerator Reload()
-    {
-        float time = 0.0f;
-        while(time < 4.0f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        _nowJugglingAmount--;
-    }
-
-    /// <summary>
     /// 破棄処理
     /// 引数 : すぐにピンを補充しない場合Trueを入れる
     /// </summary>
@@ -211,7 +197,7 @@ public class JugglingAtack : MonoBehaviour
     {
         if (isReload)
         {
-            StaticCoroutine.Instance.StartStaticCoroutine(Reload());
+            JugglingReloader.Instance.Reload();
         }
         else
         {
