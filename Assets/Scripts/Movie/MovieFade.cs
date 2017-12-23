@@ -107,7 +107,7 @@ public class MovieFade : MonoBehaviour
 		while (fAlpha - fFirstAlpha < 1.0)
 		{
 			//fAlpha += Time.deltaTime / fFadeTime;
-			fAlpha += Time.deltaTime / fFadeTime;
+			fAlpha += Time.unscaledDeltaTime / fFadeTime;
 			if (bInit)
 			{
 				fFirstAlpha = fAlpha;
