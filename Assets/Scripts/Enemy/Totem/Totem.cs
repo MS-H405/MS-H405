@@ -70,12 +70,6 @@ public class Totem : EnemyBase
             oldAction = _action;
             while (_action == oldAction)
             {
-                // DEBUG : デバッグコマンド 
-                if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    IsStan = true;
-                }
-
                 // スタン状態なら一時停止
                 if (IsStan)
                 {
