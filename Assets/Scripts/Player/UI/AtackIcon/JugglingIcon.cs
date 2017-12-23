@@ -20,7 +20,7 @@ public class JugglingIcon : MonoBehaviour
     #region variable
 
     private Image _image = null;
-    private List<Sprite> _jugglinSpriteList = new List<Sprite>();
+    private List<Sprite> _jugglingSpriteList = new List<Sprite>();
 
     #endregion
 
@@ -31,7 +31,7 @@ public class JugglingIcon : MonoBehaviour
     /// </summary>
     private bool CheckJugglingSprite()
     {
-        foreach(Sprite sp in _jugglinSpriteList)
+        foreach(Sprite sp in _jugglingSpriteList)
         {
             if (_image.sprite.name != sp.name)
                 continue;
@@ -51,10 +51,10 @@ public class JugglingIcon : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        _jugglinSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingThree"));
-        _jugglinSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingTwo"));
-        _jugglinSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingOne"));
-        _jugglinSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingZero"));
+        _jugglingSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingThree"));
+        _jugglingSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingTwo"));
+        _jugglingSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingOne"));
+        _jugglingSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingZero"));
 
         _image = GetComponent<Image>();
         this.ObserveEveryValueChanged(_ => JugglingAtack.NowJugglingAmount)
@@ -63,7 +63,7 @@ public class JugglingIcon : MonoBehaviour
                 if (!CheckJugglingSprite())
                     return;
 
-                _image.sprite = _jugglinSpriteList[JugglingAtack.NowJugglingAmount];
+                _image.sprite = _jugglingSpriteList[JugglingAtack.NowJugglingAmount];
             });
 
         this.ObserveEveryValueChanged(_ => CheckJugglingSprite())

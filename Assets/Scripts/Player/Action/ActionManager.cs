@@ -171,7 +171,7 @@ public class ActionManager : MonoBehaviour
         switch(_nowAction)
         {
             case eActionType.Juggling:
-                if (JugglingAtack.NowJugglingAmount >= 3)
+                if (JugglingAtack.NowJugglingAmount >= 3 || !JugglingAtack.IsPlay)
                     return;
 
                 GameObject jug = Instantiate(_jugglingPrefab, transform.position, transform.rotation);
