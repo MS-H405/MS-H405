@@ -293,7 +293,7 @@ public class Totem : EnemyBase
             int cnt = 0;
             for(int i = 0; i < _childTotemAmount; i++)
             {
-                if (_childTotemList[i].gameObject.active)
+                if (_childTotemList[i].gameObject.activeSelf)
                     continue;
 
                 cnt++;
@@ -364,10 +364,19 @@ public class Totem : EnemyBase
     /// </summary>
     private Vector3 RandomPos()
     {
-        float x = Random.Range(-StageData.FieldSize, StageData.FieldSize);
+        float range = StageData.FieldSize;
+        float x = -StageData.FieldSize;
         float y = -_oneBlockSize * _headAmount;
-        float z = Random.Range(-StageData.FieldSize, StageData.FieldSize);
-        return new Vector3(x,y,z);
+        float z = -StageData.FieldSize;
+
+        float t, f;
+        t = Random.Range(0, 65536) / 65536.0f * 2.0f * Mathf.PI;
+        f = Random.Range(0, 65536) / 65536.0f * 2.0f * Mathf.PI;
+
+        x = range * Mathf.Sin(t) * Mathf.Cos(f) + 1.0f;
+        z = range * Mathf.Cos(t) + 1.0f;
+
+        return new Vector3(x, y, z);
     }
 
     #endregion
