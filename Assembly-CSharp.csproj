@@ -59,10 +59,12 @@
      <Compile Include="Assets\Scripts\GameCamera\GameCamera.cs" />
      <Compile Include="Assets\Scripts\GameCamera\GameCamera_Sub.cs" />
      <Compile Include="Assets\Scripts\GameMain\GameOver.cs" />
+     <Compile Include="Assets\Scripts\GameMain\GameStart.cs" />
      <Compile Include="Assets\Scripts\GameMain\TimeManager.cs" />
      <Compile Include="Assets\Scripts\Player\Action\ActionManager.cs" />
      <Compile Include="Assets\Scripts\Player\Action\BagpipeFire.cs" />
      <Compile Include="Assets\Scripts\Player\Action\JugglingAtack.cs" />
+     <Compile Include="Assets\Scripts\Player\Action\JugglingReloader.cs" />
      <Compile Include="Assets\Scripts\Player\Action\RideBallMove.cs" />
      <Compile Include="Assets\Scripts\Player\Action\TotemJump.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
@@ -70,6 +72,7 @@
      <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\Player\UI\AtackIcon\AtackIcon.cs" />
      <Compile Include="Assets\Scripts\Player\UI\AtackIcon\AtackIconManager.cs" />
+     <Compile Include="Assets\Scripts\Player\UI\AtackIcon\JugglingIcon.cs" />
      <Compile Include="Assets\Scripts\Player\UI\Life\PlayerLifeManager.cs" />
      <Compile Include="Assets\Scripts\Special1\MovieFade.cs" />
      <Compile Include="Assets\Scripts\Special1\MovieManager.cs" />
@@ -91,6 +94,7 @@
      <Compile Include="Assets\Scripts\Stage\StageData.cs" />
      <Compile Include="Assets\Scripts\Test\Bora\TestEffecseer.cs" />
      <Compile Include="Assets\Scripts\Test\Tatsuo\TatsuoTest_Enemy.cs" />
+     <Compile Include="Assets\Scripts\Test\Tatsuo\Tatsuotest_kemuri.cs" />
      <Compile Include="Assets\Scripts\Title\PushStart.cs" />
      <Compile Include="Assets\Scripts\TotemDeath\TD_Effect_PA.cs" />
      <Compile Include="Assets\Scripts\TotemDeath\TD_Effect_PB.cs" />
