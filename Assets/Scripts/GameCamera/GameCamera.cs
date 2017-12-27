@@ -242,13 +242,17 @@ public class GameCamera : MonoBehaviour
 		#endregion
 
 		#region 角度の計算
-		//if (fTopParameter < 1.0f)
-		//	rot.y = Mathf.Lerp(rot.y, CON_fTopRotY, fTopParameter);
+
+		// 俯瞰視点の時にプレイヤーが向いてる方向を向く
 		if (fTopParameter < 1.0f)
-		{
-			rot.x = Mathf.Lerp(rot.x, Mathf.PI * 1.5f, fTopParameter);
 			rot.y = Mathf.Lerp(rot.y, CON_fTopRotY, fTopParameter);
-		}
+
+		// 俯瞰視点の時にZプラス方向に向く
+		//if (fTopParameter < 1.0f)
+		//{
+		//	rot.x = Mathf.Lerp(rot.x, Mathf.PI * 1.5f, fTopParameter);
+		//	rot.y = Mathf.Lerp(rot.y, CON_fTopRotY, fTopParameter);
+		//}
 
 		rot.x = Mathf.Lerp(vBeforeRot.x, Mathf.PI * 1.5f, Mathf.Clamp01(fTopParameter));
 		rot.y = Mathf.Lerp(vBeforeRot.y, CON_fTopRotY, Mathf.Clamp01(fTopParameter));
