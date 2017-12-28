@@ -123,6 +123,11 @@ public class ChildTotem : MonoBehaviour
             transform.GetChild(i).position = RandomPos(fallHeight);
         }
 
+        for(int i = 0; i < _totemHeadList.Count; i++)
+        {
+            _totemHeadList[i].GetComponent<CapsuleCollider>().isTrigger = true;
+        }
+
         foreach (GameObject effect in _dropEffectList)
         {
             effect.SetActive(true);
@@ -152,6 +157,10 @@ public class ChildTotem : MonoBehaviour
         }
 
         // 初期位置に戻す
+        for (int i = 0; i < _totemHeadList.Count; i++)
+        {
+            _totemHeadList[i].GetComponent<CapsuleCollider>().isTrigger = false;
+        }
         _rigidbody.useGravity = false;
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -182,12 +191,21 @@ public class ChildTotem : MonoBehaviour
     }
 
     /// <summary>
-    /// ランダムな座標を返す
+    /// 地形内のランダムな座標を返す
     /// </summary>
     private Vector3 RandomPos(float y)
     {
-        float x = Random.Range(-StageData.FieldSize, StageData.FieldSize);
-        float z = Random.Range(-StageData.FieldSize, StageData.FieldSize);
+        float range = StageData.FieldSize;
+        float x = -StageData.FieldSize;
+        float z = -StageData.FieldSize;
+
+        float t, f;
+        t = Random.Range(0, 65536) / 65536.0f * 2.0f * Mathf.PI;
+        f = Random.Range(0, 65536) / 65536.0f * 2.0f * Mathf.PI;
+
+        x = range * Mathf.Sin(t) * Mathf.Cos(f) + 1.0f;
+        z = range * Mathf.Cos(t) + 1.0f;
+
         return new Vector3(x, y, z);
     }
 
@@ -214,11 +232,11 @@ public class ChildTotem : MonoBehaviour
     /// <summary>
     /// 当たり判定
     /// </summary>
-    private void OnCollisionEnter(Collision col)
+    private void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.tag == "Player" && _isAtack)
+        if(col.tag == "Player" && _isAtack)
         {
-            col.gameObject.GetComponent<Player>().Damage();
+            col.GetComponent<Player>().Damage();
         }
     }
 

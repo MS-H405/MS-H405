@@ -19,9 +19,28 @@ public class JugglingIcon : MonoBehaviour
 
     #region variable
 
+    private Image _image = null;
+    private List<Sprite> _jugglingSpriteList = new List<Sprite>();
+
     #endregion
 
     #region method
+
+    /// <summary>
+    /// 通常のアイコンかを判定
+    /// </summary>
+    private bool CheckJugglingSprite()
+    {
+        foreach(Sprite sp in _jugglingSpriteList)
+        {
+            if (_image.sprite.name != sp.name)
+                continue;
+
+            return true;
+        }
+
+        return false;
+    }
 
     #endregion
 
@@ -32,34 +51,30 @@ public class JugglingIcon : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        List<Sprite> jugglinSpriteList = new List<Sprite>();
-        jugglinSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingThree"));
-        jugglinSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingTwo"));
-        jugglinSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingOne"));
-        jugglinSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingZero"));
+        _jugglingSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingThree"));
+        _jugglingSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingTwo"));
+        _jugglingSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingOne"));
+        _jugglingSpriteList.Add(Resources.Load<Sprite>("Sprite/GameUI/JugglingZero"));
 
-        Image image = GetComponent<Image>();
+        _image = GetComponent<Image>();
         this.ObserveEveryValueChanged(_ => JugglingAtack.NowJugglingAmount)
             .Subscribe(_ =>
-            { 
-                image.sprite = jugglinSpriteList[JugglingAtack.NowJugglingAmount];
+            {
+                if (!CheckJugglingSprite())
+                    return;
+
+                _image.sprite = _jugglingSpriteList[JugglingAtack.NowJugglingAmount];
             });
-    }
 
-    /// <summary>
-    /// 更新前処理
-    /// </summary>
-    private void Start ()
-    {
-
-    }
-
-    /// <summary>
-    /// 更新処理
-    /// </summary>
-    private void Update ()
-    {
-
+        this.ObserveEveryValueChanged(_ => CheckJugglingSprite())
+            .Subscribe(_ =>
+            {
+                bool active = CheckJugglingSprite();
+                for(int i = 0; i < transform.childCount; i++)
+                {
+                    transform.GetChild(i).gameObject.SetActive(active);
+                }
+            });
     }
 
     #endregion

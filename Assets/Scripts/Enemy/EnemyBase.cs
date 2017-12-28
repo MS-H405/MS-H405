@@ -69,4 +69,20 @@ public class EnemyBase : MonoBehaviour
     }
 
     #endregion
+
+    #region unity_event 
+
+    /// <summary>
+    /// 更新処理
+    /// </summary>
+    private void Update()
+    {
+        // DEBUG : デバッグコマンド 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            IsStan = true;
+        }
+    }
+
+    #endregion
 }

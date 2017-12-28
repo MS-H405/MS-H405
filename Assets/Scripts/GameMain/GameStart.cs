@@ -15,9 +15,13 @@ public class GameStart : MonoBehaviour
 {
     #region define
 
+    private const float Rimit = 1.0f / 30.0f;
+
     #endregion
 
     #region variable
+
+    [SerializeField] List<GameObject> _startObjList = new List<GameObject>();
 
     #endregion
 
@@ -44,7 +48,7 @@ public class GameStart : MonoBehaviour
         this.UpdateAsObservable()
             .Subscribe(_ =>
             {
-                if (MovieManager.Instance.GetisMovideFade())
+                if (MovieManager.Instance.GetisMovideFade() || Time.unscaledDeltaTime > Rimit)
                     return;
 
                 time += Time.unscaledDeltaTime;
@@ -54,6 +58,19 @@ public class GameStart : MonoBehaviour
 
                 Time.timeScale = 1.0f;
                 Destroy(gameObject);
+            });
+
+        this.ObserveEveryValueChanged(_ => Time.unscaledDeltaTime < Rimit)
+            .Subscribe(_ =>
+            {
+                bool active = Time.unscaledDeltaTime < Rimit;
+                foreach(GameObject obj in _startObjList)
+                {
+                    if (!obj)
+                        continue;
+
+                    obj.SetActive(active);
+                }
             });
     }
 

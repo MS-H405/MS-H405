@@ -23,16 +23,17 @@ public class JugglingAtack : MonoBehaviour
     static private int _nowJugglingAmount = 0;
     static public int NowJugglingAmount { get { return _nowJugglingAmount; } set { _nowJugglingAmount = value; } }
 
-    static private float _commonAtackSpeed = 1.0f;  // 共有する攻撃スピード
-    static private bool _isPlay = true;             // キャッチしたり投げたりできる状態かを保持
-    private readonly float MaxAtackSpeed = 2.0f;    // 最大スピード
+    static private float _commonAtackSpeed = 1.0f;          // 共有する攻撃スピード
+    static private bool _isPlay = true;                     // キャッチしたり投げたりできる状態かを保持
+    static public bool IsPlay { get { return _isPlay; } } 
+    private readonly float MaxAtackSpeed = 2.0f;            // 最大スピード
 
-    private GameObject _targetObj = null;           // 
-    private float _atackSpeed = 0.0f;               // 攻撃スピード
+    private GameObject _targetObj = null;                   // 
+    private float _atackSpeed = 0.0f;                       // 攻撃スピード
 
-    private bool _isAtack = false;                  // 攻撃中判定
-    private bool _isReflect = false;                // 反射判定
-    private bool _isCatch = false;                  // このオブジェクトの生存判定
+    private bool _isAtack = false;                          // 攻撃中判定
+    private bool _isReflect = false;                        // 反射判定
+    private bool _isCatch = false;                          // このオブジェクトの生存判定
 
     [SerializeField] GameObject _dropPointEffect = null;
 
@@ -49,13 +50,13 @@ public class JugglingAtack : MonoBehaviour
         if ((target && target.IsStan))
         {
             //PlayerManager.Instance.Anim.SetTrigger("Catch");
-            PinDestroy(false);
+            PinDestroy(true);
             return;
         }
         // それ以外なら
         if(!_isPlay || !PlayerManager.Instance.CheckActionType(ActionManager.eActionType.Juggling))
         {
-            PinDestroy(false);
+            PinDestroy(true);
             return;
         }
 

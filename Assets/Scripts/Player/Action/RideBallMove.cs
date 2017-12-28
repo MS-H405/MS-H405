@@ -281,11 +281,11 @@ public class RideBallMove : PlayerMove
         GameEffectManager.Instance.Play("Bohun", _ballObj.transform.position);
 
         // 地面についてもアニメーションが終了していなければ待つ
-        _animator.speed = 1.0f;
         AnimatorStateInfo animStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
         while (!animStateInfo.IsName("Base.Idle"))
         {
             _isGround = false;
+            _animator.speed = 1.0f;
             animStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             yield return null;
         }
@@ -313,8 +313,8 @@ public class RideBallMove : PlayerMove
             _rigidbody.AddForce(new Vector3(0, 100, 0));
         }
 
-        // 玉の削除処理
-        Destroy(_ballObj.gameObject);
+        // 玉をエフェクトとともに消す
+        _ballObj.SetActive(false);
         GameEffectManager.Instance.Play("Bohun", _ballObj.transform.position);
         
         while (!_isGround)
@@ -326,6 +326,9 @@ public class RideBallMove : PlayerMove
         _animator.SetBool("BallWalk", false);
         _animator.speed = 1.0f;
         _isRideAnim = false;
+        
+        // 玉の削除処理
+        Destroy(_ballObj.gameObject);
 
         // コンポーネントを切り替え
         GetComponent<PlayerMove>().enabled = true;
