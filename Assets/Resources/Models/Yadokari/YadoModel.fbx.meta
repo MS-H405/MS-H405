@@ -71,6 +71,18 @@ ModelImporter:
     100126: shell
     100128: ShellBone
     100130: //RootNode
+    100132: joint11
+    100134: joint12
+    100136: joint13
+    100138: joint16
+    100140: joint17
+    100142: joint19
+    100144: joint21
+    100146: joint22
+    100148: joint23
+    100150: joint24
+    100152: joint25
+    100154: joint26
     400000: body
     400002: ikHandle1
     400004: ikHandle2
@@ -137,6 +149,18 @@ ModelImporter:
     400126: shell
     400128: ShellBone
     400130: //RootNode
+    400132: joint11
+    400134: joint12
+    400136: joint13
+    400138: joint16
+    400140: joint17
+    400142: joint19
+    400144: joint21
+    400146: joint22
+    400148: joint23
+    400150: joint24
+    400152: joint25
+    400154: joint26
     2300000: Leftscissors
     2300002: LehtS
     2300004: pipeA1
@@ -181,6 +205,13 @@ ModelImporter:
     4300026: pipeA1
     4300028: body
     7400000: Take 001
+    7400002: charge2_1
+    7400004: charge1
+    7400006: Idle
+    7400008: LAttack
+    7400010: RAttack
+    7400012: Walk
+    7400014: charge2_2
     9500000: //RootNode
     13700000: body
   externalObjects:
