@@ -487,6 +487,11 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 245853611}
+--- !u!4 &261891418 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4446096770777980, guid: 27a2f0188d5c14f4fb9a07bf8ac9d53a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1253608022}
 --- !u!1001 &283926911
 Prefab:
   m_ObjectHideFlags: 0
@@ -2919,6 +2924,48 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1241344410}
+--- !u!1001 &1253608022
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1818006451}
+    m_Modifications:
+    - target: {fileID: 4446096770777980, guid: 27a2f0188d5c14f4fb9a07bf8ac9d53a, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.10211468
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446096770777980, guid: 27a2f0188d5c14f4fb9a07bf8ac9d53a, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -3.4407706
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446096770777980, guid: 27a2f0188d5c14f4fb9a07bf8ac9d53a, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 1.179525
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446096770777980, guid: 27a2f0188d5c14f4fb9a07bf8ac9d53a, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446096770777980, guid: 27a2f0188d5c14f4fb9a07bf8ac9d53a, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446096770777980, guid: 27a2f0188d5c14f4fb9a07bf8ac9d53a, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446096770777980, guid: 27a2f0188d5c14f4fb9a07bf8ac9d53a, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446096770777980, guid: 27a2f0188d5c14f4fb9a07bf8ac9d53a, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 27a2f0188d5c14f4fb9a07bf8ac9d53a, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1336664501
 GameObject:
   m_ObjectHideFlags: 0
@@ -3263,6 +3310,49 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1496446359
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1496446361}
+  - component: {fileID: 1496446360}
+  m_Layer: 0
+  m_Name: GAME_TotemLaser
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1496446360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1496446359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50091075b6bce714bbcd73abc4eee722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectName: GAME_TotemLaser
+  playOnStart: 1
+  loop: 1
+--- !u!4 &1496446361
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1496446359}
+  m_LocalRotation: {x: -0, y: 0.9833978, z: -0.18146321, w: 0}
+  m_LocalPosition: {x: 0.10211468, y: 0.53922915, z: 0.679525}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1818006451}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 20.91, y: 180, z: 0}
 --- !u!1 &1546003557
 GameObject:
   m_ObjectHideFlags: 0
@@ -3805,6 +3895,36 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1793129698}
+--- !u!1 &1818006450
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1818006451}
+  m_Layer: 0
+  m_Name: TatsuoEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1818006451
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1818006450}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.10211468, y: 3.6607707, z: -1.179525}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 261891418}
+  - {fileID: 1496446361}
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1895904535
 GameObject:
   m_ObjectHideFlags: 0
