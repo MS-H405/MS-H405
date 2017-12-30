@@ -56,9 +56,6 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     /// </summary>
     private void Awake()
     {
-        if (_bossEnemy)
-            return;
-
         // 登録が無ければ探索
         GameObject[] objs = GameObject.FindGameObjectsWithTag("Enemy");
 
