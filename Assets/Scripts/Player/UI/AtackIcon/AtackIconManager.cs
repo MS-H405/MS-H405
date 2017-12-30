@@ -122,7 +122,7 @@ public class AtackIconManager : SingletonMonoBehaviour<AtackIconManager>
     /// <summary>
     /// 初期化処理
     /// </summary>
-    private void Awake()
+    private void Start()
     {
         IsChange = true;
         SpecialIconSprite = Resources.Load<Sprite>("Sprite/GameUI/Special");
