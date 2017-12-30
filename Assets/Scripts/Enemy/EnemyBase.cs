@@ -19,11 +19,15 @@ public class EnemyBase : MonoBehaviour
 
     #region variable
 
-    [SerializeField] int _mainHp = 0;           // 死亡までの敵HP
+    [SerializeField] int _mainHp = 0;                   // 死亡までの敵HP
 
-    protected int _nowStanHp = 0;               // 気絶までの現在HP
-    [SerializeField] int _stanHP = 0;           // 気絶までの初期HP
-    public bool IsStan { get; /*privateに戻す*/protected set; }    // 気絶フラグ
+    protected int _nowStanHp = 0;                       // 気絶までの現在HP
+    [SerializeField] int _stanHP = 0;                   // 気絶までの初期HP
+    public bool IsStan { get; protected set; }          // 気絶フラグ
+
+    public bool IsInvincible { get; protected set; }    // 無敵フラグ
+
+    protected Animator _animator = null;
 
     #endregion
 
@@ -34,7 +38,7 @@ public class EnemyBase : MonoBehaviour
     /// </summary>
     public void Damage(int amount = 1)
     {
-        if (IsStan)
+        if (IsStan || IsInvincible)
             return;
 
         if(_nowStanHp <= 0)
@@ -49,6 +53,7 @@ public class EnemyBase : MonoBehaviour
 
         // スタン状態にする
         IsStan = true;
+        _animator.SetBool("Stan", true);
     }
 
     /// <summary>
@@ -58,6 +63,7 @@ public class EnemyBase : MonoBehaviour
     {
         _mainHp--;
         IsStan = false;
+        _animator.SetBool("Stan", false);
     }
 
     /// <summary>
@@ -70,7 +76,18 @@ public class EnemyBase : MonoBehaviour
 
     #endregion
 
-    #region unity_event 
+    #region unity_event     
+    
+    /// <summary>
+    /// 初期化処理
+    /// </summary>
+    protected void Awake()
+    {
+        IsStan = false;
+        IsInvincible = false;
+
+        _animator = GetComponent<Animator>();
+    }
 
     /// <summary>
     /// 更新処理
@@ -81,6 +98,7 @@ public class EnemyBase : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             IsStan = true;
+            _animator.SetBool("Stan", true);
         }
     }
 

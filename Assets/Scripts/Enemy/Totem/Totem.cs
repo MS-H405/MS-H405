@@ -46,7 +46,6 @@ public class Totem : EnemyBase
 
     // 演出用変数
     private ShakeCamera _shakeCamera = null;
-    private Animator _animator = null;
     [SerializeField] string _appearEffectName = "TS_boss_appear";
     List<ManualRotation> _totemHeadList = new List<ManualRotation>();
 
@@ -73,7 +72,6 @@ public class Totem : EnemyBase
                 // スタン状態なら一時停止
                 if (IsStan)
                 {
-                    _animator.SetBool("IsStan", true);
                     StaticCoroutine.Instance.StopCoroutine(enumerator);
 
                     while (IsStan)
@@ -82,7 +80,6 @@ public class Totem : EnemyBase
                         yield return null;
                     }
 
-                    _animator.SetBool("IsStan", false);
                     yield return new WaitForSeconds(1.0f);
                 }
 
@@ -386,15 +383,16 @@ public class Totem : EnemyBase
     /// <summary>
     /// 初期化処理
     /// </summary>
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
+
         // トーテムの先端が見えてしまうので頭を一つ増やした状態で処理
         _headAmount += 1;
 
         // 必要コンポーネントの取得
         _rigidbody = GetComponent<Rigidbody>();
         _shakeCamera = Camera.main.GetComponent<ShakeCamera>();
-        _animator = GetComponent<Animator>();
 
         // 子分トーテムの生成処理
         for (int i = 0; i < _childTotemAmount; i++)
