@@ -21,7 +21,7 @@ public static class GetAllChildren
     }
 
     //子要素を取得してリストに追加
-    public static void GetChildren(GameObject obj, ref List<GameObject> allChildren)
+    private static void GetChildren(GameObject obj, ref List<GameObject> allChildren)
     {
         Transform children = obj.GetComponentInChildren<Transform>();
         //子要素がいなければ終了

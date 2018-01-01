@@ -19,8 +19,8 @@ public class HermitCrab : EnemyBase
     {
         Wait = 0,
         Assault,
-        RightAtack,
-        LeftAtack,
+        RightAttack,
+        LeftAttack,
         RollAtack,
         ChargeFire,
         RollFire,
@@ -35,7 +35,13 @@ public class HermitCrab : EnemyBase
     #region variable
 
     private eAction _nowAction;             // 現在の行動を保持
+    private bool _isNext = false;           // 次の行動へ行くか
+
     private float _nearTime = 0.0f;         // Playerが近くにいる時の継続時間
+
+    // 行動用変数
+    private BoxCollider _leftScissors  = null;
+    private BoxCollider _rightScissors = null;
 
     #endregion
 
@@ -51,12 +57,12 @@ public class HermitCrab : EnemyBase
         while (true)
         {
             // 行動ルーチン実行
-            //_nowAction = SelectAction();
+            _nowAction = SelectAction();
             IEnumerator enumerator = RunAction();
+            _isNext = false;
 
             // 終わるまで待機する
-            oldAction = _nowAction;
-            while (_nowAction == oldAction)
+            while (!_isNext)
             {
                 // スタン状態なら一時停止
                 if (IsStan)
@@ -82,14 +88,34 @@ public class HermitCrab : EnemyBase
     /// </summary>
     private eAction SelectAction()
     {
-        if(_nowAction == eAction.Wait)
+        switch (_nowAction)
         {
-            return eAction.Assault;
+            case eAction.Wait:
+                return (eAction)Random.Range(2,5);
+                //return eAction.Assault;
+
+            case eAction.Assault:
+                return eAction.Wait;
+
+            case eAction.RightAttack:
+                return eAction.Wait;
+
+            case eAction.LeftAttack:
+                return eAction.Wait;
+
+            case eAction.RollAtack:
+                return eAction.Wait;
+
+            case eAction.ChargeFire:
+                return eAction.Wait;
+
+            case eAction.RollFire:
+                return eAction.Wait;
+
+            default:
+                break;
         }
-        else
-        {
-            return eAction.Wait;
-        }
+        return eAction.Wait;
     }
 
     /// <summary>
@@ -105,14 +131,10 @@ public class HermitCrab : EnemyBase
             case eAction.Assault:
                 return StaticCoroutine.Instance.StartStaticCoroutine(Assault());
 
-            case eAction.RightAtack:
-            //return StaticCoroutine.Instance.StartStaticCoroutine();
-
-            case eAction.LeftAtack:
-            //return StaticCoroutine.Instance.StartStaticCoroutine();
-
+            case eAction.RightAttack:
+            case eAction.LeftAttack:
             case eAction.RollAtack:
-            //return StaticCoroutine.Instance.StartStaticCoroutine();
+                return StaticCoroutine.Instance.StartStaticCoroutine(ScissorAttack(_nowAction));
 
             case eAction.ChargeFire:
             //return StaticCoroutine.Instance.StartStaticCoroutine();
@@ -130,6 +152,9 @@ public class HermitCrab : EnemyBase
 
     #region action_method
 
+    /// <summary>
+    /// 待機処理（Playerのターン）
+    /// </summary>
     private IEnumerator Wait()
     {
         _animator.SetBool("Walk", false);
@@ -137,27 +162,41 @@ public class HermitCrab : EnemyBase
         float time = 0.0f;
         while (time < 1.0f)
         {
-            time += Time.deltaTime / 1.0f;
+            time += Time.deltaTime / 5.0f;
             yield return null;
         }
 
-        _nowAction = eAction.Assault;
+        _isNext = true;
+        Debug.Log("Wait End");
     }
 
+    /// <summary>
+    /// 突進攻撃処理
+    /// ※突進が微妙なので、とりあえずPlayerの方を向くだけの行動になっている※
+    /// </summary>
     private IEnumerator Assault()
     {
         float time = 0.0f;
         float speed = 0.0f;
         _animator.SetBool("Walk", true);
+        _animator.speed = 1.5f;
 
         Vector3 startRot = transform.eulerAngles;
         transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
         Vector3 targetRot = transform.eulerAngles;
         transform.eulerAngles = startRot;
 
-        // TODO : 無駄な回転量が出ないようにする
+        // 無駄な回転量が出ないようにする
+        if (targetRot.y - startRot.y > 180.0f)
+        {
+            targetRot.y -= 360.0f;
+        }
+        else if (targetRot.y - startRot.y < -180.0f)
+        {
+            targetRot.y += 360.0f;
+        }
 
-        speed = Mathf.Abs(startRot.y - targetRot.y) / 180.0f;
+        speed = Mathf.Abs(startRot.y - targetRot.y) / 45.0f;
         while (time < 1.0f)
         {
             time += Time.deltaTime / speed;
@@ -165,6 +204,11 @@ public class HermitCrab : EnemyBase
             transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
             yield return null;
         }
+
+        _isNext = true;
+        _animator.speed = 1.0f;
+        yield break;
+        // TODO : 突進が微妙なので一旦なしにしている
         
         time = 0.0f;
         Vector3 startPos = transform.position;
@@ -182,7 +226,75 @@ public class HermitCrab : EnemyBase
         _animator.SetBool("Walk", false);
         _animator.speed = 1.0f;
 
-        _nowAction = eAction.Wait;
+        _isNext = true;
+    }
+
+    /// <summary>
+    /// 処理
+    /// </summary>
+    private IEnumerator ScissorAttack(eAction action)
+    {
+        switch(action)
+        {
+            case eAction.RightAttack:
+                _rightScissors.enabled = true;
+                _animator.SetTrigger("RightAttack");
+                Debug.Log("RightAttack");
+                break;
+
+            case eAction.LeftAttack:
+                _leftScissors.enabled = true;
+                _animator.SetTrigger("LeftAttack");
+                Debug.Log("LeftAttack");
+                break;
+
+            case eAction.RollAtack:
+                IsInvincible = true;
+                _rightScissors.enabled = true;
+                _animator.SetTrigger("RollAttack");
+                Debug.Log("RollAttack");
+                break;
+
+            default:
+                break;
+        }
+
+        AnimatorStateInfo animStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        yield return new WaitWhile(() =>
+        {
+            animStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            Debug.Log("a");
+            return animStateInfo.IsName("Base.Idle") || animStateInfo.IsName("Base.Walk");
+        });
+        yield return new WaitWhile(() =>
+        {
+            animStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            Debug.Log("b");
+            return !animStateInfo.IsName("Base.Idle");
+        });
+
+        _isNext = true;
+        IsInvincible = false;
+        _leftScissors.enabled = false;
+        _rightScissors.enabled = false;
+        Debug.Log(action + " : End");
+    }
+
+
+    /// <summary>
+    /// 処理
+    /// </summary>
+    private IEnumerator ChargeFire()
+    {
+        yield return null;
+    }
+
+    /// <summary>
+    /// 処理
+    /// </summary>
+    private IEnumerator RollFire()
+    {
+        yield return null;
     }
 
     #endregion
@@ -196,7 +308,12 @@ public class HermitCrab : EnemyBase
     {
         base.Awake();
 
-
+        // はさみのColliderを取得
+        List<GameObject> allChild = GetAllChildren.GetAll(gameObject);
+        _leftScissors = allChild.Where(_ => _.name == "LeftScissors").FirstOrDefault().GetComponent<BoxCollider>();
+        _leftScissors.enabled = false;
+        _rightScissors = allChild.Where(_ => _.name == "RightScissors").FirstOrDefault().GetComponent<BoxCollider>();
+        _rightScissors.enabled = false;
     }
 
     /// <summary>
@@ -221,6 +338,17 @@ public class HermitCrab : EnemyBase
         else
         {
             _nearTime = 0.0f;
+        }
+    }
+
+    /// <summary>
+    /// 当たり判定
+    /// </summary>
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.tag == "Player")
+        {
+            col.GetComponent<Player>().Damage();
         }
     }
 
