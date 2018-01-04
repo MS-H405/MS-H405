@@ -295,6 +295,15 @@
     <Compile Include="Assets\Plugins\Effekseer\Plugins\EffekseerPlayableAsset.cs" />
     <Compile Include="Assets\Plugins\Effekseer\Plugins\EffekseerPlayableBehaviour.cs" />
     <Compile Include="Assets\Plugins\Effekseer\Plugins\EffekseerSystem.cs" />
+    <Compile Include="Assets\Plugins\PyroParticles\Demo\DemoScript.cs" />
+    <Compile Include="Assets\Plugins\PyroParticles\Demo\DemoScriptEditor.cs" />
+    <Compile Include="Assets\Plugins\PyroParticles\Prefab\Script\FireBaseScript.cs" />
+    <Compile Include="Assets\Plugins\PyroParticles\Prefab\Script\FireCollisionForwardScript.cs" />
+    <Compile Include="Assets\Plugins\PyroParticles\Prefab\Script\FireConstantBaseScript.cs" />
+    <Compile Include="Assets\Plugins\PyroParticles\Prefab\Script\FireLightScript.cs" />
+    <Compile Include="Assets\Plugins\PyroParticles\Prefab\Script\FireProjectileScript.cs" />
+    <Compile Include="Assets\Plugins\PyroParticles\Prefab\Script\MeteorSwarmScript.cs" />
+    <Compile Include="Assets\Plugins\PyroParticles\Prefab\Script\SingleLineAttribute.cs" />
     <Compile Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Scripts\Antialiasing.cs" />
     <Compile Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Scripts\Bloom.cs" />
     <Compile Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Scripts\BloomAndFlares.cs" />
@@ -580,6 +589,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Cinemachine\ReleaseNotes.txt" />
+    <None Include="Assets\Plugins\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
+    <None Include="Assets\Plugins\PyroParticles\Readme.txt" />
     <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
     <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
     <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlur.shader" />
