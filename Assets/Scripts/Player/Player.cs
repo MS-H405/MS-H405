@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
 
     // ダメージ処理演出用変数
     private bool _isDamage = false;
-    public bool IsDamage { get { return _isDamage; } }
+    public bool IsDamage { get { return _isDamage; } set { _isDamage = value; } }
     private Rigidbody _rigidBody = null;
     private Animator _animator = null;
     [SerializeField] float _backPower = 75.0f;
@@ -51,6 +51,27 @@ public class Player : MonoBehaviour
         StaticCoroutine.Instance.StartStaticCoroutine(DamageWait());
     }
 
+    /// <summary>
+    /// ダメージ時のスタン演出処理
+    /// </summary>
+    private void DamageStan()
+    {
+        // 玉乗り中なら玉乗りを強制キャンセル
+        if (_rideBallMove.enabled)
+        {
+            _actionManager.Cancel();
+            _rideBallMove.Off();
+        }
+        else
+        {
+            _playerMove.OutGround();
+        }
+
+        Vector3 velocity = -transform.forward * _backPower;
+        velocity.y = _upPower;
+        _rigidBody.AddForce(velocity);
+    }
+
     /// <summary>  
     /// ダメージ時の無敵時間処理  
     /// </summary>  
@@ -71,27 +92,6 @@ public class Player : MonoBehaviour
         }
 
         _isDamage = false;
-    }
-
-    /// <summary>
-    /// ダメージ時のスタン演出処理
-    /// </summary>
-    private void DamageStan()
-    {
-        // 玉乗り中なら玉乗りを強制キャンセル
-        if (_rideBallMove.enabled)
-        {
-            _actionManager.Cancel();
-            _rideBallMove.Off();
-        }
-        else
-        {
-            _playerMove.OutGround();
-        }
-
-        Vector3 velocity = -transform.forward * _backPower;
-        velocity.y = _upPower;
-        _rigidBody.AddForce(velocity);
     }
 
     /// <summary>

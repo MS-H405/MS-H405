@@ -166,13 +166,11 @@ public class JugglingAtack : MonoBehaviour
             // 次生成
             GameObject obj = Instantiate(gameObject, transform.position, Quaternion.identity);
             obj.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy);
-            Debug.Log("キャッチ！");
         }
         else
         {
             // 速度初期化
             _commonAtackSpeed = 1.0f;
-            Debug.Log("落とした！");
         }
 
         // 破棄処理
