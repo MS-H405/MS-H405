@@ -265,6 +265,7 @@ public class RideBallMove : PlayerMove
         _animator.SetBool("Walk", false);
         _animator.SetTrigger("Roll");
         _rigidbody.useGravity = false;
+        PlayerManager.Instance.Player.IsDamage = true;
 
         // 上に飛ばし、玉より超えたら玉出現
         while (transform.position.y < 2.25f)
@@ -291,6 +292,7 @@ public class RideBallMove : PlayerMove
         }
         _isRideAnim = false;
         _isGround = true;
+        PlayerManager.Instance.Player.IsDamage = false;
     }
 
     /// <summary>  
@@ -304,6 +306,7 @@ public class RideBallMove : PlayerMove
         // 行動停止
         _isGround = false;
         _isRideAnim = true;
+        PlayerManager.Instance.Player.IsDamage = true;
 
         // 
         if (!PlayerManager.Instance.Player.IsDamage)
@@ -323,10 +326,11 @@ public class RideBallMove : PlayerMove
         }
 
         // 玉乗り時に変更したアニメーションデータを初期化
-        _animator.SetBool("BallWalk", false);
-        _animator.speed = 1.0f;
         _isRideAnim = false;
-        
+        _animator.speed = 1.0f;
+        _animator.SetBool("BallWalk", false);
+        PlayerManager.Instance.Player.IsDamage = false;
+
         // 玉の削除処理
         Destroy(_ballObj.gameObject);
 

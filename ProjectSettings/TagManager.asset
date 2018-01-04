@@ -9,6 +9,7 @@ TagManager:
   - Bagpipe
   - RideBall
   - AutoRange
+  - Fire
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - DependenceField
   - ChildTotem
   - Player
-  - 
+  - FireEffect
   - 
   - 
   - 

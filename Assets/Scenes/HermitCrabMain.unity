@@ -441,22 +441,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 2, z: 0.8}
   m_Center: {x: 0.027278636, y: 1, z: 0.0075980136}
---- !u!1 &374036759 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100028, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
-  m_PrefabInternal: {fileID: 1953789087}
---- !u!65 &374036761
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 374036759}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.8, y: 1.3, z: 0.8}
-  m_Center: {x: -0.8, y: 0, z: -0.3}
 --- !u!1001 &434382896
 Prefab:
   m_ObjectHideFlags: 0
@@ -1270,22 +1254,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 2, z: 0.8}
   m_Center: {x: 0.027278993, y: 1, z: 0.007598073}
---- !u!1 &1869614499 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100024, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
-  m_PrefabInternal: {fileID: 1953789087}
---- !u!65 &1869614501
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1869614499}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.8, y: 1.3, z: 0.8}
-  m_Center: {x: -0.6, y: 0, z: 0.3}
 --- !u!1 &1928299838
 GameObject:
   m_ObjectHideFlags: 0
@@ -1337,111 +1305,41 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 400068, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
+    - target: {fileID: 4166930980669332, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 400068, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
+    - target: {fileID: 4166930980669332, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 400068, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
+    - target: {fileID: 4166930980669332, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
       propertyPath: m_LocalPosition.z
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 400068, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
+    - target: {fileID: 4166930980669332, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 400068, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
+    - target: {fileID: 4166930980669332, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
       propertyPath: m_LocalRotation.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 400068, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
+    - target: {fileID: 4166930980669332, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 400068, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
+    - target: {fileID: 4166930980669332, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
       propertyPath: m_LocalRotation.w
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 400068, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
+    - target: {fileID: 4166930980669332, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 400068, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 100068, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
-      propertyPath: m_Name
-      value: HermitCrab
-      objectReference: {fileID: 0}
-    - target: {fileID: 100068, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
-      propertyPath: m_TagString
-      value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: b7a9ef463c6bd2748805a36167cb5792, type: 2}
-    - target: {fileID: 100024, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
-      propertyPath: m_Name
-      value: LeftScissors
-      objectReference: {fileID: 0}
-    - target: {fileID: 100028, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
-      propertyPath: m_Name
-      value: RightScissors
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
+  m_ParentPrefab: {fileID: 100100000, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1953789088 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100068, guid: b7bcc8113864d95419801d1dfae8c3f6, type: 3}
-  m_PrefabInternal: {fileID: 1953789087}
---- !u!65 &1953789089
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1953789088}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 7, y: 5, z: 6}
-  m_Center: {x: 0, y: 2.7, z: 0}
---- !u!54 &1953789090
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1953789088}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &1953789091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1953789088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 141fc4ce7f0bb004983dbca0804cf3a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mainHp: 1
-  _stanHP: 100
-  _leftScissors: {fileID: 1869614501}
-  _rightScissors: {fileID: 374036761}
 --- !u!1 &2049836557
 GameObject:
   m_ObjectHideFlags: 0

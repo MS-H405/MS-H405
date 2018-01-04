@@ -337,6 +337,7 @@
     <Compile Include="Assets\Plugins\Effekseer\Editor\EffekseerAssetInspector.cs" />
     <Compile Include="Assets\Plugins\Effekseer\Editor\EffekseerAssetPostProcessor.cs" />
     <Compile Include="Assets\Plugins\Effekseer\Editor\EffekseerPluginSwitcher.cs" />
+    <Compile Include="Assets\Plugins\PyroParticles\Prefab\Editor\PyroParticlesEditor.cs" />
     <Compile Include="Assets\Plugins\Standard Assets\Editor\ImageEffects\AntialiasingEditor.cs" />
     <Compile Include="Assets\Plugins\Standard Assets\Editor\ImageEffects\BloomAndFlaresEditor.cs" />
     <Compile Include="Assets\Plugins\Standard Assets\Editor\ImageEffects\BloomEditor.cs" />
@@ -354,6 +355,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Cinemachine\ReleaseNotes.txt" />
+    <None Include="Assets\Plugins\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
+    <None Include="Assets\Plugins\PyroParticles\Readme.txt" />
     <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
     <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
     <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlur.shader" />

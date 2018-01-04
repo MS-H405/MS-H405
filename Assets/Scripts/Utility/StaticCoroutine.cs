@@ -26,13 +26,22 @@ public class StaticCoroutine : SingletonMonoBehaviour<StaticCoroutine>
     #region method
 
     /// <summary>
-    /// コルーチン実行処理処理
+    /// コルーチン実行処理
     /// </summary>
     public IEnumerator StartStaticCoroutine(IEnumerator enumerator)
     {
         _enumeratorList.Add(enumerator);
         Instance.StartCoroutine(enumerator);
         return enumerator;
+    }
+
+    /// <summary>
+    /// コルーチン停止処理
+    /// </summary>
+    public void StopStaticCoroutine(IEnumerator enumerator)
+    {
+        _enumeratorList.Remove(enumerator);
+        Instance.StopCoroutine(enumerator);
     }
 
     /// <summary>
