@@ -226,7 +226,6 @@ public class ChildTotem : MonoBehaviour
         {
             _dropParticleList.Add(transform.GetChild(i).GetComponentInChildren<ParticleSystem>());
         }*/
-
     }
 
     /// <summary>
