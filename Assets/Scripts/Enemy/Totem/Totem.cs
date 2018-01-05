@@ -19,7 +19,8 @@ public class Totem : EnemyBase
     {
         TotemPushUp = 0,
         ChildTotemPushUp,
-        SpecialAtack,
+        SpecialAttack,
+        WindAttack,
         Max,
     };
 
@@ -107,8 +108,11 @@ public class Totem : EnemyBase
             case eAction.ChildTotemPushUp:
                 return StaticCoroutine.Instance.StartStaticCoroutine(ChildTotemPushUp());
 
-            case eAction.SpecialAtack:
+            case eAction.SpecialAttack:
                 return StaticCoroutine.Instance.StartStaticCoroutine(SpecialAtack());
+
+            case eAction.WindAttack:
+                return StaticCoroutine.Instance.StartStaticCoroutine(WindAttack());
 
             default:
                 break;
@@ -160,7 +164,7 @@ public class Totem : EnemyBase
 
             // 待機
             float waitTime = 0.0f;
-            while (waitTime < 2.0f)
+            while (waitTime < 7.5f)
             {
                 waitTime += Time.deltaTime;
                 yield return null;
@@ -256,7 +260,7 @@ public class Totem : EnemyBase
     {
         // 待機
         float time = 0.0f;
-        while (time < 2.0f)
+        while (time < 10.0f)
         {
             time += Time.deltaTime;
             yield return null;
@@ -328,6 +332,32 @@ public class Totem : EnemyBase
     }
 
     /// <summary>
+    /// 風砲攻撃処理
+    /// </summary>
+    private IEnumerator WindAttack()
+    {
+        int count = 0;
+        float time = 0.0f;
+        while (count < 3)
+        {
+            TotemRot(true, 3, Random.Range(0,360));
+
+            while(time < _oneBlockUpSpeed * 3)
+            {
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            // Effect作成
+
+            // 待つ
+        }
+
+        // 次の行動へ
+        _action += 1;
+    }
+
+    /// <summary>
     /// 突き上げエフェクト処理
     /// </summary>
     private void AppearEffect()
@@ -339,19 +369,19 @@ public class Totem : EnemyBase
     /// <summary>
     /// トーテムの回転処理
     /// </summary>
-    private void TotemRot(bool isUp, int headAmount)
+    private void TotemRot(bool isUp, int headAmount, int rot = 360)
     {
         float speed = _oneBlockUpSpeed * headAmount;
-        Vector3 rotAmount = new Vector3(0, 360, 0) * headAmount;
+        Vector3 rotAmount = new Vector3(0, rot, 0) * headAmount;
         if(isUp)
         {
             rotAmount *= -1;
         }
 
         // 回転実行
-        foreach (ManualRotation rot in _totemHeadList)
+        foreach (ManualRotation head in _totemHeadList)
         {
-            rot.Run(rotAmount, speed);
+            head.Run(rotAmount, speed);
             rotAmount *= -1;
         }
     }

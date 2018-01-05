@@ -92,7 +92,7 @@ public class EnemyBase : MonoBehaviour
     /// <summary>
     /// 更新処理
     /// </summary>
-    private void Update()
+    protected void Update()
     {
         // DEBUG : デバッグコマンド 
         if (Input.GetKeyDown(KeyCode.Q))
