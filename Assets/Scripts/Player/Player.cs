@@ -200,6 +200,17 @@ public class Player : MonoBehaviour
             });
     }
 
+    /// <summary> 
+    /// 更新処理  
+    /// </summary>  
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            _isDamage = !_isDamage;
+        }
+    }
+
     /// <summary>
     /// 地形との接地判定処理
     /// </summary>

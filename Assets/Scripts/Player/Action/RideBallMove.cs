@@ -39,6 +39,7 @@ public class RideBallMove : PlayerMove
     private GameObject _ballObj = null;             // 玉乗りボールインスタンス
     [SerializeField] GameObject _ballPrefab = null; // 玉乗りボールプレハブ
     private Vector3 _oldBallAngle = Vector3.zero;
+    private ParticleSystem[] _rideEffects = new ParticleSystem[2];
 
     #endregion
 
@@ -53,6 +54,7 @@ public class RideBallMove : PlayerMove
         if (!_isGround)
         {
             _animator.SetBool("BallWalk", false);
+            _runSmoke.SetActive(_animator.GetBool("BallWalk"));
             return;
         }
 
@@ -65,6 +67,7 @@ public class RideBallMove : PlayerMove
 
         // Animation更新
         _animator.SetBool("BallWalk", _moveAmount != Vector3.zero);
+        _runSmoke.SetActive(_animator.GetBool("BallWalk"));
 
         // 移動と向きを更新
         transform.position += _moveAmount * Time.deltaTime;
@@ -81,6 +84,7 @@ public class RideBallMove : PlayerMove
         if (_moveAmount == Vector3.zero)
         {
             _animator.speed = 1.0f;
+            foreach (ParticleSystem effect in _rideEffects) effect.loop = false;
             return;
         }
 
@@ -88,6 +92,21 @@ public class RideBallMove : PlayerMove
 
         // プレイヤーの歩行速度変更
         _animator.speed = speed / 10.0f;
+
+        if(_animator.speed > 0.0f)
+        { 
+            foreach(ParticleSystem effect in _rideEffects)
+            {
+                bool old = effect.loop;
+                effect.loop = true;
+                effect.emissionRate = 4.0f * (_animator.speed * _animator.speed);
+
+                if (effect.loop == old)
+                    continue;
+
+                effect.Play();
+            }
+        }
 
         // ボールの回転
         _ballObj.transform.eulerAngles = _oldBallAngle;
@@ -346,12 +365,15 @@ public class RideBallMove : PlayerMove
     /// <summary>  
     /// 初期化処理  
     /// </summary>  
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         InitAcceleration = _speed_Sec * 0.2f;
         MaxAcceleration = _speed_Sec * 1.7f;
         _rigidbody = GetComponent<Rigidbody>();
-        base.Awake();
+
+        _rideEffects[0] = transform.Find("TamanoriEffect").GetComponent<ParticleSystem>();
+        _rideEffects[1] = transform.Find("TamanoriEffect").GetChild(0).GetComponent<ParticleSystem>();
     }
 
     /// <summary>
@@ -393,6 +415,7 @@ public class RideBallMove : PlayerMove
             _rigidbody.AddForce(reflectPower);
             _animator.SetTrigger("Roll");
             _animator.speed = 1.0f;
+            foreach (ParticleSystem effect in _rideEffects) effect.loop = false;
         }
     }
 

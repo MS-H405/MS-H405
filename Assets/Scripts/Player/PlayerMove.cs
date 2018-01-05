@@ -36,6 +36,7 @@ public class PlayerMove : MonoBehaviour
     // animation用変数
     protected Animator _animator = null;
     private Vector3 _oldAngle = Vector3.zero;
+    protected GameObject _runSmoke = null;
 
     #endregion
 
@@ -48,6 +49,8 @@ public class PlayerMove : MonoBehaviour
     {
         // Animation更新
         _animator.SetBool("Walk", _moveAmount != Vector3.zero);
+        _runSmoke.SetActive(_animator.GetBool("Walk"));
+        _runSmoke.GetComponent<ParticleSystem>().loop = false;
 
         // 硬直時は処理しない
         if (!_isGround || IsAction)
@@ -121,6 +124,7 @@ public class PlayerMove : MonoBehaviour
     protected void Awake()
     {
         _animator = GetComponent<Animator>();
+        _runSmoke = transform.Find("RunSmoke").gameObject;
     }
 
     /// <summary>
