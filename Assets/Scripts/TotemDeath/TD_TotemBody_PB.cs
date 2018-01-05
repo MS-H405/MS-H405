@@ -84,7 +84,7 @@ public class TD_TotemBody_PB : PlayableBehaviour
 		// スキップ処理
 		if (Input.GetKeyDown(KeyCode.Return) && bFade)
 		{
-			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TITLE);
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TOTEM_TO_YADOKARI);
 			bFade = false;
 		}
 
@@ -101,7 +101,7 @@ public class TD_TotemBody_PB : PlayableBehaviour
 		// フェード
 		if(fTime > CON_FADE_TIME && bFade)
 		{
-			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TITLE);
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TOTEM_TO_YADOKARI);
 			bFade = false;
 		}
 

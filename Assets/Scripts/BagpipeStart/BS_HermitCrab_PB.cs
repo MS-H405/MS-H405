@@ -47,6 +47,8 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 	const float CON_ROAR_END = 5.4f;			// 咆哮終了時間
 	const float CON_ROAR_EFFECT = 3.6f;			// 咆哮エフェクトを出す時間
 
+	const float CON_FADE_TIME = 0.3f;			// シーン遷移し始める時間
+
 	#endregion
 
 
@@ -67,6 +69,7 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 	bool bWait = true;
 
 	bool bRoarStart, bRoarStop, bRoarEnd, bRoarEffect;
+	bool bFade = true;
 
 	// Effekseer
 	private GameObject _EffekseerObj;
@@ -139,10 +142,7 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 
 
 			case STATE_HERMITCRAB.FIN:
-				break;
-
-			default:
-				Debug.Log("defaultです");
+				Fin();
 				break;
 		}
 	}
@@ -336,6 +336,26 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 		{
 			bInitializ = true;
 			State = STATE_HERMITCRAB.FIN;
+		}
+	}
+
+
+	// シーン遷移
+	private void Fin()
+	{
+		if (bInitializ)
+		{
+			fTime = 0.0f;
+			bInitializ = false;
+		}
+
+		fTime += Time.deltaTime;
+
+		// 処理を記述
+		if (fTime >= CON_FADE_TIME && bFade)
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_2);
+			bFade = false;
 		}
 	}
 

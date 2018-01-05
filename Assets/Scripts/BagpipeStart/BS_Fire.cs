@@ -7,7 +7,8 @@ public class BS_Fire : MonoBehaviour
 {
 	#region 定数
 
-
+	const float CON_FIRE_START = 16.0f;
+	const float CON_FIRE_EMD = 18.0f;
 
 	#endregion
 
@@ -19,6 +20,7 @@ public class BS_Fire : MonoBehaviour
     [SerializeField] GameObject _chargeFireEffect = null;
     [SerializeField] GameObject _rollFireEffect = null;
 
+	float fTime = 0.0f;
 
 	#endregion
 
@@ -44,6 +46,21 @@ public class BS_Fire : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		
+		fTime += Time.deltaTime;
+
+		if(CON_FIRE_START <= fTime && fTime <= CON_FIRE_EMD)
+		{
+			foreach (ParticleSystem pipeFire in _pipeFireList)
+			{
+				string pipeName = pipeFire.transform.parent.name;
+				if (!pipeName.Contains("B1") && !pipeName.Contains("B3") &&
+					!pipeName.Contains("B4") && !pipeName.Contains("B7"))
+				{
+					continue;
+				}
+
+				pipeFire.Emit(Mathf.RoundToInt(100 * Time.deltaTime + 0.5f));
+			}
+		}
 	}
 }
