@@ -247,6 +247,7 @@ public class HermitCrab : EnemyBase
         while (time < 0.6f)
         {
             time += Time.deltaTime / speed;
+            if (time > 0.6f) time = 0.6f;
             transform.position = Vector3.Lerp(startPos, targetPos, time);
             yield return null;
         }
@@ -469,8 +470,10 @@ public class HermitCrab : EnemyBase
     /// <summary>
     /// 更新処理
     /// </summary>
-    private void Update ()
+    private new void Update ()
     {
+        base.Update();
+
         float distance = Vector3.Distance(transform.position, PlayerManager.Instance.Player.transform.position);
         if(distance <= NearRange)
         {
