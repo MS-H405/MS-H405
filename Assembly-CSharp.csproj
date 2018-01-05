@@ -51,9 +51,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\BagpipeStart\BS_Fire.cs" />
+     <Compile Include="Assets\Scripts\BagpipeStart\BS_HermitCrab_PA.cs" />
+     <Compile Include="Assets\Scripts\BagpipeStart\BS_HermitCrab_PB.cs" />
+     <Compile Include="Assets\Scripts\BagpipeStart\BS_Player_PA.cs" />
+     <Compile Include="Assets\Scripts\BagpipeStart\BS_Player_PB.cs" />
      <Compile Include="Assets\Scripts\Effect\GameEffectManager.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyBase.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
+     <Compile Include="Assets\Scripts\Enemy\HermitCrab\FireAtack.cs" />
      <Compile Include="Assets\Scripts\Enemy\HermitCrab\HermitCrab.cs" />
      <Compile Include="Assets\Scripts\Enemy\Totem\ChildTotem.cs" />
      <Compile Include="Assets\Scripts\Enemy\Totem\Totem.cs" />
@@ -145,6 +151,7 @@
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\ContrastComposite.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAAPreset3.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\FisheyeShader.shader" />
+     <None Include="Assets\Plugins\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Apply.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\frag_ao.cginc" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\DepthOfField34.shader" />
@@ -156,6 +163,7 @@
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderYUV.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\CreaseApply.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\ChromaticAberrationShader.shader" />
+     <None Include="Assets\Plugins\PyroParticles\Readme.txt" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\GlobalFog.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Luminance.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionSelective.shader" />

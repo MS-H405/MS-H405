@@ -254,7 +254,7 @@ public class GameCamera : MonoBehaviour
 		//	rot.y = Mathf.Lerp(rot.y, CON_fTopRotY, fTopParameter);
 		//}
 
-		rot.x = Mathf.Lerp(vBeforeRot.x, Mathf.PI * 1.5f, Mathf.Clamp01(fTopParameter));
+		//rot.x = Mathf.Lerp(vBeforeRot.x, Mathf.PI * 1.5f, Mathf.Clamp01(fTopParameter));		// ←これがあると結局Zプラス方向を向いてしまう
 		rot.y = Mathf.Lerp(vBeforeRot.y, CON_fTopRotY, Mathf.Clamp01(fTopParameter));
 
 		#endregion
