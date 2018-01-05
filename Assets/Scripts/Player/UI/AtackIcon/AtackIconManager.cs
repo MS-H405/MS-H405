@@ -127,9 +127,9 @@ public class AtackIconManager : SingletonMonoBehaviour<AtackIconManager>
         IsChange = true;
         SpecialIconSprite = Resources.Load<Sprite>("Sprite/GameUI/Special");
 
-        for (int i = 0; i < IconAmount; i++)
+        for (int i = 1; i < IconAmount + 1; i++)
         {
-            _atackIconList[i] = transform.GetChild(i).GetComponent<AtackIcon>();
+            _atackIconList[i - 1] = transform.GetChild(i).GetComponent<AtackIcon>();
         }
 
         // スタン状態の変更時の演出処理

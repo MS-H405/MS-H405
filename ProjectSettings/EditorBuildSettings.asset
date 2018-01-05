@@ -20,3 +20,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Special_1.unity
     guid: f0cf8968e76f0d44b8eac49cf9ae2d01
+  - enabled: 1
+    path: Assets/Scenes/StageMove/InitToTotem.unity
+    guid: 60bdf3aff1874b1438666eee22f67da4
+  - enabled: 1
+    path: Assets/Scenes/StageMove/TotemToYadokari.unity
+    guid: fc6545ad801054947a7cd94714ddc313
+  - enabled: 1
+    path: Assets/Scenes/StageMove/YadokariToMecha.unity
+    guid: 4b93165d4bad7f14e95717c3dac9f9ca

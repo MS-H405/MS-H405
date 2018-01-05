@@ -30,6 +30,14 @@ public class FireAtack : MonoBehaviour
     /// <summary>
     /// 当たり判定処理
     /// </summary>
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            col.gameObject.GetComponent<Player>().Damage();
+            transform.GetComponent<SphereCollider>().enabled = false;
+        }
+    }
     private void OnParticleCollision(GameObject obj)
     {
         if (obj.gameObject.tag == "Player")
