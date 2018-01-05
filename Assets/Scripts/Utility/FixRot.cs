@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------
-// FireAtack.cs
+// FixRot.cs
 // 概要 : 
 // 作成者: Shota_Obora
 // ---------------------------------------------------------
@@ -11,13 +11,15 @@ using System.Linq;
 using UniRx;
 using UniRx.Triggers;
   
-public class FireAtack : MonoBehaviour
+public class FixRot : MonoBehaviour
 {
     #region define
 
     #endregion
 
     #region variable
+
+    Vector3 _oldRot = Vector3.zero;
 
     #endregion
 
@@ -28,22 +30,28 @@ public class FireAtack : MonoBehaviour
     #region unity_event
 
     /// <summary>
-    /// 当たり判定処理
+    /// 初期化処理
     /// </summary>
-    private void OnTriggerEnter(Collider col)
+    private void Awake()
     {
-        if (col.gameObject.tag == "Player")
-        {
-            col.gameObject.GetComponent<Player>().Damage();
-            transform.GetComponent<SphereCollider>().enabled = false;
-        }
+        _oldRot = transform.eulerAngles;
     }
-    private void OnParticleCollision(GameObject obj)
+
+    /// <summary>
+    /// 更新前処理
+    /// </summary>
+    private void Start ()
     {
-        if (obj.gameObject.tag == "Player")
-        {
-            obj.gameObject.GetComponent<Player>().Damage();
-        }
+
+    }
+
+    /// <summary>
+    /// 更新処理
+    /// </summary>
+    private void Update ()
+    {
+        transform.eulerAngles = _oldRot;
+        _oldRot = transform.eulerAngles;
     }
 
     #endregion

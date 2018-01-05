@@ -96,11 +96,12 @@ public class HermitCrab : EnemyBase
         {
             case eAction.Wait:
 
+                // --- DEBUG ---
                 //return eAction.Assault;             // 突進攻撃
                 //return eAction.ChargeFire;          // その場でファイアー
                 //return eAction.RollAtack;           // 回転攻撃
                 //return (eAction)Random.Range(2, 5); // 左or右攻撃か回転攻撃を出す
-                return eAction.RollFire;           // 回転してファイアー
+                //return eAction.RollFire;           // 回転してファイアー
 
                 if (_nearTime > 5.0f)
                 {
@@ -191,7 +192,8 @@ public class HermitCrab : EnemyBase
         _animator.SetBool("Walk", false);
 
         float time = 0.0f;
-        while (time < 5.0f)
+        float waitTime = Random.Range(1.0f, 5.0f);
+        while (time < waitTime)
         {
             time += Time.deltaTime;
             yield return null;
@@ -236,32 +238,8 @@ public class HermitCrab : EnemyBase
             time += Time.deltaTime / speed;
             if (time > 1.0f) time = 1.0f;
             transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
-
-            // 回転量更新
-            /*Vector3 nowRot = transform.eulerAngles;
-            transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
-            targetRot = transform.eulerAngles;
-            transform.eulerAngles = nowRot;
-
-            // 無駄な回転量が出ないようにする
-            if (targetRot.y - startRot.y > 180.0f)
-            {
-                targetRot.y -= 360.0f;
-            }
-            else if (targetRot.y - startRot.y < -180.0f)
-            {
-                targetRot.y += 360.0f;
-            }
-
-            speed = Mathf.Abs(startRot.y - targetRot.y) / 45.0f;*/
-
             yield return null;
         }
-
-        // TODO : 突進が微妙なので一旦なしにしている
-        //_isNext = true;
-        //_animator.speed = 1.0f;
-        //yield break;
         
         time = 0.0f;
         _animator.speed = 3.0f;
@@ -273,10 +251,9 @@ public class HermitCrab : EnemyBase
             yield return null;
         }
 
-        _animator.SetBool("Walk", false);
-        _animator.speed = 1.0f;
-
         _isNext = true;
+        _animator.speed = 1.0f;
+        _animator.SetBool("Walk", false);
     }
 
     /// <summary>
@@ -374,19 +351,12 @@ public class HermitCrab : EnemyBase
             yield return null;
         }
 
-        /*time = 0.0f;
-        while(time < 2.33f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }*/
-
         foreach(GameObject pipe in _pipeList)
         {
-            GameObject effect = Instantiate(_chargeFireEffect, pipe.transform.position, pipe.transform.rotation);
+            GameObject effect = Instantiate(_chargeFireEffect);
             effect.transform.SetParent(pipe.transform);
-            effect.transform.localEulerAngles -= new Vector3(90, 0, 0);
-            yield break;
+            effect.transform.localPosition = Vector3.zero;
+            effect.transform.localEulerAngles = new Vector3(-90, 0, 0);
         }
     }
 
