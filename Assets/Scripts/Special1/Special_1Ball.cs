@@ -73,6 +73,8 @@ public class Special_1Ball : MonoBehaviour
 		{
 			cs_SetEffekseerObject.NewEffect(9);
 			bSP_ball_speedup = false;
+
+			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_StopBall);		// 回転音
 		}
 
 		return false;
@@ -86,6 +88,7 @@ public class Special_1Ball : MonoBehaviour
 		{
 			cs_SetEffekseerObject.NewEffect(8);		// 玉移動
 			cs_SetEffekseerObject.NewEffect(10);	// 玉発射
+			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_Charge);	// 突進音
 			bSP_ball_move = false;
 		}
 

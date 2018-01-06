@@ -121,6 +121,7 @@ public class Special_1Camera : MonoBehaviour
 			cs_SetEffekseerObject.NewEffect(3);
 			cs_SetEffekseerObject.NewEffect(4);
 			bSP_big_appear = false;
+			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_BigJug1);	// デカピン出現SE
 		}
 
 		if (fWait < CameraMoveList[1].fWait)
@@ -261,6 +262,8 @@ public class Special_1Camera : MonoBehaviour
 			{
 				cs_SetEffekseerObject.NewEffect(7);
 				bSP_player_land = false;
+
+				SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_RideOn2);	// キラキラ効果音
 			}
 		}
 	}

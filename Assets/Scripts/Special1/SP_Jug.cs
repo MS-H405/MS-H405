@@ -54,6 +54,9 @@ public class SP_Jug : MonoBehaviour
 	bool bSP_pin_hit;		// 展開ピンヒットエフェクト
 	bool bSP_big_hit;		// デカピンヒットエフェクト
 
+	// 音関係
+	bool bSE_SmallAttack = true;
+
 	#endregion
 
 	// Use this for initialization
@@ -134,6 +137,7 @@ public class SP_Jug : MonoBehaviour
 
 		// ピン展開エフェクト
 		cs_SetEffekseerObject.NewEffect(11);
+		SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_PinThrow);
 
 		return true;
 	}
@@ -166,6 +170,12 @@ public class SP_Jug : MonoBehaviour
 		fWait += Time.deltaTime;
 		if(fWait < WAIT_GOENEMY)
 			return false;
+
+		if(bSE_SmallAttack)
+		{
+			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_SmallAttack);
+			bSE_SmallAttack = false;
+		}
 
 		fPinTime += Time.deltaTime / GOENEMY_TIME;
 
@@ -202,6 +212,7 @@ public class SP_Jug : MonoBehaviour
 		{
 			cs_SPJugBig[i].JugBig_Appear();
 		}
+		SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_BigJug2);	// デカピン出現SE
 	}
 
 	// デカピン投げる
@@ -220,6 +231,7 @@ public class SP_Jug : MonoBehaviour
 
 		// デカピン投擲エフェクト
 		cs_SetEffekseerObject.NewEffect(0);
+		SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_Slow);
 	}
 
 	// デカピン移動
@@ -252,6 +264,8 @@ public class SP_Jug : MonoBehaviour
 
 				// 敵スタン
 				EnemyObj.GetComponent<SP_Enemy>().Stan();
+
+				SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_Blast);
 			
 				bSP_big_hit = false;
 			}
