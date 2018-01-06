@@ -51,6 +51,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\BagpipeDeath\BD_HermitCrab_PA.cs" />
+     <Compile Include="Assets\Scripts\BagpipeDeath\BD_HermitCrab_PB.cs" />
+     <Compile Include="Assets\Scripts\BagpipeDeath\BD_Player_PA.cs" />
+     <Compile Include="Assets\Scripts\BagpipeDeath\BD_Player_PB.cs" />
      <Compile Include="Assets\Scripts\BagpipeStart\BS_Fire.cs" />
      <Compile Include="Assets\Scripts\BagpipeStart\BS_HermitCrab_PA.cs" />
      <Compile Include="Assets\Scripts\BagpipeStart\BS_HermitCrab_PB.cs" />
