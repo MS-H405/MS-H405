@@ -21,7 +21,6 @@ public class TotemJump : MonoBehaviour
 
     // 地面との接地判定
     private bool _isGround = true;
-    public bool IsGround { get { return _isGround; } } 
 
     // トーテム押し出し量と時間
     private GameObject _totemObj = null;
@@ -31,9 +30,8 @@ public class TotemJump : MonoBehaviour
     [SerializeField] float _addForwardPower = 20.0f;
     [SerializeField] float _addUpPower = 200.0f;
 
-    private Animator _animator = null;
-    private Rigidbody _rigidBody = null;
     private PlayerMove _playerMove = null;
+    private Rigidbody _rigidBody = null;
 
     #endregion
 
@@ -50,13 +48,9 @@ public class TotemJump : MonoBehaviour
             yield break;
         }
 
-        _playerMove.RunSmoke(false);
         _playerMove.enabled = false;
-        PlayerManager.Instance.Player.IsInvincible = true;  //  無敵状態にする
         _totemObj.SetActive(true);
         _totemObj.transform.position = new Vector3(transform.position.x, -1.5f, transform.position.z);
-        _animator.SetTrigger("JumpStart");
-        _rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
 
         float time = 0.0f;
         while(time < 1.0f)
@@ -64,26 +58,19 @@ public class TotemJump : MonoBehaviour
             time += Time.deltaTime / _pushTime;
             transform.position += new Vector3(0, _pushAmount * Time.deltaTime / _pushTime, 0);
             _totemObj.transform.position += new Vector3(0, _pushAmount * Time.deltaTime / _pushTime, 0);
-            _animator.SetBool("Jump", transform.position.y > _pushAmount * 0.5f);
             yield return null;
         }
 
-        // 上に飛ばす
         _rigidBody.AddForce(new Vector3(0, _addUpPower, 0) + (transform.forward * _addForwardPower));
 
         while (!_isGround)
         {
-            _animator.SetBool("Jump", transform.position.y > 0.5f);
-            PlayerManager.Instance.Player.IsInvincible = transform.position.y > 1.0f;
             _totemObj.transform.position -= new Vector3(0, _pushAmount * Time.deltaTime / _pushTime, 0) / 2.0f;
             yield return null;
         }
-        
-        _animator.speed = 1.0f;
+
         _playerMove.enabled = true;
         _totemObj.SetActive(false);
-        _rigidBody.constraints = RigidbodyConstraints.None;
-        _rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
 
     #endregion
@@ -97,9 +84,8 @@ public class TotemJump : MonoBehaviour
     {
         _totemObj = transform.Find("TotemJump").gameObject;
         _totemObj.transform.SetParent(null);
-        _animator = GetComponent<Animator>();
-        _rigidBody = GetComponent<Rigidbody>();
         _playerMove = GetComponent<PlayerMove>();
+        _rigidBody = GetComponent<Rigidbody>();
     }
 
     /// <summary>

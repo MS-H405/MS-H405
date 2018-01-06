@@ -26,8 +26,7 @@ public class Player : MonoBehaviour
 
     // ダメージ処理演出用変数
     private bool _isDamage = false;
-    public bool IsDamage { get { return _isDamage; } }
-    public bool IsInvincible { set { _isDamage = value; } }
+    public bool IsDamage { get { return _isDamage; } set { _isDamage = value; } }
     private Rigidbody _rigidBody = null;
     private Animator _animator = null;
     [SerializeField] float _backPower = 75.0f;
@@ -50,7 +49,6 @@ public class Player : MonoBehaviour
         _animator.SetTrigger("Damage");
         PlayerLifeManager.Instance.DamageEffect();
         StaticCoroutine.Instance.StartStaticCoroutine(DamageWait());
-        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_Damage);
     }
 
     /// <summary>
@@ -188,6 +186,17 @@ public class Player : MonoBehaviour
                         AtackIconManager.Instance.Rot(false);
                     }
                 }
+
+                // DEBUG : デバッグコマンド
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    Damage();
+                }
+                else if (Input.GetKeyDown(KeyCode.X))
+                {
+                    Damage();
+                    _hp = 0;
+                }
             });
     }
 
@@ -196,17 +205,7 @@ public class Player : MonoBehaviour
     /// </summary>  
     private void Update()
     {
-        // DEBUG : デバッグコマンド
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Damage();
-        }
-        else if (Input.GetKeyDown(KeyCode.X))
-        {
-            Damage();
-            _hp = 0;
-        }
-        if (Input.GetKeyDown(KeyCode.R))
+        if(Input.GetKeyDown(KeyCode.R))
         {
             _isDamage = !_isDamage;
         }
