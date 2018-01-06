@@ -379,21 +379,17 @@ public class HermitCrab : EnemyBase
             yield return null;
         }
 
-        Vector3 startPos = transform.position;
-        Vector3 targetPos = PlayerManager.Instance.GetVerticalPos(startPos);
-
         // 回転
         time = 0.0f;
-        while (time < 3.0f)
+        while(time < 3.0f)
         {
-            transform.position = Vector3.Lerp(startPos, targetPos, time / 3.0f);
-            transform.eulerAngles += new Vector3(0, 270 * Time.deltaTime, 0);
+            transform.eulerAngles += new Vector3(0, 180 * Time.deltaTime, 0);
             time += Time.deltaTime;
 
             foreach (ParticleSystem pipeFire in _pipeFireList)
             {
                 string pipeName = pipeFire.transform.parent.name;
-                if (!pipeName.Contains("B1") && !pipeName.Contains("B3") &&
+                if (!pipeName.Contains("B1") && !pipeName.Contains("B3") && 
                     !pipeName.Contains("B4") && !pipeName.Contains("B7"))
                 {
                     continue;
@@ -401,6 +397,7 @@ public class HermitCrab : EnemyBase
 
                 pipeFire.Emit(Mathf.RoundToInt(100 * Time.deltaTime + 0.5f));
             }
+
             yield return null;
         }
 

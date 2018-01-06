@@ -122,7 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 27385939}
   - component: {fileID: 27385940}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Block
   m_TagString: AutoRange
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 36088257}
   - component: {fileID: 36088258}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Block
   m_TagString: AutoRange
   m_Icon: {fileID: 0}
@@ -200,47 +200,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 2, z: 0.8}
   m_Center: {x: 0.027279023, y: 1, z: 0.0075980136}
---- !u!1 &102754837
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 102754838}
-  - component: {fileID: 102754839}
-  m_Layer: 0
-  m_Name: BgmStarter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &102754838
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 102754837}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &102754839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 102754837}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6171990205cd94d4fb1da0a15a1b21d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bgmValue: 2
 --- !u!1 &149367454
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,7 +275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 178277668}
   - component: {fileID: 178277669}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Block
   m_TagString: AutoRange
   m_Icon: {fileID: 0}
@@ -360,7 +319,7 @@ GameObject:
   m_Component:
   - component: {fileID: 188055896}
   - component: {fileID: 188055897}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Block
   m_TagString: AutoRange
   m_Icon: {fileID: 0}
@@ -404,7 +363,7 @@ GameObject:
   m_Component:
   - component: {fileID: 266949422}
   - component: {fileID: 266949423}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Block
   m_TagString: AutoRange
   m_Icon: {fileID: 0}
@@ -448,7 +407,7 @@ GameObject:
   m_Component:
   - component: {fileID: 285430295}
   - component: {fileID: 285430296}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Block
   m_TagString: AutoRange
   m_Icon: {fileID: 0}
@@ -598,7 +557,7 @@ GameObject:
   m_Component:
   - component: {fileID: 531534530}
   - component: {fileID: 531534531}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Block
   m_TagString: AutoRange
   m_Icon: {fileID: 0}
@@ -678,48 +637,6 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53eefa152b1200846adc1b089495aabe, type: 2}
-  m_IsPrefabParent: 0
---- !u!1001 &661598941
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4267489174283518, guid: 293a01e4f1721034d88f25b9522c7062, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4267489174283518, guid: 293a01e4f1721034d88f25b9522c7062, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4267489174283518, guid: 293a01e4f1721034d88f25b9522c7062, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4267489174283518, guid: 293a01e4f1721034d88f25b9522c7062, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4267489174283518, guid: 293a01e4f1721034d88f25b9522c7062, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4267489174283518, guid: 293a01e4f1721034d88f25b9522c7062, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4267489174283518, guid: 293a01e4f1721034d88f25b9522c7062, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4267489174283518, guid: 293a01e4f1721034d88f25b9522c7062, type: 2}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 293a01e4f1721034d88f25b9522c7062, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &701933288
 Prefab:
@@ -861,12 +778,12 @@ Prefab:
     - target: {fileID: 224934584399858464, guid: 3b63b98281861e14a882469b36b60074,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 960
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224934584399858464, guid: 3b63b98281861e14a882469b36b60074,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 540
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224934584399858464, guid: 3b63b98281861e14a882469b36b60074,
         type: 2}
@@ -1004,7 +921,7 @@ GameObject:
   m_Component:
   - component: {fileID: 951485370}
   - component: {fileID: 951485371}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Block
   m_TagString: AutoRange
   m_Icon: {fileID: 0}
@@ -1153,7 +1070,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1145682530}
   - component: {fileID: 1145682531}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Block
   m_TagString: AutoRange
   m_Icon: {fileID: 0}
@@ -1239,7 +1156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1382304681}
   - component: {fileID: 1382304682}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Block
   m_TagString: AutoRange
   m_Icon: {fileID: 0}
@@ -1283,7 +1200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1421216545}
   - component: {fileID: 1421216546}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Block
   m_TagString: AutoRange
   m_Icon: {fileID: 0}
@@ -1327,7 +1244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1928299839}
   - component: {fileID: 1928299840}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Block
   m_TagString: AutoRange
   m_Icon: {fileID: 0}
@@ -1400,16 +1317,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 65663006491756798, guid: 2319cba2d4e57b94c93a62695797afbb,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 65663006491756798, guid: 2319cba2d4e57b94c93a62695797afbb,
-        type: 2}
-      propertyPath: m_Center.y
-      value: 3.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
   m_IsPrefabParent: 0
@@ -1423,7 +1330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2049836558}
   - component: {fileID: 2049836559}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Block
   m_TagString: AutoRange
   m_Icon: {fileID: 0}

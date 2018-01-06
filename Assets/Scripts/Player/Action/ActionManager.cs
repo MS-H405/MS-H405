@@ -52,9 +52,6 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     public void OnSelect()
     {
-        if (!_totemJump.IsGround)
-            return;
-
         // 行動中なら
         if (_isAction)
         {

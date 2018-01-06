@@ -129,9 +129,6 @@ public class Totem : EnemyBase
         float time = 0.0f;
         while (amount < _headAmount)
         {
-            yield return null;
-            EnemyManager.Instance.Active = false;
-
             amount++;
             transform.position = RandomPos();
             transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
@@ -343,61 +340,17 @@ public class Totem : EnemyBase
         float time = 0.0f;
         while (count < 3)
         {
-            count++;
-            time = 0.0f;
-            AppearEffect();
+            TotemRot(true, 3, Random.Range(0,360));
 
-            Vector3 startRot = _totemHeadList[0].transform.eulerAngles;
-            transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
-            Vector3 targetRot = transform.eulerAngles;
-            transform.eulerAngles = startRot;
-
-            // 無駄な回転量が出ないようにする
-            if (targetRot.y - startRot.y > 180.0f)
-            {
-                targetRot.y -= 360.0f;
-            }
-            else if (targetRot.y - startRot.y < -180.0f)
-            {
-                targetRot.y += 360.0f;
-            }
-
-            float speed = Mathf.Abs(startRot.y - targetRot.y) / 70.0f;
-            while (time < 1.0f)
-            {
-                time += Time.deltaTime / speed;
-                if (time > 1.0f) time = 1.0f;
-
-                foreach (ManualRotation head in _totemHeadList)
-                {
-                    head.transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
-                }
-                yield return null;
-            }
-
-            // 待つ
-            time = 0.0f;
-            while(time < 2.0f)
+            while(time < _oneBlockUpSpeed * 3)
             {
                 time += Time.deltaTime;
                 yield return null;
             }
-        }
 
-        // 潜る処理
-        time = 0.0f;
-        AppearEffect();
-        TotemRot(false, _headAmount);
-        while (time < _headAmount)
-        {
-            transform.position -= new Vector3(0, _oneBlockSize * (Time.deltaTime / _oneBlockUpSpeed), 0);
-            time += Time.deltaTime / _oneBlockUpSpeed;
-            yield return null;
-        }
+            // Effect作成
 
-        foreach(ManualRotation head in _totemHeadList)
-        {
-            head.transform.localEulerAngles = Vector3.zero;
+            // 待つ
         }
 
         // 次の行動へ
