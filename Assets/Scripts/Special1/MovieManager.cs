@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class MovieManager : MonoBehaviour
 {
-	const float CON_RIMIT_DELTATIME = 1000;		// Time.unScaleddeltatimeの制限
+	const float CON_RIMIT_DELTATIME = 1.0f / 10.0f;		// Time.unScaleddeltatimeの制限
 
 	public enum MOVIE_SCENE
 	{
