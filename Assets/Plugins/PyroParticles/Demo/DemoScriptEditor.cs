@@ -1,11 +1,11 @@
 ﻿using System;
 
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 
 namespace DigitalRuby.PyroParticles
 {
-    [CustomEditor(typeof(DemoScript))]
+    /*[CustomEditor(typeof(DemoScript))]
     public class LightningBoltEditor : Editor
     {
         private Texture2D logo;
@@ -46,5 +46,5 @@ namespace DigitalRuby.PyroParticles
 
             DrawDefaultInspector();
         }
-    }
+    }*/
 }
