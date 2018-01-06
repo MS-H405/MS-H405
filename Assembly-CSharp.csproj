@@ -51,9 +51,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\BagpipeStart\BS_Fire.cs" />
+     <Compile Include="Assets\Scripts\BagpipeStart\BS_HermitCrab_PA.cs" />
+     <Compile Include="Assets\Scripts\BagpipeStart\BS_HermitCrab_PB.cs" />
+     <Compile Include="Assets\Scripts\BagpipeStart\BS_Player_PA.cs" />
+     <Compile Include="Assets\Scripts\BagpipeStart\BS_Player_PB.cs" />
      <Compile Include="Assets\Scripts\Effect\GameEffectManager.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyBase.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
+     <Compile Include="Assets\Scripts\Enemy\HermitCrab\FireAtack.cs" />
      <Compile Include="Assets\Scripts\Enemy\HermitCrab\HermitCrab.cs" />
      <Compile Include="Assets\Scripts\Enemy\Totem\ChildTotem.cs" />
      <Compile Include="Assets\Scripts\Enemy\Totem\Totem.cs" />
@@ -93,8 +99,10 @@
      <Compile Include="Assets\Scripts\Special2\Special_2PlayerMotion.cs" />
      <Compile Include="Assets\Scripts\Special2\Special_2Totem.cs" />
      <Compile Include="Assets\Scripts\Stage\StageData.cs" />
+     <Compile Include="Assets\Scripts\StageMove\Airplane.cs" />
      <Compile Include="Assets\Scripts\Test\Bora\TestEffecseer.cs" />
      <Compile Include="Assets\Scripts\Test\Tatsuo\TatsuoTest_Enemy.cs" />
+     <Compile Include="Assets\Scripts\Test\Tatsuo\TatsuoTest_Sound.cs" />
      <Compile Include="Assets\Scripts\Title\PushStart.cs" />
      <Compile Include="Assets\Scripts\TotemDeath\TD_Effect_PA.cs" />
      <Compile Include="Assets\Scripts\TotemDeath\TD_Effect_PB.cs" />
@@ -111,18 +119,22 @@
      <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild.cs" />
      <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PA.cs" />
      <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PB.cs" />
+     <Compile Include="Assets\Scripts\Utility\AutoChaseParticle.cs" />
      <Compile Include="Assets\Scripts\Utility\AutoRotation.cs" />
      <Compile Include="Assets\Scripts\Utility\BezierCurve.cs" />
      <Compile Include="Assets\Scripts\Utility\Effect\EffekseerTest.cs" />
      <Compile Include="Assets\Scripts\Utility\Effect\ParticleLifeTimer.cs" />
      <Compile Include="Assets\Scripts\Utility\Effect\ParticleScaler.cs" />
      <Compile Include="Assets\Scripts\Utility\FixHeight.cs" />
+     <Compile Include="Assets\Scripts\Utility\FixHeightParticle.cs" />
+     <Compile Include="Assets\Scripts\Utility\FixRot.cs" />
      <Compile Include="Assets\Scripts\Utility\GameSetting.cs" />
      <Compile Include="Assets\Scripts\Utility\GetAllChildren.cs" />
      <Compile Include="Assets\Scripts\Utility\ManualRotation.cs" />
      <Compile Include="Assets\Scripts\Utility\ShakeCamera.cs" />
      <Compile Include="Assets\Scripts\Utility\SingletonMonoBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utility\SortingLayer.cs" />
+     <Compile Include="Assets\Scripts\Utility\SoundManager.cs" />
      <Compile Include="Assets\Scripts\Utility\StaticCoroutine.cs" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
@@ -145,6 +157,7 @@
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\ContrastComposite.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAAPreset3.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\FisheyeShader.shader" />
+     <None Include="Assets\Plugins\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Apply.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\frag_ao.cginc" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\DepthOfField34.shader" />
@@ -156,6 +169,7 @@
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderYUV.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\CreaseApply.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\ChromaticAberrationShader.shader" />
+     <None Include="Assets\Plugins\PyroParticles\Readme.txt" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\GlobalFog.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Luminance.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionSelective.shader" />

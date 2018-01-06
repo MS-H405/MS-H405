@@ -24,6 +24,10 @@ public class MovieManager : MonoBehaviour
 		SPECIAL_1,		// 必殺技1
 		SPECIAL_2,		// 必殺技2
 		SPECIAL_3,		// 必殺技3
+
+		INIT_TO_TOTEM,	// 最初からトーテム
+		TOTEM_TO_YADOKARI,	// トーテムからヤドカリ
+		YADOKARI_TO_MECHA,	// ヤドカリからメカ大道芸人
 	};
 
 	private static MovieManager instance;
@@ -92,7 +96,7 @@ public class MovieManager : MonoBehaviour
 
 		isFading = true;
 
-		if(scene == MOVIE_SCENE.TITLE ||
+		if(scene == MOVIE_SCENE.TITLE ||				// 必殺技シーン以外のシーン
 		   scene == MOVIE_SCENE.STAGE_1 ||
 		   scene == MOVIE_SCENE.STAGE_2 ||
 		   scene == MOVIE_SCENE.STAGE_3 ||
@@ -102,12 +106,15 @@ public class MovieManager : MonoBehaviour
 		   scene == MOVIE_SCENE.BAGPIPE_DEATH ||
 		   scene == MOVIE_SCENE.BAGPIPE_START ||
 		   scene == MOVIE_SCENE.MECHA_DEATH ||
-		   scene == MOVIE_SCENE.MECHA_START)
+		   scene == MOVIE_SCENE.MECHA_START ||
+		   scene == MOVIE_SCENE.INIT_TO_TOTEM ||
+		   scene == MOVIE_SCENE.TOTEM_TO_YADOKARI ||
+		   scene == MOVIE_SCENE.YADOKARI_TO_MECHA)
 		{
 			StartCoroutine("Col_SceneMove", scene);
 		}
 		else if(
-			scene == MOVIE_SCENE.SPECIAL_1 ||
+			scene == MOVIE_SCENE.SPECIAL_1 ||			// 必殺技シーン
 			scene == MOVIE_SCENE.SPECIAL_2 ||
 			scene == MOVIE_SCENE.SPECIAL_3)
 		{
@@ -165,7 +172,7 @@ public class MovieManager : MonoBehaviour
 				break;
 
 			case MOVIE_SCENE.STAGE_2:
-				SceneManager.LoadScene("a");
+				SceneManager.LoadScene("HermitCrabMain");
 				break;
 
 			case MOVIE_SCENE.STAGE_3:
@@ -185,7 +192,7 @@ public class MovieManager : MonoBehaviour
 				break;
 
 			case MOVIE_SCENE.BAGPIPE_START:
-				SceneManager.LoadScene("a");
+				SceneManager.LoadScene("BagpipeStart");
 				break;
 
 			case MOVIE_SCENE.BAGPIPE_DEATH:
@@ -198,6 +205,18 @@ public class MovieManager : MonoBehaviour
 
 			case MOVIE_SCENE.MECHA_DEATH:
 				SceneManager.LoadScene("a");
+				break;
+
+			case MOVIE_SCENE.INIT_TO_TOTEM:
+				SceneManager.LoadScene("InitToTotem");
+				break;
+
+			case MOVIE_SCENE.TOTEM_TO_YADOKARI:
+				SceneManager.LoadScene("TotemToYadokari");
+				break;
+
+			case MOVIE_SCENE.YADOKARI_TO_MECHA:
+				SceneManager.LoadScene("YadokariToMecha");
 				break;
 		}
 		#endregion

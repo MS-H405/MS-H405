@@ -16,7 +16,6 @@ public class GameStart : MonoBehaviour
     #region define
 
     private const float Rimit = 1.0f / 30.0f;
-    public static float GameStartDeltaTime = 0.0f;
 
     #endregion
 
@@ -53,13 +52,25 @@ public class GameStart : MonoBehaviour
                     return;
 
                 time += Time.unscaledDeltaTime;
-                GameStartDeltaTime = Time.unscaledDeltaTime;
 
                 if (time < 2.0f)
                     return;
 
                 Time.timeScale = 1.0f;
                 Destroy(gameObject);
+            });
+
+        this.ObserveEveryValueChanged(_ => Time.unscaledDeltaTime < Rimit)
+            .Subscribe(_ =>
+            {
+                bool active = Time.unscaledDeltaTime < Rimit;
+                foreach(GameObject obj in _startObjList)
+                {
+                    if (!obj)
+                        continue;
+
+                    obj.SetActive(active);
+                }
             });
     }
 
