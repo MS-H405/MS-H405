@@ -54,7 +54,7 @@ public class RideBallMove : PlayerMove
         if (!_isGround)
         {
             _animator.SetBool("BallWalk", false);
-            RunSmoke(_animator.GetBool("BallWalk"));
+            _runSmoke.SetActive(_animator.GetBool("BallWalk"));
             return;
         }
 
@@ -67,7 +67,7 @@ public class RideBallMove : PlayerMove
 
         // Animation更新
         _animator.SetBool("BallWalk", _moveAmount != Vector3.zero);
-        RunSmoke(_animator.GetBool("BallWalk"));
+        _runSmoke.SetActive(_animator.GetBool("BallWalk"));
 
         // 移動と向きを更新
         transform.position += _moveAmount * Time.deltaTime;
@@ -84,7 +84,7 @@ public class RideBallMove : PlayerMove
         if (_moveAmount == Vector3.zero)
         {
             _animator.speed = 1.0f;
-            RideEffect(false);
+            foreach (ParticleSystem effect in _rideEffects) effect.loop = false;
             return;
         }
 
@@ -92,7 +92,21 @@ public class RideBallMove : PlayerMove
 
         // プレイヤーの歩行速度変更
         _animator.speed = speed / 10.0f;
-        RideEffect(_animator.speed > 0.2f);
+
+        if(_animator.speed > 0.0f)
+        { 
+            foreach(ParticleSystem effect in _rideEffects)
+            {
+                bool old = effect.loop;
+                effect.loop = true;
+                effect.emissionRate = 4.0f * (_animator.speed * _animator.speed);
+
+                if (effect.loop == old)
+                    continue;
+
+                effect.Play();
+            }
+        }
 
         // ボールの回転
         _ballObj.transform.eulerAngles = _oldBallAngle;
@@ -235,36 +249,6 @@ public class RideBallMove : PlayerMove
         _nowAcceLeft = 0.0f;
     }
 
-    /// <summary>
-    /// 玉乗り加速エフェクト処理
-    /// </summary>
-    private void RideEffect(bool isOn)
-    {
-        if(isOn)
-        {
-            int count = 0;
-            foreach (ParticleSystem effect in _rideEffects)
-            {
-                count++;
-                bool old = effect.loop;
-                effect.loop = true;
-                effect.emissionRate = (3.0f * count) * (_animator.speed * _animator.speed);
-
-                if (effect.loop == old)
-                    continue;
-
-                effect.Play();
-            }
-        }
-        else
-        {
-            foreach (ParticleSystem effect in _rideEffects)
-            {
-                effect.loop = false;
-            }
-        }
-    }
-
     /// <summary>  
     /// 開始処理  
     /// </summary>
@@ -300,7 +284,7 @@ public class RideBallMove : PlayerMove
         _animator.SetBool("Walk", false);
         _animator.SetTrigger("Roll");
         _rigidbody.useGravity = false;
-        PlayerManager.Instance.Player.IsInvincible = true;
+        PlayerManager.Instance.Player.IsDamage = true;
 
         // 上に飛ばし、玉より超えたら玉出現
         while (transform.position.y < 2.25f)
@@ -327,7 +311,7 @@ public class RideBallMove : PlayerMove
         }
         _isRideAnim = false;
         _isGround = true;
-        PlayerManager.Instance.Player.IsInvincible = false;
+        PlayerManager.Instance.Player.IsDamage = false;
     }
 
     /// <summary>  
@@ -341,8 +325,7 @@ public class RideBallMove : PlayerMove
         // 行動停止
         _isGround = false;
         _isRideAnim = true;
-        PlayerManager.Instance.Player.IsInvincible = true;
-        RideEffect(false);
+        PlayerManager.Instance.Player.IsDamage = true;
 
         // 
         if (!PlayerManager.Instance.Player.IsDamage)
@@ -365,8 +348,7 @@ public class RideBallMove : PlayerMove
         _isRideAnim = false;
         _animator.speed = 1.0f;
         _animator.SetBool("BallWalk", false);
-        PlayerManager.Instance.Player.IsInvincible = false;
-        RideEffect(false);
+        PlayerManager.Instance.Player.IsDamage = false;
 
         // 玉の削除処理
         Destroy(_ballObj.gameObject);
@@ -433,7 +415,7 @@ public class RideBallMove : PlayerMove
             _rigidbody.AddForce(reflectPower);
             _animator.SetTrigger("Roll");
             _animator.speed = 1.0f;
-            RideEffect(false);
+            foreach (ParticleSystem effect in _rideEffects) effect.loop = false;
         }
     }
 

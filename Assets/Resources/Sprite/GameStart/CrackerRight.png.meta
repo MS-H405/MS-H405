@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 25d93d6724c22d8419f7137fad560532
-timeCreated: 1515167083
+timeCreated: 1513948920
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -107,10 +107,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1091
+        width: 1125.3334
         height: 500
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -119,12 +119,12 @@ TextureImporter:
       name: CrackerRight_1
       rect:
         serializedVersion: 2
-        x: 1129
+        x: 1125
         y: 0
-        width: 1091
+        width: 1125.3334
         height: 500
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -133,12 +133,12 @@ TextureImporter:
       name: CrackerRight_2
       rect:
         serializedVersion: 2
-        x: 2258
+        x: 2250
         y: 0
-        width: 1091
+        width: 1125.3334
         height: 500
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

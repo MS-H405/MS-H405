@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 222536392077951818}
   - component: {fileID: 114725418753369048}
   - component: {fileID: 95907380422976702}
-  - component: {fileID: 114689394728082950}
   m_Layer: 5
   m_Name: CrackerLeft (1)
   m_TagString: Untagged
@@ -41,7 +40,6 @@ GameObject:
   - component: {fileID: 222521842766071086}
   - component: {fileID: 114448316130339128}
   - component: {fileID: 95637110397723264}
-  - component: {fileID: 114172254383566120}
   m_Layer: 5
   m_Name: CrackerRight
   m_TagString: Untagged
@@ -60,7 +58,6 @@ GameObject:
   - component: {fileID: 222790798827628626}
   - component: {fileID: 114820637420005462}
   - component: {fileID: 95496889578757610}
-  - component: {fileID: 114005225451785156}
   m_Layer: 5
   m_Name: CrackerLeft
   m_TagString: Untagged
@@ -86,7 +83,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1800743972163286
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,7 +95,6 @@ GameObject:
   - component: {fileID: 222845589063950282}
   - component: {fileID: 114008101880216398}
   - component: {fileID: 95489167779702448}
-  - component: {fileID: 114156316360686496}
   m_Layer: 5
   m_Name: ShowTime
   m_TagString: Untagged
@@ -117,7 +113,6 @@ GameObject:
   - component: {fileID: 222140585249975816}
   - component: {fileID: 114778662793591578}
   - component: {fileID: 95604856929956400}
-  - component: {fileID: 114287655295042458}
   m_Layer: 5
   m_Name: CrackerRight (1)
   m_TagString: Untagged
@@ -210,19 +205,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114005225451785156
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1481272641144788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9005a84f9fd590f4ab7c520f21b18eaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isParent: 0
-  _speed_sec: 0.5
 --- !u!114 &114008101880216398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -250,45 +232,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114156316360686496
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1800743972163286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9005a84f9fd590f4ab7c520f21b18eaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isParent: 1
-  _speed_sec: 0.5
---- !u!114 &114172254383566120
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1112902348431038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9005a84f9fd590f4ab7c520f21b18eaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isParent: 0
-  _speed_sec: 0.5
---- !u!114 &114287655295042458
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1879668635880914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9005a84f9fd590f4ab7c520f21b18eaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isParent: 0
-  _speed_sec: 0.5
 --- !u!114 &114448316130339128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -332,19 +275,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &114689394728082950
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1062573368387240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9005a84f9fd590f4ab7c520f21b18eaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isParent: 0
-  _speed_sec: 0.5
 --- !u!114 &114725130158682142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -512,7 +442,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &224214063748503854
 RectTransform:
