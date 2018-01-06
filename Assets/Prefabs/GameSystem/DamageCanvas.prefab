@@ -122,8 +122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2aa50a70acbb94294af3a2404f5bc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fMaxAlpha: 0.25
-  fTime: 0.1
+  fMaxAlpha: 0.45
+  fTime: 0.2
 --- !u!222 &222365260703585004
 CanvasRenderer:
   m_ObjectHideFlags: 1
