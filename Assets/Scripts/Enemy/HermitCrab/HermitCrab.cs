@@ -71,7 +71,7 @@ public class HermitCrab : EnemyBase
                 // スタン状態なら一時停止
                 if (IsStan)
                 {
-                    SoundManager.Instance.PlaySE(SoundManager.eSeValue.Enemy_Stan);
+                    //SoundManager.Instance.PlaySE(SoundManager.eSeValue.Enemy_Stan);
                     StaticCoroutine.Instance.StopCoroutine(enumerator);
 
                     while (IsStan)
