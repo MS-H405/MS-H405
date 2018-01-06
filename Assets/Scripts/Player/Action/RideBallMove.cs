@@ -41,6 +41,8 @@ public class RideBallMove : PlayerMove
     private Vector3 _oldBallAngle = Vector3.zero;
     private ParticleSystem[] _rideEffects = new ParticleSystem[2];
 
+    [SerializeField] GameObject _ballAttackEffect = null; // 玉乗り衝突エフェクト
+
     #endregion
 
     #region method
@@ -68,6 +70,15 @@ public class RideBallMove : PlayerMove
         // Animation更新
         _animator.SetBool("BallWalk", _moveAmount != Vector3.zero);
         RunSmoke(_animator.GetBool("BallWalk"));
+
+        if (_animator.GetBool("BallWalk"))
+        {
+            SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Player_BallWalk);
+        }
+        else
+        {
+            SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Player_BallWalk);
+        }
 
         // 移動と向きを更新
         transform.position += _moveAmount * Time.deltaTime;
@@ -315,6 +326,7 @@ public class RideBallMove : PlayerMove
         _ballObj.transform.localPosition = new Vector3(0.0f, -0.9f, 0.0f);
         _oldBallAngle = _ballObj.transform.eulerAngles;
         GameEffectManager.Instance.Play("Bohun", _ballObj.transform.position);
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_Bofun);
 
         // 地面についてもアニメーションが終了していなければ待つ
         AnimatorStateInfo animStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
@@ -355,7 +367,8 @@ public class RideBallMove : PlayerMove
         // 玉をエフェクトとともに消す
         _ballObj.SetActive(false);
         GameEffectManager.Instance.Play("Bohun", _ballObj.transform.position);
-        
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_Bofun);
+
         while (!_isGround)
         {
             yield return null;
@@ -367,6 +380,7 @@ public class RideBallMove : PlayerMove
         _animator.SetBool("BallWalk", false);
         PlayerManager.Instance.Player.IsInvincible = false;
         RideEffect(false);
+        SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Player_BallWalk);
 
         // 玉の削除処理
         Destroy(_ballObj.gameObject);
@@ -434,6 +448,8 @@ public class RideBallMove : PlayerMove
             _animator.SetTrigger("Roll");
             _animator.speed = 1.0f;
             RideEffect(false);
+            SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_BallAttack);
+            Instantiate(_ballAttackEffect, col.contacts[0].point + new Vector3(0,0.5f,0), Quaternion.identity);
         }
     }
 

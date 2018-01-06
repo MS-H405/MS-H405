@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
         get
         {
             AnimatorStateInfo state = _animator.GetCurrentAnimatorStateInfo(0);
-            if(!state.IsName("Base.Idle") && !state.IsName("Base.Walk"))
+            if(!state.IsName("Base.Idle") && !state.IsName("Base.Walk") && !state.IsName("Base.RideBallMove"))
             {
                 return false;
             }
