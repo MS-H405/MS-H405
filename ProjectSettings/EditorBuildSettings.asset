@@ -38,3 +38,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Special_2.unity
     guid: 932d96a5697f61744ad378360416fb96
+  - enabled: 1
+    path: Assets/Scenes/BagpipeDeath.unity
+    guid: f19da88d788ff2c428b5cab39165fee6
