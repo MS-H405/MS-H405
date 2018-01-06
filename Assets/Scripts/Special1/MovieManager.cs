@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 public class MovieManager : MonoBehaviour
 {
+	const float CON_RIMIT_DELTATIME = 1000;		// Time.unScaleddeltatimeの制限
+
 	public enum MOVIE_SCENE
 	{
 		TITLE,			// タイトル
@@ -246,7 +248,9 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while (fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.deltaTime;
+			float temp = Time.unscaledDeltaTime;
+			if(temp < CON_RIMIT_DELTATIME)
+				fTime += temp;
 			if (bInit)
 			{
 				fFirstTime = fTime;
@@ -316,7 +320,9 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while(fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.deltaTime;
+			float temp = Time.unscaledDeltaTime;
+			if (temp < CON_RIMIT_DELTATIME)
+				fTime += temp;
 			if(bInit)
 			{
 				fFirstTime = fTime;
@@ -363,7 +369,9 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while (fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.deltaTime;
+			float temp = Time.unscaledDeltaTime;
+			if (temp < CON_RIMIT_DELTATIME)
+				fTime += temp;
 			if (bInit)
 			{
 				fFirstTime = fTime;
@@ -422,7 +430,9 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while (fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.deltaTime;
+			float temp = Time.unscaledDeltaTime;
+			if (temp < CON_RIMIT_DELTATIME)
+				fTime += temp;
 			if (bInit)
 			{
 				fFirstTime = fTime;
