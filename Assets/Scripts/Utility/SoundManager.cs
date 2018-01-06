@@ -34,6 +34,9 @@ public class SoundManager : MonoBehaviour {
         Bagpipe,
         Player_Run,
         GameOver,
+        Player_BallWalk,
+        Bagpipe_Walk,
+        Bagpipe_Burst,
         Max,
 	};
 	
@@ -52,6 +55,21 @@ public class SoundManager : MonoBehaviour {
         Totem_Impact,
         Totem_Fly,
         Enemy_Stan,
+        Enemy_ParticleBirth,    // 未実装
+        Totem_FirstCry,         // 未実装
+        Totem_LastCry,          // 未実装
+        Totem_Swing,            // 未実装
+        UI_RockOn,
+        UI_TimeLimit,           // 未実装
+        Player_BallAttack,
+        Player_BallWalk,
+        Player_Wind,            // 未実装
+        Player_Bofun,
+        Bagpipe_Burst,
+        Bagpipe_FireExplosion,  // 未実装
+        Bagpipe_FireShot,
+        Bagpipe_Roll,
+        Bagpipe_Scissor,
         Max,
 	};
 

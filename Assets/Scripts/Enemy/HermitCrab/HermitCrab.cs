@@ -71,6 +71,7 @@ public class HermitCrab : EnemyBase
                 // スタン状態なら一時停止
                 if (IsStan)
                 {
+                    SoundManager.Instance.PlaySE(SoundManager.eSeValue.Enemy_Stan);
                     StaticCoroutine.Instance.StopCoroutine(enumerator);
 
                     while (IsStan)
@@ -316,6 +317,7 @@ public class HermitCrab : EnemyBase
                 break;
         }
 
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_Scissor);
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
         yield break;
     }
@@ -336,6 +338,7 @@ public class HermitCrab : EnemyBase
         }
 
         _rightScissors.enabled = true;
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_Roll);
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
     }
 
@@ -377,6 +380,7 @@ public class HermitCrab : EnemyBase
             effect.transform.localPosition = Vector3.zero;
             effect.transform.localEulerAngles = new Vector3(-90, 0, 0);
         }
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_FireShot);
     }
 
     /// <summary>
@@ -397,6 +401,7 @@ public class HermitCrab : EnemyBase
             yield return null;
         }
 
+        SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Bagpipe_Burst);
         Vector3 startPos = transform.position;
         Vector3 targetPos = PlayerManager.Instance.GetVerticalPos(startPos);
 
@@ -422,6 +427,7 @@ public class HermitCrab : EnemyBase
             yield return null;
         }
 
+        SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Bagpipe_Burst);
         _animator.SetBool("RollFire", false);
     }
 
@@ -503,6 +509,15 @@ public class HermitCrab : EnemyBase
         else
         {
             _nearTime = 0.0f;
+        }
+
+        if (_animator.GetBool("Walk"))
+        {
+            SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Bagpipe_Walk);
+        }
+        else
+        {
+            SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Bagpipe_Walk);
         }
     }
 

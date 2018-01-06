@@ -292,9 +292,10 @@ public class GameCamera : MonoBehaviour
 			bEnd = true;	// ここでSubCameraObj.SetActive(false)を実行したら関数が反応しなくなるので、この関数の最後にfalseにする。
 		}
 
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.UI_RockOn);
 
-		#region 注視点の計算
-		vLookAtPos.x = Mathf.Lerp(vLookAtPos.x, cs_GameCamera_Sub.GetLookAtPos().x, fTopParameter);		// 徐々に新しい座標に移動
+        #region 注視点の計算
+        vLookAtPos.x = Mathf.Lerp(vLookAtPos.x, cs_GameCamera_Sub.GetLookAtPos().x, fTopParameter);		// 徐々に新しい座標に移動
 		vLookAtPos.y = Mathf.Lerp(vLookAtPos.y, cs_GameCamera_Sub.GetLookAtPos().y, fTopParameter);
 		vLookAtPos.z = Mathf.Lerp(vLookAtPos.z, cs_GameCamera_Sub.GetLookAtPos().z, fTopParameter);
 

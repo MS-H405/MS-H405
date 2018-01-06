@@ -73,6 +73,7 @@ public class Totem : EnemyBase
                 // スタン状態なら一時停止
                 if (IsStan)
                 {
+                    SoundManager.Instance.PlaySE(SoundManager.eSeValue.Enemy_Stan);
                     StaticCoroutine.Instance.StopCoroutine(enumerator);
 
                     while (IsStan)
@@ -129,6 +130,7 @@ public class Totem : EnemyBase
         float time = 0.0f;
         while (amount < _headAmount)
         {
+            yield return null;
             yield return null;
             EnemyManager.Instance.Active = false;
 
@@ -288,11 +290,11 @@ public class Totem : EnemyBase
         _shakeCamera.Shake();
         for (int i = 0; i < _childTotemAmount; i++)
         {
-            StaticCoroutine.Instance.StartStaticCoroutine(_childTotemList[i].SpecialAtack(_oneBlockUpSpeed, _fallHeight));
+            StaticCoroutine.Instance.StartStaticCoroutine(_childTotemList[i].SpecialAtack(_oneBlockUpSpeed, _fallHeight, i == 0));
         }
 
         // 待機
-        while(true)
+        while (true)
         {
             int cnt = 0;
             for(int i = 0; i < _childTotemAmount; i++)
@@ -339,7 +341,10 @@ public class Totem : EnemyBase
     /// </summary>
     private IEnumerator WindAttack()
     {
-        int count = 0;
+        _action += 1;
+        yield break;
+
+        /*int count = 0;
         float time = 0.0f;
         while (count < 3)
         {
@@ -401,7 +406,7 @@ public class Totem : EnemyBase
         }
 
         // 次の行動へ
-        _action += 1;
+        _action += 1;*/
     }
 
     /// <summary>
@@ -411,6 +416,7 @@ public class Totem : EnemyBase
     {
         _shakeCamera.Shake();
         GameEffectManager.Instance.PlayOnHeightZero(_appearEffectName, transform.position);
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Totem_Attack);
     }
 
     /// <summary>

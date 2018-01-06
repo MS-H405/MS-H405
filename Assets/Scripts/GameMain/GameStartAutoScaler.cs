@@ -54,6 +54,11 @@ public class GameStartAutoScaler : MonoBehaviour
                     time += GameStart.GameStartDeltaTime / _speed_sec;
                     isAlpha = time > 1.0f;
                     transform.localScale += (_maxScale - _minScale) * (GameStart.GameStartDeltaTime / _speed_sec);
+
+                    if(isAlpha)
+                    {
+                        SoundManager.Instance.PlaySE(SoundManager.eSeValue.UI_ShowTime);
+                    }
                     return;
                 }
                 else if (time < 3.0f)
