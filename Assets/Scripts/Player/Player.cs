@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
         _animator.SetTrigger("Damage");
         PlayerLifeManager.Instance.DamageEffect();
         StaticCoroutine.Instance.StartStaticCoroutine(DamageWait());
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_Damage);
     }
 
     /// <summary>

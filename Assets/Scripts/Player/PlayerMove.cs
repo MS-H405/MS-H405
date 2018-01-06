@@ -52,6 +52,15 @@ public class PlayerMove : MonoBehaviour
         _runSmoke.SetActive(_animator.GetBool("Walk"));
         _runSmoke.GetComponent<ParticleSystem>().loop = false;
 
+        if (_animator.GetBool("Walk"))
+        {
+            SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Player_Run);
+        }
+        else
+        {
+            SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Player_Run);
+        }
+
         // 硬直時は処理しない
         if (!_isGround || IsAction)
             return;
