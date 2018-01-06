@@ -88,7 +88,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: b785e2c9c4a5f4743a9fa9acc632dfbb, type: 2}
+  - {fileID: 2100000, guid: 4f3354db8ad986b49978223faebadeda, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -114,7 +114,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1516927117335540}
-  m_Mesh: {fileID: 4300000, guid: 0305741828f16644887fe1c77a225d9c, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 5f3605134e94d7c4693dc6a467e3422c, type: 3}
 --- !u!54 &54911034258270422
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -144,9 +144,9 @@ MonoBehaviour:
   _dropPointEffect: {fileID: 1730324996189536, guid: 18b86962b29177f4a94094684c697a2d,
     type: 2}
   _pinMesh:
-  - {fileID: 4300000, guid: 0305741828f16644887fe1c77a225d9c, type: 3}
-  - {fileID: 4300000, guid: 0cca0a92a1842ff498c62551a110d34a, type: 3}
-  - {fileID: 4300000, guid: ce9d7f4fef0fb474988bce996f7de3fa, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &114361786084579254
 MonoBehaviour:
   m_ObjectHideFlags: 1
