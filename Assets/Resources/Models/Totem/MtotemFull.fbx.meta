@@ -1,21 +1,48 @@
 fileFormatVersion: 2
-guid: 0cca0a92a1842ff498c62551a110d34a
-timeCreated: 1515159930
+guid: 77c123521d24ab24d988edbd4f08dcf9
+timeCreated: 1515207573
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: totem1
+    100004: totem2
+    100006: totem3
+    100008: totem4
+    100010: totem5
     400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Pin_Blue
+    400002: totem1
+    400004: totem2
+    400006: totem3
+    400008: totem4
+    400010: totem5
+    2300000: totem1
+    2300002: totem2
+    2300004: totem3
+    2300006: totem4
+    2300008: totem5
+    3300000: totem1
+    3300002: totem2
+    3300004: totem3
+    3300006: totem4
+    3300008: totem5
+    4300000: totem5
+    4300002: totem4
+    4300004: totem3
+    4300006: totem2
+    4300008: totem1
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: item
-    second: {fileID: 2100000, guid: b785e2c9c4a5f4743a9fa9acc632dfbb, type: 2}
+      name: lambert1
+    second: {fileID: 2100000, guid: 4246527195c6b034cb470257b1c37d7e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert7
+    second: {fileID: 2100000, guid: 702a220ce9f38f44784bec141ca002a4, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -45,7 +72,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1.8
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importVisibility: 1
