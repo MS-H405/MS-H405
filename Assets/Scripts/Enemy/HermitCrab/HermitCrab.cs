@@ -97,13 +97,31 @@ public class HermitCrab : EnemyBase
             case eAction.Wait:
 
                 // --- DEBUG ---
+                if (Input.GetKey(KeyCode.H))
+                {
+                    return eAction.Assault;
+                }
+                if (Input.GetKey(KeyCode.J))
+                {
+                    return eAction.RollAtack;
+                }
+                if (Input.GetKey(KeyCode.K))
+                {
+                    return eAction.ChargeFire;
+                }
+                if (Input.GetKey(KeyCode.L))
+                {
+                    return eAction.RollFire;
+                }
+                return eAction.Wait;
+
                 //return eAction.Assault;             // 突進攻撃
                 //return eAction.ChargeFire;          // その場でファイアー
                 //return eAction.RollAtack;           // 回転攻撃
                 //return (eAction)Random.Range(2, 5); // 左or右攻撃か回転攻撃を出す
                 //return eAction.RollFire;           // 回転してファイアー
 
-                if (_nearTime > 5.0f)
+                /*if (_nearTime > 5.0f)
                 {
                     if (Random.Range(0, 3) != 0)
                     {
@@ -122,7 +140,7 @@ public class HermitCrab : EnemyBase
                 else
                 {
                     return eAction.ChargeFire;
-                }
+                }*/
 
             case eAction.Assault:
                 return (eAction)Random.Range(2, 4); // 左or右攻撃か回転攻撃を出す
@@ -192,7 +210,7 @@ public class HermitCrab : EnemyBase
         _animator.SetBool("Walk", false);
 
         float time = 0.0f;
-        float waitTime = Random.Range(1.0f, 5.0f);
+        float waitTime = 0.1f; // Random.Range(1.0f, 5.0f);
         while (time < waitTime)
         {
             time += Time.deltaTime;

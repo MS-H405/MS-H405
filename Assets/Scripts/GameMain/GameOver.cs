@@ -63,8 +63,8 @@ public class GameOver : SingletonMonoBehaviour<GameOver>
         }
 
         yield return new WaitWhile(() => !Input.GetButtonDown("Atack"));
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.UI_PushButton);
         MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TITLE);
-
     }
 
     #endregion
