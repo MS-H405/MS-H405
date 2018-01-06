@@ -341,9 +341,10 @@ public class Totem : EnemyBase
     /// </summary>
     private IEnumerator WindAttack()
     {
+        yield return null;
         _action += 1;
         yield break;
-
+ 
         /*int count = 0;
         float time = 0.0f;
         while (count < 3)
