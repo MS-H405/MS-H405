@@ -20,6 +20,7 @@ public class AutoRotation : MonoBehaviour
     #region variable
 
     [SerializeField] Vector3 _rotDegreeAmount_Sec = Vector3.zero;
+    public Vector3 RotDegreeAmount { get { return _rotDegreeAmount_Sec; } set { _rotDegreeAmount_Sec = value; } }
 
     #endregion
 
