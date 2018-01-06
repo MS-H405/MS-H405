@@ -33,6 +33,7 @@ public class SoundManager : MonoBehaviour {
         Totem,
         Bagpipe,
         Player_Run,
+        GameOver,
         Max,
 	};
 	
