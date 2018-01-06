@@ -21,6 +21,7 @@ public class JugglingAtack : MonoBehaviour
 
     // 共有変数
     static private int _nowJugglingAmount = 0;
+    static private int _nowPinValue = 0;
     static public int NowJugglingAmount { get { return _nowJugglingAmount; } set { _nowJugglingAmount = value; } }
 
     static private float _commonAtackSpeed = 1.0f;          // 共有する攻撃スピード
@@ -36,6 +37,7 @@ public class JugglingAtack : MonoBehaviour
     private bool _isCatch = false;                          // このオブジェクトの生存判定
 
     [SerializeField] GameObject _dropPointEffect = null;
+    [SerializeField] Mesh[] _pinMesh = new Mesh[3];
 
     #endregion
 
@@ -45,6 +47,7 @@ public class JugglingAtack : MonoBehaviour
     {
         // 使用中の個数を増加
         _nowJugglingAmount++;
+        _nowPinValue++;
 
         // スタン中ならキャッチする
         if ((target && target.IsStan))
@@ -62,6 +65,8 @@ public class JugglingAtack : MonoBehaviour
 
         // 初期化処理
         _atackSpeed = 10.0f * _commonAtackSpeed;
+        //Debug.Log("Pin : " + _nowPinValue);
+        //transform.GetComponentInChildren<MeshFilter>().mesh = _pinMesh[_nowPinValue - 1]; // ERROR : Meshが上手く適応できていない
         Vector3 initPos = transform.position;
         initPos.y = 1.0f;
         transform.position = initPos;
@@ -86,8 +91,8 @@ public class JugglingAtack : MonoBehaviour
         _isPlay = false;
         PlayerManager.Instance.Anim.SetTrigger("CatchThrow");
         transform.SetParent(PlayerManager.Instance.PlayerLeftHand);
-        transform.localPosition = new Vector3(-0.5f, 0.67f, 0.09f);
-        transform.localEulerAngles = Vector3.zero;
+        transform.localPosition = new Vector3(-0.5f, -0.6f, 0.0f);
+        transform.localEulerAngles = new Vector3(180, 0, 0);
         
         // アニメーションが終了するまで待つ
         AnimatorStateInfo animStateInfo = PlayerManager.Instance.Anim.GetCurrentAnimatorStateInfo(0);
@@ -114,6 +119,7 @@ public class JugglingAtack : MonoBehaviour
         transform.eulerAngles = PlayerManager.Instance.Player.transform.eulerAngles;
         GetComponentInChildren<AutoRotation>().enabled = true;
         StaticCoroutine.Instance.StartStaticCoroutine(ReplayWait(animStateInfo));
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_Throw);
 
         // 投げる処理実行
         _isAtack = true;
@@ -154,8 +160,9 @@ public class JugglingAtack : MonoBehaviour
 
             yield return null;
         }
-        
+
         // キャッチ判定
+        PinDestroy(!_isCatch);
         if (_isCatch)
         {
             // 速度アップ
@@ -175,7 +182,7 @@ public class JugglingAtack : MonoBehaviour
 
         // 破棄処理
         Destroy(effect);
-        PinDestroy(!_isCatch);
+        Destroy(gameObject);
     }
 
     /// <summary>
@@ -200,9 +207,9 @@ public class JugglingAtack : MonoBehaviour
         }
         else
         {
-            _nowJugglingAmount--;
+            _nowJugglingAmount--; 
         }
-        Destroy(gameObject);
+        _nowPinValue--;
     }
 
     /// <summary>
@@ -259,6 +266,7 @@ public class JugglingAtack : MonoBehaviour
             }
             obj.GetComponent<EnemyBase>().Damage();
             _isReflect = true;
+            SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_SlowHit);
             return;
         }
 
@@ -266,6 +274,7 @@ public class JugglingAtack : MonoBehaviour
         if (col.tag == "AutoRange" && _isAtack)
         {
             _isReflect = true;
+            SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_SlowHit);
             return;
         }
 

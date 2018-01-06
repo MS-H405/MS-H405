@@ -51,6 +51,15 @@ public class PlayerMove : MonoBehaviour
         _animator.SetBool("Walk", _moveAmount != Vector3.zero);
         RunSmoke(_animator.GetBool("Walk"));
 
+        if (_animator.GetBool("Walk"))
+        {
+            SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Player_Run);
+        }
+        else
+        {
+            SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Player_Run);
+        }
+
         // 硬直時は処理しない
         if (!_isGround || IsAction)
             return;

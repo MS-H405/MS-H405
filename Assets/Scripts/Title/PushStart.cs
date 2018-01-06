@@ -34,9 +34,10 @@ public class PushStart : MonoBehaviour
     /// <summary>
     /// 初期化処理
     /// </summary>
-    private void Awake()
+    private void Start()
     {
         _image = GetComponent<Image>();
+        SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Title);
     }
 
     /// <summary>
@@ -66,6 +67,7 @@ public class PushStart : MonoBehaviour
         // TODO : ゲームパッドのインプットに対応する
         if(Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Atack"))
         {
+            SoundManager.Instance.PlaySE(SoundManager.eSeValue.UI_PushButton);
             MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TOTEM_START);
             this.enabled = false;
         }
