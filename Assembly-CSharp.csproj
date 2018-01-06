@@ -88,6 +88,7 @@
      <Compile Include="Assets\Scripts\Player\UI\AtackIcon\AtackIconManager.cs" />
      <Compile Include="Assets\Scripts\Player\UI\AtackIcon\JugglingIcon.cs" />
      <Compile Include="Assets\Scripts\Player\UI\Life\PlayerLifeManager.cs" />
+     <Compile Include="Assets\Scripts\Special1\BgmStarter_Tatsuo.cs" />
      <Compile Include="Assets\Scripts\Special1\MovieFade.cs" />
      <Compile Include="Assets\Scripts\Special1\MovieManager.cs" />
      <Compile Include="Assets\Scripts\Special1\SetEffekseerObject.cs" />
@@ -143,6 +144,7 @@
      <Compile Include="Assets\Scripts\Utility\SingletonMonoBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utility\SortingLayer.cs" />
      <Compile Include="Assets\Scripts\Utility\SoundManager.cs" />
+     <Compile Include="Assets\Scripts\Utility\SoundManager_Tatsuo.cs" />
      <Compile Include="Assets\Scripts\Utility\StaticCoroutine.cs" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
