@@ -10,6 +10,7 @@ TagManager:
   - RideBall
   - AutoRange
   - Fire
+  - SoundManager
   layers:
   - Default
   - TransparentFX

@@ -36,7 +36,7 @@ public class PlayerMove : MonoBehaviour
     // animation用変数
     protected Animator _animator = null;
     private Vector3 _oldAngle = Vector3.zero;
-    protected GameObject _runSmoke = null;
+    protected ParticleSystem _runSmoke = null;
 
     #endregion
 
@@ -49,8 +49,16 @@ public class PlayerMove : MonoBehaviour
     {
         // Animation更新
         _animator.SetBool("Walk", _moveAmount != Vector3.zero);
-        _runSmoke.SetActive(_animator.GetBool("Walk"));
-        _runSmoke.GetComponent<ParticleSystem>().loop = false;
+        RunSmoke(_animator.GetBool("Walk"));
+
+        if (_animator.GetBool("Walk"))
+        {
+            SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Player_Run);
+        }
+        else
+        {
+            SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Player_Run);
+        }
 
         // 硬直時は処理しない
         if (!_isGround || IsAction)
@@ -114,6 +122,26 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 土煙エフェクト生成処理
+    /// </summary>
+    public void RunSmoke(bool isWalk)
+    {
+        if (!isWalk)
+        {
+            _runSmoke.loop = false;
+            return;
+        }
+
+        bool old = _runSmoke.loop;
+        _runSmoke.loop = true;
+
+        if (_runSmoke.loop == old)
+            return;
+
+        _runSmoke.Play();
+    }
+
     #endregion
 
     #region unity_event
@@ -124,7 +152,7 @@ public class PlayerMove : MonoBehaviour
     protected void Awake()
     {
         _animator = GetComponent<Animator>();
-        _runSmoke = transform.Find("RunSmoke").gameObject;
+        _runSmoke = transform.Find("RunSmoke").GetComponent<ParticleSystem>();
     }
 
     /// <summary>
