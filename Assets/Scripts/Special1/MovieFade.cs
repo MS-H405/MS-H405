@@ -88,7 +88,7 @@ public class MovieFade : MonoBehaviour
 
 		image.color = new Color(image.color.r, image.color.g, image.color.b, 1.0f);
         SoundManager.Instance.StopBGM();
-        SoundManager.Instance.StopSE();
+        //SoundManager.Instance.StopSE();
 
         if (action != null)
 		{
