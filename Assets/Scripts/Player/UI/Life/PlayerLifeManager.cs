@@ -50,6 +50,7 @@ public class PlayerLifeManager : SingletonMonoBehaviour<PlayerLifeManager>
 
         float oneAnimTime = _effectTime / LifeAnimAmount;
         Image lifeImage = transform.GetChild(0).GetComponent<Image>();
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.UI_DamageBalloon);
 
         for (int i = 0; i < LifeAnimAmount; i++)
         {

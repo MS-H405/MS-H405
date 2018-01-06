@@ -145,9 +145,9 @@ MonoBehaviour:
   _dropPointEffect: {fileID: 1730324996189536, guid: 18b86962b29177f4a94094684c697a2d,
     type: 2}
   _pinMesh:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 4300000, guid: 6de2d97247ae41741bf0f990fbe5851e, type: 3}
+  - {fileID: 4300000, guid: 5f3605134e94d7c4693dc6a467e3422c, type: 3}
+  - {fileID: 4300000, guid: 586ea045aaf5e3d41be7eb7b7c079348, type: 3}
 --- !u!114 &114361786084579254
 MonoBehaviour:
   m_ObjectHideFlags: 1

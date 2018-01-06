@@ -71,6 +71,7 @@ public class HermitCrab : EnemyBase
                 // スタン状態なら一時停止
                 if (IsStan)
                 {
+                    SoundManager.Instance.PlaySE(SoundManager.eSeValue.Enemy_Stan);
                     StaticCoroutine.Instance.StopCoroutine(enumerator);
 
                     while (IsStan)
@@ -97,13 +98,31 @@ public class HermitCrab : EnemyBase
             case eAction.Wait:
 
                 // --- DEBUG ---
+                if (Input.GetKey(KeyCode.H))
+                {
+                    return eAction.Assault;
+                }
+                if (Input.GetKey(KeyCode.J))
+                {
+                    return eAction.RollAtack;
+                }
+                if (Input.GetKey(KeyCode.K))
+                {
+                    return eAction.ChargeFire;
+                }
+                if (Input.GetKey(KeyCode.L))
+                {
+                    return eAction.RollFire;
+                }
+                return eAction.Wait;
+
                 //return eAction.Assault;             // 突進攻撃
                 //return eAction.ChargeFire;          // その場でファイアー
                 //return eAction.RollAtack;           // 回転攻撃
                 //return (eAction)Random.Range(2, 5); // 左or右攻撃か回転攻撃を出す
                 //return eAction.RollFire;           // 回転してファイアー
 
-                if (_nearTime > 5.0f)
+                /*if (_nearTime > 5.0f)
                 {
                     if (Random.Range(0, 3) != 0)
                     {
@@ -122,7 +141,7 @@ public class HermitCrab : EnemyBase
                 else
                 {
                     return eAction.ChargeFire;
-                }
+                }*/
 
             case eAction.Assault:
                 return (eAction)Random.Range(2, 4); // 左or右攻撃か回転攻撃を出す
@@ -192,7 +211,7 @@ public class HermitCrab : EnemyBase
         _animator.SetBool("Walk", false);
 
         float time = 0.0f;
-        float waitTime = Random.Range(1.0f, 5.0f);
+        float waitTime = 0.1f; // Random.Range(1.0f, 5.0f);
         while (time < waitTime)
         {
             time += Time.deltaTime;
@@ -298,6 +317,7 @@ public class HermitCrab : EnemyBase
                 break;
         }
 
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_Scissor);
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
         yield break;
     }
@@ -318,6 +338,7 @@ public class HermitCrab : EnemyBase
         }
 
         _rightScissors.enabled = true;
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_Roll);
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
     }
 
@@ -359,6 +380,7 @@ public class HermitCrab : EnemyBase
             effect.transform.localPosition = Vector3.zero;
             effect.transform.localEulerAngles = new Vector3(-90, 0, 0);
         }
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_FireShot);
     }
 
     /// <summary>
@@ -379,6 +401,7 @@ public class HermitCrab : EnemyBase
             yield return null;
         }
 
+        SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Bagpipe_Burst);
         Vector3 startPos = transform.position;
         Vector3 targetPos = PlayerManager.Instance.GetVerticalPos(startPos);
 
@@ -404,6 +427,7 @@ public class HermitCrab : EnemyBase
             yield return null;
         }
 
+        SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Bagpipe_Burst);
         _animator.SetBool("RollFire", false);
     }
 
@@ -485,6 +509,15 @@ public class HermitCrab : EnemyBase
         else
         {
             _nearTime = 0.0f;
+        }
+
+        if (_animator.GetBool("Walk"))
+        {
+            SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Bagpipe_Walk);
+        }
+        else
+        {
+            SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Bagpipe_Walk);
         }
     }
 

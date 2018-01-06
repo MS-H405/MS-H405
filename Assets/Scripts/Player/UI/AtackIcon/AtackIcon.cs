@@ -74,6 +74,7 @@ public class AtackIcon : MonoBehaviour
             float time = 0.0f;
             Vector3 min = transform.position;
             Vector3 max = transform.position + new Vector3(0, SpecialUpHeight, 0);
+            SoundManager.Instance.PlaySE(SoundManager.eSeValue.UI_ChangeBurst);
 
             // 上にくるくると回転
             while (time < 1.0f)

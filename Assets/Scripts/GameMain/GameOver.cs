@@ -33,6 +33,10 @@ public class GameOver : SingletonMonoBehaviour<GameOver>
 
     private IEnumerator RunCoroutine()
     {
+        // サウンド処理
+        SoundManager.Instance.StopBGM();
+        SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.GameOver);
+
         List<Image> _imageList = new List<Image>();
         for(int i = 0; i < transform.childCount; i++)
         {
@@ -57,11 +61,11 @@ public class GameOver : SingletonMonoBehaviour<GameOver>
             }
             yield return null;
         }
+
+        yield return new WaitWhile(() => !Input.GetButtonDown("Atack"));
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.UI_PushButton);
+        MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TITLE);
     }
-
-    #endregion
-
-    #region unity_event
 
     #endregion
 }  

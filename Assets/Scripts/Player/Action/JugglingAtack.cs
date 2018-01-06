@@ -27,7 +27,7 @@ public class JugglingAtack : MonoBehaviour
     static private float _commonAtackSpeed = 1.0f;          // 共有する攻撃スピード
     static private bool _isPlay = true;                     // キャッチしたり投げたりできる状態かを保持
     static public bool IsPlay { get { return _isPlay; } } 
-    private readonly float MaxAtackSpeed = 2.0f;            // 最大スピード
+    private readonly float MaxAtackSpeed = 3.0f;            // 最大スピード
 
     private GameObject _targetObj = null;                   // 
     private float _atackSpeed = 0.0f;                       // 攻撃スピード
@@ -37,13 +37,14 @@ public class JugglingAtack : MonoBehaviour
     private bool _isCatch = false;                          // このオブジェクトの生存判定
 
     [SerializeField] GameObject _dropPointEffect = null;
+    private int _myPinValue = 0;
     [SerializeField] Mesh[] _pinMesh = new Mesh[3];
 
     #endregion
 
     #region method
 
-    public void Run(EnemyBase target)
+    public void Run(EnemyBase target, int mesh)
     {
         // 使用中の個数を増加
         _nowJugglingAmount++;
@@ -65,8 +66,16 @@ public class JugglingAtack : MonoBehaviour
 
         // 初期化処理
         _atackSpeed = 10.0f * _commonAtackSpeed;
-        //Debug.Log("Pin : " + _nowPinValue);
-        //transform.GetComponentInChildren<MeshFilter>().mesh = _pinMesh[_nowPinValue - 1]; // ERROR : Meshが上手く適応できていない
+        if (mesh < 0)
+        {
+            transform.GetComponentInChildren<MeshFilter>().mesh = _pinMesh[_nowPinValue - 1]; // ERROR : Meshが上手く適応できていない
+            _myPinValue = _nowPinValue - 1;
+        }
+        else
+        {
+            transform.GetComponentInChildren<MeshFilter>().mesh = _pinMesh[mesh];
+            _myPinValue = mesh;
+        }
         Vector3 initPos = transform.position;
         initPos.y = 1.0f;
         transform.position = initPos;
@@ -114,7 +123,7 @@ public class JugglingAtack : MonoBehaviour
             yield return null;
         }
         transform.SetParent(null);
-        transform.position = PlayerManager.Instance.GetPlayerForward() + new Vector3(0,1,0);
+        transform.position = PlayerManager.Instance.GetPlayerForward() + new Vector3(0,1.75f,0);
         transform.position -= PlayerManager.Instance.Player.transform.right / 3.0f;
         transform.eulerAngles = PlayerManager.Instance.Player.transform.eulerAngles;
         GetComponentInChildren<AutoRotation>().enabled = true;
@@ -147,19 +156,25 @@ public class JugglingAtack : MonoBehaviour
         bez.start = transform.position;
         bez.middle = Vector3.Lerp(transform.position, dropPoint, 0.5f) + new Vector3(0.0f, atackTime * 20.0f, 0.0f);
         bez.end = dropPoint;
+        AutoRotation autoRot = GetComponentInChildren<AutoRotation>();
+        Vector3 initRot = autoRot.RotDegreeAmount;
 
         while (1.0f > bez.time && !_isCatch)
         {
             transform.position = BezierCurve.CulcBez(bez, true);
-            bez.time += Time.deltaTime * (0.35f / atackTime);
 
-            /*foreach(ParticleLifeTimer lifeTimer in particleLifeTimerArray)
+            float time = Time.deltaTime * (0.35f / atackTime);
+
+            if(bez.time > 0.5f && transform.position.y < 3.0f)
             {
-                lifeTimer.ChangeLifeTime(1.0f - bez.time);
-            }*/
+                time *= 0.25f;
+                autoRot.RotDegreeAmount = initRot * 0.5f;
+            }
 
+            bez.time += time;
             yield return null;
         }
+        autoRot.RotDegreeAmount = initRot;
 
         // キャッチ判定
         PinDestroy(!_isCatch);
@@ -168,11 +183,11 @@ public class JugglingAtack : MonoBehaviour
             // 速度アップ
             if (_commonAtackSpeed < MaxAtackSpeed)
             {
-                _commonAtackSpeed += 0.1f;
+                _commonAtackSpeed += (MaxAtackSpeed - 1.0f) * 0.1f;
             }
             // 次生成
             GameObject obj = Instantiate(gameObject, transform.position, Quaternion.identity);
-            obj.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy);
+            obj.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy, _myPinValue);
         }
         else
         {
@@ -267,6 +282,7 @@ public class JugglingAtack : MonoBehaviour
             obj.GetComponent<EnemyBase>().Damage();
             _isReflect = true;
             SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_SlowHit);
+            GameEffectManager.Instance.Play("PinAttack", transform.position);
             return;
         }
 
@@ -275,6 +291,7 @@ public class JugglingAtack : MonoBehaviour
         {
             _isReflect = true;
             SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_SlowHit);
+            GameEffectManager.Instance.Play("PinAttack", transform.position);
             return;
         }
 

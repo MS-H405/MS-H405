@@ -246,6 +246,7 @@
     <Compile Include="Assets\Scripts\GameCamera\GameCamera.cs" />
     <Compile Include="Assets\Scripts\GameCamera\GameCamera_Sub.cs" />
     <Compile Include="Assets\Scripts\GameMain\BgmStarter.cs" />
+    <Compile Include="Assets\Scripts\GameMain\DamageRed.cs" />
     <Compile Include="Assets\Scripts\GameMain\GameOver.cs" />
     <Compile Include="Assets\Scripts\GameMain\GameStart.cs" />
     <Compile Include="Assets\Scripts\GameMain\GameStartAutoScaler.cs" />
@@ -302,6 +303,7 @@
     <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PA.cs" />
     <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PB.cs" />
     <Compile Include="Assets\Scripts\Utility\AutoChaseParticle.cs" />
+    <Compile Include="Assets\Scripts\Utility\AutoParticleDestoryer.cs" />
     <Compile Include="Assets\Scripts\Utility\AutoRotation.cs" />
     <Compile Include="Assets\Scripts\Utility\BezierCurve.cs" />
     <Compile Include="Assets\Scripts\Utility\Effect\EffekseerTest.cs" />

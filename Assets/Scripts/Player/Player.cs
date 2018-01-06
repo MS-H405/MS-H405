@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
         PlayerLifeManager.Instance.DamageEffect();
         StaticCoroutine.Instance.StartStaticCoroutine(DamageWait());
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_Damage);
+        DamageRed.Instance.Run();
     }
 
     /// <summary>
@@ -104,7 +105,7 @@ public class Player : MonoBehaviour
         get
         {
             AnimatorStateInfo state = _animator.GetCurrentAnimatorStateInfo(0);
-            if(!state.IsName("Base.Idle") && !state.IsName("Base.Walk"))
+            if(!state.IsName("Base.Idle") && !state.IsName("Base.Walk") && !state.IsName("Base.RideBallMove"))
             {
                 return false;
             }
@@ -209,6 +210,19 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             _isDamage = !_isDamage;
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if(Time.timeScale >= 1.0f)
+            {
+                Time.timeScale = 0.0f;
+                SoundManager.Instance.PauseSE(true);
+            }
+            else
+            {
+                Time.timeScale = 1.0f;
+                SoundManager.Instance.PauseSE(false);
+            }
         }
     }
 

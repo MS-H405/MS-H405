@@ -206,5 +206,13 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 非アクティブ処理
+    /// </summary>
+    private void OnDisable()
+    {
+        SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Player_Run);
+    }
+
     #endregion
 }  

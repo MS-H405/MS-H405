@@ -59,6 +59,7 @@ public class ChildTotem : MonoBehaviour
         TotemRot(true, speed);
         Vector3 initPos = transform.position;
         GameEffectManager.Instance.PlayOnHeightZero(_appearEffectName, transform.position);
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Totem_Attack);
         while (time < 3.0f)
         {
             transform.position = Vector3.Lerp(initPos, initPos + new Vector3(0, _oneBlockSize * 4.0f, 0), time / 3.0f);
@@ -75,6 +76,7 @@ public class ChildTotem : MonoBehaviour
     {
         float time = 0.0f;
         GameEffectManager.Instance.PlayOnHeightZero(_appearEffectName, transform.position);
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Totem_Attack);
         TotemRot(true, speed);
         while (time < 4.0f)
         {
@@ -87,7 +89,7 @@ public class ChildTotem : MonoBehaviour
     /// <summary>
     /// 特殊攻撃処理
     /// </summary>
-    public IEnumerator SpecialAtack(float speed, float fallHeight)
+    public IEnumerator SpecialAtack(float speed, float fallHeight, bool isSound)
     {
         // 土煙を出す
         GameEffectManager.Instance.PlayOnHeightZero(_appearEffectName, transform.position);
@@ -96,6 +98,11 @@ public class ChildTotem : MonoBehaviour
         {
             time += Time.deltaTime;
             yield return null;
+        }
+
+        if (isSound)
+        {
+            SoundManager.Instance.PlaySE(SoundManager.eSeValue.Totem_Fly);
         }
 
         // 上に飛び出る処理
@@ -142,13 +149,16 @@ public class ChildTotem : MonoBehaviour
             yield return null;
         }
 
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Totem_Fall);
+
         // 落下を待つ
         _isAtack = true;
-        while (transform.position.y > -20.0f)
+        while (transform.position.y > -10.0f)
         {
             _rigidbody.AddForce(0.0f, -9.8f, 0.0f);
             yield return null;
         }
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Totem_Impact);
         _isAtack = false;
 
         foreach (GameObject effect in _dropEffectList)

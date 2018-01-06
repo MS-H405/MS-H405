@@ -134,6 +134,7 @@ public class ActionManager : MonoBehaviour
                 _nowSelect = 0;
             }
         }
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.UI_ChangeSkill);
         //Debug.Log(_nowSelect);
     }
 
@@ -178,7 +179,7 @@ public class ActionManager : MonoBehaviour
                     return;
 
                 GameObject jug = Instantiate(_jugglingPrefab, transform.position, transform.rotation);
-                jug.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy);
+                jug.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy, -1);
                 break;
 
             case eActionType.RideBall:

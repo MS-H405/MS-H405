@@ -15,7 +15,7 @@ public class GameStart : MonoBehaviour
 {
     #region define
 
-    private const float Rimit = 1.0f / 30.0f;
+    private const float Rimit = 1.0f / 10.0f;
     public static float GameStartDeltaTime = 0.0f;
 
     #endregion
