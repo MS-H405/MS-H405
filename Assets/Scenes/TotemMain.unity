@@ -475,6 +475,11 @@ Prefab:
       propertyPath: ColorModule.gradient.minGradient.key0.b
       value: 0.46674958
       objectReference: {fileID: 0}
+    - target: {fileID: 198168193851845398, guid: 96def8ac0fd4dfd4084e8a6cb047675a,
+        type: 2}
+      propertyPath: lengthInSec
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 96def8ac0fd4dfd4084e8a6cb047675a, type: 2}
   m_IsPrefabParent: 0
