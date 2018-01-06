@@ -69,8 +69,10 @@
      <Compile Include="Assets\Scripts\Enemy\Totem\Totem.cs" />
      <Compile Include="Assets\Scripts\GameCamera\GameCamera.cs" />
      <Compile Include="Assets\Scripts\GameCamera\GameCamera_Sub.cs" />
+     <Compile Include="Assets\Scripts\GameMain\BgmStarter.cs" />
      <Compile Include="Assets\Scripts\GameMain\GameOver.cs" />
      <Compile Include="Assets\Scripts\GameMain\GameStart.cs" />
+     <Compile Include="Assets\Scripts\GameMain\GameStartAutoScaler.cs" />
      <Compile Include="Assets\Scripts\GameMain\TimeManager.cs" />
      <Compile Include="Assets\Scripts\Player\Action\ActionManager.cs" />
      <Compile Include="Assets\Scripts\Player\Action\BagpipeFire.cs" />
@@ -172,6 +174,7 @@
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionCurvesSimple.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderYUV.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\CreaseApply.shader" />
+     <None Include="Assets\Plugins\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\ChromaticAberrationShader.shader" />
      <None Include="Assets\Plugins\PyroParticles\Readme.txt" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\GlobalFog.shader" />

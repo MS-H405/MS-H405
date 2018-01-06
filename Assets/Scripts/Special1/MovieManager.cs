@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 public class MovieManager : MonoBehaviour
 {
+	const float CON_RIMIT_DELTATIME = 1000;		// Time.unScaleddeltatimeの制限
+
 	public enum MOVIE_SCENE
 	{
 		TITLE,			// タイトル
@@ -43,8 +45,6 @@ public class MovieManager : MonoBehaviour
 
 	MOVIE_SCENE NowSpecial;	// 今やっていた必殺技
 	bool bGoDeath;			// 死んで死亡シーンにいくのか、敵がまだ死んでいなくてゲームメインに戻るのか
-
-	MOVIE_SCENE NowScene = MOVIE_SCENE.TITLE;	// 今のシーン
 
 
 	public static MovieManager Instance
@@ -127,17 +127,17 @@ public class MovieManager : MonoBehaviour
 
 			// 1/6 追加
 			// 毎回必殺技の時はSPECIAL_1が呼ばれ、こっちで実際のSpecialシーンを分ける
-			switch(NowScene)
+			switch(StageData.Instance.StageNumber)
 			{
-				case MOVIE_SCENE.STAGE_1:
+				case 1:
 					scene = MOVIE_SCENE.SPECIAL_1;
 					break;
 
-				case MOVIE_SCENE.STAGE_2:
+				case 2:
 					scene = MOVIE_SCENE.SPECIAL_2;
 					break;
 
-				case MOVIE_SCENE.STAGE_3:
+				case 3:
 					scene = MOVIE_SCENE.SPECIAL_3;
 					break;
 			}
@@ -186,72 +186,58 @@ public class MovieManager : MonoBehaviour
 		{
 			case MOVIE_SCENE.TITLE:
 				SceneManager.LoadScene("Title");
-				NowScene = MOVIE_SCENE.TITLE;
 				break;
 
 			case MOVIE_SCENE.STAGE_1:
 				SceneManager.LoadScene("TotemMain");
-				NowScene = MOVIE_SCENE.STAGE_1;
 				break;
 
 			case MOVIE_SCENE.STAGE_2:
 				SceneManager.LoadScene("HermitCrabMain");
-				NowScene = MOVIE_SCENE.STAGE_2;
 				break;
 
 			case MOVIE_SCENE.STAGE_3:
 				SceneManager.LoadScene("a");
-				NowScene = MOVIE_SCENE.STAGE_3;
 				break;
 
 			case MOVIE_SCENE.RESULT:
 				SceneManager.LoadScene("a");
-				NowScene = MOVIE_SCENE.RESULT;
 				break;
 
 			case MOVIE_SCENE.TOTEM_START:
 				SceneManager.LoadScene("TotemStart");
-				NowScene = MOVIE_SCENE.TOTEM_START;
 				break;
 
 			case MOVIE_SCENE.TOTEM_DEATH:
 				SceneManager.LoadScene("TotemDeath");
-				NowScene = MOVIE_SCENE.TOTEM_DEATH;
 				break;
 
 			case MOVIE_SCENE.BAGPIPE_START:
 				SceneManager.LoadScene("BagpipeStart");
-				NowScene = MOVIE_SCENE.BAGPIPE_START;
 				break;
 
 			case MOVIE_SCENE.BAGPIPE_DEATH:
 				SceneManager.LoadScene("a");
-				NowScene = MOVIE_SCENE.BAGPIPE_DEATH;
 				break;
 
 			case MOVIE_SCENE.MECHA_START:
 				SceneManager.LoadScene("a");
-				NowScene = MOVIE_SCENE.MECHA_START;
 				break;
 
 			case MOVIE_SCENE.MECHA_DEATH:
 				SceneManager.LoadScene("a");
-				NowScene = MOVIE_SCENE.MECHA_DEATH;
 				break;
 
 			case MOVIE_SCENE.INIT_TO_TOTEM:
 				SceneManager.LoadScene("InitToTotem");
-				NowScene = MOVIE_SCENE.INIT_TO_TOTEM;
 				break;
 
 			case MOVIE_SCENE.TOTEM_TO_YADOKARI:
 				SceneManager.LoadScene("TotemToYadokari");
-				NowScene = MOVIE_SCENE.TOTEM_TO_YADOKARI;
 				break;
 
 			case MOVIE_SCENE.YADOKARI_TO_MECHA:
 				SceneManager.LoadScene("YadokariToMecha");
-				NowScene = MOVIE_SCENE.YADOKARI_TO_MECHA;
 				break;
 		}
 		#endregion
@@ -262,7 +248,9 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while (fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.deltaTime;
+			float temp = Time.unscaledDeltaTime;
+			if(temp < CON_RIMIT_DELTATIME)
+				fTime += temp;
 			if (bInit)
 			{
 				fFirstTime = fTime;
@@ -303,19 +291,16 @@ public class MovieManager : MonoBehaviour
 			case MOVIE_SCENE.SPECIAL_1:
 				SceneManager.LoadScene("Special_1", LoadSceneMode.Additive);
 				MovieSceneName = "Special_1";
-				NowScene = MOVIE_SCENE.SPECIAL_1;
 				break;
 
 			case MOVIE_SCENE.SPECIAL_2:
 				SceneManager.LoadScene("Special_2", LoadSceneMode.Additive);
 				MovieSceneName = "Special_2";
-				NowScene = MOVIE_SCENE.SPECIAL_2;
 				break;
 
 			case MOVIE_SCENE.SPECIAL_3:
 				SceneManager.LoadScene("Special_3", LoadSceneMode.Additive);
 				MovieSceneName = "Special_3";
-				NowScene = MOVIE_SCENE.SPECIAL_3;
 				break;
 		}
 		#endregion
@@ -335,7 +320,9 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while(fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.deltaTime;
+			float temp = Time.unscaledDeltaTime;
+			if (temp < CON_RIMIT_DELTATIME)
+				fTime += temp;
 			if(bInit)
 			{
 				fFirstTime = fTime;
@@ -382,7 +369,9 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while (fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.deltaTime;
+			float temp = Time.unscaledDeltaTime;
+			if (temp < CON_RIMIT_DELTATIME)
+				fTime += temp;
 			if (bInit)
 			{
 				fFirstTime = fTime;
@@ -420,17 +409,14 @@ public class MovieManager : MonoBehaviour
 		{
 			case MOVIE_SCENE.SPECIAL_1:
 				SceneManager.LoadScene("TotemDeath");
-				NowScene = MOVIE_SCENE.TOTEM_DEATH;
 				break;
 
 			case MOVIE_SCENE.SPECIAL_2:
 				SceneManager.LoadScene("BagpipeDeath");
-				NowScene = MOVIE_SCENE.BAGPIPE_DEATH;
 				break;
 
 			case MOVIE_SCENE.SPECIAL_3:
 				SceneManager.LoadScene("a");
-				NowScene = MOVIE_SCENE.MECHA_DEATH;
 				break;
 		}
 		#endregion
@@ -444,7 +430,9 @@ public class MovieManager : MonoBehaviour
 		fFirstTime = 0.0f;
 		while (fTime - fFirstTime < 0.2f)
 		{
-			fTime += Time.deltaTime;
+			float temp = Time.unscaledDeltaTime;
+			if (temp < CON_RIMIT_DELTATIME)
+				fTime += temp;
 			if (bInit)
 			{
 				fFirstTime = fTime;

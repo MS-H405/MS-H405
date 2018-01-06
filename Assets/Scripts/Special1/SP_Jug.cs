@@ -241,7 +241,7 @@ public class SP_Jug : MonoBehaviour
 
 			if (bSP_big_hit)
 			{
-				// 展開ピンヒットエフェクト
+				// デカピンヒットエフェクト
 				cs_SetEffekseerObject.NewEffect(2);
 				if (MainCameraObj.GetComponent<Special_1Camera>())
 					MainCameraObj.GetComponent<Special_1Camera>().shakeCamera();
@@ -249,6 +249,9 @@ public class SP_Jug : MonoBehaviour
 					MainCameraObj.GetComponent<Special_2Camera>().shakeCamera();
 				//else if(MainCameraObj.GetComponent<Special_3Camera>()))
 				//	MainCameraObj.GetComponent<Special_3Camera>())
+
+				// 敵スタン
+				EnemyObj.GetComponent<SP_Enemy>().Stan();
 			
 				bSP_big_hit = false;
 			}
