@@ -211,6 +211,19 @@ public class Player : MonoBehaviour
         {
             _isDamage = !_isDamage;
         }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if(Time.timeScale >= 1.0f)
+            {
+                Time.timeScale = 0.0f;
+                SoundManager.Instance.PauseSE(true);
+            }
+            else
+            {
+                Time.timeScale = 1.0f;
+                SoundManager.Instance.PauseSE(false);
+            }
+        }
     }
 
     /// <summary>

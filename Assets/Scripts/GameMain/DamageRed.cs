@@ -32,7 +32,7 @@ public class DamageRed : MonoBehaviour {
 	private bool bAdd = true;
 	private Color InitColor;
 
-	void Awake() 
+	private void Awake() 
 	{
 		if (this != Instance) {
 			Destroy (this.gameObject);
@@ -43,15 +43,8 @@ public class DamageRed : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () 
+	private void Update () 
 	{
-
-		#if DEBUG
-		if(Input.GetKeyDown(KeyCode.A)) {
-			Run();
-		}
-		#endif
-	
 		if (!bRun) 
 			return;
 
@@ -86,6 +79,5 @@ public class DamageRed : MonoBehaviour {
 			return;
 
 		bRun = true;
-		//SoundManager.Instance.PlaySE (SoundManager.eSeValue.SE_DAMAGERED);
 	}
 }
