@@ -78,4 +78,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c5f4011a2963dea48a10f043971287e2, type: 3}
   - {fileID: 8300000, guid: 5dbd3c010bb83a04a86f5f1c29a94a7a, type: 3}
   - {fileID: 8300000, guid: bb8e03527fc734744bb4a2041d63ba7e, type: 3}
+  - {fileID: 8300000, guid: c7e8565417e5cc248a7de6276396632f, type: 3}
+  - {fileID: 8300000, guid: e6eb5632d24874a42b46b39b6ab5278a, type: 3}
+  - {fileID: 8300000, guid: 604e89bf7a5d0634b93d99cfe0777dcd, type: 3}
   Voice: []
