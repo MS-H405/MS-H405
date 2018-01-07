@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50091075b6bce714bbcd73abc4eee722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectName: GAME_bohun
+  effectName: GAME_PinHit
   playOnStart: 0
   loop: 0
 --- !u!114 &114683617426747240
