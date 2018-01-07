@@ -80,7 +80,18 @@ public class MovieManager : MonoBehaviour
 	// デバッグ用
 	void Update()
 	{
-
+		if (Input.GetKeyDown(KeyCode.Alpha1))
+		{
+			FadeStart(MOVIE_SCENE.TITLE);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			FadeStart(MOVIE_SCENE.STAGE_1);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			FadeStart(MOVIE_SCENE.STAGE_2);
+		}
 	}
 
 
