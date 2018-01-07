@@ -168,6 +168,7 @@
      <Compile Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Scripts\Twirl.cs" />
      <Compile Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Scripts\VignetteAndChromaticAberration.cs" />
      <Compile Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Scripts\Vortex.cs" />
+     <Compile Include="Assets\Plugins\Standard Assets\Environment\Water (Basic)\Scripts\WaterBasic.cs" />
      <Compile Include="Assets\Plugins\UETools\Magic_Particle_Effects\Scripts\CameraMovement.cs" />
      <Compile Include="Assets\Plugins\UniRx\Examples\Sample01_ObservableWWW.cs" />
      <Compile Include="Assets\Plugins\UniRx\Examples\Sample02_ObservableTriggers.cs" />
@@ -444,6 +445,7 @@
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionCurvesSimple.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderYUV.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\CreaseApply.shader" />
+     <None Include="Assets\Plugins\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\ChromaticAberrationShader.shader" />
      <None Include="Assets\Plugins\PyroParticles\Readme.txt" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\GlobalFog.shader" />

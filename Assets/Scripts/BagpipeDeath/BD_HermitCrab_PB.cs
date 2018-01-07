@@ -18,13 +18,16 @@ public class BD_HermitCrab_PB : PlayableBehaviour
 		FIN
 	}
 
-	const float CON_WAIT_TIME = 2.0f;		// 待機時間（アニメーションは勝手に進行している）
+	const float CON_WAIT_TIME = 0.7f;		// 待機時間（アニメーションは勝手に進行している）
 
 	const float CON_ROAR_TIME = 1.8f;		// State.ROARに入ってから、色が変わりきるまでの時間
 	readonly Color CON_ROAR_COLOR = new Color(90.0f / 255.0f, 90.0f / 255.0f, 90.0f / 255.0f, 1.0f);
 
 	const float CON_FADE_WAIT = 1.0f;		// エフェクトを出すまでの待ち時間
 	const float CON_FADE_TIME = 1.5f;		// 透明化が完了するまでの時間
+	readonly Color CON_FADE_COLOR = new Color(90.0f / 255.0f, 90.0f / 255.0f, 90.0f / 255.0f, 0.7f);
+
+	const float CON_VANISH_TIME = 2.2f;		// 消えるまでの時間
 
 	#endregion
 
@@ -97,6 +100,10 @@ public class BD_HermitCrab_PB : PlayableBehaviour
 				Fade();
 				break;
 
+			case STATE_HERMITCRAB_DEATH.VANISH:
+				Vanish();
+				break;
+
 
 
 			case STATE_HERMITCRAB_DEATH.FIN:
@@ -122,6 +129,7 @@ public class BD_HermitCrab_PB : PlayableBehaviour
 		if (fTime >= CON_WAIT_TIME)
 		{
 			State = STATE_HERMITCRAB_DEATH.ROAR;
+			bInitializ = true;
 		}
 	}
 
@@ -143,10 +151,10 @@ public class BD_HermitCrab_PB : PlayableBehaviour
 		if (fTime >= CON_ROAR_TIME)
 		{
 			State = STATE_HERMITCRAB_DEATH.FADE;
+			bInitializ = true;
 		}
 	}
 
-	// 途中やり
 	// パワーアップエフェクト　＆　透明になる
 	private void Fade()
 	{
@@ -154,18 +162,56 @@ public class BD_HermitCrab_PB : PlayableBehaviour
 		{
 			fTime = 0.0f;
 			fWait = 0.0f;
+			bWait = true;
+			bInitializ = false;
+		}
+
+		// 待機処理
+		fWait += Time.deltaTime;
+		if (fWait > CON_FADE_WAIT && bWait)
+		{
+			cs_SetEffekseerObject.NewEffect(1);		// パワーアップエフェクト
+
+			bWait = false;
+		}
+		if (bWait)
+			return;
+
+
+		// 透明化処理
+		fTime += Time.deltaTime;
+		mat.color = Color.Lerp(CON_ROAR_COLOR, CON_FADE_COLOR, Mathf.Clamp01(fTime / CON_FADE_TIME));
+
+		// 処理を記述
+		if (fTime >= CON_FADE_TIME)
+		{
+			State = STATE_HERMITCRAB_DEATH.VANISH;
+			bInitializ = true;
+		}
+	}
+
+	// 消える
+	private void Vanish()
+	{
+		if (bInitializ)
+		{
+			fTime = 0.0f;
+			fWait = 0.0f;
+			bWait = true;
 			bInitializ = false;
 
-			cs_SetEffekseerObject.NewEffect(1);		// パワーアップエフェクト
+			cs_SetEffekseerObject.NewEffect(2);	// 消えるエフェクト。時間的にちょうどいいので初期化処理で実行
 		}
 
 		fTime += Time.deltaTime;
-		mat.color = Color.Lerp(Color.white, CON_ROAR_COLOR, Mathf.Clamp01(fTime / CON_ROAR_TIME));
-
+		
 		// 処理を記述
-		if (fTime >= CON_ROAR_TIME)
+		if (fTime >= CON_VANISH_TIME)
 		{
-			State = STATE_HERMITCRAB_DEATH.FADE;
+			mat.color = Color.clear;	// 完全に透明にする
+
+			State = STATE_HERMITCRAB_DEATH.FIN;
+			bInitializ = true;
 		}
 	}
 

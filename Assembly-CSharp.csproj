@@ -69,8 +69,11 @@
      <Compile Include="Assets\Scripts\Enemy\Totem\Totem.cs" />
      <Compile Include="Assets\Scripts\GameCamera\GameCamera.cs" />
      <Compile Include="Assets\Scripts\GameCamera\GameCamera_Sub.cs" />
+     <Compile Include="Assets\Scripts\GameMain\BgmStarter.cs" />
+     <Compile Include="Assets\Scripts\GameMain\DamageRed.cs" />
      <Compile Include="Assets\Scripts\GameMain\GameOver.cs" />
      <Compile Include="Assets\Scripts\GameMain\GameStart.cs" />
+     <Compile Include="Assets\Scripts\GameMain\GameStartAutoScaler.cs" />
      <Compile Include="Assets\Scripts\GameMain\TimeManager.cs" />
      <Compile Include="Assets\Scripts\Player\Action\ActionManager.cs" />
      <Compile Include="Assets\Scripts\Player\Action\BagpipeFire.cs" />
@@ -85,6 +88,7 @@
      <Compile Include="Assets\Scripts\Player\UI\AtackIcon\AtackIconManager.cs" />
      <Compile Include="Assets\Scripts\Player\UI\AtackIcon\JugglingIcon.cs" />
      <Compile Include="Assets\Scripts\Player\UI\Life\PlayerLifeManager.cs" />
+     <Compile Include="Assets\Scripts\Special1\BgmStarter_Tatsuo.cs" />
      <Compile Include="Assets\Scripts\Special1\MovieFade.cs" />
      <Compile Include="Assets\Scripts\Special1\MovieManager.cs" />
      <Compile Include="Assets\Scripts\Special1\SetEffekseerObject.cs" />
@@ -124,6 +128,7 @@
      <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PA.cs" />
      <Compile Include="Assets\Scripts\TotemStart\TS_Totemchild_PB.cs" />
      <Compile Include="Assets\Scripts\Utility\AutoChaseParticle.cs" />
+     <Compile Include="Assets\Scripts\Utility\AutoParticleDestoryer.cs" />
      <Compile Include="Assets\Scripts\Utility\AutoRotation.cs" />
      <Compile Include="Assets\Scripts\Utility\BezierCurve.cs" />
      <Compile Include="Assets\Scripts\Utility\Effect\EffekseerTest.cs" />
@@ -139,6 +144,7 @@
      <Compile Include="Assets\Scripts\Utility\SingletonMonoBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utility\SortingLayer.cs" />
      <Compile Include="Assets\Scripts\Utility\SoundManager.cs" />
+     <Compile Include="Assets\Scripts\Utility\SoundManager_Tatsuo.cs" />
      <Compile Include="Assets\Scripts\Utility\StaticCoroutine.cs" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
@@ -172,6 +178,7 @@
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionCurvesSimple.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderYUV.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\CreaseApply.shader" />
+     <None Include="Assets\Plugins\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\ChromaticAberrationShader.shader" />
      <None Include="Assets\Plugins\PyroParticles\Readme.txt" />
      <None Include="Assets\Plugins\Standard Assets\Effects\ImageEffects\Shaders\GlobalFog.shader" />
