@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.72794116, g: 0.72794116, b: 0.72794116, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -4495,6 +4495,47 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9a2fcb51a1a6e143be80791252114cd, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &822525531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 822525533}
+  - component: {fileID: 822525532}
+  m_Layer: 0
+  m_Name: BGM_Starter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &822525532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 822525531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae49e996b29eebb439ecd11656c9adba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bgmValue: 1
+--- !u!4 &822525533
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 822525531}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &827667763
 GameObject:
   m_ObjectHideFlags: 0
@@ -7311,6 +7352,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114612657494896566, guid: 45978aba283a7424383af39c5153f347,
+        type: 2}
+      propertyPath: BGM.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4550240709405430, guid: 45978aba283a7424383af39c5153f347, type: 2}
       propertyPath: m_LocalPosition.x
       value: 10000
@@ -7343,6 +7389,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 114612657494896566, guid: 45978aba283a7424383af39c5153f347,
+        type: 2}
+      propertyPath: BGM.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: b57777e80dc80114fb3c693a8a8b56fc, type: 3}
+    - target: {fileID: 114612657494896566, guid: 45978aba283a7424383af39c5153f347,
+        type: 2}
+      propertyPath: BGM.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: fd54f17aad177d147b17b174a4415874, type: 3}
+    - target: {fileID: 114612657494896566, guid: 45978aba283a7424383af39c5153f347,
+        type: 2}
+      propertyPath: BGM.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: fd54f17aad177d147b17b174a4415874, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 45978aba283a7424383af39c5153f347, type: 2}
   m_IsPrefabParent: 0

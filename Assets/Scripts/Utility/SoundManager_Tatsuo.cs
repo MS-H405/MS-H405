@@ -30,6 +30,9 @@ public class SoundManager_Tatsuo : MonoBehaviour {
 	
 	public enum eBgmValue {
 		Special = 0,
+		Totem,
+		HermitCrab,
+		Mecha,
 
         Max,
 	};
@@ -40,16 +43,25 @@ public class SoundManager_Tatsuo : MonoBehaviour {
 		SP_BigJug2,
 		SP_Slow,
 		SP_SmallAttack,
-		SP_Blast,
+		SP_Blast,			// 5
 		SP_Jump,
 		SP_RideOn,
 		SP_StopBall,
 		SP_Charge,
-		SP_HitBall,
+		SP_HitBall,			// 10
 		SP_End,
 		SP_RideOn2,
 		SP_Babiron,
 		SP_TotemAttack,
+		TS_TotemChild,		// 15
+		TS_TotemBoss,
+		TS_TotemRoar,
+		TS_TotemDive,
+		TD_TotemSita,
+
+
+
+		TS_GOGOGO,				// 未実装	ボストーテム登場前の揺れ
 
         Max,
 	};

@@ -34,6 +34,8 @@ public class TS_Boss_PB : PlayableBehaviour
 	const float CON_BACK_TIME = 1.0f;		// 潜るのにかける時間
 	const float CON_FADESTART_TIME = 0.6f;	// 潜るのが始まってから、フェードが開始される時間
 
+	const float CON_WIND_TIME = 0.8f;		// APPEARになってから風効果音が鳴るまでの時間
+
 	#endregion
 
 
@@ -72,6 +74,10 @@ public class TS_Boss_PB : PlayableBehaviour
 
 	bool bRoarStart = true;
 	bool bRoarEnd = true;
+
+	// エフェクト関係
+	float fEffectTime = 0.0f;
+	bool bWind = true;
 
 	#endregion
 
@@ -176,7 +182,18 @@ public class TS_Boss_PB : PlayableBehaviour
 		{
 			BossAppearObj.GetComponent<EffekseerEmitter>().Play();
 			bEffect = false;
+
+			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.TS_TotemBoss);
 		}
+
+		// 風効果音
+		//fEffectTime += Time.deltaTime;
+		//Debug.Log(fEffectTime);
+		//if (fEffectTime > CON_WIND_TIME && bWind)
+		//{
+		//	SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_TotemAttack);
+		//	bWind = false;
+		//}
 
 		// ボスの出現と、エフェクトのタイミングを合わせる
 		fWait += Time.deltaTime;
@@ -192,6 +209,8 @@ public class TS_Boss_PB : PlayableBehaviour
 
 			bInit = true;
 			BossMode = _TSBOSSMODE.SECONDWAIT;
+
+			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_TotemAttack);
 		}
 
 		BossObj.transform.localPosition = Vector3.Lerp(vStartPos, vEndPos, fTime);
@@ -213,6 +232,8 @@ public class TS_Boss_PB : PlayableBehaviour
 			BossRoarObj.GetComponent<EffekseerEmitter>().Play();
 			animator.speed = 0.5f / CON_MOUTHMAX_TIME;			// 咆哮開始(口を開け始める)
 			bRoarStart = false;
+
+			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.TS_TotemRoar);		// 咆哮効果音
 		}
 		else if( (fTime >= CON_ROAR_START + CON_MOUTHMAX_TIME*1.8) && (fTime < CON_ROAR_END) )
 		{
@@ -244,6 +265,7 @@ public class TS_Boss_PB : PlayableBehaviour
 			vEndPos = new Vector3(BossObj.transform.localPosition.x, CON_START_POSY, BossObj.transform.localPosition.z);
 
 			BossDiveObj.GetComponent<EffekseerEmitter>().Play();	// 潜るエフェクト
+			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.TS_TotemDive);
 
 			bEffect = true;
 			bInit = false;
