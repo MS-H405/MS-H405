@@ -72,6 +72,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4dadbd8fb88d6e341914999bd8f2d0f3, type: 3}
   - {fileID: 8300000, guid: d8badbe68197c5246836e5b3a986d7be, type: 3}
   - {fileID: 8300000, guid: 2241eb1ca4e52624181c6ab50bb74867, type: 3}
+  - {fileID: 8300000, guid: 82ef1a855e4b7c840aa247bcc9aeada5, type: 3}
   SE:
   - {fileID: 8300000, guid: 424eff190066e9248866eab112161cdf, type: 3}
   - {fileID: 8300000, guid: 684bd064790ddec458674e6670335a6f, type: 3}
@@ -102,4 +103,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4f838a2cd9e1a41469517304343e3be7, type: 3}
   - {fileID: 8300000, guid: 5537b70d1f2bea74daa6719a0aa14e7c, type: 3}
   - {fileID: 8300000, guid: cfc1fd5be258d57488930d4060488ef6, type: 3}
+  - {fileID: 8300000, guid: 27436f885417e8344b9f1de4b424194e, type: 3}
   Voice: []

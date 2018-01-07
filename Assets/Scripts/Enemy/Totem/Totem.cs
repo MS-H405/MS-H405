@@ -73,7 +73,7 @@ public class Totem : EnemyBase
                 // スタン状態なら一時停止
                 if (IsStan)
                 {
-                    SoundManager.Instance.PlaySE(SoundManager.eSeValue.Enemy_Stan);
+                    SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Enemy_Stan);
                     StaticCoroutine.Instance.StopCoroutine(enumerator);
 
                     while (IsStan)

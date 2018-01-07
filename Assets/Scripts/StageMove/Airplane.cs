@@ -50,6 +50,8 @@ public class Airplane : MonoBehaviour
             return;
         }
 
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.UI_hikouki);
+
         Vector3 initPos = transform.position;
         float time = 0.0f;
         this.UpdateAsObservable()

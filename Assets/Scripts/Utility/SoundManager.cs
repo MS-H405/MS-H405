@@ -37,6 +37,7 @@ public class SoundManager : MonoBehaviour {
         Player_BallWalk,
         Bagpipe_Walk,
         Bagpipe_Burst,
+        Enemy_Stan,
         Max,
 	};
 	
@@ -70,6 +71,7 @@ public class SoundManager : MonoBehaviour {
         Bagpipe_FireShot,
         Bagpipe_Roll,
         Bagpipe_Scissor,
+        UI_hikouki,
         Max,
 	};
 
