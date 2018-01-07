@@ -70,6 +70,7 @@ public class TotemJump : MonoBehaviour
 
         // 上に飛ばす
         _rigidBody.AddForce(new Vector3(0, _addUpPower, 0) + (transform.forward * _addForwardPower));
+        _playerMove.enabled = true;
 
         while (!_isGround)
         {
@@ -80,7 +81,6 @@ public class TotemJump : MonoBehaviour
         }
         
         _animator.speed = 1.0f;
-        _playerMove.enabled = true;
         _totemObj.SetActive(false);
         _rigidBody.constraints = RigidbodyConstraints.None;
         _rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;

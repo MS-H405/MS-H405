@@ -37,6 +37,7 @@ public class PlayerMove : MonoBehaviour
     protected Animator _animator = null;
     private Vector3 _oldAngle = Vector3.zero;
     protected ParticleSystem _runSmoke = null;
+    private TotemJump _totemJump = null;
 
     #endregion
 
@@ -48,15 +49,16 @@ public class PlayerMove : MonoBehaviour
     protected virtual void Move()
     {
         // Animation更新
-        _animator.SetBool("Walk", _moveAmount != Vector3.zero);
-        RunSmoke(_animator.GetBool("Walk"));
-
-        if (_animator.GetBool("Walk"))
+        if (_moveAmount != Vector3.zero && _totemJump.IsGround)
         {
+            RunSmoke(true);
+            _animator.SetBool("Walk", true);
             SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Player_Run);
         }
         else
         {
+            RunSmoke(false);
+            _animator.SetBool("Walk", false);
             SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Player_Run);
         }
 
@@ -118,7 +120,7 @@ public class PlayerMove : MonoBehaviour
         get
         {
             AnimatorStateInfo animStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            return !animStateInfo.IsName("Base.Idle") && !animStateInfo.IsName("Base.Walk");
+            return !animStateInfo.IsName("Base.Idle") && !animStateInfo.IsName("Base.Walk") && !_animator.GetBool("Jump");
         }
     }
 
@@ -152,6 +154,7 @@ public class PlayerMove : MonoBehaviour
     protected void Awake()
     {
         _animator = GetComponent<Animator>();
+        _totemJump = GetComponent<TotemJump>();
         _runSmoke = transform.Find("RunSmoke").GetComponent<ParticleSystem>();
     }
 
@@ -161,7 +164,7 @@ public class PlayerMove : MonoBehaviour
     private void Update ()
     {
         // 敵を前方として移動するので、移動前に敵の方に向ける
-        if (EnemyManager.Instance.BossEnemy)
+        if (EnemyManager.Instance.BossEnemy) // && _totemJump.IsGround)
         { 
             Vector3 enemyPos = EnemyManager.Instance.BossEnemy.transform.position;
             transform.LookAt(new Vector3(enemyPos.x, transform.position.y, enemyPos.z));
