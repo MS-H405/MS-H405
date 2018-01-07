@@ -97,7 +97,7 @@ public class Special_1Player : MonoBehaviour
 			//vStartEular = new Vector3(180.0f, 0.0f, 0.0f);
 			//vEndEular = new Vector3(540.0f, 0.0f, 0.0f);
 
-			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_Jump);		// ジャンプ音
+			//SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_Jump);		// ジャンプ音
 
 			bInit = false;
 		}

@@ -261,6 +261,7 @@ public class JugglingAtack : MonoBehaviour
         transform.eulerAngles = PlayerManager.Instance.Player.transform.forward;
         transform.GetChild(0).eulerAngles = Vector3.zero;
         GetComponentInChildren<AutoRotation>().enabled = false;
+        GetComponentInChildren<CapsuleCollider>().radius = 0.12f;
     }
 
     /// <summary>
@@ -283,6 +284,7 @@ public class JugglingAtack : MonoBehaviour
             _isReflect = true;
             SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_SlowHit);
             GameEffectManager.Instance.Play("PinAttack", transform.position);
+            GetComponentInChildren<CapsuleCollider>().radius *= 3.0f;
             return;
         }
 
@@ -292,6 +294,7 @@ public class JugglingAtack : MonoBehaviour
             _isReflect = true;
             SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_SlowHit);
             GameEffectManager.Instance.Play("PinAttack", transform.position);
+            GetComponentInChildren<CapsuleCollider>().radius *= 3.0f;
             return;
         }
 
