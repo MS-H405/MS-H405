@@ -33,9 +33,7 @@ public class HermitCrab : EnemyBase
     #endregion
 
     #region variable
-
-    [SerializeField] bool _isDebug = true;
-
+    
     private eAction _nowAction;             // 現在の行動を保持
     private bool _isNext = false;           // 次の行動へ行くか
 

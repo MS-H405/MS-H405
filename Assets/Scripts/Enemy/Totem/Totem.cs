@@ -28,8 +28,6 @@ public class Totem : EnemyBase
 
     #region variable
 
-    [SerializeField] bool _isDebug = true;
-
     // トーテムの現在の状態を保持
     private eAction _action = eAction.TotemPushUp;
     private int _headAmount = 3;

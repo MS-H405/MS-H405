@@ -19,6 +19,8 @@ public class EnemyBase : MonoBehaviour
 
     #region variable
 
+    [SerializeField] protected bool _isDebug = true;              // Debugモード管理フラグ
+
     [SerializeField] int _mainHp = 0;                   // 死亡までの敵HP
 
     protected int _nowStanHp = 0;                       // 気絶までの現在HP
