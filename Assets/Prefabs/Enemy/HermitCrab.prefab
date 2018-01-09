@@ -2617,8 +2617,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 2, z: 1}
-  m_Center: {x: -0, y: 0, z: -0.3}
+  m_Size: {x: 5, y: 2, z: 2}
+  m_Center: {x: -1, y: 0, z: 0}
 --- !u!65 &65527958606294914
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2629,8 +2629,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 2, z: 1}
-  m_Center: {x: -0, y: 0, z: 0.3}
+  m_Size: {x: 5, y: 2, z: 2}
+  m_Center: {x: -1, y: 0, z: 0}
 --- !u!65 &65663006491756798
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2641,8 +2641,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 3.722149, z: 6}
-  m_Center: {x: 1.24, y: 1.767163, z: -1}
+  m_Size: {x: 3, y: 7, z: 6}
+  m_Center: {x: 1.24, y: 3.5, z: -1}
 --- !u!95 &95248908291066756
 Animator:
   serializedVersion: 3
@@ -2673,6 +2673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainHp: 1
   _stanHP: 100
+  _isDebug: 1
   _chargeFireEffect: {fileID: 1518979216470646, guid: 8c1cc3c729da28e4e80852c775139866,
     type: 2}
   _rollFireEffect: {fileID: 1397142912161464, guid: 8329e55125ed4714a81727f52226ac6b,

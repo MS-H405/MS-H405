@@ -1575,15 +1575,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 65663006491756798, guid: 2319cba2d4e57b94c93a62695797afbb,
+    - target: {fileID: 114791301847182380, guid: 2319cba2d4e57b94c93a62695797afbb,
         type: 2}
-      propertyPath: m_Size.y
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 65663006491756798, guid: 2319cba2d4e57b94c93a62695797afbb,
-        type: 2}
-      propertyPath: m_Center.y
-      value: 3.5
+      propertyPath: _isDebug
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
