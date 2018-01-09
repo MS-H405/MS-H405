@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
     /// <summary>  
     /// ダメージ処理  
     /// </summary>  
-    public void Damage()
+    public void Damage(bool isDebug = false)
     {
         if (_isDamage)
             return;
@@ -49,6 +49,17 @@ public class Player : MonoBehaviour
         DamageStan();
         _animator.SetTrigger("Damage");
         PlayerLifeManager.Instance.DamageEffect();
+
+        if (isDebug)
+        {
+            int nowHp = _hp;
+            while (_hp > 0)
+            {
+                _hp--;
+                PlayerLifeManager.Instance.DamageEffect(nowHp - _hp);
+            }
+        }
+
         StaticCoroutine.Instance.StartStaticCoroutine(DamageWait());
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_Damage);
         DamageRed.Instance.Run();
@@ -204,8 +215,7 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
-            Damage();
-            _hp = 0;
+            Damage(true);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {

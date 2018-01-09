@@ -214,6 +214,9 @@ public class PlayerMove : MonoBehaviour
     /// </summary>
     private void OnDisable()
     {
+        if (!SoundManager.Instance)
+            return;
+
         SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Player_Run);
     }
 

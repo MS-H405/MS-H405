@@ -33,23 +33,23 @@ public class PlayerLifeManager : SingletonMonoBehaviour<PlayerLifeManager>
     /// <summary>
     /// Life減少処理 (外部呼出し用)
     /// </summary>
-    public void DamageEffect()
+    public void DamageEffect(int index = 0)
     {
-        StaticCoroutine.Instance.StartStaticCoroutine(DamageEffectCoroutine());
+        StaticCoroutine.Instance.StartStaticCoroutine(DamageEffectCoroutine(index));
     }
 
     /// <summary>
     /// life減少コルーチン
     /// </summary>
-    private IEnumerator DamageEffectCoroutine()
+    private IEnumerator DamageEffectCoroutine(int index)
     {
-        if(!transform.GetChild(0))
+        if(!transform.GetChild(index))
         {
             yield break;
         }
 
         float oneAnimTime = _effectTime / LifeAnimAmount;
-        Image lifeImage = transform.GetChild(0).GetComponent<Image>();
+        Image lifeImage = transform.GetChild(index).GetComponent<Image>();
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.UI_DamageBalloon);
 
         for (int i = 0; i < LifeAnimAmount; i++)
@@ -70,7 +70,17 @@ public class PlayerLifeManager : SingletonMonoBehaviour<PlayerLifeManager>
         }
 
         // 演出後破棄
-        Destroy(transform.GetChild(0).gameObject);
+        if (index > 0)
+        {
+            if (transform.gameObject)
+            {
+                Destroy(transform.gameObject);
+            }
+        }
+        else
+        {
+            Destroy(transform.GetChild(0).gameObject);
+        }
         yield return null;
     }
 
