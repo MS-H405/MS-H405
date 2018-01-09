@@ -17,7 +17,7 @@ public class SoundManager : MonoBehaviour {
 				instance = (SoundManager)FindObjectOfType(typeof(SoundManager));
 
 				if (instance == null) {
-					Debug.LogError("SoundManager Instance Error");
+					//Debug.LogError("SoundManager Instance Error");
 				}
 			}
 
