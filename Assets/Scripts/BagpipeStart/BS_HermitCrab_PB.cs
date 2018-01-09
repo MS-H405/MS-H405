@@ -296,6 +296,7 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 			State = STATE_HERMITCRAB.ROAR;
 
 			cs_SetEffekseerObject.NewEffect(0);
+            SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_Blast);
 		}
 	}
 
