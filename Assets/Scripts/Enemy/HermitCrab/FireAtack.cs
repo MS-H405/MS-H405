@@ -19,6 +19,8 @@ public class FireAtack : MonoBehaviour
 
     #region variable
 
+    [SerializeField] bool _isPlayer = false;
+
     #endregion
 
     #region method
@@ -32,17 +34,49 @@ public class FireAtack : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Player")
+        if (_isPlayer)
         {
-            col.gameObject.GetComponent<Player>().Damage();
-            transform.GetComponent<SphereCollider>().enabled = false;
+            if (col.tag == "Enemy")
+            {
+                GameObject obj = col.gameObject;
+                while (obj.transform.parent)
+                {
+                    obj = obj.transform.parent.gameObject;
+                }
+                obj.GetComponent<EnemyBase>().Damage();
+                transform.GetComponent<SphereCollider>().enabled = false;
+            }
+        }
+        else
+        {
+            if (col.gameObject.tag == "Player")
+            {
+                col.gameObject.GetComponent<Player>().Damage();
+                transform.GetComponent<SphereCollider>().enabled = false;
+            }
         }
     }
     private void OnParticleCollision(GameObject obj)
     {
-        if (obj.gameObject.tag == "Player")
+        if (_isPlayer)
         {
-            obj.gameObject.GetComponent<Player>().Damage();
+            if (obj.tag == "Enemy")
+            {
+                while (obj.transform.parent)
+                {
+                    obj = obj.transform.parent.gameObject;
+                }
+                obj.GetComponent<EnemyBase>().Damage();
+                transform.GetComponent<SphereCollider>().enabled = false;
+            }
+        }
+        else
+        {
+            if (obj.tag == "Player")
+            {
+                obj.GetComponent<Player>().Damage();
+                transform.GetComponent<SphereCollider>().enabled = false;
+            }
         }
     }
 

@@ -120,7 +120,17 @@ public class PlayerMove : MonoBehaviour
         get
         {
             AnimatorStateInfo animStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            return !animStateInfo.IsName("Base.Idle") && !animStateInfo.IsName("Base.Walk") && !_animator.GetBool("Jump");
+            if(_animator.GetBool("Pipe"))
+            {
+                if(!animStateInfo.IsName("Base.PipeIdle") && !animStateInfo.IsName("Base.PipeWalk"))
+                    return true;
+            }
+            else
+            {
+                if (!animStateInfo.IsName("Base.Idle") && !animStateInfo.IsName("Base.Walk") && !_animator.GetBool("Jump"))
+                    return true;
+            }
+            return false;
         }
     }
 

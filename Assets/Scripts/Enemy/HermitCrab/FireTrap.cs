@@ -19,6 +19,7 @@ public class FireTrap : MonoBehaviour
 
     #region variable
 
+    [SerializeField] bool _isPlayer = false;
     [SerializeField] float _speed_sec = 30.0f;
     private float _life = 1.0f;
 
@@ -43,6 +44,12 @@ public class FireTrap : MonoBehaviour
     /// </summary>
     private void Start ()
     {
+        // 位置調整
+        Vector3 temp = transform.position;
+        temp.y = 0.0f;
+        transform.position = temp;
+
+        //
         ParticleSystem flame = transform.Find("Flame").GetComponent<ParticleSystem>();
         float flameInitSize = flame.startSize;
         ParticleSystem secondaryFlame = transform.Find("SecondaryFlame").GetComponent<ParticleSystem>();
@@ -66,6 +73,11 @@ public class FireTrap : MonoBehaviour
                 if (_life > 0.0f)
                     return;
 
+                if(_isPlayer)
+                {
+                    Bagpipe._nowFireAmount--;
+                }
+
                  Destroy(gameObject);
             });
     }
@@ -83,11 +95,26 @@ public class FireTrap : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter(Collider col)
     {
-        if (col.tag == "Player" && col.transform.position.y < 1.0f)
+        if (_isPlayer)
         {
-            Debug.Log(col.name);
-            col.GetComponent<Player>().Damage();
-            _life = 0.25f;
+            if (col.tag == "Enemy")
+            {
+                GameObject obj = col.gameObject;
+                while (obj.transform.parent)
+                {
+                    obj = obj.transform.parent.gameObject;
+                }
+                obj.GetComponent<EnemyBase>().Damage();
+                _life = 0.25f;
+            }
+        }
+        else
+        {
+            if (col.tag == "Player" && col.transform.position.y < 1.0f)
+            {
+                col.GetComponent<Player>().Damage();
+                _life = 0.25f;
+            }
         }
     }
 

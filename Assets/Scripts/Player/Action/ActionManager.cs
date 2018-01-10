@@ -41,7 +41,7 @@ public class ActionManager : MonoBehaviour
     private PlayerMove _playerMove = null;
     private RideBallMove _rideBallMove = null;
     private TotemJump _totemJump = null;
-    [SerializeField] GameObject _bagpipeFirePrefab = null;
+    private Bagpipe _bagPipe = null;
 
     #endregion
 
@@ -103,7 +103,7 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case eActionType.Bagpipe:
-
+                _bagPipe.Run(false);
                 break;
 
             default:
@@ -160,6 +160,7 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case eActionType.Bagpipe:
+                _bagPipe.Run(true);
                 break;
 
             default:
@@ -191,8 +192,7 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case eActionType.Bagpipe:
-                GameObject bag = Instantiate(_bagpipeFirePrefab, transform.position + new Vector3(0,1,0), transform.rotation);
-                bag.GetComponent<BagpipeFire>().Run(transform.forward);
+                _bagPipe.Action();
                 break;
 
             default:
@@ -213,6 +213,7 @@ public class ActionManager : MonoBehaviour
         _playerMove = GetComponent<PlayerMove>();
         _rideBallMove = GetComponent<RideBallMove>();
         _totemJump = GetComponent<TotemJump>();
+        _bagPipe = GetComponent<Bagpipe>();
 
         // ステージ番号を取得
         _maxSelect = StageData.Instance.StageNumber;

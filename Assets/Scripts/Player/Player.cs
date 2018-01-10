@@ -116,12 +116,13 @@ public class Player : MonoBehaviour
         get
         {
             AnimatorStateInfo state = _animator.GetCurrentAnimatorStateInfo(0);
-            if(!state.IsName("Base.Idle") && !state.IsName("Base.Walk") && !state.IsName("Base.RideBallMove"))
+            if (!state.IsName("Base.Idle") && !state.IsName("Base.PipeIdle") &&
+                !state.IsName("Base.Walk") && !state.IsName("Base.PipeWalk") && !state.IsName("Base.RideBallMove"))
             {
                 return false;
             }
 
-            if(_playerMove.enabled)
+            if (_playerMove.enabled)
             {
                 return _playerMove.IsInput;
             }
