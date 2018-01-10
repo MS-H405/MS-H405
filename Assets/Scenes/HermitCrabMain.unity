@@ -572,6 +572,12 @@ Prefab:
       propertyPath: _addForwardPower
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114848179674949450, guid: 96def8ac0fd4dfd4084e8a6cb047675a,
+        type: 2}
+      propertyPath: _bagpipeFirePrefab
+      value: 
+      objectReference: {fileID: 1765129736498618, guid: aa0f24491fe6ac3489e34e87808a17fe,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 96def8ac0fd4dfd4084e8a6cb047675a, type: 2}
   m_IsPrefabParent: 0
@@ -725,7 +731,7 @@ Prefab:
     - target: {fileID: 114912582981541840, guid: 53eefa152b1200846adc1b089495aabe,
         type: 2}
       propertyPath: _stageNumber
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53eefa152b1200846adc1b089495aabe, type: 2}
@@ -1549,7 +1555,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4166930980669332, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4166930980669332, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1575,10 +1581,15 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114791301847182380, guid: 2319cba2d4e57b94c93a62695797afbb,
+    - target: {fileID: 54365919659113632, guid: 2319cba2d4e57b94c93a62695797afbb,
         type: 2}
-      propertyPath: _isDebug
+      propertyPath: m_IsKinematic
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54365919659113632, guid: 2319cba2d4e57b94c93a62695797afbb,
+        type: 2}
+      propertyPath: m_UseGravity
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
