@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4550240709405430}
   - component: {fileID: 114612657494896566}
   m_Layer: 0
-  m_Name: SoundManager_Tatsuo
-  m_TagString: SoundManager_Tatsuo
+  m_Name: MovieSoundManager
+  m_TagString: MovieSoundManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
