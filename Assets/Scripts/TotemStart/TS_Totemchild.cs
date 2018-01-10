@@ -77,7 +77,7 @@ public class TS_Totemchild : MonoBehaviour
 			EffectObj.GetComponent<EffekseerEmitter>().Play();
 			bEffect = false;
 
-			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.TS_TotemChild);
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_TotemChild);
 		}
 
 		// 出現と、エフェクトのタイミングを合わせる
@@ -123,7 +123,7 @@ public class TS_Totemchild : MonoBehaviour
 			vEndPos = new Vector3(transform.position.x, CON_START_POSY, transform.position.z);
 			DiveObj.GetComponent<EffekseerEmitter>().Play();
 
-			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.TS_TotemDive);
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_TotemDive);
 
 			bInit = false;
 		}

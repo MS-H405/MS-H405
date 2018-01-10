@@ -19,7 +19,7 @@ public class BgmStarter_Tatsuo : MonoBehaviour
 
     #region variable
 
-    [SerializeField] SoundManager_Tatsuo.eBgmValue _bgmValue;
+    [SerializeField] MovieSoundManager.eBgmValue _bgmValue;
 
     #endregion
 
@@ -40,7 +40,7 @@ public class BgmStarter_Tatsuo : MonoBehaviour
     private IEnumerator PlaySound()
     {
         yield return new WaitWhile(() => Time.timeScale <= 0.0f);
-        SoundManager_Tatsuo.Instance.PlayBGM(_bgmValue);
+        MovieSoundManager.Instance.PlayBGM(_bgmValue);
     }
 
     /// <summary>

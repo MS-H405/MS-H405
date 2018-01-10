@@ -97,7 +97,7 @@ public class Special_2Player : MonoBehaviour
 			//vStartEular = new Vector3(180.0f, 0.0f, 0.0f);
 			//vEndEular = new Vector3(540.0f, 0.0f, 0.0f);
 
-			//SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_Jump);		// ジャンプ音
+			//MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_Jump);		// ジャンプ音
 
 			bInit = false;
 		}
@@ -113,8 +113,8 @@ public class Special_2Player : MonoBehaviour
 			transform.position = new Vector3(vStartPos.x, BallObj.transform.localScale.y, vStartPos.z + CON_BACKJAMP_SPEED.z * CON_TIME_BACKJAMP);
 			Parent.eulerAngles = Vector3.zero;
 
-			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_RideOn);	// 着地音
-			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_RideOn2);	// キラキラ効果音
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_RideOn);	// 着地音
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_RideOn2);	// キラキラ効果音
 
 			return true;
 		}

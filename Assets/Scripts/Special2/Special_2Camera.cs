@@ -125,7 +125,7 @@ public class Special_2Camera : MonoBehaviour
 			cs_SetEffekseerObject.NewEffect(3);
 			cs_SetEffekseerObject.NewEffect(4);
 			bSP_big_appear = false;
-			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_BigJug1);	// デカピン出現SE
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_BigJug1);	// デカピン出現SE
 		}
 
 		if (fWait < CameraMoveList[1].fWait)
@@ -306,7 +306,7 @@ public class Special_2Camera : MonoBehaviour
 		if(bTotemEffect && fTime >= CON_TOTEMEFFCT_TIME)
 		{
 			cs_SetEffekseerObject.NewEffect(13);
-			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_Babiron);	// バビロン効果音
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_Babiron);	// バビロン効果音
 			bTotemEffect = false;
 		}
 

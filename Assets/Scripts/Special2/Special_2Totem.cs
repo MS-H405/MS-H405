@@ -46,7 +46,7 @@ public class Special_2Totem : MonoBehaviour
 		{
 			PokeTotemObj.SetActive(true);
 
-			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_TotemAttack);		// トーテム突き出し音
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_TotemAttack);		// トーテム突き出し音
 
 			bInit = false;
 		}
