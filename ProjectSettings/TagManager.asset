@@ -26,8 +26,8 @@ TagManager:
   - ChildTotem
   - Player
   - FireEffect
-  - 
-  - 
+  - Enemy
+  - FireEffect_Player
   - 
   - 
   - 
