@@ -46,7 +46,6 @@ public class Totem : EnemyBase
     private float _fallHeight = 50.0f;
 
     // 演出用変数
-    //private bool _isLook = false;
     private ShakeCamera _shakeCamera = null;
     [SerializeField] string _appearEffectName = "TS_boss_appear";
     List<ManualRotation> _totemHeadList = new List<ManualRotation>();
@@ -145,7 +144,7 @@ public class Totem : EnemyBase
         {
             EnemyManager.Instance.Active = false;
             amount++;
-            transform.position = PlayerPos(); // RandomPos();
+            transform.position = PlayerPos();
 
             // 土煙を出す
             AppearEffect();
@@ -233,7 +232,7 @@ public class Totem : EnemyBase
         }
 
         // 本体突き上げ処理
-        transform.position = PlayerPos(); // RandomPos();
+        transform.position = PlayerPos();
         transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
 
         // 土煙を出す

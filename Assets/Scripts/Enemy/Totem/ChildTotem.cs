@@ -23,7 +23,8 @@ public class ChildTotem : MonoBehaviour
 
     [SerializeField] float _oneBlockSize = 1.0f;
     private Rigidbody _rigidbody = null;
-    private bool _isAtack = false;  //  攻撃中かのフラグ
+    private bool _isAtack = false;  // 攻撃中かのフラグ
+    private bool _isLook = false;   // Playerの方を向くかのフラグ
 
     // 演出用変数
     [SerializeField] string _appearEffectName = "TS_totem_appear";
@@ -92,6 +93,7 @@ public class ChildTotem : MonoBehaviour
     public IEnumerator SpecialAtack(float speed, float fallHeight, bool isSound)
     {
         // 土煙を出す
+        _isLook = false;
         GameEffectManager.Instance.PlayOnHeightZero(_appearEffectName, transform.position);
         float time = 0.0f;
         while (time < 0.5f)
@@ -191,6 +193,7 @@ public class ChildTotem : MonoBehaviour
             _totemHeadList[i].transform.localPosition = initPos[i];
             _totemHeadList[i].transform.localEulerAngles = Vector3.zero;
         }
+        _isLook = true;
         _rigidbody.velocity = Vector3.zero;
         transform.position = new Vector3(1000,0,0);
         gameObject.SetActive(false);
@@ -274,6 +277,7 @@ public class ChildTotem : MonoBehaviour
         
         // アニメーション処理
         this.LateUpdateAsObservable()
+            .Where(_ => _isLook)
             .Subscribe(_ =>
             {
                 transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
