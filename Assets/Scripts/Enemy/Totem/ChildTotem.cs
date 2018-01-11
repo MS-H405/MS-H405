@@ -15,7 +15,7 @@ public class ChildTotem : MonoBehaviour
 {
     #region define
 
-    readonly int HeadAmount = 3;
+    private int HeadAmount = 5;
 
     #endregion
 
@@ -28,10 +28,8 @@ public class ChildTotem : MonoBehaviour
     // 演出用変数
     [SerializeField] string _appearEffectName = "TS_totem_appear";
     List<ManualRotation> _totemHeadList = new List<ManualRotation>();
-
-    //[SerializeField] GameObject _dropPointEffect = null;
-    // TODO : SerializeFieldではなくする
-    [SerializeField] List<GameObject> _dropEffectList = new List<GameObject>();
+    private List<GameObject> _dropEffectList = new List<GameObject>();
+    private Totem _parentScript = null;
 
     #endregion
 
@@ -194,6 +192,7 @@ public class ChildTotem : MonoBehaviour
             _totemHeadList[i].transform.localEulerAngles = Vector3.zero;
         }
         _rigidbody.velocity = Vector3.zero;
+        transform.position = new Vector3(1000,0,0);
         gameObject.SetActive(false);
     }
 
@@ -218,22 +217,43 @@ public class ChildTotem : MonoBehaviour
     }
 
     /// <summary>
+    /// Playerの真下の座標を返す
+    /// </summary>
+    private Vector3 PlayerPos(float y)
+    {
+        Vector3 pos = PlayerManager.Instance.PlayerObj.transform.position;
+        pos.y = y;
+
+        if (_parentScript.CheckNearTotem(gameObject, pos))
+        {
+            pos = RandomPos(y);
+        }
+
+        return pos;
+    }
+
+    /// <summary>
     /// 地形内のランダムな座標を返す
     /// </summary>
     private Vector3 RandomPos(float y)
     {
         float range = StageData.FieldSize;
-        float x = -StageData.FieldSize;
-        float z = -StageData.FieldSize;
+
+        Vector3 pos = new Vector3(-StageData.FieldSize, y, -StageData.FieldSize);
 
         float t, f;
         t = Random.Range(0, 65536) / 65536.0f * 2.0f * Mathf.PI;
         f = Random.Range(0, 65536) / 65536.0f * 2.0f * Mathf.PI;
 
-        x = range * Mathf.Sin(t) * Mathf.Cos(f) + 1.0f;
-        z = range * Mathf.Cos(t) + 1.0f;
+        pos.x = range * Mathf.Sin(t) * Mathf.Cos(f) + 1.0f;
+        pos.z = range * Mathf.Cos(t) + 1.0f;
 
-        return new Vector3(x, y, z);
+        while (_parentScript.CheckNearTotem(gameObject, pos))
+        {
+            pos = RandomPos(y);
+        }
+
+        return pos;
     }
 
     #endregion
@@ -245,14 +265,20 @@ public class ChildTotem : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        HeadAmount = transform.childCount;
         _rigidbody = GetComponent<Rigidbody>();
         _totemHeadList = GetComponentsInChildren<ManualRotation>().ToList();
 
         // 子の子に配置してあるパーティクルを取得
-        /*for (int i = 0; i < transform.childCount; i++)
-        {
-            _dropParticleList.Add(transform.GetChild(i).GetComponentInChildren<ParticleSystem>());
-        }*/
+        _dropEffectList = gameObject.GetAll().Where(_ => _.name == "ChildTotemFall").ToList();
+    }
+
+    /// <summary>
+    /// 初期化処理
+    /// </summary>
+    public void Init(Totem parent)
+    {
+        _parentScript = parent;
     }
 
     /// <summary>

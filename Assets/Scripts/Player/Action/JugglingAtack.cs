@@ -53,7 +53,6 @@ public class JugglingAtack : MonoBehaviour
         // スタン中ならキャッチする
         if ((target && target.IsStan))
         {
-            //PlayerManager.Instance.Anim.SetTrigger("Catch");
             PinDestroy(true);
             return;
         }
@@ -68,7 +67,7 @@ public class JugglingAtack : MonoBehaviour
         _atackSpeed = 10.0f * _commonAtackSpeed;
         if (mesh < 0)
         {
-            transform.GetComponentInChildren<MeshFilter>().mesh = _pinMesh[_nowPinValue - 1]; // ERROR : Meshが上手く適応できていない
+            transform.GetComponentInChildren<MeshFilter>().mesh = _pinMesh[_nowPinValue - 1];
             _myPinValue = _nowPinValue - 1;
         }
         else
@@ -138,6 +137,11 @@ public class JugglingAtack : MonoBehaviour
         // 敵にあたって反射するか地形外に行くまで直進
         while (!_isReflect)
         {
+            if (!this)
+            {
+                yield break;
+            }
+
             Vector3 moveAmount = transform.forward * _atackSpeed * Time.deltaTime;
             transform.position += moveAmount;
 
@@ -149,7 +153,6 @@ public class JugglingAtack : MonoBehaviour
         Vector3 dropPoint = RandomDropPoint(startPos);
         dropPoint.y = 0.0f;
         GameObject effect = Instantiate(_dropPointEffect, dropPoint, _dropPointEffect.transform.rotation);
-        //ParticleLifeTimer[] particleLifeTimerArray = effect.GetComponentsInChildren<ParticleLifeTimer>();
 
         // 跳ね返り処理
         BezierCurve.tBez bez = new BezierCurve.tBez();  // 曲線移動のためベジエ曲線を使用
@@ -176,6 +179,15 @@ public class JugglingAtack : MonoBehaviour
         }
         autoRot.RotDegreeAmount = initRot;
 
+        RunNext();
+        Destroy(effect);
+    }
+
+    /// <summary>
+    /// ピンの後処理
+    /// </summary>
+    private void RunNext()
+    {        
         // キャッチ判定
         PinDestroy(!_isCatch);
         if (_isCatch)
@@ -196,7 +208,6 @@ public class JugglingAtack : MonoBehaviour
         }
 
         // 破棄処理
-        Destroy(effect);
         Destroy(gameObject);
     }
 
@@ -269,12 +280,21 @@ public class JugglingAtack : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter (Collider col)
     {
-        // 敵にあたった場合、ダメージ処理をして跳ね返す
-        if (col.tag == "Enemy" && _isAtack)
+        // 跳ね返り中のピンにPlayerが触れたらキャッチ判定
+        if (col.tag == "Player" && _isReflect && _isPlay)
         {
-            if (_isReflect)
-                return;
+            _isCatch = true;
+            transform.position = col.transform.position;
+            transform.rotation = col.transform.rotation;
+            return;
+        }
 
+        if (!_isAtack || _isReflect)
+            return;
+
+        // 敵にあたった場合、ダメージ処理をして跳ね返す
+        if (col.tag == "Enemy")
+        {
             GameObject obj = col.gameObject;
             while(obj.transform.parent)
             {
@@ -288,22 +308,18 @@ public class JugglingAtack : MonoBehaviour
             return;
         }
 
-        // Field外に行ってしまったら跳ね返す
-        if (col.tag == "AutoRange" && _isAtack)
+        if(col.tag == "ChildTotem")
         {
             _isReflect = true;
             SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_SlowHit);
             GameEffectManager.Instance.Play("PinAttack", transform.position);
             GetComponentInChildren<CapsuleCollider>().radius *= 3.0f;
-            return;
         }
 
-        // 跳ね返り中のピンにPlayerが触れたらキャッチ判定
-        if (col.tag == "Player" && _isReflect && _isPlay)
+        // Field外に行ってしまったら跳ね返す
+        if (col.tag == "AutoRange")
         {
-            _isCatch = true;
-            transform.position = col.transform.position;
-            transform.rotation = col.transform.rotation;
+            RunNext();
             return;
         }
     }
