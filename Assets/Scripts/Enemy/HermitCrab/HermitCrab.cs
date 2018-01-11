@@ -524,7 +524,6 @@ public class HermitCrab : EnemyBase
     private void Start ()
     {
         StaticCoroutine.Instance.StartStaticCoroutine(Run());
-        _defenseEffect.Play();
     }
 
     /// <summary>

@@ -152,7 +152,9 @@ public class JugglingAtack : MonoBehaviour
         // 反射したので適当な位置を落下地点として設定
         Vector3 dropPoint = RandomDropPoint(startPos);
         dropPoint.y = 0.0f;
-        GameObject effect = Instantiate(_dropPointEffect, dropPoint, _dropPointEffect.transform.rotation);
+        GameObject dropEffect = Instantiate(_dropPointEffect, dropPoint, _dropPointEffect.transform.rotation); //.GetComponent<ParticleSystem>();
+        dropEffect.transform.position += new Vector3(0.0f, 0.0f, 0.0f);
+        Vector3 initEffectScale = dropEffect.transform.localScale;
 
         // 跳ね返り処理
         BezierCurve.tBez bez = new BezierCurve.tBez();  // 曲線移動のためベジエ曲線を使用
@@ -168,10 +170,19 @@ public class JugglingAtack : MonoBehaviour
 
             float time = Time.deltaTime * (0.35f / atackTime);
 
-            if(bez.time > 0.5f && transform.position.y < 3.0f)
+            if (bez.time > 0.8f)
             {
-                time *= 0.25f;
+                time = Time.deltaTime * 0.1f;
                 autoRot.RotDegreeAmount = initRot * 0.5f;
+
+                if (dropEffect.transform.localScale.x > 0.3f)
+                {
+                    dropEffect.transform.localScale -= initEffectScale * (Time.deltaTime / 0.75f);
+                }
+                else
+                {
+                    dropEffect.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+                }
             }
 
             bez.time += time;
@@ -180,7 +191,7 @@ public class JugglingAtack : MonoBehaviour
         autoRot.RotDegreeAmount = initRot;
 
         RunNext();
-        Destroy(effect);
+        Destroy(dropEffect);
     }
 
     /// <summary>
@@ -205,6 +216,7 @@ public class JugglingAtack : MonoBehaviour
         {
             // 速度初期化
             _commonAtackSpeed = 1.0f;
+            GameEffectManager.Instance.Play("PinLose", transform.position);
         }
 
         // 破棄処理
@@ -258,6 +270,25 @@ public class JugglingAtack : MonoBehaviour
             yield return null;
         }
         _isPlay = true;
+    }
+
+    /// <summary>
+    /// 落下地点エフェクトを縮小
+    /// </summary>
+    private void DropEffectReduction(GameObject main, float speed)
+    {
+        Vector3 initScale = main.transform.localScale;
+        this.UpdateAsObservable()
+            .Where(_ => main.transform.localScale.x > 0.0f)
+            .Subscribe(_ =>
+            {
+                main.transform.localScale -= initScale * Time.deltaTime * speed;
+
+                if(main.transform.localScale.x < 0.0f)
+                {
+                    main.transform.localScale = Vector3.zero;
+                }
+            });
     }
 
     #endregion
