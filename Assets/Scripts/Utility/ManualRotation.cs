@@ -34,14 +34,15 @@ public class ManualRotation : MonoBehaviour
     private IEnumerator RunCoroutine(Vector3 amount, float time)
     {
         float nowTime = 0.0f;
-        Vector3 initRot = transform.eulerAngles;
+        Vector3 initRot = transform.localEulerAngles;
         Vector3 endRot = initRot + amount;
         while(nowTime < 1.0f)
         {
             nowTime += Time.deltaTime / time;
-            transform.eulerAngles = Vector3.Lerp(initRot, endRot, nowTime);
+            transform.localEulerAngles = Vector3.Lerp(initRot, endRot, nowTime);
             yield return null;
         }
+        transform.localEulerAngles = endRot;
     }
 
     #endregion

@@ -694,6 +694,17 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114097555248322722, guid: 756c1f99629816e40859ff6ff9affb30,
+        type: 2}
+      propertyPath: _childTotemPrefab
+      value: 
+      objectReference: {fileID: 1317445268974252, guid: 0aac8fd4d8fa14644b2d9a03c04b2f54,
+        type: 2}
+    - target: {fileID: 114097555248322722, guid: 756c1f99629816e40859ff6ff9affb30,
+        type: 2}
+      propertyPath: _action
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
   m_IsPrefabParent: 0

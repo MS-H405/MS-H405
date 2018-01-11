@@ -12,6 +12,7 @@ TagManager:
   - Fire
   - SoundManager
   - SoundManager_Tatsuo
+  - ChildTotem
   layers:
   - Default
   - TransparentFX
