@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f416791d65d0c459f1b09bc483c2a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dropPointEffect: {fileID: 1730324996189536, guid: 18b86962b29177f4a94094684c697a2d,
+  _dropPointEffect: {fileID: 1747504605174294, guid: 5f6d003262a08344289e5da43155d42a,
     type: 2}
   _pinMesh:
   - {fileID: 4300000, guid: 6de2d97247ae41741bf0f990fbe5851e, type: 3}
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 873b1400c7872544495b5c7ea811132f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotDegreeAmount_Sec: {x: 720, y: 0, z: 0}
+  _rotDegreeAmount_Sec: {x: 1080, y: 0, z: 0}
 --- !u!136 &136277714350151688
 CapsuleCollider:
   m_ObjectHideFlags: 1
