@@ -64,7 +64,7 @@ public class Totem : EnemyBase
             yield break;
         }
 
-        _action = eAction.TotemPushUp;
+        _action = eAction.ChildTotemPushUp;
         eAction oldAction = _action;
         while (true)
         {
