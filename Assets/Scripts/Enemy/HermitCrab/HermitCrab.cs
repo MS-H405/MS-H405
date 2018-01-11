@@ -46,7 +46,9 @@ public class HermitCrab : EnemyBase
     private List<ParticleSystem> _pipeFireList = new List<ParticleSystem>();
     [SerializeField] GameObject _chargeFireEffect = null;
     [SerializeField] GameObject _rollFireEffect = null;
-    [SerializeField] EffekseerEmitter _defenseEffect = null;
+
+    private EffekseerEmitter _defenseEffect = null;
+    private EffekseerEmitter _invincibleEffect = null;
 
     #endregion
 
@@ -488,6 +490,14 @@ public class HermitCrab : EnemyBase
             });
     }
 
+    /// <summary>
+    /// 無敵時エフェクト再生処理
+    /// </summary>
+    protected override void InvincibleEffect()
+    {
+        _invincibleEffect.Play();
+    }
+
     #endregion
 
     #region unity_event
@@ -506,6 +516,10 @@ public class HermitCrab : EnemyBase
         _rightScissors = allChild.Where(_ => _.name == "RightScissors").FirstOrDefault().GetComponent<BoxCollider>();
         _rightScissors.enabled = false;
         _pipeList = allChild.Where(_ => _.name.Contains("pipe")).ToList();
+
+        // 結界エフェクトを取得
+        _defenseEffect = allChild.Where(_ => _.name == "DefenseEffect").FirstOrDefault().GetComponent<EffekseerEmitter>();
+        _invincibleEffect = allChild.Where(_ => _.name == "InvincibleEffect").FirstOrDefault().GetComponent<EffekseerEmitter>();
 
         // パイプから出る炎を作成
         foreach (GameObject pipe in _pipeList)

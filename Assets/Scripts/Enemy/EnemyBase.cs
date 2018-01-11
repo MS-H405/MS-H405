@@ -40,8 +40,14 @@ public class EnemyBase : MonoBehaviour
     /// </summary>
     public void Damage(int amount = 1)
     {
-        if (IsStan || IsInvincible)
+        if (IsStan)
             return;
+
+        if(IsInvincible)
+        {
+            InvincibleEffect();
+            return;
+        }
 
         if(_nowStanHp <= 0)
         {
@@ -76,10 +82,18 @@ public class EnemyBase : MonoBehaviour
         return _mainHp <= 0;
     }
 
+    /// <summary>
+    /// 無敵時エフェクト再生処理
+    /// </summary>
+    protected virtual void InvincibleEffect()
+    {
+        
+    }
+
     #endregion
 
     #region unity_event     
-    
+
     /// <summary>
     /// 初期化処理
     /// </summary>
