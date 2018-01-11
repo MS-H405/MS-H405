@@ -29,7 +29,7 @@ public class Totem : EnemyBase
     #region variable
 
     // トーテムの現在の状態を保持
-    private eAction _action = eAction.TotemPushUp;
+    [SerializeField] eAction _action = eAction.TotemPushUp;
     private int _headAmount = 3;
     private bool _isAtack = false;  //  攻撃中かのフラグ
 
@@ -46,6 +46,7 @@ public class Totem : EnemyBase
     private float _fallHeight = 50.0f;
 
     // 演出用変数
+    //private bool _isLook = false;
     private ShakeCamera _shakeCamera = null;
     [SerializeField] string _appearEffectName = "TS_boss_appear";
     List<ManualRotation> _totemHeadList = new List<ManualRotation>();
@@ -64,7 +65,14 @@ public class Totem : EnemyBase
             yield break;
         }
 
-        _action = eAction.ChildTotemPushUp;
+        // 待機
+        float time = 0.0f;
+        while (time < 1.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
         eAction oldAction = _action;
         while (true)
         {
@@ -135,13 +143,9 @@ public class Totem : EnemyBase
         float time = 0.0f;
         while (amount < _headAmount)
         {
-            yield return null;
-            yield return null;
             EnemyManager.Instance.Active = false;
-
             amount++;
-            transform.position = RandomPos();
-            transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
+            transform.position = PlayerPos(); // RandomPos();
 
             // 土煙を出す
             AppearEffect();
@@ -157,9 +161,10 @@ public class Totem : EnemyBase
             AppearEffect();
             TotemRot(true, amount);
             Vector3 initPos = transform.position;
+            Vector3 endPos = initPos + new Vector3(0, _oneBlockSize * amount, 0);
             while (time < amount)
             {
-                transform.position = Vector3.Lerp(initPos, initPos + new Vector3(0, _oneBlockSize * amount, 0), time / amount);
+                transform.position = Vector3.Lerp(initPos, endPos, time / amount);
                 time += Time.deltaTime / _oneBlockUpSpeed;
 
                 // 半分出たところで通常視点に戻す
@@ -170,6 +175,7 @@ public class Totem : EnemyBase
                 
                 yield return null;
             }
+            transform.position = endPos;
             _isAtack = false;
 
             // 待機
@@ -227,7 +233,7 @@ public class Totem : EnemyBase
         }
 
         // 本体突き上げ処理
-        transform.position = RandomPos();
+        transform.position = PlayerPos(); // RandomPos();
         transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
 
         // 土煙を出す
@@ -244,9 +250,10 @@ public class Totem : EnemyBase
         AppearEffect();
         TotemRot(true, _headAmount);
         Vector3 initPos = transform.position;
+        Vector3 endPos = initPos + new Vector3(0, _oneBlockSize * _headAmount, 0);
         while (time < _headAmount)
         {
-            transform.position = Vector3.Lerp(initPos, initPos + new Vector3(0, _oneBlockSize * _headAmount, 0), time / _headAmount);
+            transform.position = Vector3.Lerp(initPos, endPos, time / _headAmount);
             time += Time.deltaTime / _oneBlockUpSpeed;
 
             // 半分出たところで通常視点に戻す
@@ -257,6 +264,7 @@ public class Totem : EnemyBase
 
             yield return null;
         }
+        transform.position = endPos;
         _isAtack = false;
 
         // 次の行動へ
@@ -446,23 +454,71 @@ public class Totem : EnemyBase
     }
 
     /// <summary>
+    /// Playerの真下の座標を返す
+    /// </summary>
+    private Vector3 PlayerPos()
+    {
+        Vector3 pos = PlayerManager.Instance.PlayerObj.transform.position;
+        pos.y = -_oneBlockSize * _headAmount;
+
+        if(CheckNearTotem(gameObject, pos))
+        {
+            pos = RandomPos();
+        }
+
+        return pos;
+    }
+
+    /// <summary>
     /// ランダムな座標を返す
     /// </summary>
     private Vector3 RandomPos()
     {
         float range = StageData.FieldSize;
-        float x = -StageData.FieldSize;
-        float y = -_oneBlockSize * _headAmount;
-        float z = -StageData.FieldSize;
+        Vector3 pos = new Vector3(-StageData.FieldSize, -_oneBlockSize * _headAmount, -StageData.FieldSize);
 
         float t, f;
         t = Random.Range(0, 65536) / 65536.0f * 2.0f * Mathf.PI;
         f = Random.Range(0, 65536) / 65536.0f * 2.0f * Mathf.PI;
 
-        x = range * Mathf.Sin(t) * Mathf.Cos(f) + 1.0f;
-        z = range * Mathf.Cos(t) + 1.0f;
+        pos.x = range * Mathf.Sin(t) * Mathf.Cos(f) + 1.0f;
+        pos.z = range * Mathf.Cos(t) + 1.0f;
 
-        return new Vector3(x, y, z);
+        while(CheckNearTotem(gameObject, pos))
+        {
+            pos = RandomPos();
+        }
+
+        return pos;
+    }
+
+    /// <summary>
+    /// 近くに他のトーテムがいないかチェック
+    /// </summary>
+    public bool CheckNearTotem(GameObject my, Vector3 pos)
+    {
+        pos.y = 0.0f;
+
+        List<GameObject> objList = new List<GameObject>();
+        objList.Add(gameObject);
+        foreach(ChildTotem child in _childTotemList)
+        {
+            objList.Add(child.gameObject);
+        }
+        objList.Remove(my);
+
+        foreach (GameObject obj in objList)
+        {
+            Vector3 objPos = obj.transform.position;
+            objPos.y = 0.0f;
+            if (Vector3.Distance(objPos, pos) > 3.5f)
+            {
+                continue;
+            }
+
+            return true;
+        }
+        return false;
     }
 
     #endregion
@@ -487,6 +543,7 @@ public class Totem : EnemyBase
         for (int i = 0; i < _childTotemAmount; i++)
         {
             ChildTotem instance = Instantiate(_childTotemPrefab).GetComponent<ChildTotem>();
+            instance.Init(this);
             instance.gameObject.SetActive(false);
             _childTotemList.Add(instance);
         }
@@ -505,6 +562,24 @@ public class Totem : EnemyBase
     {
         // 行動開始
         StaticCoroutine.Instance.StartStaticCoroutine(Run());
+
+        // アニメーション処理
+        this.LateUpdateAsObservable()
+            //.Where(_ => _isLook)
+            .Subscribe(_ =>
+            {
+                if (_animator.GetBool("Stan"))
+                {
+                    Vector3 rot = transform.eulerAngles;
+                    transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
+                    rot.y = transform.eulerAngles.y;
+                    transform.eulerAngles = rot;
+                }
+                else
+                {
+                    transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
+                }
+            });
     }
 
     /// <summary>

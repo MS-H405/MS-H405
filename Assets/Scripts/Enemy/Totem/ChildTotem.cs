@@ -15,7 +15,7 @@ public class ChildTotem : MonoBehaviour
 {
     #region define
 
-    private int HeadAmount = 5;
+    readonly int HeadAmount = 3;
 
     #endregion
 
@@ -271,6 +271,13 @@ public class ChildTotem : MonoBehaviour
 
         // 子の子に配置してあるパーティクルを取得
         _dropEffectList = gameObject.GetAll().Where(_ => _.name == "ChildTotemFall").ToList();
+        
+        // アニメーション処理
+        this.LateUpdateAsObservable()
+            .Subscribe(_ =>
+            {
+                transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
+            });
     }
 
     /// <summary>
