@@ -736,49 +736,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53eefa152b1200846adc1b089495aabe, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &649655542
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 649655543}
-  - component: {fileID: 649655544}
-  m_Layer: 13
-  m_Name: DefenseEffect
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &649655543
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 649655542}
-  m_LocalRotation: {x: -0, y: -0.5118263, z: -0, w: 0.859089}
-  m_LocalPosition: {x: 1.61, y: 1.12, z: -0.85}
-  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
-  m_Children: []
-  m_Father: {fileID: 1867803744}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &649655544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 649655542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50091075b6bce714bbcd73abc4eee722, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effectName: GAME2_Defense
-  playOnStart: 0
-  loop: 0
 --- !u!1001 &661598941
 Prefab:
   m_ObjectHideFlags: 0
@@ -1553,11 +1510,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 2, z: 0.8}
   m_Center: {x: 0.027278993, y: 1, z: 0.007598073}
---- !u!4 &1867803744 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4597783486817994, guid: 2319cba2d4e57b94c93a62695797afbb,
-    type: 2}
-  m_PrefabInternal: {fileID: 1953789087}
 --- !u!1 &1928299838
 GameObject:
   m_ObjectHideFlags: 0
@@ -1640,53 +1592,6 @@ Prefab:
     - target: {fileID: 4166930980669332, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 54365919659113632, guid: 2319cba2d4e57b94c93a62695797afbb,
-        type: 2}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 54365919659113632, guid: 2319cba2d4e57b94c93a62695797afbb,
-        type: 2}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114791301847182380, guid: 2319cba2d4e57b94c93a62695797afbb,
-        type: 2}
-      propertyPath: _defenseEffect
-      value: 
-      objectReference: {fileID: 649655544}
-    - target: {fileID: 4597783486817994, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4648891555678592, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069922019240538, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4507869728984350, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4977469611866796, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4942606547380448, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4596110812171582, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4584250362976976, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
-      propertyPath: m_RootOrder
-      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}

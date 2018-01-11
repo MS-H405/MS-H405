@@ -688,7 +688,7 @@ Prefab:
     - target: {fileID: 114097555248322722, guid: 756c1f99629816e40859ff6ff9affb30,
         type: 2}
       propertyPath: _isDebug
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1574225438334816, guid: 756c1f99629816e40859ff6ff9affb30, type: 2}
       propertyPath: m_IsActive
