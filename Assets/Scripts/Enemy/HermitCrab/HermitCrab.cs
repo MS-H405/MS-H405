@@ -46,6 +46,7 @@ public class HermitCrab : EnemyBase
     private List<ParticleSystem> _pipeFireList = new List<ParticleSystem>();
     [SerializeField] GameObject _chargeFireEffect = null;
     [SerializeField] GameObject _rollFireEffect = null;
+    [SerializeField] EffekseerEmitter _defenseEffect = null;
 
     #endregion
 
@@ -329,7 +330,7 @@ public class HermitCrab : EnemyBase
     /// </summary>
     private IEnumerator RollAttack()
     {
-        IsInvincible = true;
+        PlayDefenseEffect();
         _animator.SetTrigger("RollAttack");
 
         float time = 0.0f;
@@ -349,7 +350,7 @@ public class HermitCrab : EnemyBase
     /// </summary>
     private IEnumerator ChargeFire()
     {
-        IsInvincible = true;
+        PlayDefenseEffect();
         _animator.SetTrigger("ChargeFire");
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
 
@@ -390,7 +391,7 @@ public class HermitCrab : EnemyBase
     /// </summary>
     private IEnumerator RollFire()
     {
-        IsInvincible = true;
+        PlayDefenseEffect();
         _animator.SetBool("RollFire", true);
 
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
@@ -458,6 +459,35 @@ public class HermitCrab : EnemyBase
         _animator.speed = 1.0f;
     }
 
+    /// <summary>
+    /// 防御結界表示処理
+    /// </summary>
+    private void PlayDefenseEffect()
+    {
+        float time = 0.0f;
+        _defenseEffect.Play();
+        IsInvincible = true;
+
+        var disposable = new SingleAssignmentDisposable();
+        disposable.Disposable = this.UpdateAsObservable()
+            .Subscribe(_ =>
+            {
+                if (IsInvincible)
+                {
+                    time += Time.deltaTime;
+                    if (time >= 0.5f)
+                    {
+                        _defenseEffect.paused = true;
+                    }
+                }
+                else
+                {
+                    _defenseEffect.paused = false;
+                    disposable.Dispose();
+                }
+            });
+    }
+
     #endregion
 
     #region unity_event
@@ -494,6 +524,7 @@ public class HermitCrab : EnemyBase
     private void Start ()
     {
         StaticCoroutine.Instance.StartStaticCoroutine(Run());
+        _defenseEffect.Play();
     }
 
     /// <summary>

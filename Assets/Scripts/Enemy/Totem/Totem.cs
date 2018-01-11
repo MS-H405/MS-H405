@@ -565,7 +565,6 @@ public class Totem : EnemyBase
 
         // アニメーション処理
         this.LateUpdateAsObservable()
-            //.Where(_ => _isLook)
             .Subscribe(_ =>
             {
                 if (_animator.GetBool("Stan"))
