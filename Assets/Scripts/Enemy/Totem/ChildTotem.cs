@@ -15,7 +15,7 @@ public class ChildTotem : MonoBehaviour
 {
     #region define
 
-    readonly int HeadAmount = 3;
+    private int HeadAmount = 5;
 
     #endregion
 
