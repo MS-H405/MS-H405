@@ -31,6 +31,9 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
     private Animator _anim = null;
     public Animator Anim { get { return _anim; } private set { _anim = value; } }
 
+    private TotemJump _totemJump = null;
+    public bool IsGround { get { return _totemJump.IsGround; } }
+
     private ActionManager _actionManager = null;
 
     #endregion
@@ -101,6 +104,7 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
         // 初期化処理
         _anim = _player.GetComponent<Animator>();
         _actionManager = _player.GetComponent<ActionManager>();
+        _totemJump = _player.GetComponent<TotemJump>();
 
         List<GameObject> allChild = GetAllChildren.GetAll(_player.gameObject);
         _playerLeftHand = allChild.Where(_ => _.name == "USER_20171210_1546:USER_20171210_1546:Character1_LeftForeArm").FirstOrDefault().transform;

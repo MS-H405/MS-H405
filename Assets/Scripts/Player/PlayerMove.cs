@@ -113,24 +113,75 @@ public class PlayerMove : MonoBehaviour
     }
 
     /// <summary>
-    /// 攻撃行動中かを返す
+    /// 別の行動中化を返す
     /// </summary>
     private bool IsAction
     {
         get
         {
             AnimatorStateInfo animStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            if(_animator.GetBool("Pipe"))
+            /*if (_animator.GetBool("Pipe"))
             {
-                if(!animStateInfo.IsName("Base.PipeIdle") && !animStateInfo.IsName("Base.PipeWalk"))
-                    return true;
+                if (animStateInfo.IsName("Base.PipeIdle"))
+                    return false;
+
+                if (animStateInfo.IsName("Base.PipeWalk"))
+                    return false;
             }
             else
             {
-                if (!animStateInfo.IsName("Base.Idle") && !animStateInfo.IsName("Base.Walk") && !_animator.GetBool("Jump"))
-                    return true;
+                if (animStateInfo.IsName("Base.Idle"))
+                    return false;
+
+                if (animStateInfo.IsName("Base.Walk"))
+                    return false;
+
+                if (animStateInfo.IsName("Base.JumpEnd"))
+                    return false;
+
+                if (_animator.GetBool("Jump"))
+                    return false;
             }
+
+            if (animStateInfo.IsName("Base.Down"))
+                return false;
+
+            if (animStateInfo.IsName("Base.Up"))
+                return false;
+                
+            return true;*/
+
+            if (animStateInfo.IsName("Base.CatchThrow"))
+                return true;
+
+            if (animStateInfo.IsName("JumpEnd") && !_animator.GetBool("Jump"))
+                return true;
+
+            if (animStateInfo.IsName("Base.Down") || animStateInfo.IsName("Base.Up"))
+                return true;
+
             return false;
+        }
+    }
+
+    /// <summary>
+    /// 敵の方を見るかを返す
+    /// </summary>
+    private bool IsLook
+    {
+        get
+        {
+            if (!EnemyManager.Instance.BossEnemy)
+                return false;
+
+            if (PlayerManager.Instance.Player.IsDamage && !_animator.GetBool("Jump"))
+                return false;
+
+            AnimatorStateInfo animStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            if (animStateInfo.IsName("JumpEnd") && !_animator.GetBool("Jump"))
+                return false;
+
+            return true;
         }
     }
 
@@ -174,11 +225,10 @@ public class PlayerMove : MonoBehaviour
     private void Update ()
     {
         // 敵を前方として移動するので、移動前に敵の方に向ける
-        if (EnemyManager.Instance.BossEnemy) // && _totemJump.IsGround)
-        { 
+        if (IsLook)
+        {
             Vector3 enemyPos = EnemyManager.Instance.BossEnemy.transform.position;
             transform.LookAt(new Vector3(enemyPos.x, transform.position.y, enemyPos.z));
-            _oldAngle = transform.eulerAngles;
         }
         else
         {
@@ -206,6 +256,7 @@ public class PlayerMove : MonoBehaviour
         // 移動・減速処理
         Move();
         Deceleration();
+        _oldAngle = transform.eulerAngles;
     }
 
     /// <summary>
