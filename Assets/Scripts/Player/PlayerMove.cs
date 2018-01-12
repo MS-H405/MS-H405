@@ -219,13 +219,31 @@ public class PlayerMove : MonoBehaviour
         _runSmoke = transform.Find("RunSmoke").GetComponent<ParticleSystem>();
     }
 
-    /// <summary>
+    /// <summary>  
+    /// 更新前処理  
+    /// </summary>  
+    private void Start()
+    {
+        this.ObserveEveryValueChanged(_ => EnemyManager.Instance.BossEnemy)
+            .Subscribe(_ =>
+            {
+                if (EnemyManager.Instance.BossEnemy)
+                    return;
+
+                Vector3 enemyPos = EnemyManager.Instance.BossEnemyIgnoreActive.transform.position;
+                transform.LookAt(new Vector3(enemyPos.x, transform.position.y, enemyPos.z));
+                _oldAngle = transform.eulerAngles;
+            });
+    }
+
+    /// <summary> 
     /// 更新処理
     /// </summary>
     private void Update ()
     {
         // 敵を前方として移動するので、移動前に敵の方に向ける
-        if (IsLook)
+        bool isLook = IsLook;
+        if (isLook)
         {
             Vector3 enemyPos = EnemyManager.Instance.BossEnemy.transform.position;
             transform.LookAt(new Vector3(enemyPos.x, transform.position.y, enemyPos.z));
@@ -233,6 +251,7 @@ public class PlayerMove : MonoBehaviour
         else
         {
             transform.eulerAngles = _oldAngle;
+            _oldAngle = transform.eulerAngles;
         }
 
         // 入力判定に応じて加速
@@ -256,7 +275,11 @@ public class PlayerMove : MonoBehaviour
         // 移動・減速処理
         Move();
         Deceleration();
-        _oldAngle = transform.eulerAngles;
+
+        if (isLook)
+        {
+            _oldAngle = transform.eulerAngles;
+        }
     }
 
     /// <summary>
