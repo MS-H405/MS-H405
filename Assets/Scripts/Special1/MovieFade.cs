@@ -91,10 +91,10 @@ public class MovieFade : MonoBehaviour
         //SoundManager.Instance.StopSE();
         JugglingAtack.NowJugglingAmount = 0;
 
-        if (SoundManager_Tatsuo.Instance)
+        if (MovieSoundManager.Instance)
         {
-            SoundManager_Tatsuo.Instance.StopBGM();
-            //SoundManager_Tatsuo.Instance.StopSE();
+            MovieSoundManager.Instance.StopBGM();
+            //MovieSoundManager.Instance.StopSE();
         }
 
         if (action != null)

@@ -75,25 +75,25 @@ public class TD_Effect_PB : PlayableBehaviour
 		{
 			cs_SetEffekseerObject.NewEffect(0);
 			bEffectList[0] = false;
-			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.TS_TotemRoar);
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_TotemRoar);
 		}
 		if (bEffectList[1] && fTime >= CON_EFFECT_SITA)		// トーテム下用土埃
 		{
 			cs_SetEffekseerObject.NewEffect(1);
 			bEffectList[1] = false;
-			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.TD_TotemSita);
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TD_TotemSita);
 		}
 		if (bEffectList[2] && fTime >= CON_EFFECT_UE)		// トーテム上用土埃
 		{
 			cs_SetEffekseerObject.NewEffect(2);
 			bEffectList[2] = false;
-			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.TS_TotemBoss);
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_TotemBoss);
 		}
 		if (bEffectList[3] && fTime >= CON_EFFECT_NAKA)		// トーテム中用土埃
 		{
 			cs_SetEffekseerObject.NewEffect(3);
 			bEffectList[3] = false;
-			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.TS_TotemChild);
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_TotemChild);
 		}
 		if (bEffectList[4] && fTime >= CON_EFFECT_POWERUP)	// パワーアップ
 		{

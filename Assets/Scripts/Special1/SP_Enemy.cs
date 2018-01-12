@@ -55,7 +55,7 @@ public class SP_Enemy : MonoBehaviour
 
 		// 消滅エフェクトを出す
 		SetEffekseerObject.Instance.NewEffect(12);
-		SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_End);	// 消滅音
+		MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_End);	// 消滅音
 	}
 
 	// スタン
