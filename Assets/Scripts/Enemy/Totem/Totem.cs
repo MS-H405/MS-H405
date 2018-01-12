@@ -32,6 +32,7 @@ public class Totem : EnemyBase
     [SerializeField] eAction _action = eAction.TotemPushUp;
     private int _headAmount = 3;
     private bool _isAtack = false;  //  攻撃中かのフラグ
+    private bool _isLook = true;
 
     [SerializeField] float _oneBlockSize = 1.0f;
     [SerializeField] float _oneBlockUpSpeed = 0.25f;         // 頭ひとつぶんの飛び出る
@@ -49,6 +50,8 @@ public class Totem : EnemyBase
     private ShakeCamera _shakeCamera = null;
     [SerializeField] string _appearEffectName = "TS_boss_appear";
     List<ManualRotation> _totemHeadList = new List<ManualRotation>();
+    private EffekseerEmitter _totemLaser = null;
+    private CapsuleCollider _totemLaserCol = null;
 
     #endregion
 
@@ -233,7 +236,7 @@ public class Totem : EnemyBase
 
         // 本体突き上げ処理
         transform.position = PlayerPos();
-        transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
+        //transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
 
         // 土煙を出す
         AppearEffect();
@@ -325,20 +328,8 @@ public class Totem : EnemyBase
             yield return null;
         }
 
-        // 本体も潜らせる
-        float time = 0.0f;
-        AppearEffect();
-        TotemRot(false, _headAmount);
-        while (time < _headAmount)
-        {
-            transform.position -= new Vector3(0, _oneBlockSize * (Time.deltaTime / _oneBlockUpSpeed), 0);
-            time += Time.deltaTime / _oneBlockUpSpeed;
-            yield return null;
-        }
-        EnemyManager.Instance.Active = false;
-
         // 待機
-        time = 0.0f;
+        float time = 0.0f;
         while (time < 2.0f)
         {
             time += Time.deltaTime;
@@ -354,56 +345,61 @@ public class Totem : EnemyBase
     /// </summary>
     private IEnumerator WindAttack()
     {
-        yield return null;
-        _action += 1;
-        yield break;
- 
-        /*int count = 0;
+        _isLook = false;
+        _totemLaser.Play();
+        _animator.SetTrigger("Roar");
+        _animator.speed = 0.25f;
+
         float time = 0.0f;
-        while (count < 3)
+        var disposable = new SingleAssignmentDisposable();
+        disposable.Disposable = this.ObserveEveryValueChanged(_ => time >= 4.0f)
+            .Where(_ => time >= 4.0f)
+            .Subscribe(_ =>
+            {
+                _animator.speed = 0.0f;
+                _totemLaserCol.enabled = true;
+                disposable.Dispose();
+            });
+
+        /*Vector3 startRot = transform.eulerAngles;
+        transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
+        Vector3 targetRot = transform.eulerAngles;
+        transform.eulerAngles = startRot;
+
+        // 無駄な回転量が出ないようにする
+        if (targetRot.y - startRot.y > 180.0f)
         {
-            count++;
-            time = 0.0f;
-            AppearEffect();
+            targetRot.y -= 360.0f;
+        }
+        else if (targetRot.y - startRot.y < -180.0f)
+        {
+            targetRot.y += 360.0f;
+        }*/
 
-            Vector3 startRot = _totemHeadList[0].transform.eulerAngles;
-            transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
-            Vector3 targetRot = transform.eulerAngles;
-            transform.eulerAngles = startRot;
+        // 終了待ち
+        while (time < 7.0f)
+        {
+            time += Time.deltaTime;
 
-            // 無駄な回転量が出ないようにする
-            if (targetRot.y - startRot.y > 180.0f)
+            /*if (time > 4.0f)
             {
-                targetRot.y -= 360.0f;
-            }
-            else if (targetRot.y - startRot.y < -180.0f)
-            {
-                targetRot.y += 360.0f;
-            }
-
-            float speed = Mathf.Abs(startRot.y - targetRot.y) / 70.0f;
-            while (time < 1.0f)
-            {
-                time += Time.deltaTime / speed;
-                if (time > 1.0f) time = 1.0f;
-
-                foreach (ManualRotation head in _totemHeadList)
-                {
-                    head.transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
-                }
-                yield return null;
-            }
-
-            // 待つ
-            time = 0.0f;
-            while(time < 2.0f)
-            {
-                time += Time.deltaTime;
-                yield return null;
-            }
+                transform.eulerAngles = Vector3.Lerp(startRot, targetRot, (time - 4.0f) / 3.0f);
+            }*/
+            yield return null;
         }
 
-        // 潜る処理
+        // ビーム後処理
+        _animator.speed = 1.0f;
+        _totemLaserCol.enabled = false;
+
+        time = 0.0f;
+        while (time < 3.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // 本体も潜らせる
         time = 0.0f;
         AppearEffect();
         TotemRot(false, _headAmount);
@@ -413,14 +409,18 @@ public class Totem : EnemyBase
             time += Time.deltaTime / _oneBlockUpSpeed;
             yield return null;
         }
+        EnemyManager.Instance.Active = false;
 
-        foreach(ManualRotation head in _totemHeadList)
+        // 待機
+        time = 0.0f;
+        while (time < 3.0f)
         {
-            head.transform.localEulerAngles = Vector3.zero;
+            time += Time.deltaTime;
+            yield return null;
         }
 
-        // 次の行動へ
-        _action += 1;*/
+        _isLook = true;
+        _action += 1;
     }
 
     /// <summary>
@@ -532,9 +532,6 @@ public class Totem : EnemyBase
     {
         base.Awake();
 
-        // トーテムの先端が見えてしまうので頭を一つ増やした状態で処理
-        _headAmount += 1;
-
         // 必要コンポーネントの取得
         _rigidbody = GetComponent<Rigidbody>();
         _shakeCamera = Camera.main.GetComponent<ShakeCamera>();
@@ -549,10 +546,18 @@ public class Totem : EnemyBase
         }
 
         // トーテムの顔ごとの回転処理用コンポーネントを取得
-        for(int i = 0; i < transform.childCount; i++)
+        for(int i = 0; i < _headAmount; i++)
         {
             _totemHeadList.Add(transform.GetChild(i).GetComponent<ManualRotation>());
         }
+
+        // トーテムの先端が見えてしまうので頭を一つ増やした状態で処理
+        _headAmount += 1;
+
+        // トーテムのレーザー攻撃実装
+        _totemLaser = transform.GetChild(1).GetComponentInChildren<EffekseerEmitter>();
+        _totemLaserCol = _totemLaser.GetComponentInChildren<CapsuleCollider>();
+        _totemLaserCol.enabled = false;
     }
 
     /// <summary>
@@ -564,20 +569,21 @@ public class Totem : EnemyBase
         StaticCoroutine.Instance.StartStaticCoroutine(Run());
 
         // アニメーション処理
+        Vector3 oldRot = Vector3.zero;
         this.LateUpdateAsObservable()
             .Subscribe(_ =>
             {
-                if (_animator.GetBool("Stan"))
+                if (_animator.GetBool("Stan") || !_isLook)
                 {
                     Vector3 rot = transform.eulerAngles;
-                    transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
-                    rot.y = transform.eulerAngles.y;
+                    rot.y = oldRot.y;
                     transform.eulerAngles = rot;
                 }
                 else
                 {
                     transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
                 }
+                oldRot = transform.eulerAngles;
             });
     }
 
@@ -587,6 +593,13 @@ public class Totem : EnemyBase
     private void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Player" && _isAtack)
+        {
+            col.gameObject.GetComponent<Player>().Damage();
+        }
+    }
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Player")
         {
             col.gameObject.GetComponent<Player>().Damage();
         }
