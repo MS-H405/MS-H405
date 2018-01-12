@@ -152,8 +152,8 @@ public class JugglingAtack : MonoBehaviour
         // 反射したので適当な位置を落下地点として設定
         Vector3 dropPoint = RandomDropPoint(startPos);
         dropPoint.y = 0.0f;
-        GameObject dropEffect = Instantiate(_dropPointEffect, dropPoint, _dropPointEffect.transform.rotation); //.GetComponent<ParticleSystem>();
-        dropEffect.transform.position += new Vector3(0.0f, 0.0f, 0.0f);
+        GameObject dropEffect = Instantiate(_dropPointEffect, dropPoint, _dropPointEffect.transform.rotation);
+        dropEffect.transform.position += new Vector3(0.0f, 0.01f, 0.0f);
         Vector3 initEffectScale = dropEffect.transform.localScale;
 
         // 跳ね返り処理
@@ -272,25 +272,6 @@ public class JugglingAtack : MonoBehaviour
         _isPlay = true;
     }
 
-    /// <summary>
-    /// 落下地点エフェクトを縮小
-    /// </summary>
-    private void DropEffectReduction(GameObject main, float speed)
-    {
-        Vector3 initScale = main.transform.localScale;
-        this.UpdateAsObservable()
-            .Where(_ => main.transform.localScale.x > 0.0f)
-            .Subscribe(_ =>
-            {
-                main.transform.localScale -= initScale * Time.deltaTime * speed;
-
-                if(main.transform.localScale.x < 0.0f)
-                {
-                    main.transform.localScale = Vector3.zero;
-                }
-            });
-    }
-
     #endregion
 
     #region unity_event
@@ -303,7 +284,9 @@ public class JugglingAtack : MonoBehaviour
         transform.eulerAngles = PlayerManager.Instance.Player.transform.forward;
         transform.GetChild(0).eulerAngles = Vector3.zero;
         GetComponentInChildren<AutoRotation>().enabled = false;
-        GetComponentInChildren<CapsuleCollider>().radius = 0.12f;
+        var collider = GetComponentInChildren<CapsuleCollider>();
+        collider.radius = 0.12f;
+        collider.height = 1.55f;
     }
 
     /// <summary>
@@ -335,7 +318,9 @@ public class JugglingAtack : MonoBehaviour
             _isReflect = true;
             SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_SlowHit);
             GameEffectManager.Instance.Play("PinAttack", transform.position);
-            GetComponentInChildren<CapsuleCollider>().radius *= 3.0f;
+            var collider = GetComponentInChildren<CapsuleCollider>();
+            collider.radius *= 5.0f;
+            collider.height *= 2.0f;
             return;
         }
 
@@ -344,7 +329,9 @@ public class JugglingAtack : MonoBehaviour
             _isReflect = true;
             SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_SlowHit);
             GameEffectManager.Instance.Play("PinAttack", transform.position);
-            GetComponentInChildren<CapsuleCollider>().radius *= 3.0f;
+            var collider = GetComponentInChildren<CapsuleCollider>();
+            collider.radius *= 5.0f;
+            collider.height *= 2.0f;
         }
 
         // Field外に行ってしまったら跳ね返す
