@@ -266,17 +266,8 @@ public class Totem : EnemyBase
         transform.position = endPos;
         _isAtack = false;
 
-        // 次の行動へ
-        _action += 1;
-    }
-
-    /// <summary>
-    /// 特殊攻撃処理
-    /// </summary>
-    private IEnumerator SpecialAtack()
-    {
         // 待機
-        float time = 0.0f;
+        time = 0.0f;
         while (time < 10.0f)
         {
             time += Time.deltaTime;
@@ -298,10 +289,20 @@ public class Totem : EnemyBase
             yield return null;
         }
 
+        // 次の行動へ
+        _action += 1;
+    }
+
+    /// <summary>
+    /// 特殊攻撃処理
+    /// </summary>
+    private IEnumerator SpecialAtack()
+    {
         // 子分に特殊攻撃の実行を通知
         _shakeCamera.Shake();
         for (int i = 0; i < _childTotemAmount; i++)
         {
+            _childTotemList[i].gameObject.SetActive(true);
             StaticCoroutine.Instance.StartStaticCoroutine(_childTotemList[i].SpecialAtack(_oneBlockUpSpeed, _fallHeight, i == 0));
         }
 
@@ -325,7 +326,7 @@ public class Totem : EnemyBase
         }
 
         // 本体も潜らせる
-        time = 0.0f;
+        float time = 0.0f;
         AppearEffect();
         TotemRot(false, _headAmount);
         while (time < _headAmount)

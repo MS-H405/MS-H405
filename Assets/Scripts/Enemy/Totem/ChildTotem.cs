@@ -24,7 +24,7 @@ public class ChildTotem : MonoBehaviour
     [SerializeField] float _oneBlockSize = 1.0f;
     private Rigidbody _rigidbody = null;
     private bool _isAtack = false;  // 攻撃中かのフラグ
-    private bool _isLook = false;   // Playerの方を向くかのフラグ
+    private bool _isLook = true;   // Playerの方を向くかのフラグ
 
     // 演出用変数
     [SerializeField] string _appearEffectName = "TS_totem_appear";
