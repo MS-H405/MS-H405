@@ -20,15 +20,15 @@ public class MS_Enemy_PB : PlayableBehaviour
 		FIN
 	}
 
-	const float CON_STROKE_TIME = 3.0f;			// ストロークエフェクト表示開始時間
+	const float CON_STROKE_TIME = 4.9f;			// ストロークエフェクト表示開始時間
 	const float CON_KAMINARI_TIME = 5.0f;		// 雷エフェクト表示開始時間
 	const float CON_ENEMY_DRAW_TIME = 0.8f;		// 敵表示
 	const float CON_WAIT_TIME = 4.0f;			// 待機時間
 
 	const float CON_BACKJAMP_TIME = 1.0f;		// 後方ジャンプモーションを開始してから、玉に着地するまでの時間
 	readonly Vector3 CON_BACKJAMP_START_POS = new Vector3(0.0f, 0.0f, 0.0f);	// 開始点
-	readonly Vector3 CON_BACKJAMP_MIDDLE_POS = new Vector3(0.0f, 10.0f, 2.5f);	// ベジエ曲線の制御点
-	readonly Vector3 CON_BACKJAMP_END_POS = new Vector3(0.0f, 5.0f, 5.0f);		// 終了点
+	readonly Vector3 CON_BACKJAMP_MIDDLE_POS = new Vector3(0.0f, 10.0f, 3.5f);	// ベジエ曲線の制御点
+	readonly Vector3 CON_BACKJAMP_END_POS = new Vector3(0.0f, 4.19f, 7.0f);		// 終了点
 
 	#endregion
 
