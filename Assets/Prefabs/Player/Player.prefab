@@ -2712,7 +2712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 873b1400c7872544495b5c7ea811132f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotDegreeAmount_Sec: {x: 0, y: 720, z: 0}
+  _rotDegreeAmount_Sec: {x: 0, y: 1080, z: 0}
 --- !u!114 &114119398833752624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2724,6 +2724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795313df628d9bf4998bcf76cb2611b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _height: 0
 --- !u!114 &114373139986790730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2780,7 +2781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 873b1400c7872544495b5c7ea811132f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotDegreeAmount_Sec: {x: 0, y: -720, z: 0}
+  _rotDegreeAmount_Sec: {x: 0, y: -1080, z: 0}
 --- !u!114 &114848179674949450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2793,7 +2794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pipeObj: {fileID: 1148549175524584}
-  _bagpipeFirePrefab: {fileID: 1031283051134078, guid: aa0f24491fe6ac3489e34e87808a17fe,
+  _bagpipeFirePrefab: {fileID: 1765129736498618, guid: aa0f24491fe6ac3489e34e87808a17fe,
     type: 2}
 --- !u!114 &114899902873179586
 MonoBehaviour:
@@ -2818,7 +2819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 873b1400c7872544495b5c7ea811132f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotDegreeAmount_Sec: {x: 0, y: 720, z: 0}
+  _rotDegreeAmount_Sec: {x: 0, y: 1080, z: 0}
 --- !u!114 &114960468404790136
 MonoBehaviour:
   m_ObjectHideFlags: 1
