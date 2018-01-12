@@ -313,6 +313,25 @@ public class Special_2Camera : MonoBehaviour
 		return false;
 	}
 
+	// 停止中、ズーム１
+	public bool StopCamera_1()
+	{
+		fTime += Time.unscaledDeltaTime / CameraMoveList[8].fTime;
+		if (fTime > 1.0f)
+		{
+			EulerMove(CameraMoveList[8], CameraMoveList[9], 1.0f);
+
+			fTime = 0.0f;
+			fWait = 0.0f;
+
+			return true;
+		}
+
+		EulerMove(CameraMoveList[8], CameraMoveList[9], fTime);
+
+		return false;
+	}
+
 	// 玉発射
 	public void Camera_GoEnemy()
 	{// 視点は動かずに、注視点だけ追従
@@ -476,6 +495,22 @@ public class Special_2Camera : MonoBehaviour
 		temp.vEuler = new Vector3(0.0f, 180.0f, 0.0f);
 		temp.fTime = 1.5f;
 		temp.fWait = 1.6f;
+		CameraMoveList.Add(temp);
+
+		// 8
+		temp.vPos = new Vector3(10010.5f, 7.7f, -94.1f);		// ズーム１開始
+		temp.vLook = new Vector3(10003f, 4.3f, -99.7f);
+		temp.vEuler = new Vector3(20.0f, 233.2f, 0.0f);
+		temp.fTime = 0.4f;
+		temp.fWait = 0.0f;
+		CameraMoveList.Add(temp);
+
+		// 9
+		temp.vPos = new Vector3(10006.2f, 5.8f, -97.3f);		// ズーム１終了
+		temp.vLook = new Vector3(9998.7f, 2.4f, -102.9f);
+		temp.vEuler = new Vector3(20.0f, 233.2f, 0.0f);
+		temp.fTime = 0.0f;
+		temp.fWait = 0.0f;
 		CameraMoveList.Add(temp);
 	}
 }

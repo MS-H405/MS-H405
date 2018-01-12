@@ -22,6 +22,9 @@ public class Special_2Manager : MonoBehaviour
 		TOTEMAPPEAREFFECT,	// バビロンエフェクト表示(SP2で追加)
 		BALLRIDE,			// 玉に乗る(回転も)
 		TOTEMPOKE,			// トーテム突き
+		STOPCAMERA_1,		// 全てのオブジェクトが停止して、カメラが3カットくらいはいる	ズーム
+		STOPCAMERA_2,		// 全てのオブジェクトが停止して、カメラが3カットくらいはいる	ズーム
+		STOPCAMERA_3,		// 全てのオブジェクトが停止して、カメラが3カットくらいはいる	移動
 		BALLMOVE,			// 玉が動き出す
 		CAMERASHOULDER,		// カメラが敵の肩越しにワープ
 
@@ -117,6 +120,18 @@ public class Special_2Manager : MonoBehaviour
 
 			case State_Special2.TOTEMPOKE:
 				TotemPoke();
+				break;
+
+			case State_Special2.STOPCAMERA_1:
+				StopCamera_1();
+				break;
+
+			case State_Special2.STOPCAMERA_2:
+				StopCamera_2();
+				break;
+
+			case State_Special2.STOPCAMERA_3:
+				StopCamera_3();
 				break;
 
 			case State_Special2.BALLMOVE:
@@ -351,7 +366,66 @@ public class Special_2Manager : MonoBehaviour
 		if (!bFlgs[0])
 			bFlgs[0] = cs_Totem.Poke();				// トーテム突き
 
-		cs_Ball.Rotation();							// 玉回転
+		// 終了判定
+		if (CheckFlgs())
+		{
+			bInitializ = true;
+			State = State_Special2.STOPCAMERA_1;
+		}
+	}
+
+	// 全てのオブジェクトが停止して、カメラが3カットくらいはいる	ズーム
+	private void StopCamera_1()
+	{
+		if (bInitializ)
+		{
+			InitializFlgs(1);
+			bInitializ = false;
+			Time.timeScale=0;
+		}
+
+		if (!bFlgs[0])
+			bFlgs[0] = cs_Camera.StopCamera_1();				// カメラズーム１
+
+		// 終了判定
+		if (CheckFlgs())
+		{
+			bInitializ = true;
+			State = State_Special2.STOPCAMERA_2;
+		}
+	}
+
+	// 全てのオブジェクトが停止して、カメラが3カットくらいはいる	ズーム
+	private void StopCamera_2()
+	{
+		if (bInitializ)
+		{
+			InitializFlgs(1);
+			bInitializ = false;
+		}
+
+		if (!bFlgs[0])
+			bFlgs[0] = cs_Totem.Poke();				// トーテム突き
+
+		// 終了判定
+		if (CheckFlgs())
+		{
+			bInitializ = true;
+			State = State_Special2.STOPCAMERA_3;
+		}
+	}
+
+	// 全てのオブジェクトが停止して、カメラが3カットくらいはいる	移動
+	private void StopCamera_3()
+	{
+		if (bInitializ)
+		{
+			InitializFlgs(1);
+			bInitializ = false;
+		}
+
+		if (!bFlgs[0])
+			bFlgs[0] = cs_Totem.Poke();				// トーテム突き
 
 		// 終了判定
 		if (CheckFlgs())
