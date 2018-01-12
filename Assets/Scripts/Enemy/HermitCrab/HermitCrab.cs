@@ -228,7 +228,6 @@ public class HermitCrab : EnemyBase
 
     /// <summary>
     /// 突進攻撃処理
-    /// ※突進が微妙なので、とりあえずPlayerの方を向くだけの行動になっている※
     /// </summary>
     private IEnumerator Assault()
     {
@@ -408,14 +407,19 @@ public class HermitCrab : EnemyBase
 
         SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Bagpipe_Burst);
         Vector3 startPos = transform.position;
-        Vector3 targetPos = PlayerManager.Instance.GetVerticalPos(startPos);
+        Vector3 targetPos = Vector3.Lerp(startPos, PlayerManager.Instance.GetVerticalPos(startPos), 0.7f);
 
         // 回転
         time = 0.0f;
         while (time < 3.0f)
         {
+            if(PlayerManager.Instance.IsGround)
+            {
+                targetPos = Vector3.Lerp(startPos, PlayerManager.Instance.GetVerticalPos(startPos), 0.7f);
+            }
+
             transform.position = Vector3.Lerp(startPos, targetPos, time / 3.0f);
-            transform.eulerAngles += new Vector3(0, 270 * Time.deltaTime, 0);
+            transform.eulerAngles += new Vector3(0, 360 * Time.deltaTime, 0);
             time += Time.deltaTime;
 
             foreach (ParticleSystem pipeFire in _pipeFireList)
