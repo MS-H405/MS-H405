@@ -19,6 +19,8 @@ public class FixHeight : MonoBehaviour
 
     #region variable
 
+    [SerializeField] float _height = 0.0f;
+
     #endregion
 
     #region method
@@ -28,28 +30,12 @@ public class FixHeight : MonoBehaviour
     #region unity_event
 
     /// <summary>
-    /// 初期化処理
-    /// </summary>
-    private void Awake()
-    {
-
-    }
-
-    /// <summary>
-    /// 更新前処理
-    /// </summary>
-    private void Start ()
-    {
-
-    }
-
-    /// <summary>
     /// 更新処理
     /// </summary>
     private void Update ()
     {
         Vector3 pos = transform.position;
-        pos.y = 0.0f;
+        pos.y = _height;
         transform.position = pos;
     }
 

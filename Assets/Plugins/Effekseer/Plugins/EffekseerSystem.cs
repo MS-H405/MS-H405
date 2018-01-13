@@ -28,8 +28,7 @@ public class EffekseerSystem : MonoBehaviour
 	/// <summary xml:lang="ja">
 	/// エフェクトインスタンスの最大数
 	/// </summary>
-	// 最初 : 1600
-	public int effectInstances = 5000;		// メカ大道芸人登場で1600では足りなくなったので、とりあえず5000に
+	public int effectInstances	= 3200;
 
 	/// <summary xml:lang="en">
 	/// Maximum number of quads that can be drawn.
@@ -37,8 +36,7 @@ public class EffekseerSystem : MonoBehaviour
 	/// <summary xml:lang="ja">
 	/// 描画できる四角形の最大数
 	/// </summary>
-	public int maxSquares = 8192;
-	//public int maxSquares = 1000;
+	public int maxSquares		= 8192;
 
 	/// <summary xml:lang="en">
 	/// The coordinate system of effects.

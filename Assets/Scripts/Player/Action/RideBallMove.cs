@@ -439,18 +439,33 @@ public class RideBallMove : PlayerMove
                 obj.GetComponent<EnemyBase>().Damage(_nowAcceForward >= (MaxAcceleration * DeceRate - 0.1f) ? 3 : 1);
             }
 
-            // 跳ね返り処理
-            AcceReset();
-            _isGround = false;
-            Vector3 reflectPower = -transform.forward * _nowAcceForward * 10.0f;
-            reflectPower += new Vector3(0.0f, 250.0f, 0.0f);
-            _rigidbody.AddForce(reflectPower);
-            _animator.SetTrigger("Roll");
-            _animator.speed = 1.0f;
-            RideEffect(false);
-            SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_BallAttack);
-            Instantiate(_ballAttackEffect, col.contacts[0].point + new Vector3(0,0.5f,0), Quaternion.identity);
+            ReflectBall(col.contacts[0].point);
         }
+
+        if (col.transform.tag == "ChildTotem")
+        {
+            // 既に攻撃判定等が発生していたら処理しない
+            if (!_isGround || _nowAcceForward == 0.0f)
+                return;
+
+            ReflectBall(col.contacts[0].point);
+        }
+    }
+
+    private void ReflectBall(Vector3 point)
+    {
+        // 跳ね返り処理
+        _isGround = false;
+        Vector3 reflectPower = -transform.forward * _nowAcceForward * 10.0f;
+        reflectPower += new Vector3(0.0f, 300.0f, 0.0f);
+        _rigidbody.AddForce(reflectPower);
+        _animator.SetTrigger("Roll");
+        _animator.speed = 1.0f;
+
+        AcceReset();
+        RideEffect(false);
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_BallAttack);
+        Instantiate(_ballAttackEffect, point + new Vector3(0, 0.5f, 0), Quaternion.identity);
     }
 
     #endregion

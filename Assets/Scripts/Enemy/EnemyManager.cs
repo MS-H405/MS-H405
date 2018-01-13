@@ -31,6 +31,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
         }
         private set { _bossEnemy = value; }
     }
+    public EnemyBase BossEnemyIgnoreActive { get { return _bossEnemy; } }
 
     private bool _isActive = true;
     public bool Active { get { return _isActive; } set { _isActive = value; } }

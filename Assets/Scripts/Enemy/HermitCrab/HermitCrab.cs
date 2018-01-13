@@ -47,6 +47,9 @@ public class HermitCrab : EnemyBase
     [SerializeField] GameObject _chargeFireEffect = null;
     [SerializeField] GameObject _rollFireEffect = null;
 
+    private EffekseerEmitter _defenseEffect = null;
+    private EffekseerEmitter _invincibleEffect = null;
+
     #endregion
 
     #region method
@@ -225,7 +228,6 @@ public class HermitCrab : EnemyBase
 
     /// <summary>
     /// 突進攻撃処理
-    /// ※突進が微妙なので、とりあえずPlayerの方を向くだけの行動になっている※
     /// </summary>
     private IEnumerator Assault()
     {
@@ -329,7 +331,7 @@ public class HermitCrab : EnemyBase
     /// </summary>
     private IEnumerator RollAttack()
     {
-        IsInvincible = true;
+        PlayDefenseEffect();
         _animator.SetTrigger("RollAttack");
 
         float time = 0.0f;
@@ -349,7 +351,7 @@ public class HermitCrab : EnemyBase
     /// </summary>
     private IEnumerator ChargeFire()
     {
-        IsInvincible = true;
+        PlayDefenseEffect();
         _animator.SetTrigger("ChargeFire");
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
 
@@ -390,7 +392,7 @@ public class HermitCrab : EnemyBase
     /// </summary>
     private IEnumerator RollFire()
     {
-        IsInvincible = true;
+        PlayDefenseEffect();
         _animator.SetBool("RollFire", true);
 
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
@@ -405,14 +407,19 @@ public class HermitCrab : EnemyBase
 
         SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Bagpipe_Burst);
         Vector3 startPos = transform.position;
-        Vector3 targetPos = PlayerManager.Instance.GetVerticalPos(startPos);
+        Vector3 targetPos = Vector3.Lerp(startPos, PlayerManager.Instance.GetVerticalPos(startPos), 0.7f);
 
         // 回転
         time = 0.0f;
         while (time < 3.0f)
         {
+            if(PlayerManager.Instance.IsGround)
+            {
+                targetPos = Vector3.Lerp(startPos, PlayerManager.Instance.GetVerticalPos(startPos), 0.7f);
+            }
+
             transform.position = Vector3.Lerp(startPos, targetPos, time / 3.0f);
-            transform.eulerAngles += new Vector3(0, 270 * Time.deltaTime, 0);
+            transform.eulerAngles += new Vector3(0, 360 * Time.deltaTime, 0);
             time += Time.deltaTime;
 
             foreach (ParticleSystem pipeFire in _pipeFireList)
@@ -458,6 +465,43 @@ public class HermitCrab : EnemyBase
         _animator.speed = 1.0f;
     }
 
+    /// <summary>
+    /// 防御結界表示処理
+    /// </summary>
+    private void PlayDefenseEffect()
+    {
+        float time = 0.0f;
+        _defenseEffect.Play();
+        IsInvincible = true;
+
+        var disposable = new SingleAssignmentDisposable();
+        disposable.Disposable = this.UpdateAsObservable()
+            .Subscribe(_ =>
+            {
+                if (IsInvincible)
+                {
+                    time += Time.deltaTime;
+                    if (time >= 0.5f)
+                    {
+                        _defenseEffect.paused = true;
+                    }
+                }
+                else
+                {
+                    _defenseEffect.paused = false;
+                    disposable.Dispose();
+                }
+            });
+    }
+
+    /// <summary>
+    /// 無敵時エフェクト再生処理
+    /// </summary>
+    protected override void InvincibleEffect()
+    {
+        _invincibleEffect.Play();
+    }
+
     #endregion
 
     #region unity_event
@@ -476,6 +520,10 @@ public class HermitCrab : EnemyBase
         _rightScissors = allChild.Where(_ => _.name == "RightScissors").FirstOrDefault().GetComponent<BoxCollider>();
         _rightScissors.enabled = false;
         _pipeList = allChild.Where(_ => _.name.Contains("pipe")).ToList();
+
+        // 結界エフェクトを取得
+        _defenseEffect = allChild.Where(_ => _.name == "DefenseEffect").FirstOrDefault().GetComponent<EffekseerEmitter>();
+        _invincibleEffect = allChild.Where(_ => _.name == "InvincibleEffect").FirstOrDefault().GetComponent<EffekseerEmitter>();
 
         // パイプから出る炎を作成
         foreach (GameObject pipe in _pipeList)

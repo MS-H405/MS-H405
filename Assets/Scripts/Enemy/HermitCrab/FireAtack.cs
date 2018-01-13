@@ -75,7 +75,12 @@ public class FireAtack : MonoBehaviour
             if (obj.tag == "Player")
             {
                 obj.GetComponent<Player>().Damage();
-                transform.GetComponent<SphereCollider>().enabled = false;
+
+                var col = transform.GetComponent<SphereCollider>();
+                if (!col)
+                    return;
+
+                col.enabled = false;
             }
         }
     }

@@ -202,6 +202,16 @@ public class Player : MonoBehaviour
                     }
                 }
             });
+
+        // 必殺打てる判定
+        GameObject specialAura = transform.Find("SpecialAura").gameObject;
+        specialAura.SetActive(false);
+        this.ObserveEveryValueChanged(_ => enemyBase.IsStan)
+            .Where(_ => enemyBase.IsStan)
+            .Subscribe(_ =>
+            {
+                specialAura.SetActive(true);
+            });
     }
 
     /// <summary> 
