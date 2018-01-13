@@ -313,6 +313,63 @@ public class Special_2Camera : MonoBehaviour
 		return false;
 	}
 
+	// 停止中、ズーム1
+	public bool StopCamera_1()
+	{
+		fTime += Time.unscaledDeltaTime / CameraMoveList[8].fTime;
+		if (fTime > 1.0f)
+		{
+			EulerMove(CameraMoveList[8], CameraMoveList[9], 1.0f);
+
+			fTime = 0.0f;
+			fWait = 0.0f;
+
+			return true;
+		}
+
+		EulerMove(CameraMoveList[8], CameraMoveList[9], fTime);
+
+		return false;
+	}
+
+	// 停止中、ズーム2
+	public bool StopCamera_2()
+	{
+		fTime += Time.unscaledDeltaTime / CameraMoveList[10].fTime;
+		if (fTime > 1.0f)
+		{
+			EulerMove(CameraMoveList[10], CameraMoveList[11], 1.0f);
+
+			fTime = 0.0f;
+			fWait = 0.0f;
+
+			return true;
+		}
+
+		EulerMove(CameraMoveList[10], CameraMoveList[11], fTime);
+
+		return false;
+	}
+
+	// 停止中、移動
+	public bool StopCamera_3()
+	{
+		fTime += Time.unscaledDeltaTime / CameraMoveList[12].fTime;
+		if (fTime > 1.0f)
+		{
+			EulerMove(CameraMoveList[12], CameraMoveList[13], 1.0f);
+
+			fTime = 0.0f;
+			fWait = 0.0f;
+
+			return true;
+		}
+
+		EulerMove(CameraMoveList[12], CameraMoveList[13], fTime);
+
+		return false;
+	}
+
 	// 玉発射
 	public void Camera_GoEnemy()
 	{// 視点は動かずに、注視点だけ追従
@@ -476,6 +533,54 @@ public class Special_2Camera : MonoBehaviour
 		temp.vEuler = new Vector3(0.0f, 180.0f, 0.0f);
 		temp.fTime = 1.5f;
 		temp.fWait = 1.6f;
+		CameraMoveList.Add(temp);
+
+		// 8
+		temp.vPos = new Vector3(10010.5f, 7.7f, -94.1f);		// ズーム1開始
+		temp.vLook = new Vector3(10003f, 4.3f, -99.7f);
+		temp.vEuler = new Vector3(20.0f, 233.2f, 0.0f);
+		temp.fTime = 0.4f;
+		temp.fWait = 0.0f;
+		CameraMoveList.Add(temp);
+
+		// 9
+		temp.vPos = new Vector3(10006.2f, 5.8f, -97.3f);		// ズーム1終了
+		temp.vLook = new Vector3(9998.7f, 2.4f, -102.9f);
+		temp.vEuler = new Vector3(20.0f, 233.2f, 0.0f);
+		temp.fTime = 0.0f;
+		temp.fWait = 0.0f;
+		CameraMoveList.Add(temp);
+
+		// 10
+		temp.vPos = new Vector3(9987.7f, 10.9f, -98.3f);		// ズーム2開始
+		temp.vLook = new Vector3(9995.5f, 5.3f, -100.8f);
+		temp.vEuler = new Vector3(34.6f, 108.2f, 0.0f);
+		temp.fTime = 0.4f;
+		temp.fWait = 0.0f;
+		CameraMoveList.Add(temp);
+
+		// 11
+		temp.vPos = new Vector3(9992.0f, 7.8f, -99.7f);			// ズーム2終了
+		temp.vLook = new Vector3(9999.8f, 2.1f, -102.2f);
+		temp.vEuler = new Vector3(34.6f, 108.2f, 0.0f);
+		temp.fTime = 0.0f;
+		temp.fWait = 0.0f;
+		CameraMoveList.Add(temp);
+
+		// 12
+		temp.vPos = new Vector3(10009.5f, 5.9f, -103.8f);		// 移動開始
+		temp.vLook = new Vector3(10000.4f, 2.6f, -101.3f);
+		temp.vEuler = new Vector3(19.3f, 285.1f, 0.0f);
+		temp.fTime = 0.6f;
+		temp.fWait = 0.0f;
+		CameraMoveList.Add(temp);
+
+		// 13
+		temp.vPos = new Vector3(10007.4f, 3.3f, -109.2f);			// 移動終了
+		temp.vLook = new Vector3(10003.7f, 3.2f, -99.9f);
+		temp.vEuler = new Vector3(0.8f, 338.3f, 0.0f);
+		temp.fTime = 0.0f;
+		temp.fWait = 0.0f;
 		CameraMoveList.Add(temp);
 	}
 }
