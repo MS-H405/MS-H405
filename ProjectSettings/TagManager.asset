@@ -11,8 +11,8 @@ TagManager:
   - AutoRange
   - Fire
   - SoundManager
-  - SoundManager_Tatsuo
   - ChildTotem
+  - MovieSoundManager
   layers:
   - Default
   - TransparentFX
