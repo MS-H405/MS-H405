@@ -5778,6 +5778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd1391360b4963a44b3cdf83fe208092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SetEffekseerObj: {fileID: 2121041255}
 --- !u!1 &1313304199
 GameObject:
   m_ObjectHideFlags: 0
@@ -7687,6 +7688,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1833278210}
   - component: {fileID: 1833278211}
+  - component: {fileID: 1833278212}
   m_Layer: 0
   m_Name: Special_2Ball
   m_TagString: Untagged
@@ -7715,9 +7717,22 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1833278209}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7bbf73fca26e142498037532cf7b0112, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BallObj: {fileID: 1221050386}
+  SetEffekseerObj: {fileID: 2121041255}
+--- !u!114 &1833278212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1833278209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 565f52ae22eaa9445a82859c0993d905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BallObj: {fileID: 1221050386}
