@@ -8,9 +8,9 @@ public class MS_Light_PB : PlayableBehaviour
 {
 	#region 定数
 
-	const float CON_LIGHT1 = 1.0f;		// ライト1がつく時間
-	const float CON_LIGHT2 = 1.5f;		// ライト2がつく時間
-	const float CON_LIGHT3 = 2.0f;		// ライト3がつく時間
+	const float CON_LIGHT1 = 5.0f;		// ライト1がつく時間
+	const float CON_LIGHT2 = 5.5f;		// ライト2がつく時間
+	const float CON_LIGHT3 = 6.0f;		// ライト3がつく時間
 
 	#endregion
 
