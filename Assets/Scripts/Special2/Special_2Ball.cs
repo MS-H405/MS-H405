@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Special_1Ball : MonoBehaviour
+public class Special_2Ball : MonoBehaviour
 {
 	#region 定数
 
@@ -87,7 +87,7 @@ public class Special_1Ball : MonoBehaviour
 		if(bSP_ball_move)
 		{
 			cs_SetEffekseerObject.NewEffect(8);		// 玉移動
-			cs_SetEffekseerObject.NewEffect(10);	// 玉発射
+			//cs_SetEffekseerObject.NewEffect(10);	// 玉発射	←カメラが止まっているときにエフェクトを出したいから、トーテムに移動
 			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_Charge);	// 突進音
 			bSP_ball_move = false;
 		}

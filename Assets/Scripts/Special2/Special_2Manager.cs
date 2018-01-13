@@ -45,7 +45,7 @@ public class Special_2Manager : MonoBehaviour
 	Special_2Player cs_Player;
 	
 	[SerializeField] GameObject BallObj;
-	Special_1Ball	cs_Ball;
+	Special_2Ball	cs_Ball;
 
 	[SerializeField] GameObject TotemPokeObj;
 	Special_2Totem cs_Totem;
@@ -63,7 +63,7 @@ public class Special_2Manager : MonoBehaviour
 		cs_Camera = MainCameraObj.GetComponent<Special_2Camera>();
 		cs_Jug = Special_JugglingObj.GetComponent<SP_Jug>();
 		cs_Player = PlayerObj.GetComponent<Special_2Player>();
-		cs_Ball = BallObj.GetComponent<Special_1Ball>();
+		cs_Ball = BallObj.GetComponent<Special_2Ball>();
 		cs_Totem = TotemPokeObj.GetComponent<Special_2Totem>();
 	}
 	
@@ -381,11 +381,11 @@ public class Special_2Manager : MonoBehaviour
 		{
 			InitializFlgs(1);
 			bInitializ = false;
-			Time.timeScale=0;
+			Time.timeScale=0;		// カメラ以外すべて停止
 		}
 
 		if (!bFlgs[0])
-			bFlgs[0] = cs_Camera.StopCamera_1();				// カメラズーム１
+			bFlgs[0] = cs_Camera.StopCamera_1();				// カメラズーム1
 
 		// 終了判定
 		if (CheckFlgs())
@@ -405,7 +405,7 @@ public class Special_2Manager : MonoBehaviour
 		}
 
 		if (!bFlgs[0])
-			bFlgs[0] = cs_Totem.Poke();				// トーテム突き
+			bFlgs[0] = cs_Camera.StopCamera_2();				// カメラズーム2
 
 		// 終了判定
 		if (CheckFlgs())
@@ -425,11 +425,12 @@ public class Special_2Manager : MonoBehaviour
 		}
 
 		if (!bFlgs[0])
-			bFlgs[0] = cs_Totem.Poke();				// トーテム突き
+			bFlgs[0] = cs_Camera.StopCamera_3();				// カメラ移動
 
 		// 終了判定
 		if (CheckFlgs())
 		{
+			Time.timeScale = 1.0f;		// 停止解除
 			bInitializ = true;
 			State = State_Special2.BALLMOVE;
 		}
