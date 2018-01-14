@@ -30,6 +30,9 @@ public class EnemyBase : MonoBehaviour
     public bool IsInvincible { get; protected set; }    // 無敵フラグ
 
     protected Animator _animator = null;
+    private bool _isDamage = false;
+    [SerializeField] List<Material> _matList = new List<Material>();
+    //[SerializeField] Material _material = null;
 
     #endregion
 
@@ -55,6 +58,7 @@ public class EnemyBase : MonoBehaviour
         }
 
         _nowStanHp -= amount;
+        StaticCoroutine.Instance.StartStaticCoroutine(DamageEffect());
 
         if (_nowStanHp > 0)
             return;
@@ -62,6 +66,7 @@ public class EnemyBase : MonoBehaviour
         // スタン状態にする
         IsStan = true;
         _animator.SetBool("Stan", true);
+        StaticCoroutine.Instance.StartStaticCoroutine(StanEffect());
     }
 
     /// <summary>
@@ -87,7 +92,97 @@ public class EnemyBase : MonoBehaviour
     /// </summary>
     protected virtual void InvincibleEffect()
     {
-        
+
+    }
+
+    /// <summary>
+    /// ダメージエフェクト再生処理
+    /// </summary>
+    private IEnumerator DamageEffect()
+    {
+        if (_isDamage)
+            yield break;
+
+        _isDamage = true;
+        float time = 0.0f;
+        Color nowColor = Color.white;
+
+        while (time < 1.0f)
+        {
+            time += Time.deltaTime * 5.0f;
+            nowColor = Color.Lerp(Color.white, Color.red, time);
+
+            foreach (Material mat in _matList)
+            {
+                mat.color = nowColor;
+            }
+            yield return null;
+        }
+
+        time = 0.0f;
+        while(time < 1.0f)
+        {
+            time += Time.deltaTime * 5.0f;
+            nowColor = Color.Lerp(Color.red, Color.white, time);
+
+            foreach (Material mat in _matList)
+            {
+                mat.color = nowColor;
+            }
+            yield return null;
+        }
+
+        _isDamage = false;
+    }
+
+    /// <summary>
+    /// スタンエフェクト再生処理
+    /// </summary>
+    private IEnumerator StanEffect()
+    {
+        while (_isDamage)
+        {
+            yield return null;
+        }
+
+        _isDamage = true;
+        while (IsStan)
+        {
+            float time = 0.0f;
+            Color nowColor = Color.white;
+
+            while (time < 1.0f && IsStan)
+            {
+                time += Time.deltaTime * 5.0f;
+                nowColor = Color.Lerp(Color.white, Color.red, time);
+
+                foreach (Material mat in _matList)
+                {
+                    mat.color = nowColor;
+                }
+                yield return null;
+            }
+
+            time = 0.0f;
+            while (time < 1.0f && IsStan)
+            {
+                time += Time.deltaTime * 5.0f;
+                nowColor = Color.Lerp(Color.red, Color.white, time);
+
+                foreach (Material mat in _matList)
+                {
+                    mat.color = nowColor;
+                }
+                yield return null;
+            }
+        }
+
+        foreach (Material mat in _matList)
+        {
+            mat.color = Color.white;
+        }
+
+        _isDamage = false;
     }
 
     #endregion
@@ -101,8 +196,12 @@ public class EnemyBase : MonoBehaviour
     {
         IsStan = false;
         IsInvincible = false;
-
         _animator = GetComponent<Animator>();
+
+        foreach (Material mat in _matList)
+        {
+            mat.color = Color.white;
+        }
     }
 
     /// <summary>
@@ -115,6 +214,7 @@ public class EnemyBase : MonoBehaviour
         {
             IsStan = true;
             _animator.SetBool("Stan", true);
+            StaticCoroutine.Instance.StartStaticCoroutine(StanEffect());
         }
     }
 
