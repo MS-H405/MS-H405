@@ -57,6 +57,7 @@ public class TotemJump : MonoBehaviour
         _totemObj.transform.position = new Vector3(transform.position.x, -1.5f, transform.position.z);
         _animator.SetTrigger("JumpStart");
         _rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+        GameEffectManager.Instance.Play("TS_totem_appear", transform.position);
 
         float time = 0.0f;
         while(time < 1.0f)
@@ -69,8 +70,9 @@ public class TotemJump : MonoBehaviour
         }
 
         // 上に飛ばす
-        _rigidBody.AddForce(new Vector3(0, _addUpPower, 0) + (transform.forward * _addForwardPower));
         _playerMove.enabled = true;
+        _rigidBody.AddForce(new Vector3(0, _addUpPower, 0) + (transform.forward * _addForwardPower));
+        GameEffectManager.Instance.Play("PinAttack", transform.position);
 
         while (!_isGround)
         {
