@@ -259,8 +259,8 @@ public class SP_Jug : MonoBehaviour
 					MainCameraObj.GetComponent<Special_1Camera>().shakeCamera();
 				else if (MainCameraObj.GetComponent<Special_2Camera>())
 					MainCameraObj.GetComponent<Special_2Camera>().shakeCamera();
-				//else if(MainCameraObj.GetComponent<Special_3Camera>()))
-				//	MainCameraObj.GetComponent<Special_3Camera>())
+				else if(MainCameraObj.GetComponent<Special_3Camera>())
+					MainCameraObj.GetComponent<Special_3Camera>().shakeCamera();
 
 				// 敵スタン
 				EnemyObj.GetComponent<SP_Enemy>().Stan();

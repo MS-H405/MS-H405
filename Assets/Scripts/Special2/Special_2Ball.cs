@@ -74,7 +74,7 @@ public class Special_2Ball : MonoBehaviour
 			cs_SetEffekseerObject.NewEffect(9);
 			bSP_ball_speedup = false;
 
-			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_StopBall);		// 回転音
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_StopBall);		// 回転音
 		}
 
 		return false;
@@ -88,7 +88,7 @@ public class Special_2Ball : MonoBehaviour
 		{
 			cs_SetEffekseerObject.NewEffect(8);		// 玉移動
 			//cs_SetEffekseerObject.NewEffect(10);	// 玉発射	←カメラが止まっているときにエフェクトを出したいから、トーテムに移動
-			SoundManager_Tatsuo.Instance.PlaySE(SoundManager_Tatsuo.eSeValue.SP_Charge);	// 突進音
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_Charge);	// 突進音
 			bSP_ball_move = false;
 		}
 

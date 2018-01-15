@@ -2,22 +2,22 @@
 using System;
 using System.Collections;
 
-public class SoundManager_Tatsuo : MonoBehaviour {
+public class MovieSoundManager : MonoBehaviour {
 
 	/// <summary>
 	/// 概要 : サウンド管理
 	/// Author : 大洞祥太が作ったのをパクった
 	/// </summary>
 
-	protected static SoundManager_Tatsuo instance;
+	protected static MovieSoundManager instance;
 
-	public static SoundManager_Tatsuo Instance {
+	public static MovieSoundManager Instance {
 		get {
 			if (instance == null) {
-				instance = (SoundManager_Tatsuo)FindObjectOfType(typeof(SoundManager_Tatsuo));
+				instance = (MovieSoundManager)FindObjectOfType(typeof(MovieSoundManager));
 
 				if (instance == null) {
-					Debug.LogError("SoundManager_Tatsuo Instance Error");
+					Debug.LogError("MovieSoundManager Instance Error");
 				}
 			}
 
@@ -84,7 +84,7 @@ public class SoundManager_Tatsuo : MonoBehaviour {
 
 	void Awake()
 	{
-		GameObject[] obj = GameObject.FindGameObjectsWithTag("SoundManager_Tatsuo");
+		GameObject[] obj = GameObject.FindGameObjectsWithTag("MovieSoundManager");
 		if (obj.Length > 1)
 		{
 			// 既に存在しているなら削除

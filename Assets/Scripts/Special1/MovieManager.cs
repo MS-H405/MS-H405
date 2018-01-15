@@ -83,14 +83,17 @@ public class MovieManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
 			FadeStart(MOVIE_SCENE.TITLE);
+			Time.timeScale = 1.0f;
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha2))
 		{
 			FadeStart(MOVIE_SCENE.STAGE_1);
+			Time.timeScale = 1.0f;
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha3))
 		{
 			FadeStart(MOVIE_SCENE.STAGE_2);
+			Time.timeScale = 1.0f;
 		}
 	}
 
@@ -232,7 +235,7 @@ public class MovieManager : MonoBehaviour
 				break;
 
 			case MOVIE_SCENE.MECHA_START:
-				SceneManager.LoadScene("a");
+				SceneManager.LoadScene("MechaStart");
 				break;
 
 			case MOVIE_SCENE.MECHA_DEATH:
