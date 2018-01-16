@@ -32,6 +32,7 @@ public class EnemyBase : MonoBehaviour
     protected Animator _animator = null;
     private bool _isDamage = false;
     [SerializeField] List<Material> _matList = new List<Material>();
+    private List<Color> _initColorList = new List<Color>();
     //[SerializeField] Material _material = null;
 
     #endregion
@@ -104,17 +105,17 @@ public class EnemyBase : MonoBehaviour
             yield break;
 
         _isDamage = true;
+        int index = 0;
         float time = 0.0f;
-        Color nowColor = Color.white;
 
         while (time < 1.0f)
         {
+            index = 0;
             time += Time.deltaTime * 5.0f;
-            nowColor = Color.Lerp(Color.white, Color.red, time);
-
             foreach (Material mat in _matList)
             {
-                mat.color = nowColor;
+                mat.color = Color.Lerp(_initColorList[index], Color.red, time);
+                index++;
             }
             yield return null;
         }
@@ -122,12 +123,12 @@ public class EnemyBase : MonoBehaviour
         time = 0.0f;
         while(time < 1.0f)
         {
+            index = 0;
             time += Time.deltaTime * 5.0f;
-            nowColor = Color.Lerp(Color.red, Color.white, time);
-
             foreach (Material mat in _matList)
             {
-                mat.color = nowColor;
+                mat.color = Color.Lerp(Color.red, _initColorList[index], time);
+                index++;
             }
             yield return null;
         }
@@ -145,6 +146,7 @@ public class EnemyBase : MonoBehaviour
             yield return null;
         }
 
+        int index = 0;
         _isDamage = true;
         while (IsStan)
         {
@@ -153,12 +155,12 @@ public class EnemyBase : MonoBehaviour
 
             while (time < 1.0f && IsStan)
             {
+                index = 0;
                 time += Time.deltaTime * 5.0f;
-                nowColor = Color.Lerp(Color.white, Color.red, time);
-
                 foreach (Material mat in _matList)
                 {
-                    mat.color = nowColor;
+                    mat.color = Color.Lerp(_initColorList[index], Color.red, time);
+                    index++;
                 }
                 yield return null;
             }
@@ -166,12 +168,12 @@ public class EnemyBase : MonoBehaviour
             time = 0.0f;
             while (time < 1.0f && IsStan)
             {
+                index = 0;
                 time += Time.deltaTime * 5.0f;
-                nowColor = Color.Lerp(Color.red, Color.white, time);
-
                 foreach (Material mat in _matList)
                 {
-                    mat.color = nowColor;
+                    mat.color = Color.Lerp(Color.red, _initColorList[index], time);
+                    index++;
                 }
                 yield return null;
             }
@@ -200,7 +202,7 @@ public class EnemyBase : MonoBehaviour
 
         foreach (Material mat in _matList)
         {
-            mat.color = Color.white;
+            _initColorList.Add(mat.color);
         }
     }
 
@@ -215,6 +217,19 @@ public class EnemyBase : MonoBehaviour
             IsStan = true;
             _animator.SetBool("Stan", true);
             StaticCoroutine.Instance.StartStaticCoroutine(StanEffect());
+        }
+    }
+
+    /// <summary>
+    /// 破棄処理
+    /// </summary>
+    private void OnDestroy()
+    {
+        int index = 0;
+        foreach (Material mat in _matList)
+        {
+            mat.color = _initColorList[index];
+            index++;
         }
     }
 
