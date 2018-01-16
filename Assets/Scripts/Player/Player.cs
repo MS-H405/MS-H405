@@ -40,10 +40,10 @@ public class Player : MonoBehaviour
     /// <summary>  
     /// ダメージ処理  
     /// </summary>  
-    public void Damage(bool isDebug = false)
+    public bool Damage(bool isDebug = false)
     {
         if (_isDamage)
-            return;
+            return false;
 
         _hp--;
         DamageStan();
@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
         StaticCoroutine.Instance.StartStaticCoroutine(DamageWait());
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_Damage);
         DamageRed.Instance.Run();
+        return true;
     }
 
     /// <summary>
