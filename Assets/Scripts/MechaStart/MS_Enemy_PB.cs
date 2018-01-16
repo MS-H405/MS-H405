@@ -23,7 +23,7 @@ public class MS_Enemy_PB : PlayableBehaviour
 	const float CON_STROKE_TIME = 7.0f;			// ストロークエフェクト表示開始時間	4.9
 	const float CON_KAMINARI_TIME = 5.0f;		// 雷エフェクト表示開始時間
 	const float CON_ENEMY_DRAW_TIME = 0.8f;		// 敵表示
-	const float CON_WAIT_TIME = 4.0f;			// 待機時間
+	const float CON_WAIT_TIME = 3.0f;			// 待機時間
 
 	const float CON_BACKJAMP_TIME = 1.0f;		// 後方ジャンプモーションを開始してから、玉に着地するまでの時間
 	readonly Vector3 CON_BACKJAMP_START_POS = new Vector3(0.0f, 0.0f, 0.0f);	// 開始点

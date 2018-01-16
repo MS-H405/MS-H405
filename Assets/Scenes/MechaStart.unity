@@ -4217,7 +4217,7 @@ MonoBehaviour:
   m_ShadowmapMode: 0
   m_Cameras:
   - {fileID: 268817840}
-  m_CurrentCamera: {fileID: 0}
+  m_CurrentCamera: {fileID: 268817840}
   m_Size: {x: 10, y: 10, z: 20}
   m_SpotNear: 0.05
   m_SpotFar: 1
@@ -6600,6 +6600,8 @@ PlayableDirector:
     value: {fileID: 0}
   - key: {fileID: 114598203346556238, guid: 5bd8276eaebda5842b477eb21045b142, type: 2}
     value: {fileID: 268817842}
+  - key: {fileID: 114415254364521696, guid: 5bd8276eaebda5842b477eb21045b142, type: 2}
+    value: {fileID: 268817842}
   m_ExposedReferences:
     m_References:
     - 9e34bf96514ea7342a064cf7825c5d58: {fileID: 0}
@@ -6609,13 +6611,16 @@ PlayableDirector:
     - 7fbcbf79a9621524ab5a9f724b33f983: {fileID: 0}
     - e83b0d642ac32e44b9ac2a4727f85c1a: {fileID: 0}
     - 9c57d1f5b877c70418919519885ac673: {fileID: 204073870}
+    - 3297c71ac7ff33a4d8ddccfc986af211: {fileID: 1929477896}
     - 4f1f01fa4f5d50f4b9ca7a8dff85e04e: {fileID: 1118748611}
     - 10319affda1ede3469b3822d4bad1d3f: {fileID: 0}
     - 70df8fbc83074e04b9e7298d54a654a0: {fileID: 0}
     - 9afbeba9a09d1f645b8a83faca6eaa03: {fileID: 0}
     - 3d4ead41b3802904ba7febd726b50360: {fileID: 1746454388}
     - 5f596769bf63e04489f06ac2d25a151c: {fileID: 1929771807}
+    - a4b5bd02f229a1c409d97e4dcfd74d33: {fileID: 429817027}
     - 4e8bf3d45e0e4f64aa1d60101f0f9a3e: {fileID: 0}
+    - ec1a38b498b676748a470d2371d690a4: {fileID: 1185642579}
     - eec4775241e84804899e14564e79be76: {fileID: 0}
     - 4be190d8ad4a1e84eabdbdf80af8decc: {fileID: 0}
     - c43c0550cc1b0b149a438410c058b8d9: {fileID: 0}
@@ -6627,7 +6632,10 @@ PlayableDirector:
     - 3cfd9125dd14dee40aa5fcf8cb44a812: {fileID: 0}
     - 3e337c5d84cf9a54bb4415ebe1abbf3f: {fileID: 0}
     - 6e99e2c6631f08349b13c3df7cf5dc0e: {fileID: 0}
+    - 0b2d15dd066dab44399132bc17287d9f: {fileID: 1746454388}
+    - f004ece2f6196fc488dbb02608c8f0a3: {fileID: 204073870}
     - bd4f0af8a2c70bb4ebab9f2245e695ed: {fileID: 0}
+    - a39e93474f765b948b9caddc9f2636a6: {fileID: 1118748611}
     - aa3b800047b49ba4f9e025dfb28fa02c: {fileID: 0}
     - e87ebe7dfbc67a348b6af847d7bef0df: {fileID: 0}
     - 5ad892a1e5bb5834e9552db90000936f: {fileID: 0}
@@ -9330,7 +9338,7 @@ MonoBehaviour:
   m_ShadowmapMode: 0
   m_Cameras:
   - {fileID: 268817840}
-  m_CurrentCamera: {fileID: 0}
+  m_CurrentCamera: {fileID: 268817840}
   m_Size: {x: 10, y: 10, z: 20}
   m_SpotNear: 0.05
   m_SpotFar: 1
@@ -11188,7 +11196,7 @@ MonoBehaviour:
   m_ShadowmapMode: 0
   m_Cameras:
   - {fileID: 268817840}
-  m_CurrentCamera: {fileID: 0}
+  m_CurrentCamera: {fileID: 268817840}
   m_Size: {x: 10, y: 10, z: 20}
   m_SpotNear: 0.05
   m_SpotFar: 1
