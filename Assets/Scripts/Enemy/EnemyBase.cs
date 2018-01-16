@@ -13,10 +13,6 @@ using UniRx.Triggers;
   
 public class EnemyBase : MonoBehaviour
 {
-    #region define
-
-    #endregion
-
     #region variable
 
     [SerializeField] protected bool _isDebug = true;              // Debugモード管理フラグ
