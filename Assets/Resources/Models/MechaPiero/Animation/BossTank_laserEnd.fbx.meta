@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 9660ac8a459641540854e2631114d1da
-timeCreated: 1516097989
+guid: ea07eb6aabb559d49b7ff0ea8fbd4c91
+timeCreated: 1516111763
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -155,38 +155,43 @@ ModelImporter:
     4300006: pCylinder26
     4300008: pSphere3
     4300010: polySurface26
-    4300012: polySurface27
-    4300014: polySurface28
-    4300016: polySurface29
-    4300018: polySurface30
-    4300020: polySurface31
-    4300022: polySurface32
-    4300024: polySurface33
-    4300026: polySurface34
-    4300028: polySurface35
-    4300030: polySurface36
-    4300032: polySurface37
-    4300034: polySurface38
-    4300036: polySurface39
-    4300038: polySurface40
-    4300040: polySurface41
-    4300042: polySurface42
-    4300044: polySurface43
-    4300046: polySurface44
-    4300048: polySurface45
-    4300050: polySurface46
-    4300052: polySurface23
-    4300054: polySurface24
-    4300056: polySurface25
-    4300058: pSphere4
-    4300060: pPipe1
-    4300062: pPipe2
-    4300064: pPipe3
-    4300066: pCube10
-    4300068: pCube11
+    4300012: polySurface23
+    4300014: polySurface24
+    4300016: polySurface25
+    4300018: pSphere4
+    4300020: pPipe1
+    4300022: pPipe2
+    4300024: pPipe3
+    4300026: pCube10
+    4300028: pCube11
+    4300030: polySurface27
+    4300032: polySurface28
+    4300034: polySurface29
+    4300036: polySurface30
+    4300038: polySurface31
+    4300040: polySurface32
+    4300042: polySurface33
+    4300044: polySurface34
+    4300046: polySurface35
+    4300048: polySurface36
+    4300050: polySurface37
+    4300052: polySurface38
+    4300054: polySurface39
+    4300056: polySurface40
+    4300058: polySurface41
+    4300060: polySurface42
+    4300062: polySurface43
+    4300064: polySurface44
+    4300066: polySurface45
+    4300068: polySurface46
     7400000: Take 001
     9500000: //RootNode
   externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _lambert2
+    second: {fileID: 2100000, guid: bb4acad9940be4141be0d0c81b7b1c29, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -236,8 +241,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Take 001
       takeName: Take 001
-      firstFrame: 0
-      lastFrame: 100
+      firstFrame: 1
+      lastFrame: 70
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
