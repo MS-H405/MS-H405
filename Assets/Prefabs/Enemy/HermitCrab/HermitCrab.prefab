@@ -2748,7 +2748,10 @@ MonoBehaviour:
   _isDebug: 1
   _mainHp: 1
   _stanHP: 100
-  _matList: []
+  _matList:
+  - {fileID: 2100000, guid: e67eaf87e570a7345af2edb8a437b1d3, type: 2}
+  _rollAttackEffect: {fileID: 1642350589952798, guid: db209dbec323f98448496787961cdcca,
+    type: 2}
   _chargeFireEffect: {fileID: 1518979216470646, guid: 8c1cc3c729da28e4e80852c775139866,
     type: 2}
   _rollFireEffect: {fileID: 1397142912161464, guid: 8329e55125ed4714a81727f52226ac6b,
