@@ -530,6 +530,21 @@ public class HermitCrab : EnemyBase
         _invincibleEffect.Play();
     }
 
+    /// <summary>
+    /// 各自のスタンエフェクト再生処理
+    /// </summary>
+    protected override IEnumerator StanEffectUnique()
+    {
+        float time = 0.0f;
+        while(time < 1.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        GameEffectManager.Instance.Play("HermitStan", transform.position);
+    }
+
     #endregion
 
     #region unity_event

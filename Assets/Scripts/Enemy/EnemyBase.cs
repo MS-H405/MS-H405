@@ -64,6 +64,7 @@ public class EnemyBase : MonoBehaviour
         IsStan = true;
         _animator.SetBool("Stan", true);
         StaticCoroutine.Instance.StartStaticCoroutine(StanEffect());
+        StaticCoroutine.Instance.StartStaticCoroutine(StanEffectUnique());
     }
 
     /// <summary>
@@ -183,6 +184,14 @@ public class EnemyBase : MonoBehaviour
         _isDamage = false;
     }
 
+    /// <summary>
+    /// 各自のスタンエフェクト再生処理
+    /// </summary>
+    protected virtual IEnumerator StanEffectUnique()
+    {
+        yield return null;
+    }
+
     #endregion
 
     #region unity_event     
@@ -213,6 +222,7 @@ public class EnemyBase : MonoBehaviour
             IsStan = true;
             _animator.SetBool("Stan", true);
             StaticCoroutine.Instance.StartStaticCoroutine(StanEffect());
+            StaticCoroutine.Instance.StartStaticCoroutine(StanEffectUnique());
         }
     }
 
