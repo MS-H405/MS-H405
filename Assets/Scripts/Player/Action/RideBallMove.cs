@@ -439,7 +439,7 @@ public class RideBallMove : PlayerMove
                 obj.GetComponent<EnemyBase>().Damage(_nowAcceForward >= (MaxAcceleration * DeceRate - 0.1f) ? 3 : 1);
             }
 
-            ReflectBall(col.contacts[0].point);
+            ReflectBall(col.contacts[0].point, _nowAcceForward >= _speed_Sec);
         }
 
         if (col.transform.tag == "ChildTotem")
@@ -448,11 +448,11 @@ public class RideBallMove : PlayerMove
             if (!_isGround || _nowAcceForward == 0.0f)
                 return;
 
-            ReflectBall(col.contacts[0].point);
+            ReflectBall(col.contacts[0].point, false);
         }
     }
 
-    private void ReflectBall(Vector3 point)
+    private void ReflectBall(Vector3 point, bool isEffect)
     {
         // 跳ね返り処理
         _isGround = false;
@@ -465,7 +465,12 @@ public class RideBallMove : PlayerMove
         AcceReset();
         RideEffect(false);
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_BallAttack);
+
+        if (!isEffect)
+            return;
+
         Instantiate(_ballAttackEffect, point + new Vector3(0, 0.5f, 0), Quaternion.identity);
+        
     }
 
     #endregion
