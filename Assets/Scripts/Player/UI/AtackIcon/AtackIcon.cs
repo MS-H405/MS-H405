@@ -99,6 +99,7 @@ public class AtackIcon : MonoBehaviour
                 yield return null;
             }
             transform.eulerAngles = new Vector3(0, 0, 0);
+            transform.position = min;
         }
         else
         {
