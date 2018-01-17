@@ -19,6 +19,8 @@ public class AutoParticleDestoryer : MonoBehaviour
 
     #region variable
 
+    [SerializeField] GameObject _destroyObj = null;
+
     #endregion
 
     #region method
@@ -47,12 +49,19 @@ public class AutoParticleDestoryer : MonoBehaviour
                 if (particle.isPlaying)
                     return;
 
-                Transform trans = transform;
-                while (trans.parent)
+                if (_destroyObj)
                 {
-                    trans = trans.parent;
+                    Destroy(_destroyObj);
                 }
-                Destroy(trans.gameObject);
+                else
+                {
+                    Transform trans = transform;
+                    while (trans.parent)
+                    {
+                        trans = trans.parent;
+                    }
+                    Destroy(trans.gameObject);
+                }
             });
     }
 
