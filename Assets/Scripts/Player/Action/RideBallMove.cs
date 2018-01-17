@@ -109,8 +109,6 @@ public class RideBallMove : PlayerMove
         _ballObj.transform.eulerAngles = _oldBallAngle;
         _ballObj.transform.Rotate(transform.right * _moveAmount.x, 360 * (speed / 5.0f) * Time.deltaTime);
         _oldBallAngle = _ballObj.transform.eulerAngles;
-        //_ballObj.transform.Rotate(transform.forward * _moveAmount.z, 360 * Time.deltaTime);
-        //_ballObj.transform.eulerAngles += new Vector3(_moveAmount.z, 0.0f, -_moveAmount.x) * 5.0f * Time.deltaTime;
     }
 
     /// <summary>
@@ -353,16 +351,14 @@ public class RideBallMove : PlayerMove
         // 行動停止
         _isGround = false;
         _isRideAnim = true;
-        PlayerManager.Instance.Player.IsInvincible = true;
         RideEffect(false);
-
-        // 
         if (!PlayerManager.Instance.Player.IsDamage)
         {
             _animator.speed = 1.0f;
             _animator.SetTrigger("Roll");
             _rigidbody.AddForce(new Vector3(0, 100, 0));
         }
+        PlayerManager.Instance.Player.IsInvincible = true;
 
         // 玉をエフェクトとともに消す
         _ballObj.SetActive(false);
