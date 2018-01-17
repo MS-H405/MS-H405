@@ -328,7 +328,8 @@ MonoBehaviour:
   _isDebug: 0
   _mainHp: 1
   _stanHP: 1000
-  _matList: []
+  _matList:
+  - {fileID: 2100000, guid: 8cd9139af636b33459528664e074e5f3, type: 2}
   _action: 3
   _oneBlockSize: 3
   _oneBlockUpSpeed: 0.25
@@ -336,6 +337,8 @@ MonoBehaviour:
   _childTotemPrefab: {fileID: 1317445268974252, guid: 0aac8fd4d8fa14644b2d9a03c04b2f54,
     type: 2}
   _appearEffectName: TS_boss_appear
+  _stanEffect: {fileID: 1293750889377812, guid: c94d3a56a2b69f24f86dd4ef0ccce63c,
+    type: 2}
 --- !u!114 &114394504096145612
 MonoBehaviour:
   m_ObjectHideFlags: 1
