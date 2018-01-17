@@ -37,6 +37,7 @@ public class JugglingAtack : MonoBehaviour
     private bool _isCatch = false;                          // このオブジェクトの生存判定
 
     [SerializeField] GameObject _dropPointEffect = null;
+    [SerializeField] GameObject _pinThrowEffect = null;
     private int _myPinValue = 0;
     [SerializeField] Mesh[] _pinMesh = new Mesh[3];
 
@@ -128,6 +129,7 @@ public class JugglingAtack : MonoBehaviour
         GetComponentInChildren<AutoRotation>().enabled = true;
         StaticCoroutine.Instance.StartStaticCoroutine(ReplayWait(animStateInfo));
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_Throw);
+        Instantiate(_pinThrowEffect, transform.position, _pinThrowEffect.transform.rotation);
 
         // 投げる処理実行
         _isAtack = true;
