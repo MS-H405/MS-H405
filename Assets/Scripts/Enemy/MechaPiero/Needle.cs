@@ -19,8 +19,8 @@ public class Needle : MonoBehaviour
 
     #region variable
 
-    private Vector3 _initPos = Vector3.zero;
-    private bool _isAttack = false;
+    private Vector3 _initLocalPos = Vector3.zero;
+    //private bool _isAttack = false;
 
     #endregion
 
@@ -29,19 +29,26 @@ public class Needle : MonoBehaviour
     /// <summary>
     /// トゲ飛ばし実行処理
     /// </summary>
-    public IEnumerator Run()
+    public IEnumerator Run(float life)
     {
         float time = 0.0f;
-        _isAttack = true;
+        GameEffectManager.Instance.Play("NeedleLight", transform.position);
+        while (time < 2.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        //_isAttack = true;
 
-        while (time < 5.0f)
+        time = 0.0f;
+        while (time < life)
         {
             time += Time.deltaTime;
             transform.position += transform.up * 20.0f * Time.deltaTime;
             yield return null;
         }
 
-        _isAttack = false;
+        //_isAttack = false;
         transform.localPosition = Vector3.zero; 
     }
 
@@ -51,16 +58,23 @@ public class Needle : MonoBehaviour
     public IEnumerator Reload()
     {
         float time = 0.0f;
-        Vector3 nowPos = transform.position;
+        Vector3 nowPos = transform.localPosition;
 
         while (time < 1.0f)
         {
             time += Time.deltaTime * 1.666f;
-            transform.position = Vector3.Lerp(nowPos, _initPos, time);
+            transform.localPosition = Vector3.Lerp(nowPos, _initLocalPos, time);
             yield return null;
         }
+        transform.localPosition = _initLocalPos;
 
-        transform.position = _initPos;
+        time = 0.0f;
+        while (time < 1.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        GameEffectManager.Instance.Play("NeedleLight", transform.position);
     }
 
     #endregion
@@ -72,7 +86,7 @@ public class Needle : MonoBehaviour
     /// </summary>
     private void Start ()
     {
-        _initPos = transform.position;
+        _initLocalPos = transform.localPosition;
     }
 
     /// <summary>
@@ -80,8 +94,8 @@ public class Needle : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter(Collider col)
     {
-        if (!_isAttack)
-            return;
+        //if (!_isAttack)
+        //    return;
 
         if (col.tag == "Player")
         {

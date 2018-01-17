@@ -31,11 +31,11 @@ public class NeedleManager : MonoBehaviour
     /// <summary>
     /// 発射処理
     /// </summary>
-    public void Run()
+    public void Run(float life)
     {
         foreach (Needle needle in _needleList)
         {
-            StaticCoroutine.Instance.StartCoroutine(needle.Run());
+            StaticCoroutine.Instance.StartCoroutine(needle.Run(life));
         }
     }
 
@@ -65,7 +65,7 @@ public class NeedleManager : MonoBehaviour
             GameObject obj = Instantiate(_needlePrefab, transform.position, _needlePrefab.transform.rotation);
             obj.transform.SetParent(transform);
             obj.transform.eulerAngles += new Vector3(0, 0, angle);
-            obj.transform.position += obj.transform.up * 1.32f;
+            obj.transform.position += obj.transform.up * 1.65f;
             angle += 360.0f / NeedleAmount;
             _needleList.Add(obj.GetComponent<Needle>());
         }
