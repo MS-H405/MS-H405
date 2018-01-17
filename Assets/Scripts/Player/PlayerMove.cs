@@ -217,6 +217,7 @@ public class PlayerMove : MonoBehaviour
         _animator = GetComponent<Animator>();
         _totemJump = GetComponent<TotemJump>();
         _runSmoke = transform.Find("RunSmoke").GetComponent<ParticleSystem>();
+        _runSmoke.Stop();
     }
 
     /// <summary>  

@@ -109,8 +109,6 @@ public class RideBallMove : PlayerMove
         _ballObj.transform.eulerAngles = _oldBallAngle;
         _ballObj.transform.Rotate(transform.right * _moveAmount.x, 360 * (speed / 5.0f) * Time.deltaTime);
         _oldBallAngle = _ballObj.transform.eulerAngles;
-        //_ballObj.transform.Rotate(transform.forward * _moveAmount.z, 360 * Time.deltaTime);
-        //_ballObj.transform.eulerAngles += new Vector3(_moveAmount.z, 0.0f, -_moveAmount.x) * 5.0f * Time.deltaTime;
     }
 
     /// <summary>
@@ -353,16 +351,14 @@ public class RideBallMove : PlayerMove
         // 行動停止
         _isGround = false;
         _isRideAnim = true;
-        PlayerManager.Instance.Player.IsInvincible = true;
         RideEffect(false);
-
-        // 
         if (!PlayerManager.Instance.Player.IsDamage)
         {
             _animator.speed = 1.0f;
             _animator.SetTrigger("Roll");
             _rigidbody.AddForce(new Vector3(0, 100, 0));
         }
+        PlayerManager.Instance.Player.IsInvincible = true;
 
         // 玉をエフェクトとともに消す
         _ballObj.SetActive(false);
@@ -439,7 +435,7 @@ public class RideBallMove : PlayerMove
                 obj.GetComponent<EnemyBase>().Damage(_nowAcceForward >= (MaxAcceleration * DeceRate - 0.1f) ? 3 : 1);
             }
 
-            ReflectBall(col.contacts[0].point);
+            ReflectBall(col.contacts[0].point, _nowAcceForward >= _speed_Sec);
         }
 
         if (col.transform.tag == "ChildTotem")
@@ -448,11 +444,11 @@ public class RideBallMove : PlayerMove
             if (!_isGround || _nowAcceForward == 0.0f)
                 return;
 
-            ReflectBall(col.contacts[0].point);
+            ReflectBall(col.contacts[0].point, false);
         }
     }
 
-    private void ReflectBall(Vector3 point)
+    private void ReflectBall(Vector3 point, bool isEffect)
     {
         // 跳ね返り処理
         _isGround = false;
@@ -465,7 +461,12 @@ public class RideBallMove : PlayerMove
         AcceReset();
         RideEffect(false);
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_BallAttack);
+
+        if (!isEffect)
+            return;
+
         Instantiate(_ballAttackEffect, point + new Vector3(0, 0.5f, 0), Quaternion.identity);
+        
     }
 
     #endregion

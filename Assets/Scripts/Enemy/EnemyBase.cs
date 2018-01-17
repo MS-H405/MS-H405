@@ -13,10 +13,6 @@ using UniRx.Triggers;
   
 public class EnemyBase : MonoBehaviour
 {
-    #region define
-
-    #endregion
-
     #region variable
 
     [SerializeField] protected bool _isDebug = true;              // Debugモード管理フラグ
@@ -30,6 +26,10 @@ public class EnemyBase : MonoBehaviour
     public bool IsInvincible { get; protected set; }    // 無敵フラグ
 
     protected Animator _animator = null;
+    private bool _isDamage = false;
+    [SerializeField] List<Material> _matList = new List<Material>();
+    private List<Color> _initColorList = new List<Color>();
+    //[SerializeField] Material _material = null;
 
     #endregion
 
@@ -55,6 +55,7 @@ public class EnemyBase : MonoBehaviour
         }
 
         _nowStanHp -= amount;
+        StaticCoroutine.Instance.StartStaticCoroutine(DamageEffect());
 
         if (_nowStanHp > 0)
             return;
@@ -62,6 +63,8 @@ public class EnemyBase : MonoBehaviour
         // スタン状態にする
         IsStan = true;
         _animator.SetBool("Stan", true);
+        StaticCoroutine.Instance.StartStaticCoroutine(StanEffect());
+        StaticCoroutine.Instance.StartStaticCoroutine(StanEffectUnique());
     }
 
     /// <summary>
@@ -87,7 +90,106 @@ public class EnemyBase : MonoBehaviour
     /// </summary>
     protected virtual void InvincibleEffect()
     {
-        
+
+    }
+
+    /// <summary>
+    /// ダメージエフェクト再生処理
+    /// </summary>
+    private IEnumerator DamageEffect()
+    {
+        if (_isDamage)
+            yield break;
+
+        _isDamage = true;
+        int index = 0;
+        float time = 0.0f;
+
+        while (time < 1.0f)
+        {
+            index = 0;
+            time += Time.deltaTime * 5.0f;
+            foreach (Material mat in _matList)
+            {
+                mat.color = Color.Lerp(_initColorList[index], Color.red, time);
+                index++;
+            }
+            yield return null;
+        }
+
+        time = 0.0f;
+        while(time < 1.0f)
+        {
+            index = 0;
+            time += Time.deltaTime * 5.0f;
+            foreach (Material mat in _matList)
+            {
+                mat.color = Color.Lerp(Color.red, _initColorList[index], time);
+                index++;
+            }
+            yield return null;
+        }
+
+        _isDamage = false;
+    }
+
+    /// <summary>
+    /// スタンエフェクト再生処理
+    /// </summary>
+    private IEnumerator StanEffect()
+    {
+        while (_isDamage)
+        {
+            yield return null;
+        }
+
+        int index = 0;
+        _isDamage = true;
+        while (IsStan)
+        {
+            float time = 0.0f;
+            Color nowColor = Color.white;
+
+            while (time < 1.0f && IsStan)
+            {
+                index = 0;
+                time += Time.deltaTime * 5.0f;
+                foreach (Material mat in _matList)
+                {
+                    mat.color = Color.Lerp(_initColorList[index], Color.red, time);
+                    index++;
+                }
+                yield return null;
+            }
+
+            time = 0.0f;
+            while (time < 1.0f && IsStan)
+            {
+                index = 0;
+                time += Time.deltaTime * 5.0f;
+                foreach (Material mat in _matList)
+                {
+                    mat.color = Color.Lerp(Color.red, _initColorList[index], time);
+                    index++;
+                }
+                yield return null;
+            }
+        }
+
+        foreach (Material mat in _matList)
+        {
+            mat.color = Color.white;
+        }
+
+        _isDamage = false;
+    }
+
+    /// <summary>
+    /// 各自のスタンエフェクト再生処理
+    /// </summary>
+    protected virtual IEnumerator StanEffectUnique()
+    {
+        yield return null;
     }
 
     #endregion
@@ -101,8 +203,12 @@ public class EnemyBase : MonoBehaviour
     {
         IsStan = false;
         IsInvincible = false;
-
         _animator = GetComponent<Animator>();
+
+        foreach (Material mat in _matList)
+        {
+            _initColorList.Add(mat.color);
+        }
     }
 
     /// <summary>
@@ -115,6 +221,21 @@ public class EnemyBase : MonoBehaviour
         {
             IsStan = true;
             _animator.SetBool("Stan", true);
+            StaticCoroutine.Instance.StartStaticCoroutine(StanEffect());
+            StaticCoroutine.Instance.StartStaticCoroutine(StanEffectUnique());
+        }
+    }
+
+    /// <summary>
+    /// 破棄処理
+    /// </summary>
+    private void OnDestroy()
+    {
+        int index = 0;
+        foreach (Material mat in _matList)
+        {
+            mat.color = _initColorList[index];
+            index++;
         }
     }
 

@@ -44,6 +44,9 @@ public class HermitCrab : EnemyBase
     private BoxCollider _rightScissors = null;
     private List<GameObject> _pipeList = new List<GameObject>();
     private List<ParticleSystem> _pipeFireList = new List<ParticleSystem>();
+    [SerializeField] GameObject _leftScissorsEffect = null;
+    [SerializeField] GameObject _rightScissorsEffect = null;
+    [SerializeField] GameObject _rollAttackEffect = null;
     [SerializeField] GameObject _chargeFireEffect = null;
     [SerializeField] GameObject _rollFireEffect = null;
 
@@ -307,19 +310,28 @@ public class HermitCrab : EnemyBase
             yield return null;
         }
 
+        GameObject effect = null;
         switch (action)
         {
             case eAction.RightAttack:
                 _rightScissors.enabled = true;
+                //effect = Instantiate(_rightScissorsEffect);
+                //effect.transform.SetParent(_rightScissors.transform.Find("RightS"));
                 break;
 
             case eAction.LeftAttack:
                 _leftScissors.enabled = true;
+                effect = Instantiate(_leftScissorsEffect);
+                effect.transform.SetParent(_leftScissors.transform.Find("LehtS"));
+                effect.transform.localPosition = Vector3.zero;
+                effect.transform.localEulerAngles = Vector3.zero;
                 break;
 
             default:
                 break;
         }
+        //effect.transform.localPosition = Vector3.zero;
+        //effect.transform.localEulerAngles = Vector3.zero;
 
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_Scissor);
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
@@ -344,6 +356,22 @@ public class HermitCrab : EnemyBase
         _rightScissors.enabled = true;
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_Roll);
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
+
+        time = 0.0f;
+        while (time < 0.5f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        Instantiate(_rollAttackEffect, transform.position, _rollAttackEffect.transform.rotation);
+
+        time = 0.0f;
+        while (time < 0.75f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        _rightScissors.enabled = false;
     }
 
     /// <summary>
@@ -500,6 +528,21 @@ public class HermitCrab : EnemyBase
     protected override void InvincibleEffect()
     {
         _invincibleEffect.Play();
+    }
+
+    /// <summary>
+    /// 各自のスタンエフェクト再生処理
+    /// </summary>
+    protected override IEnumerator StanEffectUnique()
+    {
+        float time = 0.0f;
+        while(time < 1.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        GameEffectManager.Instance.Play("HermitStan", transform.position);
     }
 
     #endregion

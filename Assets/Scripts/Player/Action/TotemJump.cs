@@ -35,6 +35,8 @@ public class TotemJump : MonoBehaviour
     private Rigidbody _rigidBody = null;
     private PlayerMove _playerMove = null;
 
+    private ParticleSystem _totemJumpEffect = null;
+
     #endregion
 
     #region method
@@ -57,6 +59,7 @@ public class TotemJump : MonoBehaviour
         _totemObj.transform.position = new Vector3(transform.position.x, -1.5f, transform.position.z);
         _animator.SetTrigger("JumpStart");
         _rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+        GameEffectManager.Instance.Play("TS_totem_appear", transform.position);
 
         float time = 0.0f;
         while(time < 1.0f)
@@ -69,8 +72,10 @@ public class TotemJump : MonoBehaviour
         }
 
         // 上に飛ばす
-        _rigidBody.AddForce(new Vector3(0, _addUpPower, 0) + (transform.forward * _addForwardPower));
+        TotemJumpEffect(true);
         _playerMove.enabled = true;
+        _rigidBody.AddForce(new Vector3(0, _addUpPower, 0) + (transform.forward * _addForwardPower));
+        GameEffectManager.Instance.Play("PinAttack", transform.position);
 
         while (!_isGround)
         {
@@ -79,11 +84,33 @@ public class TotemJump : MonoBehaviour
             _totemObj.transform.position -= new Vector3(0, _pushAmount * Time.deltaTime / _pushTime, 0) / 2.0f;
             yield return null;
         }
-        
+
+        TotemJumpEffect(false);
         _animator.speed = 1.0f;
         _totemObj.SetActive(false);
         _rigidBody.constraints = RigidbodyConstraints.None;
         _rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+    }
+
+    /// <summary>
+    /// トーテムジャンプ時の滑空エフェクト処理
+    /// </summary>
+    private void TotemJumpEffect(bool isOn)
+    {
+        if (isOn)
+        {
+            bool old = _totemJumpEffect.loop;
+            _totemJumpEffect.loop = true;
+            
+            if (_totemJumpEffect.loop == old)
+                return;
+            
+            _totemJumpEffect.Play();
+        }
+        else
+        {
+            _totemJumpEffect.loop = false;
+        }
     }
 
     #endregion
@@ -100,6 +127,9 @@ public class TotemJump : MonoBehaviour
         _animator = GetComponent<Animator>();
         _rigidBody = GetComponent<Rigidbody>();
         _playerMove = GetComponent<PlayerMove>();
+
+        _totemJumpEffect = transform.Find("TotemJumpEffect").GetComponent<ParticleSystem>();
+        _totemJumpEffect.Stop();
     }
 
     /// <summary>

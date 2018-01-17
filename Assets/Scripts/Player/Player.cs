@@ -15,11 +15,13 @@ public class Player : MonoBehaviour
 {
     #region define
 
+    readonly int MaxHp = 6;
+
     #endregion
 
     #region variable
 
-    [SerializeField] int _hp = 6;
+    private int _hp = 0;
     private ActionManager _actionManager = null;
     private PlayerMove _playerMove = null;
     private RideBallMove _rideBallMove = null;
@@ -40,13 +42,13 @@ public class Player : MonoBehaviour
     /// <summary>  
     /// ダメージ処理  
     /// </summary>  
-    public void Damage(bool isDebug = false)
+    public bool Damage(float power = 1.0f, bool isDebug = false)
     {
         if (_isDamage)
-            return;
+            return false;
 
         _hp--;
-        DamageStan();
+        DamageStan(power);
         _animator.SetTrigger("Damage");
         PlayerLifeManager.Instance.DamageEffect();
 
@@ -63,12 +65,13 @@ public class Player : MonoBehaviour
         StaticCoroutine.Instance.StartStaticCoroutine(DamageWait());
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_Damage);
         DamageRed.Instance.Run();
+        return true;
     }
 
     /// <summary>
     /// ダメージ時のスタン演出処理
     /// </summary>
-    private void DamageStan()
+    private void DamageStan(float power)
     {
         // 玉乗り中なら玉乗りを強制キャンセル
         if (_rideBallMove.enabled)
@@ -81,7 +84,7 @@ public class Player : MonoBehaviour
             _playerMove.OutGround();
         }
 
-        Vector3 velocity = -transform.forward * _backPower;
+        Vector3 velocity = -transform.forward * _backPower * power;
         velocity.y = _upPower;
         _rigidBody.AddForce(velocity);
     }
@@ -132,6 +135,17 @@ public class Player : MonoBehaviour
             }
         }
     }
+    
+    /// <summary>
+    /// ライフの残り割合を返す(1.0fで100%)
+    /// </summary>
+    public float LifePercentage
+    {
+        get
+        {
+            return (float)_hp / MaxHp;
+        }
+    }
 
     #endregion
 
@@ -142,6 +156,7 @@ public class Player : MonoBehaviour
     /// </summary>  
     private void Awake()
     {
+        _hp = MaxHp;
         _animator = GetComponent<Animator>();
         _actionManager = GetComponent<ActionManager>();
         _playerMove = GetComponent<PlayerMove>();
@@ -226,7 +241,7 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
-            Damage(true);
+            Damage(1.0f, true);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
