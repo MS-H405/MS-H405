@@ -21,6 +21,22 @@ GameObject:
   - component: {fileID: 4850423568378498}
   - component: {fileID: 114628011938590124}
   m_Layer: 0
+  m_Name: NeedleLight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1288782621850162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4511205264082546}
+  - component: {fileID: 114839401971025874}
+  m_Layer: 0
   m_Name: NeedleHit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,6 +91,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1496599788630742
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4487426550838878}
+  - component: {fileID: 114376848537758984}
+  m_Layer: 0
+  m_Name: KnifeStart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1498296772679554
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,7 +117,7 @@ GameObject:
   - component: {fileID: 4884180594096242}
   - component: {fileID: 114667219727435758}
   m_Layer: 0
-  m_Name: KnifeStart
+  m_Name: KnifeStick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132,6 +164,22 @@ GameObject:
   m_Component:
   - component: {fileID: 4213553411418160}
   - component: {fileID: 114766459098146478}
+  m_Layer: 0
+  m_Name: LaserEnd
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1864171694513476
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4606651197685856}
+  - component: {fileID: 114393959903450962}
   m_Layer: 0
   m_Name: KnifeLose
   m_TagString: Untagged
@@ -205,10 +253,10 @@ Transform:
   m_GameObject: {fileID: 1863188970465194}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.39999998, y: 0.39999998, z: 0.39999998}
   m_Children: []
   m_Father: {fileID: 4740896305287190}
-  m_RootOrder: 7
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4249893198951100
 Transform:
@@ -223,6 +271,32 @@ Transform:
   m_Father: {fileID: 4740896305287190}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4487426550838878
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1496599788630742}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children: []
+  m_Father: {fileID: 4740896305287190}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4511205264082546
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1288782621850162}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4740896305287190}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4555326015717796
 Transform:
   m_ObjectHideFlags: 1
@@ -235,6 +309,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4740896305287190}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4606651197685856
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1864171694513476}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_Children: []
+  m_Father: {fileID: 4740896305287190}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4740896305287190
 Transform:
@@ -252,7 +339,10 @@ Transform:
   - {fileID: 4960725046968952}
   - {fileID: 4016456980509500}
   - {fileID: 4061337855163362}
+  - {fileID: 4487426550838878}
   - {fileID: 4884180594096242}
+  - {fileID: 4606651197685856}
+  - {fileID: 4511205264082546}
   - {fileID: 4213553411418160}
   - {fileID: 4850423568378498}
   m_Father: {fileID: 0}
@@ -269,7 +359,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4740896305287190}
-  m_RootOrder: 8
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4884180594096242
 Transform:
@@ -282,7 +372,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4740896305287190}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4960725046968952
 Transform:
@@ -322,6 +412,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectName: GAME_PinHit
+  playOnStart: 0
+  loop: 0
+--- !u!114 &114376848537758984
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1496599788630742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50091075b6bce714bbcd73abc4eee722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectName: GAME_bohun
+  playOnStart: 0
+  loop: 0
+--- !u!114 &114393959903450962
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1864171694513476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50091075b6bce714bbcd73abc4eee722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectName: GAME_bohun
   playOnStart: 0
   loop: 0
 --- !u!114 &114628011938590124
@@ -417,6 +535,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectName: GAME_bohun
+  playOnStart: 0
+  loop: 0
+--- !u!114 &114839401971025874
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1288782621850162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50091075b6bce714bbcd73abc4eee722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectName: GAME_PinHit
   playOnStart: 0
   loop: 0
 --- !u!114 &114948993531161370
