@@ -13,10 +13,6 @@ using UniRx.Triggers;
   
 public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
 {
-    #region define
-
-    #endregion
-
     #region variable
 
     private Player _player = null;

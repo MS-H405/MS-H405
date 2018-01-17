@@ -15,11 +15,13 @@ public class Player : MonoBehaviour
 {
     #region define
 
+    readonly int MaxHp = 6;
+
     #endregion
 
     #region variable
 
-    [SerializeField] int _hp = 6;
+    private int _hp = 0;
     private ActionManager _actionManager = null;
     private PlayerMove _playerMove = null;
     private RideBallMove _rideBallMove = null;
@@ -133,6 +135,17 @@ public class Player : MonoBehaviour
             }
         }
     }
+    
+    /// <summary>
+    /// ライフの残り割合を返す(1.0fで100%)
+    /// </summary>
+    public float LifePercentage
+    {
+        get
+        {
+            return (float)_hp / MaxHp;
+        }
+    }
 
     #endregion
 
@@ -143,6 +156,7 @@ public class Player : MonoBehaviour
     /// </summary>  
     private void Awake()
     {
+        _hp = MaxHp;
         _animator = GetComponent<Animator>();
         _actionManager = GetComponent<ActionManager>();
         _playerMove = GetComponent<PlayerMove>();
