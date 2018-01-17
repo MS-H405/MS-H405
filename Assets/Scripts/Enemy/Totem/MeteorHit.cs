@@ -35,6 +35,7 @@ public class MeteorHit : MonoBehaviour
         float oldHeight = transform.position.y;
         CapsuleCollider col = GetComponent<CapsuleCollider>();
         EffekseerEmitter meteorEffect = GetComponentInChildren<EffekseerEmitter>();
+        ShakeCamera shakeCamera = Camera.main.GetComponent<ShakeCamera>();
         this.UpdateAsObservable()
             .Subscribe(_ =>
             {
@@ -56,7 +57,7 @@ public class MeteorHit : MonoBehaviour
                     meteorEffect.Stop();
                     GameEffectManager.Instance.Play("Totem_MeteorHit", effectPos);
                     SoundManager.Instance.PlaySE(SoundManager.eSeValue.Totem_Impact);
-                    //.Log("MeteorHit");
+                    shakeCamera.Shake();
                 }
 
                 oldHeight = transform.position.y;

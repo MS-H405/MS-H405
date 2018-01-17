@@ -577,7 +577,7 @@ public class Totem : EnemyBase
     {
         if (col.gameObject.tag == "Player" && _isAtack)
         {
-            col.gameObject.GetComponent<Player>().Damage();
+            col.gameObject.GetComponent<Player>().Damage(1.5f);
         }
     }
     private void OnTriggerEnter(Collider col)
