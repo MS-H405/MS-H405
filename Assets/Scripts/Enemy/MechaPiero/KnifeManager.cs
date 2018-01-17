@@ -31,7 +31,7 @@ public class KnifeManager : MonoBehaviour
     private IEnumerator Run()
     {
         float time = 0.0f;
-        while(time < 1.0f)
+        while(time < 2.0f)
         {
             time += Time.deltaTime;
             yield return null;
@@ -51,6 +51,27 @@ public class KnifeManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 終了処理
+    /// </summary>
+    private IEnumerator End()
+    {
+        float time = 0.0f;
+        while(time < 1.5f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // 終了処理
+        foreach (Knife knife in _knifeList)
+        {
+            knife.End();
+        }
+
+        Destroy(gameObject);
+    }
+
     #endregion
 
     #region unity_event
@@ -65,17 +86,18 @@ public class KnifeManager : MonoBehaviour
             _knifeList.Add(transform.GetChild(i).GetComponent<Knife>());
         }
         StaticCoroutine.Instance.StartStaticCoroutine(Run());
-    }
 
-    /// <summary>
-    /// 更新処理
-    /// </summary>
-    private void Update()
-    {
-        if (transform.childCount > 0)
-            return;
+        // 終了判定監視
+        var disposable = new SingleAssignmentDisposable();
+        disposable.Disposable = this.UpdateAsObservable()
+            .Subscribe(_ =>
+            {
+                if (_knifeList.Where(knife => knife.IsEnd).Count() < _knifeList.Count())
+                    return;
 
-        Destroy(gameObject);
+                StaticCoroutine.Instance.StartStaticCoroutine(End());
+                disposable.Dispose();
+            });
     }
 
     #endregion

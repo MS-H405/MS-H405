@@ -19,6 +19,9 @@ public class Knife : MonoBehaviour
 
     #region variable
 
+    private bool _isEnd = false;
+    public bool IsEnd { get { return _isEnd; } } 
+
     #endregion
 
     #region method
@@ -40,10 +43,17 @@ public class Knife : MonoBehaviour
             yield return null;
         }
 
-        this.UpdateAsObservable()
+        var disposable = new SingleAssignmentDisposable();
+        disposable.Disposable = this.UpdateAsObservable()
             .Subscribe(_ =>
             {
                 transform.position += transform.forward * 20.0f * Time.deltaTime;
+
+                if (!_isEnd)
+                    return;
+
+                transform.position += transform.forward * 75.0f * Time.deltaTime;
+                disposable.Dispose();
             });
     }
 
@@ -65,6 +75,15 @@ public class Knife : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// 終了処理
+    /// </summary>
+    public void End()
+    {
+        GameEffectManager.Instance.Play("KnifeLose", transform.position + transform.forward);
+        Destroy(gameObject);
+    }
+
     #endregion
 
     #region unity_event
@@ -82,18 +101,23 @@ public class Knife : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter(Collider col)
     {
+        if (_isEnd)
+            return;
+
         if (col.tag == "Player")
         {
             if (!col.GetComponent<Player>().Damage())
                 return;
 
             GameEffectManager.Instance.Play("PinAttack", transform.position);
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
         if (col.tag == "Field")
         {
-            GameEffectManager.Instance.Play("KnifeLose", transform.position + transform.forward);
-            Destroy(gameObject);
+            GameEffectManager.Instance.Play("KnifeStick", transform.position + transform.forward);
+            _isEnd = true;
+            //GameEffectManager.Instance.Play("KnifeLose", transform.position + transform.forward);
+            //Destroy(gameObject);
         }
     }
 
