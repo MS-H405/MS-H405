@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198581497650211218}
   - component: {fileID: 199836408894202488}
   m_Layer: 0
-  m_Name: Leaf_Effect
+  m_Name: Title_Leaf_Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
