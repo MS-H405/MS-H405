@@ -52,6 +52,7 @@ public class Totem : EnemyBase
     List<ManualRotation> _totemHeadList = new List<ManualRotation>();
     private EffekseerEmitter _totemLaser = null;
     private CapsuleCollider _totemLaserCol = null;
+    [SerializeField] GameObject _stanEffect = null;
 
     #endregion
 
@@ -88,15 +89,17 @@ public class Totem : EnemyBase
                 // スタン状態なら一時停止
                 if (IsStan)
                 {
-                    SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Enemy_Stan);
+                    _animator.speed = 1.0f;
+                    Instantiate(_stanEffect, transform.position + new Vector3(0, 9, 0), Quaternion.identity);
                     StaticCoroutine.Instance.StopCoroutine(enumerator);
+                    SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Enemy_Stan);
 
                     while (IsStan)
                     {
                         // スタン演出
                         yield return null;
                     }
-
+                    
                     yield return new WaitForSeconds(1.0f);
                 }
 
@@ -361,30 +364,10 @@ public class Totem : EnemyBase
                 disposable.Dispose();
             });
 
-        /*Vector3 startRot = transform.eulerAngles;
-        transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
-        Vector3 targetRot = transform.eulerAngles;
-        transform.eulerAngles = startRot;
-
-        // 無駄な回転量が出ないようにする
-        if (targetRot.y - startRot.y > 180.0f)
-        {
-            targetRot.y -= 360.0f;
-        }
-        else if (targetRot.y - startRot.y < -180.0f)
-        {
-            targetRot.y += 360.0f;
-        }*/
-
         // 終了待ち
         while (time < 7.0f)
         {
             time += Time.deltaTime;
-
-            /*if (time > 4.0f)
-            {
-                transform.eulerAngles = Vector3.Lerp(startRot, targetRot, (time - 4.0f) / 3.0f);
-            }*/
             yield return null;
         }
 
@@ -554,7 +537,7 @@ public class Totem : EnemyBase
         // トーテムの先端が見えてしまうので頭を一つ増やした状態で処理
         _headAmount += 1;
 
-        // トーテムのレーザー攻撃実装
+        // トーテムのレーザー攻撃準備
         _totemLaser = transform.GetChild(1).GetComponentInChildren<EffekseerEmitter>();
         _totemLaserCol = _totemLaser.GetComponentInChildren<CapsuleCollider>();
         _totemLaserCol.enabled = false;
