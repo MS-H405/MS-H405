@@ -40,13 +40,13 @@ public class Player : MonoBehaviour
     /// <summary>  
     /// ダメージ処理  
     /// </summary>  
-    public bool Damage(bool isDebug = false)
+    public bool Damage(float power = 1.0f, bool isDebug = false)
     {
         if (_isDamage)
             return false;
 
         _hp--;
-        DamageStan();
+        DamageStan(power);
         _animator.SetTrigger("Damage");
         PlayerLifeManager.Instance.DamageEffect();
 
@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// ダメージ時のスタン演出処理
     /// </summary>
-    private void DamageStan()
+    private void DamageStan(float power)
     {
         // 玉乗り中なら玉乗りを強制キャンセル
         if (_rideBallMove.enabled)
@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
             _playerMove.OutGround();
         }
 
-        Vector3 velocity = -transform.forward * _backPower;
+        Vector3 velocity = -transform.forward * _backPower * power;
         velocity.y = _upPower;
         _rigidBody.AddForce(velocity);
     }
@@ -227,7 +227,7 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
-            Damage(true);
+            Damage(1.0f, true);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
