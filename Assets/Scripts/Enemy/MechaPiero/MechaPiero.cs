@@ -33,9 +33,13 @@ public class MechaPiero : EnemyBase
     private bool _isNext = false;           // 次の行動へ行くか
 
     // 行動用変数
-    private AutoRotation _rideBallRot = null;
     [SerializeField] GameObject _knifePrefab = null;
     private NeedleManager _needleManager = null;
+    //private AutoRotation _rideBallRot = null;
+    private Animator _ballAnimator = null;
+    private EffekseerEmitter _laserEffect = null;
+    private CapsuleCollider _laserCollider = null;
+    private EffekseerEmitter _eyeLight = null;
 
     #endregion
 
@@ -120,7 +124,7 @@ public class MechaPiero : EnemyBase
                 return eAction.Wait;
 
             case eAction.ThornsAttack:
-                return eAction.Wait;
+                return eAction.CannonAttack;
 
             case eAction.CannonAttack:
                 return eAction.Wait;
@@ -187,17 +191,27 @@ public class MechaPiero : EnemyBase
     /// </summary>
     private IEnumerator KnifeAttack()
     {
-        float time = 0.0f;
         _animator.SetTrigger("KnifeStart");
 
-        while (time < 2.5f)
+        float time = 0.0f;
+        while (time < 1.5f)
         {
             time += Time.deltaTime;
             yield return null;
         }
 
         GameObject obj = Instantiate(_knifePrefab, transform.position, Quaternion.identity);
-        while(obj)
+
+        _animator.speed = 0.0f;
+        time = 0.0f;
+        while (time < 1.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        _animator.speed = 1.0f;
+
+        while (obj)
         {
             yield return null;
         }
@@ -264,17 +278,26 @@ public class MechaPiero : EnemyBase
                     disposable.Dispose();
                 });
 
-            _rideBallRot.ChangeSpeed(3.0f);
+            //_rideBallRot.ChangeSpeed(3.0f);
             while (!isOutRange)
             {
                 transform.position += transform.forward * 11.5f * Time.deltaTime;
                 yield return null;
             }
-            _rideBallRot.ChangeSpeed(1.0f);
+            //_rideBallRot.ChangeSpeed(1.0f);
 
             // 敵の方を向く
             startRot = transform.eulerAngles;
-            transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
+            if (count != 4)
+            {
+                transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
+            }
+            else
+            {
+                Vector3 lookPos = Vector3.zero;
+                lookPos.y = transform.position.y;
+                transform.LookAt(lookPos);
+            }
             targetRot = transform.eulerAngles;
             transform.eulerAngles = startRot;
 
@@ -300,6 +323,17 @@ public class MechaPiero : EnemyBase
             count++;
         }
 
+        time = 0.0f;
+        Vector3 startPos = transform.position;
+        Vector3 endPos = Vector3.zero;
+        endPos.y = transform.position.y;
+        while(time < 1.0f)
+        {
+            time += Time.deltaTime / 2.0f;
+            transform.position = Vector3.Lerp(startPos, endPos, time);
+            yield return null;
+        }
+
         _isNext = true;
         Debug.Log("RideBall");
     }
@@ -309,15 +343,25 @@ public class MechaPiero : EnemyBase
     /// </summary>
     private IEnumerator ThornsAttack()
     {
-        // TODO : トゲ飛ばしアニメーション？
-        yield return null;
+        float time = 0.0f;
+
+        // トゲ飛ばしアニメーション実行
+        _ballAnimator.enabled = false;
+        _animator.SetTrigger("Roll");
+        time = 0.0f;
+        while (time < 0.7f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
 
         // 実行処理
-        _needleManager.Run();
-        _rideBallRot.ChangeSpeed(0.0f);
+        float life = 3.0f;
+        _needleManager.Run(life);
+        //_rideBallRot.ChangeSpeed(0.0f);
 
-        float time = 0.0f;
-        while(time < 5.0f)
+        time = 0.0f;
+        while(time < life)
         {
             time += Time.deltaTime;
             yield return null;
@@ -333,12 +377,49 @@ public class MechaPiero : EnemyBase
     private IEnumerator CannonAttack()
     {
         float time = 0.0f;
+        IEnumerator lookEnumerator = StaticCoroutine.Instance.StartStaticCoroutine(LookPlayer(45.0f));
 
-        // TODO : キャノン攻撃
-        yield return null;
+        // 砲台を出す
+        _ballAnimator.enabled = true;
+        _ballAnimator.SetBool("Laser", true);
+        time = 0.0f;
+        while(time < 3.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
 
-        // トゲを生やす
-        _needleManager.Reload();
+        _animator.SetTrigger("Pointhing");
+        time = 0.0f;
+        while (time < 1.15f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        _eyeLight.Play();
+
+        // 砲撃実行
+        _laserEffect.Play();
+        time = 0.0f;
+        while(time < 4.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // 当たり判定をON
+        _laserCollider.enabled = true;
+        time = 0.0f;
+        while (time < 2.5f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        _laserCollider.enabled = false;
+        StaticCoroutine.Instance.StopCoroutine(lookEnumerator);
+
+        // 終了の煙エフェクト
+        GameEffectManager.Instance.Play("LaserEnd", _laserEffect.transform.position);
         time = 0.0f;
         while (time < 3.0f)
         {
@@ -346,9 +427,63 @@ public class MechaPiero : EnemyBase
             yield return null;
         }
 
+        // 砲台しまう
+        _ballAnimator.SetTrigger("LaserEnd");
+        time = 0.0f;
+        while (time < 2.33f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // トゲを生やす
+        _needleManager.Reload();
+        Debug.Log("Reload");
+        time = 0.0f;
+        while (time < 0.6f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        _ballAnimator.SetBool("Laser", false);
+
         _isNext = true;
-        _rideBallRot.ChangeSpeed(1.0f);
+        //_rideBallRot.ChangeSpeed(1.0f);
         Debug.Log("CannonAttack");
+    }
+
+    /// <summary>
+    /// キャノン攻撃攻撃
+    /// </summary>
+    private IEnumerator LookPlayer(float magni)
+    {
+        while (true)
+        {
+            float time = 0.0f;
+            Vector3 startRot = transform.eulerAngles;
+            transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
+            Vector3 targetRot = transform.eulerAngles;
+            transform.eulerAngles = startRot;
+
+            // 無駄な回転量が出ないようにする
+            if (targetRot.y - startRot.y > 180.0f)
+            {
+                targetRot.y -= 360.0f;
+            }
+            else if (targetRot.y - startRot.y < -180.0f)
+            {
+                targetRot.y += 360.0f;
+            }
+
+            float speed = Mathf.Abs(startRot.y - targetRot.y) / magni;
+            while (time < 1.0f)
+            {
+                time += Time.deltaTime / speed;
+                if (time > 1.0f) time = 1.0f;
+                transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
+                yield return null;
+            }
+        }
     }
 
     #endregion
@@ -363,8 +498,13 @@ public class MechaPiero : EnemyBase
         base.Awake();
 
         List<GameObject> allChild = gameObject.GetAll();
-        _rideBallRot = allChild.Where(_ => _.name.Contains("RideBall")).FirstOrDefault().GetComponent<AutoRotation>();
-        _needleManager = allChild.Where(_ => _.name.Contains("NeedleManager")).FirstOrDefault().GetComponent<NeedleManager>();
+        //_rideBallRot = allChild.Where(_ => _.name.Contains("RideBall")).FirstOrDefault().GetComponent<AutoRotation>();
+        _needleManager = allChild.Where(_ => _.name.Contains("group1")).FirstOrDefault().GetComponent<NeedleManager>();
+        _ballAnimator = transform.Find("RideBall").GetComponent<Animator>();
+        _laserEffect = _ballAnimator.transform.Find("LaserAttack").GetComponent<EffekseerEmitter>();
+        _laserCollider = _ballAnimator.transform.Find("LaserCollision").GetComponent<CapsuleCollider>();
+        _laserCollider.enabled = false;
+        _eyeLight = allChild.Where(_ => _.name.Contains("Bossitem_pCylinder2")).FirstOrDefault().GetComponent<EffekseerEmitter>();
     }
 
     /// <summary>
