@@ -32,14 +32,6 @@ public class FireTrap : MonoBehaviour
     #region unity_event
 
     /// <summary>
-    /// 初期化処理
-    /// </summary>
-    private void Awake ()
-    {
-
-    }
-
-    /// <summary>
     /// 更新前処理
     /// </summary>
     private void Start ()
@@ -83,14 +75,6 @@ public class FireTrap : MonoBehaviour
     }
 
     /// <summary>
-    /// 更新処理
-    /// </summary>
-    private void Update()
-    {
-
-    }
-
-    /// <summary>
     /// 当たり判定
     /// </summary>
     private void OnTriggerEnter(Collider col)
@@ -104,7 +88,7 @@ public class FireTrap : MonoBehaviour
                 {
                     obj = obj.transform.parent.gameObject;
                 }
-                obj.GetComponent<EnemyBase>().Damage();
+                obj.GetComponent<EnemyBase>().Damage(1, "Bagpipe");
                 _life = 0.25f;
             }
         }

@@ -27,6 +27,8 @@ public class Bagpipe : MonoBehaviour
     [SerializeField] GameObject _bagpipeFirePrefab = null;
     private Animator _animator = null;
 
+    private EffekseerEmitter _fireEffect = null;
+
     #endregion
 
     #region method
@@ -50,8 +52,27 @@ public class Bagpipe : MonoBehaviour
     /// </summary>
     public void Run(bool isRun)
     {
-        _pipeObj.SetActive(isRun);
+        _fireEffect.Play();
         _animator.SetBool("Pipe", isRun);
+        StaticCoroutine.Instance.StartStaticCoroutine(RunActive(isRun));
+    }
+
+    private IEnumerator RunActive(bool isRun)
+    {
+        if(isRun)
+        {
+            float time = 0.0f;
+            while(time < 0.2f)
+            {
+                time += Time.deltaTime;
+                yield return null;
+            }
+            _pipeObj.SetActive(true);
+        }
+        else
+        {
+            _pipeObj.SetActive(false);
+        }
     }
 
     #endregion
@@ -65,22 +86,7 @@ public class Bagpipe : MonoBehaviour
     {
         _pipeObj.SetActive(false);
         _animator = GetComponent<Animator>();
-    }
-
-    /// <summary>
-    /// 更新前処理
-    /// </summary>
-    private void Start ()
-    {
-
-    }
-
-    /// <summary>
-    /// 更新処理
-    /// </summary>
-    private void Update ()
-    {
-
+        _fireEffect = _pipeObj.transform.parent.Find("PipeFire").GetComponent<EffekseerEmitter>();
     }
 
     #endregion
