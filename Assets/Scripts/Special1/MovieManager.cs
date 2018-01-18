@@ -8,6 +8,9 @@ public class MovieManager : MonoBehaviour
 {
 	const float CON_RIMIT_DELTATIME = 1.0f / 10.0f;		// Time.unScaleddeltatimeの制限
 
+	const float CON_NORMAL_FADEINTERVAL = 0.2f;			// 普通のときの、フェードイン・アウトの間の時間
+	const float CON_STAGE_FADEINTERVAL = 1.0f;			// ゲームメインに遷移するときの、フェードイン・アウトの間の時間		←ここを追加したところまで
+
 	public enum MOVIE_SCENE
 	{
 		TITLE,			// タイトル

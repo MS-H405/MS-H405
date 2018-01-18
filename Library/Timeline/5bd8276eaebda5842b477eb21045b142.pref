@@ -21,7 +21,11 @@ MonoBehaviour:
   m_Keys:
   - {fileID: 114277285430518390, guid: 5bd8276eaebda5842b477eb21045b142, type: 2}
   - {fileID: 114110556502408906, guid: 5bd8276eaebda5842b477eb21045b142, type: 2}
+  - {fileID: 114415254364521696, guid: 5bd8276eaebda5842b477eb21045b142, type: 2}
   m_Vals:
+  - collapsed: 0
+    showInlineCurves: 0
+    inlineAnimationCurveHeight: 100
   - collapsed: 0
     showInlineCurves: 0
     inlineAnimationCurveHeight: 100
