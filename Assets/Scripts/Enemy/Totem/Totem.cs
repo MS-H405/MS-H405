@@ -89,10 +89,7 @@ public class Totem : EnemyBase
                 // スタン状態なら一時停止
                 if (IsStan)
                 {
-                    _animator.speed = 1.0f;
-                    Instantiate(_stanEffect, transform.position + new Vector3(0, 9, 0), Quaternion.identity);
                     StaticCoroutine.Instance.StopCoroutine(enumerator);
-                    SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Enemy_Stan);
 
                     while (IsStan)
                     {
@@ -137,273 +134,6 @@ public class Totem : EnemyBase
                 break;
         }
         return null;
-    }
-
-    /// <summary>
-    /// 突き上げ攻撃処理
-    /// </summary>
-    private IEnumerator TotemPushUp()
-    {
-        int amount = 1;
-        float time = 0.0f;
-        while (amount < _headAmount)
-        {
-            EnemyManager.Instance.Active = false;
-            amount++;
-            transform.position = PlayerPos();
-
-            // 土煙を出す
-            AppearEffect();
-            time = 0.0f;
-            while (time < 2.0f)
-            {
-                time += Time.deltaTime;
-                yield return null;
-            }
-
-            time = 0.0f;
-            _isAtack = true;
-            AppearEffect();
-            TotemRot(true, amount);
-            Vector3 initPos = transform.position;
-            Vector3 endPos = initPos + new Vector3(0, _oneBlockSize * amount, 0);
-            while (time < amount)
-            {
-                transform.position = Vector3.Lerp(initPos, endPos, time / amount);
-                time += Time.deltaTime / _oneBlockUpSpeed;
-
-                // 半分出たところで通常視点に戻す
-                if (time >= amount / 2.0f)
-                {
-                    EnemyManager.Instance.Active = true;
-                }
-                
-                yield return null;
-            }
-            transform.position = endPos;
-            _isAtack = false;
-
-            // 待機
-            float waitTime = 0.0f;
-            while (waitTime < 7.5f)
-            {
-                waitTime += Time.deltaTime;
-                yield return null;
-            }
-            EnemyManager.Instance.Active = false;
-
-            // 潜る処理
-            AppearEffect();
-            TotemRot(false, amount);
-            while (time > 0.0f)
-            {
-                transform.position -= new Vector3(0, _oneBlockSize * (Time.deltaTime / _oneBlockUpSpeed), 0);
-                time -= Time.deltaTime / _oneBlockUpSpeed;
-                yield return null;
-            }
-            
-            // 待機処理
-            time = 0.0f;
-            while(time < 2.0f)
-            {
-                time += Time.deltaTime;
-                yield return null;
-            }
-        }
-
-        // 次の行動へ
-        _action += 1;
-    }
-
-    /// <summary>
-    /// 子分と同時突き上げ処理
-    /// </summary>
-    private IEnumerator ChildTotemPushUp()
-    {
-        float time = 0.0f;
-
-        // 子分の突き上げ処理
-        for (int i = 0; i < _childTotemAmount; i++)
-        {
-            _childTotemList[i].gameObject.SetActive(true);
-            StaticCoroutine.Instance.StartStaticCoroutine(_childTotemList[i].PushUp(_oneBlockUpSpeed));
-
-            time = 0.0f;
-            _shakeCamera.Shake();
-            while (time < (_oneBlockUpSpeed * 3.0f) * 0.75f)
-            {
-                time += Time.deltaTime;
-                yield return null;
-            }
-        }
-
-        // 本体突き上げ処理
-        transform.position = PlayerPos();
-        //transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
-
-        // 土煙を出す
-        AppearEffect();
-        time = 0.0f;
-        while (time < 1.0f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        time = 0.0f;
-        _isAtack = true;
-        AppearEffect();
-        TotemRot(true, _headAmount);
-        Vector3 initPos = transform.position;
-        Vector3 endPos = initPos + new Vector3(0, _oneBlockSize * _headAmount, 0);
-        while (time < _headAmount)
-        {
-            transform.position = Vector3.Lerp(initPos, endPos, time / _headAmount);
-            time += Time.deltaTime / _oneBlockUpSpeed;
-
-            // 半分出たところで通常視点に戻す
-            if(time >= _headAmount / 2.0f)
-            {
-                EnemyManager.Instance.Active = true;
-            }
-
-            yield return null;
-        }
-        transform.position = endPos;
-        _isAtack = false;
-
-        // 待機
-        time = 0.0f;
-        while (time < 10.0f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        // 子分を潜らせる
-        _shakeCamera.Shake();
-        for (int i = 0; i < _childTotemAmount; i++)
-        {
-            StaticCoroutine.Instance.StartStaticCoroutine(_childTotemList[i].Dive(_oneBlockUpSpeed));
-        }
-
-        // 待機
-        time = 0.0f;
-        while (time < 1.0f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        // 次の行動へ
-        _action += 1;
-    }
-
-    /// <summary>
-    /// 特殊攻撃処理
-    /// </summary>
-    private IEnumerator SpecialAtack()
-    {
-        // 子分に特殊攻撃の実行を通知
-        _shakeCamera.Shake();
-        for (int i = 0; i < _childTotemAmount; i++)
-        {
-            _childTotemList[i].gameObject.SetActive(true);
-            StaticCoroutine.Instance.StartStaticCoroutine(_childTotemList[i].SpecialAtack(_oneBlockUpSpeed, _fallHeight, i == 0));
-        }
-
-        // 待機
-        while (true)
-        {
-            int cnt = 0;
-            for(int i = 0; i < _childTotemAmount; i++)
-            {
-                if (_childTotemList[i].gameObject.activeSelf)
-                    continue;
-
-                cnt++;
-            }
-
-            if (cnt >= _childTotemAmount)
-            {
-                break;
-            }
-            yield return null;
-        }
-
-        // 待機
-        float time = 0.0f;
-        while (time < 2.0f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        // 次の行動へ
-        _action += 1;
-    }
-
-    /// <summary>
-    /// 風砲攻撃処理
-    /// </summary>
-    private IEnumerator WindAttack()
-    {
-        _isLook = false;
-        _totemLaser.Play();
-        _animator.SetTrigger("Roar");
-        _animator.speed = 0.25f;
-
-        float time = 0.0f;
-        var disposable = new SingleAssignmentDisposable();
-        disposable.Disposable = this.ObserveEveryValueChanged(_ => time >= 4.0f)
-            .Where(_ => time >= 4.0f)
-            .Subscribe(_ =>
-            {
-                _animator.speed = 0.0f;
-                _totemLaserCol.enabled = true;
-                disposable.Dispose();
-            });
-
-        // 終了待ち
-        while (time < 7.0f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        // ビーム後処理
-        _animator.speed = 1.0f;
-        _totemLaserCol.enabled = false;
-
-        time = 0.0f;
-        while (time < 3.0f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        // 本体も潜らせる
-        time = 0.0f;
-        AppearEffect();
-        TotemRot(false, _headAmount);
-        while (time < _headAmount)
-        {
-            transform.position -= new Vector3(0, _oneBlockSize * (Time.deltaTime / _oneBlockUpSpeed), 0);
-            time += Time.deltaTime / _oneBlockUpSpeed;
-            yield return null;
-        }
-        EnemyManager.Instance.Active = false;
-
-        // 待機
-        time = 0.0f;
-        while (time < 3.0f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        _isLook = true;
-        _action += 1;
     }
 
     /// <summary>
@@ -502,6 +232,292 @@ public class Totem : EnemyBase
             return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// 各自のスタンエフェクト再生処理
+    /// </summary>
+    protected override IEnumerator StanEffectUnique()
+    {
+        _animator.speed = 1.0f;
+        SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Enemy_Stan);
+
+        GameObject stanEffect = Instantiate(_stanEffect, transform.position + new Vector3(0, 9, 0), Quaternion.identity);
+        stanEffect.transform.SetParent(_totemHeadList[0].transform);
+
+        yield break;
+    }
+
+
+    #endregion
+
+    #region actuin_method
+
+    /// <summary>
+    /// 突き上げ攻撃処理
+    /// </summary>
+    private IEnumerator TotemPushUp()
+    {
+        int amount = 1;
+        float time = 0.0f;
+        while (amount < _headAmount)
+        {
+            EnemyManager.Instance.Active = false;
+            amount++;
+            transform.position = PlayerPos();
+
+            // 土煙を出す
+            AppearEffect();
+            time = 0.0f;
+            while (time < 2.0f)
+            {
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            time = 0.0f;
+            _isAtack = true;
+            AppearEffect();
+            TotemRot(true, amount);
+            Vector3 initPos = transform.position;
+            Vector3 endPos = initPos + new Vector3(0, _oneBlockSize * amount, 0);
+            while (time < amount)
+            {
+                transform.position = Vector3.Lerp(initPos, endPos, time / amount);
+                time += Time.deltaTime / _oneBlockUpSpeed;
+
+                // 半分出たところで通常視点に戻す
+                if (time >= amount / 2.0f)
+                {
+                    EnemyManager.Instance.Active = true;
+                }
+
+                yield return null;
+            }
+            transform.position = endPos;
+            _isAtack = false;
+
+            // 待機
+            float waitTime = 0.0f;
+            while (waitTime < 7.5f)
+            {
+                waitTime += Time.deltaTime;
+                yield return null;
+            }
+            EnemyManager.Instance.Active = false;
+
+            // 潜る処理
+            AppearEffect();
+            TotemRot(false, amount);
+            while (time > 0.0f)
+            {
+                transform.position -= new Vector3(0, _oneBlockSize * (Time.deltaTime / _oneBlockUpSpeed), 0);
+                time -= Time.deltaTime / _oneBlockUpSpeed;
+                yield return null;
+            }
+
+            // 待機処理
+            time = 0.0f;
+            while (time < 2.0f)
+            {
+                time += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        // 次の行動へ
+        _action += 1;
+    }
+
+    /// <summary>
+    /// 子分と同時突き上げ処理
+    /// </summary>
+    private IEnumerator ChildTotemPushUp()
+    {
+        float time = 0.0f;
+
+        // 子分の突き上げ処理
+        for (int i = 0; i < _childTotemAmount; i++)
+        {
+            _childTotemList[i].gameObject.SetActive(true);
+            StaticCoroutine.Instance.StartStaticCoroutine(_childTotemList[i].PushUp(_oneBlockUpSpeed));
+
+            time = 0.0f;
+            _shakeCamera.Shake();
+            while (time < (_oneBlockUpSpeed * 3.0f) * 0.75f)
+            {
+                time += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        // 本体突き上げ処理
+        transform.position = PlayerPos();
+        //transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
+
+        // 土煙を出す
+        AppearEffect();
+        time = 0.0f;
+        while (time < 1.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        time = 0.0f;
+        _isAtack = true;
+        AppearEffect();
+        TotemRot(true, _headAmount);
+        Vector3 initPos = transform.position;
+        Vector3 endPos = initPos + new Vector3(0, _oneBlockSize * _headAmount, 0);
+        while (time < _headAmount)
+        {
+            transform.position = Vector3.Lerp(initPos, endPos, time / _headAmount);
+            time += Time.deltaTime / _oneBlockUpSpeed;
+
+            // 半分出たところで通常視点に戻す
+            if (time >= _headAmount / 2.0f)
+            {
+                EnemyManager.Instance.Active = true;
+            }
+
+            yield return null;
+        }
+        transform.position = endPos;
+        _isAtack = false;
+
+        // 待機
+        time = 0.0f;
+        while (time < 10.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // 子分を潜らせる
+        _shakeCamera.Shake();
+        for (int i = 0; i < _childTotemAmount; i++)
+        {
+            StaticCoroutine.Instance.StartStaticCoroutine(_childTotemList[i].Dive(_oneBlockUpSpeed));
+        }
+
+        // 待機
+        time = 0.0f;
+        while (time < 1.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // 次の行動へ
+        _action += 1;
+    }
+
+    /// <summary>
+    /// 特殊攻撃処理
+    /// </summary>
+    private IEnumerator SpecialAtack()
+    {
+        // 子分に特殊攻撃の実行を通知
+        _shakeCamera.Shake();
+        for (int i = 0; i < _childTotemAmount; i++)
+        {
+            _childTotemList[i].gameObject.SetActive(true);
+            StaticCoroutine.Instance.StartStaticCoroutine(_childTotemList[i].SpecialAtack(_oneBlockUpSpeed, _fallHeight, i == 0));
+        }
+
+        // 待機
+        while (true)
+        {
+            int cnt = 0;
+            for (int i = 0; i < _childTotemAmount; i++)
+            {
+                if (_childTotemList[i].gameObject.activeSelf)
+                    continue;
+
+                cnt++;
+            }
+
+            if (cnt >= _childTotemAmount)
+            {
+                break;
+            }
+            yield return null;
+        }
+
+        // 待機
+        float time = 0.0f;
+        while (time < 2.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // 次の行動へ
+        _action += 1;
+    }
+
+    /// <summary>
+    /// 風砲攻撃処理
+    /// </summary>
+    private IEnumerator WindAttack()
+    {
+        _isLook = false;
+        _totemLaser.Play();
+        _animator.SetTrigger("Roar");
+        _animator.speed = 0.25f;
+
+        float time = 0.0f;
+        var disposable = new SingleAssignmentDisposable();
+        disposable.Disposable = this.ObserveEveryValueChanged(_ => time >= 4.0f)
+            .Where(_ => time >= 4.0f)
+            .Subscribe(_ =>
+            {
+                _animator.speed = 0.0f;
+                _totemLaserCol.enabled = true;
+                disposable.Dispose();
+            });
+
+        // 終了待ち
+        while (time < 7.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // ビーム後処理
+        _animator.speed = 1.0f;
+        _totemLaserCol.enabled = false;
+
+        time = 0.0f;
+        while (time < 3.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // 本体も潜らせる
+        time = 0.0f;
+        AppearEffect();
+        TotemRot(false, _headAmount);
+        while (time < _headAmount)
+        {
+            transform.position -= new Vector3(0, _oneBlockSize * (Time.deltaTime / _oneBlockUpSpeed), 0);
+            time += Time.deltaTime / _oneBlockUpSpeed;
+            yield return null;
+        }
+        EnemyManager.Instance.Active = false;
+
+        // 待機
+        time = 0.0f;
+        while (time < 3.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        _isLook = true;
+        _action += 1;
     }
 
     #endregion
