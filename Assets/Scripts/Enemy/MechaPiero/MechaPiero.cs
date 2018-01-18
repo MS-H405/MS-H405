@@ -32,14 +32,17 @@ public class MechaPiero : EnemyBase
     private eAction _nowAction;             // 現在の行動を保持
     private bool _isNext = false;           // 次の行動へ行くか
 
+    private bool _isRunaway = false;        // 熱暴走が起きる状態化を保持
+
     // 行動用変数
     [SerializeField] GameObject _knifePrefab = null;
     private NeedleManager _needleManager = null;
-    //private AutoRotation _rideBallRot = null;
+    private EffekseerEmitter _eyeLight = null;
+
     private Animator _ballAnimator = null;
     private EffekseerEmitter _laserEffect = null;
     private CapsuleCollider _laserCollider = null;
-    private EffekseerEmitter _eyeLight = null;
+    private BoxCollider _assaultStopper = null;     // 突進攻撃の方向回転開始の基準となるコリジョン
 
     #endregion
 
@@ -163,6 +166,18 @@ public class MechaPiero : EnemyBase
         return null;
     }
 
+    /// <summary>
+    /// 各自のダメージエフェクト再生処理
+    /// </summary>
+    protected override IEnumerator DamageEffectUnique(string colTag)
+    {
+        if (colTag != "Bagpipe")
+            yield break; ;
+
+        _isRunaway = true;
+        // 熱暴走エフェクト
+    }
+
     #endregion
 
     #region action_method
@@ -202,14 +217,14 @@ public class MechaPiero : EnemyBase
 
         GameObject obj = Instantiate(_knifePrefab, transform.position, Quaternion.identity);
 
-        _animator.speed = 0.0f;
+        //_animator.speed = 0.0f;
         time = 0.0f;
         while (time < 1.0f)
         {
             time += Time.deltaTime;
             yield return null;
         }
-        _animator.speed = 1.0f;
+        //_animator.speed = 1.0f;
 
         while (obj)
         {
@@ -225,6 +240,9 @@ public class MechaPiero : EnemyBase
     /// </summary>
     private IEnumerator RideBall()
     {
+        // 開始処理
+        _isRunaway = false;
+
         // 必要Player情報の取得
         float time = 0.0f;
         float speed = 0.0f;
@@ -255,20 +273,22 @@ public class MechaPiero : EnemyBase
         }
 
         _animator.SetTrigger("Pointhing");
+        _animator.SetBool("BallWalk", true);
         time = 0.0f;
-        while(time < 1.15f)
+        while(time < 3.15f)
         {
             time += Time.deltaTime;
             yield return null;
         }
 
         int count = 0;
+        _assaultStopper.enabled = true;
         while (count < 5)
         {
             // 外壁にぶつかるまで止めないよう設定
             bool isOutRange = false;
             var disposable = new SingleAssignmentDisposable();
-            disposable.Disposable = this.OnCollisionEnterAsObservable()
+            disposable.Disposable = this.OnTriggerEnterAsObservable()
                 .Subscribe(col =>
                 {
                     if (col.gameObject.tag != "AutoRange")
@@ -277,16 +297,15 @@ public class MechaPiero : EnemyBase
                     isOutRange = true;
                     disposable.Dispose();
                 });
-
-            //_rideBallRot.ChangeSpeed(3.0f);
+            
+            // 方向転換まで待つ
             while (!isOutRange)
             {
                 transform.position += transform.forward * 11.5f * Time.deltaTime;
                 yield return null;
             }
-            //_rideBallRot.ChangeSpeed(1.0f);
 
-            // 敵の方を向く
+            // 敵の方を向くための計算
             startRot = transform.eulerAngles;
             if (count != 4)
             {
@@ -310,16 +329,67 @@ public class MechaPiero : EnemyBase
                 targetRot.y += 360.0f;
             }
 
-            time = 0.0f;
             speed = Mathf.Abs(startRot.y - targetRot.y) / 240.0f;
-            while (time < 1.0f)
-            {
-                time += Time.deltaTime / speed;
-                if (time > 1.0f) time = 1.0f;
-                transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
-                yield return null;
-            }
+            Vector3 moveAmount = transform.forward * _assaultStopper.transform.localPosition.z;
 
+            // 熱暴走の時の処理
+            if (_isRunaway)
+            {
+                // 壁にぶつかる
+                time = 0.0f;
+                while (time < 1.0f)
+                {
+                    time += Time.deltaTime / speed;
+                    if (time > 1.0f) time = 1.0f;
+                    transform.position += moveAmount * Time.deltaTime / speed;
+                    yield return null;
+                }
+
+                // 倒れるアニメーション再生
+                _animator.SetBool("BallStan", true);
+
+                // 8秒のロス
+                time = 0.0f;
+                while (time < 8.0f)
+                {
+                    time += Time.deltaTime / speed;
+                    yield return null;
+                }
+
+                // 復帰アニメーション再生
+                _animator.SetBool("BallStan", false);
+                time = 0.0f;
+                while(time < 2.0f)
+                {
+                    time += Time.deltaTime;
+                    yield return null;
+                }
+
+                // そのあと回転
+                time = 0.0f;
+                while (time < 1.0f)
+                {
+                    time += Time.deltaTime / speed;
+                    if (time > 1.0f) time = 1.0f;
+                    transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
+                    yield return null;
+                }
+
+                _isRunaway = false;
+            }
+            else
+            {
+                time = 0.0f;
+                while (time < 1.0f)
+                {
+                    time += Time.deltaTime / speed;
+                    if (time > 1.0f) time = 1.0f;
+                    transform.position += moveAmount * Time.deltaTime / speed;
+                    transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
+                    yield return null;
+                }
+            }
+              
             count++;
         }
 
@@ -335,6 +405,8 @@ public class MechaPiero : EnemyBase
         }
 
         _isNext = true;
+        _assaultStopper.enabled = false;
+        _animator.SetBool("BallWalk", false);
         Debug.Log("RideBall");
     }
 
@@ -498,37 +570,44 @@ public class MechaPiero : EnemyBase
         base.Awake();
 
         List<GameObject> allChild = gameObject.GetAll();
-        //_rideBallRot = allChild.Where(_ => _.name.Contains("RideBall")).FirstOrDefault().GetComponent<AutoRotation>();
         _needleManager = allChild.Where(_ => _.name.Contains("group1")).FirstOrDefault().GetComponent<NeedleManager>();
+        _eyeLight = allChild.Where(_ => _.name.Contains("Bossitem_pCylinder2")).FirstOrDefault().GetComponent<EffekseerEmitter>();
+
         _ballAnimator = transform.Find("RideBall").GetComponent<Animator>();
+        _ballAnimator.speed = 0.0f;
         _laserEffect = _ballAnimator.transform.Find("LaserAttack").GetComponent<EffekseerEmitter>();
         _laserCollider = _ballAnimator.transform.Find("LaserCollision").GetComponent<CapsuleCollider>();
         _laserCollider.enabled = false;
-        _eyeLight = allChild.Where(_ => _.name.Contains("Bossitem_pCylinder2")).FirstOrDefault().GetComponent<EffekseerEmitter>();
+        _assaultStopper = _ballAnimator.transform.Find("AssaultStopper").GetComponent<BoxCollider>();
+        _assaultStopper.enabled = false;
     }
 
     /// <summary>
     /// 更新前処理
     /// </summary>
     private void Start ()
-    {
+    { 
         StaticCoroutine.Instance.StartStaticCoroutine(Run());
-    }
 
-    /// <summary>
-    /// 更新処理
-    /// </summary>
-    private new void Update ()
-    {
-        base.Update();
-    }
+        AnimatorStateInfo animStateInfo;
+        Vector3 oldPos = transform.position;
+        this.UpdateAsObservable()
+            .Subscribe(_ =>
+            {
+                animStateInfo = _ballAnimator.GetCurrentAnimatorStateInfo(0);
+                if (animStateInfo.IsName("Base.Idle") && !_ballAnimator.GetBool("Laser"))
+                {
+                    if (oldPos == transform.position)
+                    {
+                        oldPos = transform.position;
+                        _ballAnimator.speed = 0.0f;
+                        return;
+                    }
+                }
 
-    /// <summary>
-    /// 当たり判定
-    /// </summary>
-    private void OnCollisionEnter(Collision col)
-    {
-
+                _ballAnimator.speed = 1.0f;  // 他でspeedを変更する箇所がある場合はspeed変更を関数化させ管理する
+                oldPos = transform.position;
+            });
     }
 
     #endregion
