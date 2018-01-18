@@ -77,7 +77,6 @@ public class HermitCrab : EnemyBase
                 // スタン状態なら一時停止
                 if (IsStan)
                 {
-                    //SoundManager.Instance.PlaySE(SoundManager.eSeValue.Enemy_Stan);
                     StaticCoroutine.Instance.StopCoroutine(enumerator);
 
                     while (IsStan)
@@ -122,14 +121,16 @@ public class HermitCrab : EnemyBase
                     {
                         return eAction.RollFire;
                     }
+                    if (Input.GetKey(KeyCode.N))
+                    {
+                        return eAction.RightAttack;
+                    }
+                    if (Input.GetKey(KeyCode.M))
+                    {
+                        return eAction.LeftAttack;
+                    }
                     return eAction.Wait;
                 }
-
-                //return eAction.Assault;             // 突進攻撃
-                //return eAction.ChargeFire;          // その場でファイアー
-                //return eAction.RollAtack;           // 回転攻撃
-                //return (eAction)Random.Range(2, 5); // 左or右攻撃か回転攻撃を出す
-                //return eAction.RollFire;           // 回転してファイアー
                
                 if (_nearTime > 5.0f)
                 {
@@ -315,23 +316,21 @@ public class HermitCrab : EnemyBase
         {
             case eAction.RightAttack:
                 _rightScissors.enabled = true;
-                //effect = Instantiate(_rightScissorsEffect);
-                //effect.transform.SetParent(_rightScissors.transform.Find("RightS"));
+                effect = Instantiate(_rightScissorsEffect);
+                effect.transform.SetParent(_rightScissors.transform.Find("RightS"));
                 break;
 
             case eAction.LeftAttack:
                 _leftScissors.enabled = true;
                 effect = Instantiate(_leftScissorsEffect);
                 effect.transform.SetParent(_leftScissors.transform.Find("LehtS"));
-                effect.transform.localPosition = Vector3.zero;
-                effect.transform.localEulerAngles = Vector3.zero;
                 break;
 
             default:
                 break;
         }
-        //effect.transform.localPosition = Vector3.zero;
-        //effect.transform.localEulerAngles = Vector3.zero;
+        effect.transform.localPosition = Vector3.zero;
+        effect.transform.localEulerAngles = Vector3.zero;
 
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_Scissor);
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
