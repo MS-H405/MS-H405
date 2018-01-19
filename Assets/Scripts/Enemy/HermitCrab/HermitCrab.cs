@@ -249,6 +249,7 @@ public class HermitCrab : EnemyBase
 
         Vector3 startPos = transform.position;
         Vector3 targetPos = PlayerManager.Instance.Player.transform.position;
+        targetPos.y = startPos.y;
 
         // 無駄な回転量が出ないようにする
         if (targetRot.y - startRot.y > 180.0f)
@@ -306,7 +307,7 @@ public class HermitCrab : EnemyBase
         _animator.speed = 1.25f;
 
         float time = 0.0f;
-        while(time < (0.5f / _animator.speed))
+        while(time < (0.25f / _animator.speed))
         {
             time += Time.deltaTime;
             yield return null;
@@ -316,13 +317,11 @@ public class HermitCrab : EnemyBase
         switch (action)
         {
             case eAction.RightAttack:
-                _rightScissors.enabled = true;
                 effect = Instantiate(_rightScissorsEffect);
                 effect.transform.SetParent(_rightScissors.transform.Find("RightS"));
                 break;
 
             case eAction.LeftAttack:
-                _leftScissors.enabled = true;
                 effect = Instantiate(_leftScissorsEffect);
                 effect.transform.SetParent(_leftScissors.transform.Find("LehtS"));
                 break;
@@ -332,6 +331,27 @@ public class HermitCrab : EnemyBase
         }
         effect.transform.localPosition = Vector3.zero;
         effect.transform.localEulerAngles = Vector3.zero;
+
+        time = 0.0f;
+        while (time < (0.25f / _animator.speed))
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        
+        switch (action)
+        {
+            case eAction.RightAttack:
+                _rightScissors.enabled = true;
+                break;
+
+            case eAction.LeftAttack:
+                _leftScissors.enabled = true;
+                break;
+
+            default:
+                break;
+        }
 
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_Scissor);
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
@@ -363,7 +383,7 @@ public class HermitCrab : EnemyBase
             time += Time.deltaTime;
             yield return null;
         }
-        Instantiate(_rollAttackEffect, transform.position, _rollAttackEffect.transform.rotation);
+        Instantiate(_rollAttackEffect, transform.position/* + new Vector3(0.0f,0.0f,-1.5f)*/, _rollAttackEffect.transform.rotation);
 
         time = 0.0f;
         while (time < 0.75f)
