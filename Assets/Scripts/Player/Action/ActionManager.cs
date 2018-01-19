@@ -151,6 +151,7 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case eActionType.RideBall:
+                _rideBallMove.OldAngle = _playerMove.OldAngle;
                 _playerMove.enabled = false;
                 _rideBallMove.enabled = true;
                 _rideBallMove.On();

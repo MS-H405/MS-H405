@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
             return false;
 
         _hp--;
+        StaticCoroutine.Instance.StartStaticCoroutine(DamageWait());
         DamageStan(power);
         _animator.SetTrigger("Damage");
         PlayerLifeManager.Instance.DamageEffect();
@@ -62,7 +63,6 @@ public class Player : MonoBehaviour
             }
         }
 
-        StaticCoroutine.Instance.StartStaticCoroutine(DamageWait());
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_Damage);
         DamageRed.Instance.Run();
         return true;

@@ -36,6 +36,7 @@ public class PlayerMove : MonoBehaviour
     // animation用変数
     protected Animator _animator = null;
     private Vector3 _oldAngle = Vector3.zero;
+    public Vector3 OldAngle { get { return _oldAngle; } set { _oldAngle = value; } }
     protected ParticleSystem _runSmoke = null;
     private TotemJump _totemJump = null;
 
@@ -150,7 +151,7 @@ public class PlayerMove : MonoBehaviour
             AnimatorStateInfo animStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             if (animStateInfo.IsName("JumpEnd") && !_animator.GetBool("Jump"))
                 return false;
-
+            
             return true;
         }
     }

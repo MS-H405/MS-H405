@@ -37,10 +37,10 @@ public class RideBallMove : PlayerMove
     private Vector3 _inputVec = Vector3.zero;       // 現在の入力している方向
 
     private GameObject _ballObj = null;             // 玉乗りボールインスタンス
+    private IEnumerator _rideOnEnumerator = null;   // RideOn中にRideOffしたい場合、これを使ってコルーチンを停止する
     [SerializeField] GameObject _ballPrefab = null; // 玉乗りボールプレハブ
     private Vector3 _oldBallAngle = Vector3.zero;
     private ParticleSystem[] _rideEffects = new ParticleSystem[2];
-
     [SerializeField] GameObject _ballAttackEffect = null; // 玉乗り衝突エフェクト
 
     #endregion
@@ -53,7 +53,7 @@ public class RideBallMove : PlayerMove
     protected override void Move()
     {
         // 硬直時は処理しない
-        if (!_isGround)
+        if (!_isGround || _isRideAnim)
         {
             _animator.SetBool("BallWalk", false);
             RunSmoke(_animator.GetBool("BallWalk"));
@@ -280,7 +280,7 @@ public class RideBallMove : PlayerMove
     public void On()
     {
         AcceReset();
-        StaticCoroutine.Instance.StartStaticCoroutine(RideOn());
+        _rideOnEnumerator = StaticCoroutine.Instance.StartStaticCoroutine(RideOn());
     }
 
     /// <summary>  
@@ -309,7 +309,6 @@ public class RideBallMove : PlayerMove
         _animator.SetBool("Walk", false);
         _animator.SetTrigger("Roll");
         _rigidbody.useGravity = false;
-        PlayerManager.Instance.Player.IsInvincible = true;
 
         // 上に飛ばし、玉より超えたら玉出現
         while (transform.position.y < 2.25f)
@@ -320,7 +319,7 @@ public class RideBallMove : PlayerMove
         _rigidbody.useGravity = true;
 
         _ballObj = Instantiate(_ballPrefab);
-        _ballObj.transform.SetParent(transform); //.Find("RideBall"));
+        _ballObj.transform.SetParent(transform);
         _ballObj.transform.localPosition = new Vector3(0.0f, -0.9f, 0.0f);
         _oldBallAngle = _ballObj.transform.eulerAngles;
         GameEffectManager.Instance.Play("Bohun", _ballObj.transform.position);
@@ -337,7 +336,7 @@ public class RideBallMove : PlayerMove
         }
         _isRideAnim = false;
         _isGround = true;
-        PlayerManager.Instance.Player.IsInvincible = false;
+        _rideOnEnumerator = null;
     }
 
     /// <summary>  
@@ -346,7 +345,20 @@ public class RideBallMove : PlayerMove
     private IEnumerator RideOff()
     {
         if (_isRideAnim)
-            yield break;
+        {
+            // RideOn中にダメージなどでRideOffする場合
+            if (_rideOnEnumerator != null)
+            {
+                StaticCoroutine.Instance.StopStaticCoroutine(_rideOnEnumerator);
+                _rideOnEnumerator = null;
+                _rigidbody.useGravity = true;
+                _animator.ResetTrigger("Roll");
+            }
+            else
+            {
+                yield break;
+            }
+        }
 
         // 行動停止
         _isGround = false;
@@ -358,7 +370,6 @@ public class RideBallMove : PlayerMove
             _animator.SetTrigger("Roll");
             _rigidbody.AddForce(new Vector3(0, 100, 0));
         }
-        PlayerManager.Instance.Player.IsInvincible = true;
 
         // 玉をエフェクトとともに消す
         if (_ballObj)
@@ -377,16 +388,20 @@ public class RideBallMove : PlayerMove
         _isRideAnim = false;
         _animator.speed = 1.0f;
         _animator.SetBool("BallWalk", false);
-        PlayerManager.Instance.Player.IsInvincible = false;
         AcceReset();
         RideEffect(false);
         SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Player_BallWalk);
 
         // 玉の削除処理
-        Destroy(_ballObj.gameObject);
+        if (_ballObj)
+        {
+            Destroy(_ballObj.gameObject);
+        }
 
         // コンポーネントを切り替え
-        GetComponent<PlayerMove>().enabled = true;
+        PlayerMove playerMove = GetComponent<PlayerMove>();
+        playerMove.OldAngle = OldAngle;
+        playerMove.enabled = true;
         enabled = false;
     }
 
