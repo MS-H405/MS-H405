@@ -36,7 +36,7 @@ public class MS_Enemy_PB : PlayableBehaviour
 	const float CON_NEEDLE_TIME = 1.5f;			// 決めポーズモーションを開始してから、棘を出すまでの時間
 
 	const float CON_ROTATION_TIME = 0.3f;		// 棘を出してから、玉が回転し始めるまでの時間
-	const float CON_FIN_TIME = 0.8f;			// 棘を出してから、フェードを開始するまでの時間
+	const float CON_FIN_TIME = 1.4f;			// 棘を出してから、フェードを開始するまでの時間
 
 	#endregion
 
