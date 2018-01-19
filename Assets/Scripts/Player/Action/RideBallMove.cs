@@ -361,9 +361,12 @@ public class RideBallMove : PlayerMove
         PlayerManager.Instance.Player.IsInvincible = true;
 
         // 玉をエフェクトとともに消す
-        _ballObj.SetActive(false);
-        GameEffectManager.Instance.Play("Bohun", _ballObj.transform.position);
-        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_Bofun);
+        if (_ballObj)
+        {
+            _ballObj.SetActive(false);
+            GameEffectManager.Instance.Play("Bohun", _ballObj.transform.position);
+            SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_Bofun);
+        }
 
         while (!_isGround)
         {
@@ -465,8 +468,7 @@ public class RideBallMove : PlayerMove
         if (!isEffect)
             return;
 
-        Instantiate(_ballAttackEffect, point + new Vector3(0, 0.5f, 0), Quaternion.identity);
-        
+        Instantiate(_ballAttackEffect, point + new Vector3(0, 0.5f, 0), Quaternion.identity);       
     }
 
     #endregion

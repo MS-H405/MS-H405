@@ -36,6 +36,7 @@ public class JugglingAtack : MonoBehaviour
     private bool _isReflect = false;                        // 反射判定
     private bool _isCatch = false;                          // このオブジェクトの生存判定
 
+    [SerializeField] GameObject _nextJuggling = null;
     [SerializeField] GameObject _dropPointEffect = null;
     [SerializeField] GameObject _pinThrowEffect = null;
     private int _myPinValue = 0;
@@ -154,6 +155,7 @@ public class JugglingAtack : MonoBehaviour
         // 反射したので適当な位置を落下地点として設定
         Vector3 dropPoint = RandomDropPoint(startPos);
         dropPoint.y = 0.0f;
+
         GameObject dropEffect = Instantiate(_dropPointEffect, dropPoint, _dropPointEffect.transform.rotation);
         dropEffect.transform.position += new Vector3(0.0f, 0.01f, 0.0f);
         Vector3 initEffectScale = dropEffect.transform.localScale;
@@ -192,8 +194,8 @@ public class JugglingAtack : MonoBehaviour
         }
         autoRot.RotDegreeAmount = initRot;
 
+        dropEffect.GetComponent<JugglingDropEffect>().End();
         RunNext();
-        Destroy(dropEffect);
     }
 
     /// <summary>
@@ -211,7 +213,7 @@ public class JugglingAtack : MonoBehaviour
                 _commonAtackSpeed += (MaxAtackSpeed - 1.0f) * 0.1f;
             }
             // 次生成
-            GameObject obj = Instantiate(gameObject, transform.position, Quaternion.identity);
+            GameObject obj = Instantiate(_nextJuggling, transform.position, Quaternion.identity);
             obj.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy, _myPinValue);
         }
         else
