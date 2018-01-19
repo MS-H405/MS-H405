@@ -8159,6 +8159,11 @@ Prefab:
       propertyPath: fCoefShakeIntensity
       value: 0.03
       objectReference: {fileID: 0}
+    - target: {fileID: 114429880413292132, guid: 48eaafd4238bda64aa7dd1041ccca91e,
+        type: 2}
+      propertyPath: vLookPosOffset.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 48eaafd4238bda64aa7dd1041ccca91e, type: 2}
   m_IsPrefabParent: 0
