@@ -16092,7 +16092,7 @@ Prefab:
     - target: {fileID: 114382591642984632, guid: 755f49747a0565d4ebd5ba678b15a9b2,
         type: 2}
       propertyPath: _isDebug
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 755f49747a0565d4ebd5ba678b15a9b2, type: 2}
@@ -27537,6 +27537,11 @@ Prefab:
     - target: {fileID: 4770898306820322, guid: f701d02553f49444aa9b98444fcd3ea5, type: 2}
       propertyPath: m_LocalScale.y
       value: 0.07000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 114153319218281864, guid: f701d02553f49444aa9b98444fcd3ea5,
+        type: 2}
+      propertyPath: _waitTime
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f701d02553f49444aa9b98444fcd3ea5, type: 2}

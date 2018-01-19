@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.28797045, g: 0.17186666, b: 0.1619133, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1759,6 +1759,11 @@ Prefab:
         type: 2}
       propertyPath: effectName
       value: GAME2_ShowTime
+      objectReference: {fileID: 0}
+    - target: {fileID: 114153319218281864, guid: f701d02553f49444aa9b98444fcd3ea5,
+        type: 2}
+      propertyPath: _waitTime
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f701d02553f49444aa9b98444fcd3ea5, type: 2}
@@ -6833,6 +6838,11 @@ Prefab:
         type: 2}
       propertyPath: ShapeModule.radiusThickness
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198918686737059946, guid: 111a3163a57da034ab661344df4667ef,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
       objectReference: {fileID: 0}
     - target: {fileID: 198918686737059946, guid: 111a3163a57da034ab661344df4667ef,
         type: 2}
