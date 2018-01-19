@@ -103,7 +103,7 @@ public class JugglingAtack : MonoBehaviour
         transform.SetParent(PlayerManager.Instance.PlayerLeftHand);
         transform.localPosition = new Vector3(-0.5f, -0.6f, 0.0f);
         transform.localEulerAngles = new Vector3(180, 0, 0);
-        
+
         // アニメーションが終了するまで待つ
         AnimatorStateInfo animStateInfo = PlayerManager.Instance.Anim.GetCurrentAnimatorStateInfo(0);
         while (animStateInfo.IsName("Base.Idle") || animStateInfo.IsName("Base.Walk"))
@@ -134,6 +134,7 @@ public class JugglingAtack : MonoBehaviour
 
         // 投げる処理実行
         _isAtack = true;
+        transform.GetChild(0).GetComponent<CapsuleCollider>().enabled = true;
         Vector3 startPos = PlayerManager.Instance.PlayerObj.transform.position; // 投げてから当たるまでの距離を計算するため
         float atackTime = 0.0f;
 
