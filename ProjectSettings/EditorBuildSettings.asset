@@ -9,29 +9,23 @@ EditorBuildSettings:
     path: Assets/Scenes/Title.unity
     guid: 2b3c824480767a74cba87149519c4c0f
   - enabled: 1
+    path: Assets/Scenes/StageMove/InitToTotem.unity
+    guid: 60bdf3aff1874b1438666eee22f67da4
+  - enabled: 1
     path: Assets/Scenes/TotemStart.unity
     guid: 390d6b00cb9c03446ae1821b47fe18e2
   - enabled: 1
     path: Assets/Scenes/TotemMain.unity
     guid: d563330faa6897447ad80823651127d0
   - enabled: 1
-    path: Assets/Scenes/TotemDeath.unity
-    guid: 195e3bf75052249488efe786c382bc0c
-  - enabled: 1
-    path: Assets/Scenes/HermitCrabMain.unity
-    guid: a80bcf0a57a954840861089bcab3fbe5
-  - enabled: 1
     path: Assets/Scenes/Special_1.unity
     guid: f0cf8968e76f0d44b8eac49cf9ae2d01
   - enabled: 1
-    path: Assets/Scenes/StageMove/InitToTotem.unity
-    guid: 60bdf3aff1874b1438666eee22f67da4
+    path: Assets/Scenes/TotemDeath.unity
+    guid: 195e3bf75052249488efe786c382bc0c
   - enabled: 1
     path: Assets/Scenes/StageMove/TotemToYadokari.unity
     guid: fc6545ad801054947a7cd94714ddc313
-  - enabled: 1
-    path: Assets/Scenes/StageMove/YadokariToMecha.unity
-    guid: 4b93165d4bad7f14e95717c3dac9f9ca
   - enabled: 1
     path: Assets/Scenes/BagpipeStart.unity
     guid: a5000632f446b634f9998b727ab3dd39
@@ -44,3 +38,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BagpipeDeath.unity
     guid: f19da88d788ff2c428b5cab39165fee6
+  - enabled: 1
+    path: Assets/Scenes/StageMove/YadokariToMecha.unity
+    guid: 4b93165d4bad7f14e95717c3dac9f9ca
+  - enabled: 1
+    path: Assets/Scenes/MechaStart.unity
+    guid: 915db66910bcb904581d1c2c137af521
+  - enabled: 1
+    path: Assets/Scenes/MechaMain.unity
+    guid: 30c859b136babf34abeb496a74d46cb8
+  - enabled: 1
+    path: Assets/Scenes/Special_3.unity
+    guid: 200584c2c45e0694bb02e0ad00a410bd
+  - enabled: 1
+    path: Assets/Scenes/MechaDeath.unity
+    guid: e7b3b4a337dc73542a3c16cdf20a384b

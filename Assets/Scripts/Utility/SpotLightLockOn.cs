@@ -6,7 +6,6 @@ public class SpotLightLockOn : MonoBehaviour
 {
 	/// <summary>
 	/// スポットライト制御
-	/// まだ途中の空間を照らすことはできてない
 	/// 
 	/// 制作者 : 原田達夫
 	/// </summary>
