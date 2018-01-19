@@ -15,7 +15,8 @@ public class MS_Enemy_PB : PlayableBehaviour
 		DRAW,		// 敵出現
 		WAIT,		// 待機		カメラが動いてると思う
 		BACKJAMP,	// バク宙で玉に乗る	
-		//BALLRIDE,
+		POSE,		// 決めポーズ
+		NEEDLE,		// 棘を出す
 
 		FIN
 	}
@@ -28,7 +29,14 @@ public class MS_Enemy_PB : PlayableBehaviour
 	const float CON_BACKJAMP_TIME = 1.0f;		// 後方ジャンプモーションを開始してから、玉に着地するまでの時間
 	readonly Vector3 CON_BACKJAMP_START_POS = new Vector3(0.0f, 0.0f, 0.0f);	// 開始点
 	readonly Vector3 CON_BACKJAMP_MIDDLE_POS = new Vector3(0.0f, 10.0f, 3.5f);	// ベジエ曲線の制御点
-	readonly Vector3 CON_BACKJAMP_END_POS = new Vector3(0.0f, 4.19f, 7.0f);		// 終了点
+	readonly Vector3 CON_BACKJAMP_END_POS = new Vector3(0.0f, 4.19f, 7.0f);			// 終了点
+
+	const float CON_POSE_TIME = 1.0f;			// 玉に着地してから、決めポーズモーションを開始するまでの時間
+
+	const float CON_NEEDLE_TIME = 1.5f;			// 決めポーズモーションを開始してから、棘を出すまでの時間
+
+	const float CON_ROTATION_TIME = 0.3f;		// 棘を出してから、玉が回転し始めるまでの時間
+	const float CON_FIN_TIME = 0.8f;			// 棘を出してから、フェードを開始するまでの時間
 
 	#endregion
 
@@ -58,6 +66,20 @@ public class MS_Enemy_PB : PlayableBehaviour
 
 	BezierCurve.tBez tBez;
 
+	bool bFade = true;
+
+	#region 玉関連
+
+	private GameObject _BallObj;
+	public GameObject BallObj { get; set; }
+	private GameObject _group1Obj;
+	public GameObject group1Obj { get; set; }
+	Animator _ballAnimator;
+	MS_NeedleManager _needleManager;
+	float time;
+
+	#endregion
+
 	#endregion
 
 
@@ -71,6 +93,12 @@ public class MS_Enemy_PB : PlayableBehaviour
 		SkinnedMeshRendererArray = EnemyObj.GetComponentsInChildren<SkinnedMeshRenderer>();
 		MeshRendererArray = EnemyObj.GetComponentsInChildren<MeshRenderer>();
 		DrawEnemy(false);
+
+
+		// Ball関係
+		_ballAnimator = BallObj.GetComponent<Animator>();
+		_needleManager = group1Obj.GetComponent<MS_NeedleManager>();
+		_ballAnimator.speed = 0.0f;
 	}
 
 	public override void OnGraphStop(Playable playable)
@@ -108,6 +136,18 @@ public class MS_Enemy_PB : PlayableBehaviour
 
 			case STATE_MECHASTART.BACKJAMP:
 				BackJamp();
+				break;
+
+			case STATE_MECHASTART.POSE:
+				Pose();
+				break;
+
+			case STATE_MECHASTART.NEEDLE:
+				Needle();
+				break;
+
+			case STATE_MECHASTART.FIN:
+				Fin();
 				break;
 		}
 	}
@@ -214,11 +254,70 @@ public class MS_Enemy_PB : PlayableBehaviour
 		{
 			transform.position = CON_BACKJAMP_END_POS;
 
+			State = STATE_MECHASTART.POSE;
+			bInitialize = true;
+		}
+	}
+
+	// 決めポーズ
+	private void Pose()
+	{
+		if (bInitialize)
+		{
+			fTime = 0.0f;
+			bInitialize = false;
+		}
+
+		fTime += Time.deltaTime;
+		if (fTime >= CON_POSE_TIME)
+		{
+			animator.SetBool("bPose", true);	// 決めポーズモーション開始
+
+			State = STATE_MECHASTART.NEEDLE;
+			bInitialize = true;
+		}
+	}
+
+	// 棘を出す
+	private void Needle()
+	{
+		if (bInitialize)
+		{
+			fTime = 0.0f;
+			bInitialize = false;
+		}
+
+		fTime += Time.deltaTime;
+		if (fTime >= CON_NEEDLE_TIME)
+		{
+			StaticCoroutine.Instance.StartCoroutine(_needleManager.NeedleAppear());
+
 			State = STATE_MECHASTART.FIN;
 			bInitialize = true;
 		}
 	}
 
+	// シーン遷移
+	private void Fin()
+	{
+		if (bInitialize)
+		{
+			fTime = 0.0f;
+			bInitialize = false;
+		}
+
+		fTime += Time.deltaTime;
+
+		if(fTime >= CON_ROTATION_TIME)
+		{
+			_ballAnimator.speed = 1.0f;		// 玉回転
+		}
+		if (fTime >= CON_FIN_TIME && bFade)
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_3);	// シーン遷移
+			bFade = false;
+		}
+	}
 
 
 
