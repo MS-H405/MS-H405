@@ -172,16 +172,18 @@ public class ChildTotem : MonoBehaviour
                     _totemHeadList[i].transform.eulerAngles -= new Vector3(0, 1080, 0) * Time.deltaTime;
                 }
 
-                if(transform.position.y > -1.0f - (_oneBlockSize * (HeadAmount - (i + 1))))
+                if(_totemHeadList[i].transform.position.y > -1.0f - (_oneBlockSize * (HeadAmount - (i + 1))))
                     continue;
 
                 endCount ++;
             }
 
-            isEnd = endCount == HeadAmount;
+            isEnd = (endCount == HeadAmount);
             yield return null;
         }
         _isAtack = false;
+        yield return null;
+        yield return null;
 
         foreach (GameObject effect in _dropEffectList)
         {
@@ -196,7 +198,6 @@ public class ChildTotem : MonoBehaviour
         _rigidbody.useGravity = false;
         for (int i = 0; i < _totemHeadList.Count; i++)
         {
-            Debug.Log(_totemHeadList[i].transform.position);
             _totemHeadList[i].transform.localPosition = initPos[i];
             _totemHeadList[i].transform.localEulerAngles = Vector3.zero;
         }
