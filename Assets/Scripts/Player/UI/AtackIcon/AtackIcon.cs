@@ -104,7 +104,7 @@ public class AtackIcon : MonoBehaviour
         else
         {
             // コルーチン再開時に差し替えるため
-            yield return new WaitForSeconds(100.0f);
+            yield return new WaitForSeconds(1.0f);
 
             // 戻すときはムービー中にそのまま差し替え
             _image.sprite = _defaultSprite;
@@ -127,7 +127,7 @@ public class AtackIcon : MonoBehaviour
         if (StageData.Instance.StageNumber >= (int)_actionType)
             return;
 
-        // TODO : 使えないアイコンの処理
+        // 使えないアイコンの処理
         _image.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
     }
 
