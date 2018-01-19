@@ -65,6 +65,7 @@ public class Totem : EnemyBase
     {
         if(_isDebug)
         {
+            transform.position = Vector3.zero;
             yield break;
         }
 
@@ -251,7 +252,7 @@ public class Totem : EnemyBase
 
     #endregion
 
-    #region actuin_method
+    #region action_method
 
     /// <summary>
     /// 突き上げ攻撃処理
@@ -353,7 +354,6 @@ public class Totem : EnemyBase
 
         // 本体突き上げ処理
         transform.position = PlayerPos();
-        //transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
 
         // 土煙を出す
         AppearEffect();
@@ -557,6 +557,30 @@ public class Totem : EnemyBase
         _totemLaser = transform.GetChild(1).GetComponentInChildren<EffekseerEmitter>();
         _totemLaserCol = _totemLaser.GetComponentInChildren<CapsuleCollider>();
         _totemLaserCol.enabled = false;
+
+        // トーテムの初期位置決定
+        switch (_action)
+        {
+            case eAction.TotemPushUp:
+                transform.position = new Vector3(0, -_headAmount * _oneBlockSize, 0); 
+                break;
+
+            case eAction.ChildTotemPushUp:
+                transform.position = new Vector3(0, -_headAmount * _oneBlockSize, 0);
+                break;
+
+            case eAction.SpecialAttack:
+                transform.position = Vector3.zero;
+                break;
+
+            case eAction.WindAttack:
+                transform.position = Vector3.zero;
+                break;
+
+            default:
+                break;
+        }
+        transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
     }
 
     /// <summary>
