@@ -457,20 +457,24 @@ public class RideBallMove : PlayerMove
     {
         // 跳ね返り処理
         _isGround = false;
+        _animator.speed = 1.0f;
+        AcceReset();
+        RideEffect(false);
+        _animator.SetTrigger("Roll");
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_BallAttack);
+
         Vector3 reflectPower = -transform.forward * _nowAcceForward * 10.0f;
         reflectPower += new Vector3(0.0f, 300.0f, 0.0f);
         _rigidbody.AddForce(reflectPower);
-        _animator.SetTrigger("Roll");
-        _animator.speed = 1.0f;
 
-        AcceReset();
-        RideEffect(false);
-        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_BallAttack);
-
-        if (!isEffect)
-            return;
-
-        Instantiate(_ballAttackEffect, point + new Vector3(0, 0.5f, 0), Quaternion.identity);       
+        if (isEffect)
+        {
+            Instantiate(_ballAttackEffect, point + new Vector3(0, 0.5f, 0), Quaternion.identity);
+        }
+        else
+        {
+            // 今のところ特になし
+        }
     }
 
     #endregion

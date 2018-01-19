@@ -288,6 +288,10 @@ public class Player : MonoBehaviour
             if (!_isDamage)
                 return;
 
+            var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            if (!stateInfo.IsName("Base.Down"))
+                return;
+
             _animator.SetTrigger("Return");
         }
     }
