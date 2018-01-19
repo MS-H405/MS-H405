@@ -32,7 +32,7 @@ public class FixHeight : MonoBehaviour
     /// <summary>
     /// 更新処理
     /// </summary>
-    private void Update ()
+    private void LateUpdate ()
     {
         Vector3 pos = transform.position;
         pos.y = _height;

@@ -13,25 +13,21 @@ using UniRx.Triggers;
   
 public class MeteorHit : MonoBehaviour
 {
-    #region define
-
-    #endregion
-
     #region variable
 
-    #endregion
-
-    #region method
+    [SerializeField] int _index = 0;
 
     #endregion
 
     #region unity_event
-   
+
     /// <summary>
     /// 更新前処理
     /// </summary>
     private void Start ()
     {
+        float meteorHeight = 15.0f - (2.0f * (2 - _index));
+        float endHeight = -1.0f - (2.0f * (2 - _index));
         float oldHeight = transform.position.y;
         CapsuleCollider col = GetComponent<CapsuleCollider>();
         EffekseerEmitter meteorEffect = GetComponentInChildren<EffekseerEmitter>();
@@ -45,12 +41,12 @@ public class MeteorHit : MonoBehaviour
                     return;
                 }
 
-                if (oldHeight > 15.0f && transform.position.y <= 15.0f)
+                if (oldHeight > meteorHeight && transform.position.y <= meteorHeight)
                 {
                     meteorEffect.Play();
                 }
 
-                if (oldHeight > -1.0f && transform.position.y <= -1.0f)
+                if (oldHeight > endHeight && transform.position.y <= endHeight)
                 {
                     Vector3 effectPos = transform.position;
                     effectPos.y = 0.01f;
@@ -62,6 +58,17 @@ public class MeteorHit : MonoBehaviour
 
                 oldHeight = transform.position.y;
             });
+    }
+
+    /// <summary>
+    /// 当たり判定
+    /// </summary>
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.tag == "Player")
+        {
+            col.GetComponent<Player>().Damage();
+        }
     }
 
     #endregion

@@ -580,7 +580,6 @@ public class Totem : EnemyBase
             default:
                 break;
         }
-        transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
     }
 
     /// <summary>

@@ -15,7 +15,7 @@ public class ChildTotem : MonoBehaviour
 {
     #region define
 
-    private int HeadAmount = 5;
+    private int HeadAmount = 3;
 
     #endregion
 
@@ -112,7 +112,7 @@ public class ChildTotem : MonoBehaviour
         topPos.y = fallHeight;
         Vector3 underPos = transform.position;
 
-        TotemRot(true, 1.0f / (float)HeadAmount);
+        TotemRot(true, 1.0f / HeadAmount);
         time = 0.0f;
         while (time < 1.0f)
         {
@@ -158,21 +158,27 @@ public class ChildTotem : MonoBehaviour
         bool isEnd = false;
         while (!isEnd)
         {
-            _rigidbody.AddForce(0.0f, -9.8f, 0.0f);
+            int endCount = 0;
+            transform.position -= new Vector3(0, 10, 0) * Time.deltaTime;
 
             for (int i = 0; i < _totemHeadList.Count; i++)
             {
                 if (i % 2 == 0)
                 {
-                    _totemHeadList[i].transform.eulerAngles += new Vector3(0, 720, 0) * Time.deltaTime;
+                    _totemHeadList[i].transform.eulerAngles += new Vector3(0, 1080, 0) * Time.deltaTime;
                 }
                 else
                 {
-                    _totemHeadList[i].transform.eulerAngles -= new Vector3(0, 720, 0) * Time.deltaTime;
+                    _totemHeadList[i].transform.eulerAngles -= new Vector3(0, 1080, 0) * Time.deltaTime;
                 }
+
+                if(transform.position.y > -1.0f - (_oneBlockSize * (HeadAmount - (i + 1))))
+                    continue;
+
+                endCount ++;
             }
 
-            isEnd = _totemHeadList.Where(_ => _.transform.position.y <= -1.0f).ToList().Count() == HeadAmount;
+            isEnd = endCount == HeadAmount;
             yield return null;
         }
         _isAtack = false;
@@ -190,6 +196,7 @@ public class ChildTotem : MonoBehaviour
         _rigidbody.useGravity = false;
         for (int i = 0; i < _totemHeadList.Count; i++)
         {
+            Debug.Log(_totemHeadList[i].transform.position);
             _totemHeadList[i].transform.localPosition = initPos[i];
             _totemHeadList[i].transform.localEulerAngles = Vector3.zero;
         }
@@ -290,17 +297,6 @@ public class ChildTotem : MonoBehaviour
     public void Init(Totem parent)
     {
         _parentScript = parent;
-    }
-
-    /// <summary>
-    /// 当たり判定
-    /// </summary>
-    private void OnTriggerEnter(Collider col)
-    {
-        if(col.tag == "Player" && _isAtack)
-        {
-            col.GetComponent<Player>().Damage();
-        }
     }
 
     #endregion
