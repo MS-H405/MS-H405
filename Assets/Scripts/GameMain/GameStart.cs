@@ -68,39 +68,36 @@ public class GameStart : MonoBehaviour
         }
 
         this.ObserveEveryValueChanged(_ => MovieManager.Instance.GetisMovideFade() || Time.unscaledDeltaTime > Rimit)
-            .Where(_ => !(MovieManager.Instance.GetisMovideFade() || Time.unscaledDeltaTime > Rimit))
+            .Where(_ => !MovieManager.Instance.GetisMovideFade() && Time.unscaledDeltaTime <= Rimit)
             .Subscribe(_ =>
             {
                 GetComponent<EffekseerEmitter>().Play();
-            });
 
-        float time = 0.0f;
-        this.UpdateAsObservable()
-            .Subscribe(_ =>
-            {
-                if (MovieManager.Instance.GetisMovideFade() || Time.unscaledDeltaTime > Rimit)
-                    return;
+                float time = 0.0f;
+                this.UpdateAsObservable()
+                    .Subscribe(x =>
+                    {
+                        time += Time.deltaTime;
+                        GameStartDeltaTime = Time.deltaTime;
 
-                time += Time.unscaledDeltaTime;
-                GameStartDeltaTime = Time.unscaledDeltaTime;
+                        if (time < _waitTime)
+                            return;
 
-                if (time < _waitTime)
-                    return;
-                
-                StaticCoroutine.Instance.AllStartCoroutine();
-                foreach (MonoBehaviour playerMono in playerMonos)
-                {
-                    playerMono.enabled = true;
-                }
-                foreach (MonoBehaviour enemyMono in enemyMonos)
-                {
-                    enemyMono.enabled = true;
-                }
-                foreach (MonoBehaviour cameraMono in cameraMonos)
-                {
-                    cameraMono.enabled = true;
-                }
-                Destroy(gameObject);
+                        StaticCoroutine.Instance.AllStartCoroutine();
+                        foreach (MonoBehaviour playerMono in playerMonos)
+                        {
+                            playerMono.enabled = true;
+                        }
+                        foreach (MonoBehaviour enemyMono in enemyMonos)
+                        {
+                            enemyMono.enabled = true;
+                        }
+                        foreach (MonoBehaviour cameraMono in cameraMonos)
+                        {
+                            cameraMono.enabled = true;
+                        }
+                        Destroy(gameObject);
+                    });
             });
     }
 
