@@ -36,8 +36,9 @@ public class HermitCrab : EnemyBase
     
     private eAction _nowAction;             // 現在の行動を保持
     private bool _isNext = false;           // 次の行動へ行くか
-
     private float _nearTime = 0.0f;         // Playerが近くにいる時の継続時間
+    
+    private SphereCollider _bodyAttackCollider = null;
 
     // 行動用変数
     private BoxCollider _leftScissors  = null;
@@ -438,6 +439,7 @@ public class HermitCrab : EnemyBase
 
         // 回転
         time = 0.0f;
+        _bodyAttackCollider.enabled = true;
         while (time < 3.0f)
         {
             if(PlayerManager.Instance.IsGround)
@@ -463,6 +465,7 @@ public class HermitCrab : EnemyBase
             yield return null;
         }
 
+        _bodyAttackCollider.enabled = false;
         SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Bagpipe_Burst);
         _animator.SetBool("RollFire", false);
     }
@@ -535,7 +538,7 @@ public class HermitCrab : EnemyBase
     protected override IEnumerator StanEffectUnique()
     {
         float time = 0.0f;
-        while(time < 1.0f)
+        while(time < 0.75f)
         {
             time += Time.deltaTime;
             yield return null;
@@ -576,6 +579,10 @@ public class HermitCrab : EnemyBase
             effect.name += " : " + pipe.name;
             _pipeFireList.Add(pipe.transform.GetChild(0).GetComponentInChildren<ParticleSystem>());
         }
+
+        // ボディ攻撃判定の初期化
+        _bodyAttackCollider = GetComponent<SphereCollider>();
+        _bodyAttackCollider.enabled = false;
     }
 
     /// <summary>
