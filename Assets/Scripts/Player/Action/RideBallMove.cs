@@ -378,6 +378,7 @@ public class RideBallMove : PlayerMove
         _animator.speed = 1.0f;
         _animator.SetBool("BallWalk", false);
         PlayerManager.Instance.Player.IsInvincible = false;
+        AcceReset();
         RideEffect(false);
         SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Player_BallWalk);
 
@@ -425,6 +426,7 @@ public class RideBallMove : PlayerMove
             if (!_isGround || _nowAcceForward == 0.0f)
                 return;
 
+            Debug.Log("Attack : " + _nowAcceForward);
             // ダメージ処理がある場合はダメージ処理
             if (_nowAcceForward >= _speed_Sec)
             {
