@@ -28,7 +28,7 @@ public class EffekseerSystem : MonoBehaviour
 	/// <summary xml:lang="ja">
 	/// エフェクトインスタンスの最大数
 	/// </summary>
-	public int effectInstances	= 3200;
+	public int effectInstances	= 8192;
 
 	/// <summary xml:lang="en">
 	/// Maximum number of quads that can be drawn.

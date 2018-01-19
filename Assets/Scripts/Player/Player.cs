@@ -84,6 +84,11 @@ public class Player : MonoBehaviour
             _playerMove.OutGround();
         }
 
+        if(_actionManager.NowAction == ActionManager.eActionType.Bagpipe)
+        {
+            _actionManager.Cancel();
+        }
+
         Vector3 velocity = -transform.forward * _backPower * power;
         velocity.y = _upPower;
         _rigidBody.AddForce(velocity);
@@ -201,7 +206,10 @@ public class Player : MonoBehaviour
                     // 行動キャンセル
                     else if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetButtonDown("Cancel"))
                     {
-                        _actionManager.Cancel();
+                        if (_actionManager.NowAction == ActionManager.eActionType.RideBall)
+                        {
+                            _actionManager.Cancel();
+                        }
                     }
                     // 武器スロット右回り
                     if (Input.GetButtonDown("Right") && AtackIconManager.Instance.IsChange)

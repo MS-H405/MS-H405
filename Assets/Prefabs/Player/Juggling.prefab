@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4839899278818266}
   - component: {fileID: 54911034258270422}
-  - component: {fileID: 114151507824491852}
+  - component: {fileID: 114303423595037806}
   m_Layer: 0
   m_Name: Juggling
   m_TagString: Untagged
@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 4958617319029032}
   - component: {fileID: 198629715894028380}
   - component: {fileID: 199905793665383488}
+  - component: {fileID: 114674162602726350}
   m_Layer: 0
   m_Name: JugglingAir_Effect
   m_TagString: Untagged
@@ -161,7 +162,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114151507824491852
+--- !u!114 &114303423595037806
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -169,16 +170,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1195973821784986}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21f416791d65d0c459f1b09bc483c2a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 8422db088c8c3654590c60f2a400e156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _nextJuggling: {fileID: 1195973821784986}
   _dropPointEffect: {fileID: 1747504605174294, guid: 5f6d003262a08344289e5da43155d42a,
     type: 2}
   _pinThrowEffect: {fileID: 1940381854088576, guid: a0f897e799d94fa40917efe8c9a7a65c,
     type: 2}
   _pinMesh:
-  - {fileID: 4300000, guid: 6de2d97247ae41741bf0f990fbe5851e, type: 3}
   - {fileID: 4300000, guid: 5f3605134e94d7c4693dc6a467e3422c, type: 3}
+  - {fileID: 4300000, guid: 6de2d97247ae41741bf0f990fbe5851e, type: 3}
   - {fileID: 4300000, guid: 586ea045aaf5e3d41be7eb7b7c079348, type: 3}
 --- !u!114 &114361786084579254
 MonoBehaviour:
@@ -192,6 +194,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotDegreeAmount_Sec: {x: 1080, y: 0, z: 0}
+--- !u!114 &114674162602726350
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1767710947954800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26740facd25a31e438b0bcc1d6da4a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136277714350151688
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -200,7 +213,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1516927117335540}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.12
   m_Height: 1.55
   m_Direction: 1
@@ -265,7 +278,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 39286996
+  randomSeed: 551852225
   InitialModule:
     serializedVersion: 3
     enabled: 1

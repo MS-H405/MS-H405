@@ -36,8 +36,9 @@ public class HermitCrab : EnemyBase
     
     private eAction _nowAction;             // 現在の行動を保持
     private bool _isNext = false;           // 次の行動へ行くか
-
     private float _nearTime = 0.0f;         // Playerが近くにいる時の継続時間
+    
+    private SphereCollider _bodyAttackCollider = null;
 
     // 行動用変数
     private BoxCollider _leftScissors  = null;
@@ -77,7 +78,6 @@ public class HermitCrab : EnemyBase
                 // スタン状態なら一時停止
                 if (IsStan)
                 {
-                    //SoundManager.Instance.PlaySE(SoundManager.eSeValue.Enemy_Stan);
                     StaticCoroutine.Instance.StopCoroutine(enumerator);
 
                     while (IsStan)
@@ -122,14 +122,16 @@ public class HermitCrab : EnemyBase
                     {
                         return eAction.RollFire;
                     }
+                    if (Input.GetKey(KeyCode.N))
+                    {
+                        return eAction.RightAttack;
+                    }
+                    if (Input.GetKey(KeyCode.M))
+                    {
+                        return eAction.LeftAttack;
+                    }
                     return eAction.Wait;
                 }
-
-                //return eAction.Assault;             // 突進攻撃
-                //return eAction.ChargeFire;          // その場でファイアー
-                //return eAction.RollAtack;           // 回転攻撃
-                //return (eAction)Random.Range(2, 5); // 左or右攻撃か回転攻撃を出す
-                //return eAction.RollFire;           // 回転してファイアー
                
                 if (_nearTime > 5.0f)
                 {
@@ -315,23 +317,21 @@ public class HermitCrab : EnemyBase
         {
             case eAction.RightAttack:
                 _rightScissors.enabled = true;
-                //effect = Instantiate(_rightScissorsEffect);
-                //effect.transform.SetParent(_rightScissors.transform.Find("RightS"));
+                effect = Instantiate(_rightScissorsEffect);
+                effect.transform.SetParent(_rightScissors.transform.Find("RightS"));
                 break;
 
             case eAction.LeftAttack:
                 _leftScissors.enabled = true;
                 effect = Instantiate(_leftScissorsEffect);
                 effect.transform.SetParent(_leftScissors.transform.Find("LehtS"));
-                effect.transform.localPosition = Vector3.zero;
-                effect.transform.localEulerAngles = Vector3.zero;
                 break;
 
             default:
                 break;
         }
-        //effect.transform.localPosition = Vector3.zero;
-        //effect.transform.localEulerAngles = Vector3.zero;
+        effect.transform.localPosition = Vector3.zero;
+        effect.transform.localEulerAngles = Vector3.zero;
 
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_Scissor);
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
@@ -439,6 +439,7 @@ public class HermitCrab : EnemyBase
 
         // 回転
         time = 0.0f;
+        _bodyAttackCollider.enabled = true;
         while (time < 3.0f)
         {
             if(PlayerManager.Instance.IsGround)
@@ -464,6 +465,7 @@ public class HermitCrab : EnemyBase
             yield return null;
         }
 
+        _bodyAttackCollider.enabled = false;
         SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Bagpipe_Burst);
         _animator.SetBool("RollFire", false);
     }
@@ -536,7 +538,7 @@ public class HermitCrab : EnemyBase
     protected override IEnumerator StanEffectUnique()
     {
         float time = 0.0f;
-        while(time < 1.0f)
+        while(time < 0.75f)
         {
             time += Time.deltaTime;
             yield return null;
@@ -577,6 +579,10 @@ public class HermitCrab : EnemyBase
             effect.name += " : " + pipe.name;
             _pipeFireList.Add(pipe.transform.GetChild(0).GetComponentInChildren<ParticleSystem>());
         }
+
+        // ボディ攻撃判定の初期化
+        _bodyAttackCollider = GetComponent<SphereCollider>();
+        _bodyAttackCollider.enabled = false;
     }
 
     /// <summary>

@@ -38,7 +38,7 @@ public class EnemyBase : MonoBehaviour
     /// <summary>
     /// ダメージ処理
     /// </summary>
-    public void Damage(int amount = 1)
+    public void Damage(int amount = 1, string colTag = "")
     {
         if (IsStan)
             return;
@@ -56,6 +56,7 @@ public class EnemyBase : MonoBehaviour
 
         _nowStanHp -= amount;
         StaticCoroutine.Instance.StartStaticCoroutine(DamageEffect());
+        StaticCoroutine.Instance.StartStaticCoroutine(DamageEffectUnique(colTag));
 
         if (_nowStanHp > 0)
             return;
@@ -131,6 +132,14 @@ public class EnemyBase : MonoBehaviour
         }
 
         _isDamage = false;
+    }
+
+    /// <summary>
+    /// 各自のダメージエフェクト再生処理
+    /// </summary>
+    protected virtual IEnumerator DamageEffectUnique(string colTag)
+    {
+        yield return null;
     }
 
     /// <summary>

@@ -193,6 +193,7 @@ ModelImporter:
     7400016: down1
     7400018: down2
     7400020: damage
+    7400022: Take 001
     9500000: //RootNode
     13700000: body
   externalObjects:
@@ -200,6 +201,11 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: blinn1
+    second: {fileID: 2100000, guid: e67eaf87e570a7345af2edb8a437b1d3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: blinn1SG3
     second: {fileID: 2100000, guid: e67eaf87e570a7345af2edb8a437b1d3, type: 2}
   - first:
       type: UnityEngine:Material
