@@ -369,6 +369,16 @@ Prefab:
       propertyPath: m_LocalPosition.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 54870697125074760, guid: 22ef5ae20c0e87e40a6234203c526865,
+        type: 2}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 54870697125074760, guid: 22ef5ae20c0e87e40a6234203c526865,
+        type: 2}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 22ef5ae20c0e87e40a6234203c526865, type: 2}
   m_IsPrefabParent: 0
@@ -788,7 +798,7 @@ Prefab:
     - target: {fileID: 114153319218281864, guid: f701d02553f49444aa9b98444fcd3ea5,
         type: 2}
       propertyPath: _waitTime
-      value: 3
+      value: 3.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f701d02553f49444aa9b98444fcd3ea5, type: 2}
