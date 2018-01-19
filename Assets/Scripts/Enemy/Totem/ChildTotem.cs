@@ -300,5 +300,19 @@ public class ChildTotem : MonoBehaviour
         _parentScript = parent;
     }
 
+    /// <summary>
+    /// 当たり判定
+    /// </summary>
+    private void OnCollisionEnter(Collision col)
+    {
+        if (!_isAtack)
+            return;
+
+        if (col.gameObject.tag == "Player")
+        {
+            col.gameObject.GetComponent<Player>().Damage();
+        }
+    }
+
     #endregion
 }  
