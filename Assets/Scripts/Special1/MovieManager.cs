@@ -214,7 +214,7 @@ public class MovieManager : MonoBehaviour
 				break;
 
 			case MOVIE_SCENE.STAGE_3:
-				SceneManager.LoadScene("a");
+				SceneManager.LoadScene("MechaMain");
 				break;
 
 			case MOVIE_SCENE.RESULT:
@@ -234,7 +234,7 @@ public class MovieManager : MonoBehaviour
 				break;
 
 			case MOVIE_SCENE.BAGPIPE_DEATH:
-				SceneManager.LoadScene("a");
+				SceneManager.LoadScene("BagpipeDeath");
 				break;
 
 			case MOVIE_SCENE.MECHA_START:
@@ -242,7 +242,7 @@ public class MovieManager : MonoBehaviour
 				break;
 
 			case MOVIE_SCENE.MECHA_DEATH:
-				SceneManager.LoadScene("a");
+				SceneManager.LoadScene("MechaDeath");
 				break;
 
 			case MOVIE_SCENE.INIT_TO_TOTEM:
@@ -433,7 +433,7 @@ public class MovieManager : MonoBehaviour
 				break;
 
 			case MOVIE_SCENE.SPECIAL_3:
-				SceneManager.LoadScene("a");
+				SceneManager.LoadScene("MechaDeath");
 				break;
 		}
 		#endregion

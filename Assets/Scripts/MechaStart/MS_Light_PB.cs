@@ -21,6 +21,16 @@ public class MS_Light_PB : PlayableBehaviour
 	private GameObject _LightObj;
 	public GameObject LightObj { get; set; }
 	private Transform[] TransformArray;
+
+
+
+	// 頻繁にfalseになっているので無理やりtrueに
+	private GameObject _LightObj_1;
+	public GameObject LightObj_1 { get; set; }
+	private GameObject _LightObj_2;
+	public GameObject LightObj_2 { get; set; }
+	private GameObject _LightObj_3;
+	public GameObject LightObj_3 { get; set; }
 	#endregion
 
 	float fTime = 0.0f;
@@ -31,6 +41,12 @@ public class MS_Light_PB : PlayableBehaviour
 
 	public override void OnGraphStart(Playable playable)
 	{
+		// 頻繁にfalseになっているので無理やりtrueに
+		LightObj.SetActive(true);
+		LightObj_1.SetActive(true);
+		LightObj_2.SetActive(true);
+		LightObj_3.SetActive(true);
+
 		// ライト取得&非表示
 		TransformArray = LightObj.GetComponentsInChildren<Transform>();
 		foreach (Transform transform in TransformArray)
