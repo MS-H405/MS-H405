@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4426439677711864}
   - component: {fileID: 212900427193659164}
   - component: {fileID: 114439820806795656}
+  - component: {fileID: 114965589356913154}
   m_Layer: 0
   m_Name: JuggDropEffect
   m_TagString: Untagged
@@ -53,6 +54,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotDegreeAmount_Sec: {x: 0, y: 0, z: 720}
+--- !u!114 &114965589356913154
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1747504605174294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1227832c1ee6d284b89f82a728e81bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212900427193659164
 SpriteRenderer:
   m_ObjectHideFlags: 1
