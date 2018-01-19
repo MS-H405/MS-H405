@@ -28,6 +28,8 @@ public class GameCamera : MonoBehaviour
 	const float CON_fTopRotY = 0.7f;													// ターゲットロストして、俯瞰になった時の角度(Y)
 	const float	CON_fTopDistance = 12.0f;												// ターゲットロストして、俯瞰になった時のプレイヤーからの距離
 
+	const float CON_MIN_Y = 0.5f;	// Y座標がこの値以下にならないようにする
+
 	#endregion
 	
 
@@ -108,6 +110,12 @@ public class GameCamera : MonoBehaviour
 			case _CameraMode.BACKPLAYER:	// 俯瞰　→　通常
 				CameraBackPlayer();
 				break;
+		}
+
+		// カメラが下に行き過ぎないようにする
+		if(transform.position.y < CON_MIN_Y)
+		{
+			transform.position = new Vector3(transform.position.x, CON_MIN_Y, transform.position.z);
 		}
 	}
 
