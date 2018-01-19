@@ -21,7 +21,8 @@ public class GameStart : MonoBehaviour
     #endregion
 
     #region variable
-    
+
+    [SerializeField] float _waitTime = 5.0f;
 
     #endregion
 
@@ -83,7 +84,7 @@ public class GameStart : MonoBehaviour
                 time += Time.unscaledDeltaTime;
                 GameStartDeltaTime = Time.unscaledDeltaTime;
 
-                if (time < 5.0f)
+                if (time < _waitTime)
                     return;
                 
                 StaticCoroutine.Instance.AllStartCoroutine();
