@@ -21,8 +21,7 @@ public class GameStart : MonoBehaviour
     #endregion
 
     #region variable
-
-    [SerializeField] List<GameObject> _startObjList = new List<GameObject>();
+    
 
     #endregion
 
@@ -45,6 +44,35 @@ public class GameStart : MonoBehaviour
     /// </summary>
     private void Start ()
     {
+        // PlayerとEnemyを停止
+        Time.timeScale = 1.0f;
+        StaticCoroutine.Instance.AllStopCoroutine();
+        MonoBehaviour[] playerMonos = PlayerManager.Instance.Player.GetComponentsInChildren<MonoBehaviour>();
+        playerMonos = playerMonos.Where(_ => _.enabled).ToArray();
+        foreach (MonoBehaviour playerMono in playerMonos)
+        {
+            playerMono.enabled = false;
+        }
+        MonoBehaviour[] enemyMonos = EnemyManager.Instance.BossEnemy.GetComponentsInChildren<MonoBehaviour>();
+        enemyMonos = enemyMonos.Where(_ => _.enabled).ToArray();
+        foreach (MonoBehaviour enemyMono in enemyMonos)
+        {
+            enemyMono.enabled = false;
+        }
+        MonoBehaviour[] cameraMonos = Camera.main.GetComponentsInChildren<MonoBehaviour>();
+        cameraMonos = cameraMonos.Where(_ => _.enabled).ToArray();
+        foreach (MonoBehaviour cameraMono in cameraMonos)
+        {
+            cameraMono.enabled = false;
+        }
+
+        this.ObserveEveryValueChanged(_ => MovieManager.Instance.GetisMovideFade() || Time.unscaledDeltaTime > Rimit)
+            .Where(_ => !(MovieManager.Instance.GetisMovideFade() || Time.unscaledDeltaTime > Rimit))
+            .Subscribe(_ =>
+            {
+                GetComponent<EffekseerEmitter>().Play();
+            });
+
         float time = 0.0f;
         this.UpdateAsObservable()
             .Subscribe(_ =>
@@ -55,20 +83,24 @@ public class GameStart : MonoBehaviour
                 time += Time.unscaledDeltaTime;
                 GameStartDeltaTime = Time.unscaledDeltaTime;
 
-                if (time < 2.0f)
+                if (time < 5.0f)
                     return;
-
-                Time.timeScale = 1.0f;
+                
+                StaticCoroutine.Instance.AllStartCoroutine();
+                foreach (MonoBehaviour playerMono in playerMonos)
+                {
+                    playerMono.enabled = true;
+                }
+                foreach (MonoBehaviour enemyMono in enemyMonos)
+                {
+                    enemyMono.enabled = true;
+                }
+                foreach (MonoBehaviour cameraMono in cameraMonos)
+                {
+                    cameraMono.enabled = true;
+                }
                 Destroy(gameObject);
             });
-    }
-
-    /// <summary>
-    /// 更新処理
-    /// </summary>
-    private void Update ()
-    {
-
     }
 
     #endregion
