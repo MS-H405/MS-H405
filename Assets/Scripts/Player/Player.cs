@@ -272,6 +272,7 @@ public class Player : MonoBehaviour
 
     /// <summary>
     /// 地形との接地判定処理
+    /// memo : Enterだと復帰しないバグが発生する恐れあり
     /// </summary>
     private void OnCollisionEnter(Collision col)
     {
@@ -288,9 +289,12 @@ public class Player : MonoBehaviour
             if (!_isDamage)
                 return;
 
-            var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            if (!stateInfo.IsName("Base.Down"))
+            if (transform.position.y > 0.0f)
                 return;
+
+            /*var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            if (!stateInfo.IsName("Base.Down"))
+                return;*/
 
             _animator.SetTrigger("Return");
         }

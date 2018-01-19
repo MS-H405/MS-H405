@@ -77,7 +77,7 @@ public class FireTrap : MonoBehaviour
     /// <summary>
     /// 当たり判定
     /// </summary>
-    private void OnTriggerEnter(Collider col)
+    private void OnTriggerStay(Collider col)
     {
         if (_isPlayer)
         {
@@ -94,9 +94,14 @@ public class FireTrap : MonoBehaviour
         }
         else
         {
-            if (col.tag == "Player" && col.transform.position.y < 1.0f)
+            if (col.transform.position.y >= 1.0f)
+                return;
+
+            if (col.tag == "Player")
             {
-                col.GetComponent<Player>().Damage();
+                if (!col.GetComponent<Player>().Damage())
+                    return;
+
                 _life = 0.25f;
             }
         }

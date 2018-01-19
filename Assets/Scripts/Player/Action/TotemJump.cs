@@ -34,6 +34,7 @@ public class TotemJump : MonoBehaviour
     private Animator _animator = null;
     private Rigidbody _rigidBody = null;
     private PlayerMove _playerMove = null;
+    private CapsuleCollider _playerCollider = null;
 
     private ParticleSystem _totemJumpEffect = null;
 
@@ -52,6 +53,8 @@ public class TotemJump : MonoBehaviour
             yield break;
         }
 
+        // 開始処理
+        _isGround = false;
         _playerMove.RunSmoke(false);
         _playerMove.enabled = false;
         PlayerManager.Instance.Player.IsInvincible = true;  //  無敵状態にする
@@ -77,10 +80,27 @@ public class TotemJump : MonoBehaviour
         _rigidBody.AddForce(new Vector3(0, _addUpPower, 0) + (transform.forward * _addForwardPower));
         GameEffectManager.Instance.Play("PinAttack", transform.position);
 
+        var invincibleDisposable = new SingleAssignmentDisposable();
+        invincibleDisposable.Disposable = this.UpdateAsObservable()
+            .Where(_ => transform.position.y <= 1.0f)
+            .Subscribe(_ =>
+            {
+                PlayerManager.Instance.Player.IsInvincible = false;
+                _playerCollider.enabled = false;
+                invincibleDisposable.Dispose();
+            });
+        var jumpDisposable = new SingleAssignmentDisposable();
+        jumpDisposable.Disposable = this.UpdateAsObservable()
+            .Where(_ => transform.position.y <= 0.5f)
+            .Subscribe(_ =>
+            {
+                _animator.SetBool("Jump", false);
+                _playerCollider.enabled = true;
+                jumpDisposable.Dispose();
+            });
+
         while (!_isGround)
         {
-            _animator.SetBool("Jump", transform.position.y > 0.5f);
-            PlayerManager.Instance.Player.IsInvincible = transform.position.y > 1.0f;
             _totemObj.transform.position -= new Vector3(0, _pushAmount * Time.deltaTime / _pushTime, 0) / 2.0f;
             yield return null;
         }
@@ -127,6 +147,7 @@ public class TotemJump : MonoBehaviour
         _animator = GetComponent<Animator>();
         _rigidBody = GetComponent<Rigidbody>();
         _playerMove = GetComponent<PlayerMove>();
+        _playerCollider = GetComponent<CapsuleCollider>();
 
         _totemJumpEffect = transform.Find("TotemJumpEffect").GetComponent<ParticleSystem>();
         _totemJumpEffect.Stop();
