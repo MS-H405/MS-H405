@@ -24,15 +24,15 @@ public class JugglingAtack : MonoBehaviour
     static private int _nowPinValue = 0;
     static public int NowJugglingAmount { get { return _nowJugglingAmount; } set { _nowJugglingAmount = value; } }
 
-    static private float _commonAtackSpeed = 1.0f;          // 共有する攻撃スピード
+    static private float _commonAttackSpeed = 1.0f;         // 共有する攻撃スピード
     static private bool _isPlay = true;                     // キャッチしたり投げたりできる状態かを保持
     static public bool IsPlay { get { return _isPlay; } } 
-    private readonly float MaxAtackSpeed = 3.0f;            // 最大スピード
+    private readonly float MaxAttackSpeed = 3.0f;           // 最大スピード
 
     private GameObject _targetObj = null;                   // 
     private float _atackSpeed = 0.0f;                       // 攻撃スピード
 
-    private bool _isAtack = false;                          // 攻撃中判定
+    private bool _isAttack = false;                         // 攻撃中判定
     private bool _isReflect = false;                        // 反射判定
     private bool _isCatch = false;                          // このオブジェクトの生存判定
 
@@ -53,20 +53,20 @@ public class JugglingAtack : MonoBehaviour
         _nowPinValue++;
 
         // スタン中ならキャッチする
-        if ((target && target.IsStan))
+        if (target && target.IsStan)
         {
-            PinDestroy(true);
+            Stop();
             return;
         }
         // それ以外なら
         if(!_isPlay || !PlayerManager.Instance.CheckActionType(ActionManager.eActionType.Juggling))
         {
-            PinDestroy(true);
+            Stop();
             return;
         }
 
         // 初期化処理
-        _atackSpeed = 10.0f * _commonAtackSpeed;
+        _atackSpeed = 10.0f * _commonAttackSpeed;
         if (mesh < 0)
         {
             transform.GetComponentInChildren<MeshFilter>().mesh = _pinMesh[_nowPinValue - 1];
@@ -133,7 +133,7 @@ public class JugglingAtack : MonoBehaviour
         Instantiate(_pinThrowEffect, transform.position, _pinThrowEffect.transform.rotation);
 
         // 投げる処理実行
-        _isAtack = true;
+        _isAttack = true;
         transform.GetChild(0).GetComponent<CapsuleCollider>().enabled = true;
         Vector3 startPos = PlayerManager.Instance.PlayerObj.transform.position; // 投げてから当たるまでの距離を計算するため
         float atackTime = 0.0f;
@@ -209,9 +209,9 @@ public class JugglingAtack : MonoBehaviour
         if (_isCatch)
         {
             // 速度アップ
-            if (_commonAtackSpeed < MaxAtackSpeed)
+            if (_commonAttackSpeed < MaxAttackSpeed)
             {
-                _commonAtackSpeed += (MaxAtackSpeed - 1.0f) * 0.1f;
+                _commonAttackSpeed += (MaxAttackSpeed - 1.0f) * 0.1f;
             }
             // 次生成
             GameObject obj = Instantiate(_nextJuggling, transform.position, Quaternion.identity);
@@ -220,12 +220,22 @@ public class JugglingAtack : MonoBehaviour
         else
         {
             // 速度初期化
-            _commonAtackSpeed = 1.0f;
+            _commonAttackSpeed = 1.0f;
             GameEffectManager.Instance.Play("PinLose", transform.position);
         }
 
         // 破棄処理
         Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// 処理停止
+    /// </summary>
+    private void Stop()
+    {
+        PinDestroy(true);
+        Destroy(gameObject);
+        GameEffectManager.Instance.Play("PinLose", transform.position);
     }
 
     /// <summary>
@@ -300,15 +310,21 @@ public class JugglingAtack : MonoBehaviour
     private void OnTriggerEnter (Collider col)
     {
         // 跳ね返り中のピンにPlayerが触れたらキャッチ判定
-        if (col.tag == "Player" && _isReflect && _isPlay)
+        if (col.tag == "Player")
         {
+            if (!_isReflect || !_isPlay)
+                return;
+
+            if (!PlayerManager.Instance.CheckActionType(ActionManager.eActionType.Juggling))
+                return;
+
             _isCatch = true;
             transform.position = col.transform.position;
             transform.rotation = col.transform.rotation;
             return;
         }
 
-        if (!_isAtack || _isReflect)
+        if (!_isAttack || _isReflect)
             return;
 
         // 敵にあたった場合、ダメージ処理をして跳ね返す
