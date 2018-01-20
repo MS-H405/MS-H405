@@ -40,7 +40,7 @@ public class FireTrap : MonoBehaviour
         Vector3 temp = transform.position;
         temp.y = 0.0f;
         transform.position = temp;
-        
+
         ParticleSystem flame = transform.Find("Flame").GetComponent<ParticleSystem>();
         float flameInitSize = flame.startSize;
         ParticleSystem secondaryFlame = transform.Find("SecondaryFlame").GetComponent<ParticleSystem>();
@@ -66,6 +66,11 @@ public class FireTrap : MonoBehaviour
 
                  Destroy(gameObject);
             });
+
+        if (!_isPlayer)
+        {
+            Camera.main.GetComponent<ShakeCamera>().Shake(0.015f, 0.0012f);
+        }
     }
 
     /// <summary>

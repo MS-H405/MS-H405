@@ -29,7 +29,7 @@ public class EnemyBase : MonoBehaviour
     private bool _isDamage = false;
     [SerializeField] List<Material> _matList = new List<Material>();
     private List<Color> _initColorList = new List<Color>();
-    //[SerializeField] Material _material = null;
+    protected ShakeCamera _shakeCamera = null;    // 画ぶれカメラ
 
     #endregion
 
@@ -213,6 +213,7 @@ public class EnemyBase : MonoBehaviour
         IsStan = false;
         IsInvincible = false;
         _animator = GetComponent<Animator>();
+        _shakeCamera = Camera.main.GetComponent<ShakeCamera>();
 
         foreach (Material mat in _matList)
         {

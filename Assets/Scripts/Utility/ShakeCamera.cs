@@ -5,12 +5,14 @@ using UnityEngine;
 public class ShakeCamera : MonoBehaviour 
 {
     [SerializeField]
-    float fShakeDecay = 0.0006f;        // 揺れる力の減衰
+    float fCoefShakeDecay = 0.0006f;        // 揺れる力の減衰
     [SerializeField]
     float fCoefShakeIntensity = 0.03f;  // 揺れる幅の強度
 
     private Vector3 originPosition;     // 元の位置
     private Quaternion originRotation;  // 元の角度
+
+    private float fShakeDecay;
     private float fShakeIntensity;
 
 	bool bMove = true;
@@ -42,10 +44,27 @@ public class ShakeCamera : MonoBehaviour
     }
 
 	// カメラが動くときのの揺れ
-    public void Shake()
+    public void Shake(float intensity = 0.0f, float decay = 0.0f)
     {
 		bMove = true;
-        fShakeIntensity = fCoefShakeIntensity;
+
+        if (intensity == 0.0f)
+        {
+            fShakeIntensity = fCoefShakeIntensity;
+        }
+        else
+        {
+            fShakeIntensity = intensity;
+        }
+
+        if(decay == 0.0f)
+        {
+            fShakeDecay = fCoefShakeDecay;
+        }
+        else
+        {
+            fShakeDecay = decay;
+        }
     }
 
 	// カメラが動かない時の揺れ

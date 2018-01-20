@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     private Animator _animator = null;
     [SerializeField] float _backPower = 75.0f;
     [SerializeField] float _upPower = 200.0f;
+    private ShakeCamera _shakeCamera = null;
 
     #endregion
 
@@ -52,6 +53,7 @@ public class Player : MonoBehaviour
         DamageStan(power);
         _animator.SetTrigger("Damage");
         PlayerLifeManager.Instance.DamageEffect();
+        _shakeCamera.Shake(0,02f);
 
         if (isDebug)
         {
@@ -167,6 +169,7 @@ public class Player : MonoBehaviour
         _playerMove = GetComponent<PlayerMove>();
         _rideBallMove = GetComponent<RideBallMove>();
         _rigidBody = GetComponent<Rigidbody>();
+        _shakeCamera = Camera.main.GetComponent<ShakeCamera>();
     }
 
     /// <summary> 

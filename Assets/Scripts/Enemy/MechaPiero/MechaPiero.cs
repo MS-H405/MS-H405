@@ -216,15 +216,13 @@ public class MechaPiero : EnemyBase
         }
 
         GameObject obj = Instantiate(_knifePrefab, transform.position, Quaternion.identity);
-
-        //_animator.speed = 0.0f;
+        
         time = 0.0f;
         while (time < 1.0f)
         {
             time += Time.deltaTime;
             yield return null;
         }
-        //_animator.speed = 1.0f;
 
         while (obj)
         {
@@ -481,6 +479,7 @@ public class MechaPiero : EnemyBase
 
         // 当たり判定をON
         _laserCollider.enabled = true;
+        _shakeCamera.Shake(0.045f, 0.00045f);
         time = 0.0f;
         while (time < 2.5f)
         {

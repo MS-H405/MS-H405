@@ -34,9 +34,9 @@ public class HermitCrab : EnemyBase
 
     #region variable
     
-    private eAction _nowAction;             // 現在の行動を保持
-    private bool _isNext = false;           // 次の行動へ行くか
-    private float _nearTime = 0.0f;         // Playerが近くにいる時の継続時間
+    private eAction _nowAction;         // 現在の行動を保持
+    private bool _isNext = false;       // 次の行動へ行くか
+    private float _nearTime = 0.0f;     // Playerが近くにいる時の継続時間
     
     private SphereCollider _bodyAttackCollider = null;
 
@@ -383,7 +383,8 @@ public class HermitCrab : EnemyBase
             time += Time.deltaTime;
             yield return null;
         }
-        Instantiate(_rollAttackEffect, transform.position/* + new Vector3(0.0f,0.0f,-1.5f)*/, _rollAttackEffect.transform.rotation);
+        _shakeCamera.Shake();
+        Instantiate(_rollAttackEffect, transform.position, _rollAttackEffect.transform.rotation);
 
         time = 0.0f;
         while (time < 0.75f)
@@ -432,6 +433,7 @@ public class HermitCrab : EnemyBase
             effect.transform.localPosition = Vector3.zero;
             effect.transform.localEulerAngles = new Vector3(-90, 0, 0);
         }
+        _shakeCamera.Shake(0.03f, 0.0012f);
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_FireShot);
     }
 
@@ -577,6 +579,15 @@ public class HermitCrab : EnemyBase
         }
 
         GameEffectManager.Instance.Play("HermitStan", transform.position);
+
+        time = 0.0f;
+        while (time < 0.75f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        _shakeCamera.Shake();
     }
 
     #endregion
