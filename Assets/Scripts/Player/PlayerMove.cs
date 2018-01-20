@@ -28,6 +28,7 @@ public class PlayerMove : MonoBehaviour
     #region variable
 
     [SerializeField] protected float _speed_Sec = 7.5f;
+    private float _initSpeed_Sec = 0.0f;
     protected Vector3 _moveAmount = Vector3.zero;
 
     protected bool _isGround = false;    // 地面との接地判定
@@ -176,6 +177,15 @@ public class PlayerMove : MonoBehaviour
         _runSmoke.Play();
     }
 
+    /// <summary>
+    /// 速度変更処理
+    /// 引数 : 倍率で指定
+    /// </summary>
+    public void ChangeSpeed(float magni)
+    {
+        _speed_Sec = _initSpeed_Sec * magni;
+    }
+
     #endregion
 
     #region unity_event
@@ -189,6 +199,7 @@ public class PlayerMove : MonoBehaviour
         _totemJump = GetComponent<TotemJump>();
         _runSmoke = transform.Find("RunSmoke").GetComponent<ParticleSystem>();
         _runSmoke.Stop();
+        _initSpeed_Sec = _speed_Sec;
     }
 
     /// <summary>  

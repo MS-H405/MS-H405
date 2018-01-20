@@ -80,6 +80,25 @@ public class TotemJump : MonoBehaviour
         _rigidBody.AddForce(new Vector3(0, _addUpPower, 0) + (transform.forward * _addForwardPower));
         GameEffectManager.Instance.Play("PinAttack", transform.position);
 
+        GameObject bossEnemy = EnemyManager.Instance.BossEnemy.gameObject;
+        var enemyDistanceDisposable = new SingleAssignmentDisposable();
+        enemyDistanceDisposable.Disposable = this.UpdateAsObservable()
+            .Subscribe(_ =>
+            {
+                Vector3 enemyPos = bossEnemy.transform.position;
+                Vector3 playerPos = PlayerManager.Instance.GetVerticalPos(enemyPos);
+                float distance = Vector3.Distance(enemyPos, playerPos);
+
+                if (distance >= 8.0f)
+                {
+                    EnemyManager.Instance.Active = true;
+                }
+                else
+                {
+                    EnemyManager.Instance.Active = false;
+                }
+            });
+
         var invincibleDisposable = new SingleAssignmentDisposable();
         invincibleDisposable.Disposable = this.UpdateAsObservable()
             .Where(_ => transform.position.y <= 1.0f)
@@ -108,6 +127,8 @@ public class TotemJump : MonoBehaviour
         TotemJumpEffect(false);
         _animator.speed = 1.0f;
         _totemObj.SetActive(false);
+        EnemyManager.Instance.Active = true;
+        enemyDistanceDisposable.Dispose();
         _rigidBody.constraints = RigidbodyConstraints.None;
         _rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
