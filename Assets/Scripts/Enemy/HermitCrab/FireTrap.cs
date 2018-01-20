@@ -64,11 +64,6 @@ public class FireTrap : MonoBehaviour
                 if (_life > 0.0f)
                     return;
 
-                if(_isPlayer)
-                {
-                    Bagpipe._nowFireAmount--;
-                }
-
                  Destroy(gameObject);
             });
     }
