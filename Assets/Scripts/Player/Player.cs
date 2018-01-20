@@ -177,8 +177,26 @@ public class Player : MonoBehaviour
         // PlayerInputのUpdate
         EnemyBase enemyBase = EnemyManager.Instance.BossEnemy.GetComponent<EnemyBase>();
         this.UpdateAsObservable()
+            .Where(_ => _hp > 0)
             .Subscribe(_ =>
             {
+                // 行動スロットの切り替えは常時可能
+                if (!enemyBase.IsStan)
+                {
+                    // 武器スロット右回り
+                    if (Input.GetButtonDown("Right") && AtackIconManager.Instance.IsChange)
+                    {
+                        _actionManager.ChangeSelect(true);
+                        AtackIconManager.Instance.Rot(true);
+                    }
+                    // 武器スロット左回り
+                    else if (Input.GetButtonDown("Left") && AtackIconManager.Instance.IsChange)
+                    {
+                        _actionManager.ChangeSelect(false);
+                        AtackIconManager.Instance.Rot(false);
+                    }
+                }
+
                 // 入力を受け付けてよいかを判定
                 if (!IsInput)
                     return;
@@ -210,18 +228,6 @@ public class Player : MonoBehaviour
                         {
                             _actionManager.Cancel();
                         }
-                    }
-                    // 武器スロット右回り
-                    if (Input.GetButtonDown("Right") && AtackIconManager.Instance.IsChange)
-                    {
-                        _actionManager.ChangeSelect(true);
-                        AtackIconManager.Instance.Rot(true);
-                    }
-                    // 武器スロット左回り
-                    else if (Input.GetButtonDown("Left") && AtackIconManager.Instance.IsChange)
-                    { 
-                        _actionManager.ChangeSelect(false);
-                        AtackIconManager.Instance.Rot(false);
                     }
                 }
             });
