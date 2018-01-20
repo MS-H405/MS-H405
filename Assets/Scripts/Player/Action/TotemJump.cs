@@ -77,6 +77,7 @@ public class TotemJump : MonoBehaviour
         // 上に飛ばす
         TotemJumpEffect(true);
         _playerMove.enabled = true;
+        _playerMove.ChangeSpeed(1.5f);
         _rigidBody.AddForce(new Vector3(0, _addUpPower, 0) + (transform.forward * _addForwardPower));
         GameEffectManager.Instance.Play("PinAttack", transform.position);
 
@@ -126,6 +127,7 @@ public class TotemJump : MonoBehaviour
 
         TotemJumpEffect(false);
         _animator.speed = 1.0f;
+        _playerMove.ChangeSpeed(1.0f);
         _totemObj.SetActive(false);
         EnemyManager.Instance.Active = true;
         enemyDistanceDisposable.Dispose();
