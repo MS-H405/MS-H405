@@ -270,7 +270,8 @@ public class MovieSoundManager : MonoBehaviour {
 		float time = 0.0f;
 		this.volume.OldBGM = this.volume.BGM;
 		while (time <= interval) {
-			this.volume.BGM = Mathf.Lerp(this.volume.OldBGM, 0.0f, time / interval);
+			//this.volume.BGM = Mathf.Lerp(this.volume.OldBGM, 0.0f, time / interval);
+			this.volume.BGM = Mathf.Lerp(1.0f, 0.0f, time / interval);
 			time += Time.deltaTime;
 			yield return 0;
 		}
@@ -280,7 +281,8 @@ public class MovieSoundManager : MonoBehaviour {
 		float time = 0.0f;
 		float VolumeB = this.volume.BGM;
 		while (time <= interval) {
-			this.volume.BGM = Mathf.Lerp(VolumeB, this.volume.OldBGM, time / interval);
+			//this.volume.BGM = Mathf.Lerp(VolumeB, this.volume.OldBGM, time / interval);
+			this.volume.BGM = Mathf.Lerp(0.0f, 1.0f, time / interval);
 			time += Time.deltaTime;
 			yield return 0;
 		}
