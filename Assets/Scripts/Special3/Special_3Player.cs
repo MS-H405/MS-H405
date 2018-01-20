@@ -25,6 +25,7 @@ public class Special_3Player : MonoBehaviour
 	#region 変数
 	
 	[SerializeField] GameObject BallObj;
+	[SerializeField] GameObject EnemyHontaiObj;
 	[SerializeField] GameObject EnemyObj;
 
 	[SerializeField] GameObject NormalPlayerObj;
@@ -176,11 +177,14 @@ public class Special_3Player : MonoBehaviour
 		}
 		else if(100.0f <= fMovedDis && fMovedDis < CON_ENEMY_FLY)
 		{// 敵引きずり
-			EnemyObj.transform.position = new Vector3(EnemyObj.transform.position.x, EnemyObj.transform.position.y, transform.position.z + 2.5f);	// 玉の大きさ分ずらす
+			EnemyHontaiObj.transform.position = new Vector3(EnemyHontaiObj.transform.position.x, EnemyHontaiObj.transform.position.y, transform.position.z + 2.5f);	// 玉の大きさ分ずらす
 		}
 		else if(CON_ENEMY_FLY <= fMovedDis && fMovedDis < CON_END_DISTANCE && !bEnemyFly)
 		{// 敵吹き飛ばし
-			EnemyObj.GetComponent<SP_Enemy>().StartFly();
+			if (EnemyObj.GetComponent<SP_Enemy>())
+				EnemyObj.GetComponent<SP_Enemy>().StartFly();
+			else if (EnemyObj.GetComponent<SP3_Enemy>())
+				EnemyObj.GetComponent<SP3_Enemy>().StartFly();
 			bEnemyFly = true;
 		}
 		else if (fMovedDis > CON_END_DISTANCE && !bEnd)
