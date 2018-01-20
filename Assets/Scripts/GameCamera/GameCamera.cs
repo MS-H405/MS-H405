@@ -53,6 +53,7 @@ public class GameCamera : MonoBehaviour
 	GameCamera_Sub cs_GameCamera_Sub;
 
 	[SerializeField] Vector3 vLookPosOffset = Vector3.zero; // 敵の座標から注視点までのズレ
+    public Vector3 LookPosOffset { get { return vLookPosOffset;  } }
     [SerializeField] float CON_fTopDistance = 10.0f;        // ターゲットロストして、俯瞰になった時のプレイヤーからの距離
 
     #endregion
