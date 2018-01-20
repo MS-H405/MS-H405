@@ -65,6 +65,12 @@ MonoBehaviour:
   EffekseerObj:
     exposedName: 5b1547c7c586cdc499b904ef7aef037b
     defaultValue: {fileID: 0}
+  EffectObj_1:
+    exposedName: adc3849912ea6ef4999efd116c2c5bc0
+    defaultValue: {fileID: 0}
+  EffectObj_2:
+    exposedName: 3b2b0c28f9a42b94aa172829ed6c46e7
+    defaultValue: {fileID: 0}
 --- !u!114 &114180090540032230
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -36,6 +36,12 @@ MonoBehaviour:
   PlayerObj:
     exposedName: 33152af6c00a7644f9094c89a35861bf
     defaultValue: {fileID: 0}
+  EffectObj_1:
+    exposedName: 647d567520a70824b8f527e4688f2db1
+    defaultValue: {fileID: 0}
+  EffectObj_2:
+    exposedName: f5a19a024ee49a848902a80923eb0bab
+    defaultValue: {fileID: 0}
 --- !u!114 &114308084053938768
 MonoBehaviour:
   m_ObjectHideFlags: 1
