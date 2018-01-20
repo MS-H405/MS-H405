@@ -10,9 +10,9 @@ public class MD_Player_PB : PlayableBehaviour
 
 	const float CON_WIN_TIME = 1.0f;		// 勝利モーションを始める時間	10
 	const float CON_WIN_EFFECT = 1.9f;		// プレイヤーの後ろに出てくる火みたいなエフェクトを発生させる時間	勝利モーション開始から0.8秒後
-	const float CON_KIRAKIRA_EFFECT = 2.4f;		// プレイヤーの後ろに出てくるキラキラしたエフェクト
-//	const float CON_FADE_TIME = 14.0f;		// フェードを始める時間
-
+	const float CON_KIRAKIRA_EFFECT = 2.4f;	// プレイヤーの後ろに出てくるキラキラしたエフェクト
+	const float CON_FADE_TIME = 10.0f;		// フェードし始めてもいい時間（シーン遷移は"キー入力されたら"だけど、この時間より前のキー入力は受け付けない）
+	
 	#endregion
 
 
@@ -53,7 +53,12 @@ public class MD_Player_PB : PlayableBehaviour
 
 	public override void OnGraphStop(Playable playable)
 	{
-		
+		// 1800Frame(30秒)経ってもシーン遷移されないので、シーン遷移する
+		if (bFade && !MovieManager.Instance.GetisMovideFade())
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TITLE);
+			bFade = false;
+		}
 	}
 
 
@@ -89,10 +94,13 @@ public class MD_Player_PB : PlayableBehaviour
 			KirakiraObj.GetComponent<ParticleSystem>().Play();		// キラキラエフェクト
 			bKirakira = false;
 		}
-//		else if (fTime >= CON_FADE_TIME && bFade)
-//		{
-//			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);
-//			bFade = false;
-//		}
+
+
+		// 特定の時間を過ぎて(演出を全部見せたいから)、キー入力されたら、シーン遷移
+		if (fTime >= CON_FADE_TIME && Input.GetKeyDown(KeyCode.Return) && bFade && !MovieManager.Instance.GetisMovideFade())
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TITLE);
+			bFade = false;
+		}
 	}
 }

@@ -139,7 +139,7 @@ public class TS_Boss_PB : PlayableBehaviour
 		}
 
 		// スキップ処理
-		if(Input.GetKeyDown(KeyCode.Return) && bFade)
+		if (Input.GetKeyDown(KeyCode.Return) && bFade && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_1);
 			bFade = false;
@@ -288,7 +288,7 @@ public class TS_Boss_PB : PlayableBehaviour
 		fTime += Time.deltaTime / CON_BACK_TIME;
 
 		// ゲームメインへシーン遷移
-		if(fTime > CON_FADESTART_TIME && bFade)
+		if (fTime > CON_FADESTART_TIME && bFade && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_1);
 			bFade = false;

@@ -51,7 +51,7 @@ public class Special_3Manager : MonoBehaviour
 	Special_2Ball	cs_Ball;
 
 	[SerializeField] GameObject TotemPokeObj;
-	Special_2Totem cs_Totem;
+	Special_3Totem cs_Totem;
 
 	[SerializeField] GameObject BagpipeFireObj;
 	Special_3BagpipeFire cs_BagpipeFire;
@@ -70,7 +70,7 @@ public class Special_3Manager : MonoBehaviour
 		cs_Jug = Special_JugglingObj.GetComponent<SP_Jug>();
 		cs_Player = PlayerObj.GetComponent<Special_3Player>();
 		cs_Ball = BallObj.GetComponent<Special_2Ball>();
-		cs_Totem = TotemPokeObj.GetComponent<Special_2Totem>();
+		cs_Totem = TotemPokeObj.GetComponent<Special_3Totem>();
 		cs_BagpipeFire = BagpipeFireObj.GetComponent<Special_3BagpipeFire>();
 	}
 	
@@ -125,7 +125,7 @@ public class Special_3Manager : MonoBehaviour
 				CenterLine();
 				break;
 
-			case State_Special3.BALLIGNITION:
+			case State_Special3.BALLIGNITION:			// ここをとばす
 				BallIgnition();
 				break;
 
@@ -167,7 +167,7 @@ public class Special_3Manager : MonoBehaviour
 		}
 
 		// スキップ処理
-		if (Input.GetKeyDown(KeyCode.Return) && bSkip)
+		if (Input.GetKeyDown(KeyCode.Return) && bSkip && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.MovieFinish();
 			bSkip = false;
@@ -325,8 +325,7 @@ public class Special_3Manager : MonoBehaviour
 			cs_Player.ParentConf();				// 親子関係を設定する
 
 			bInitializ = true;
-//			State = State_Special3.BAGPIPE;
-			State = State_Special3.TOTEMAPPEAREFFECT;
+			State = State_Special3.BAGPIPE;
 		}
 	}
 
@@ -372,7 +371,8 @@ public class Special_3Manager : MonoBehaviour
 		if (CheckFlgs())
 		{
 			bInitializ = true;
-			State = State_Special3.BALLIGNITION;
+			//State = State_Special3.BALLIGNITION;
+			State = State_Special3.TOTEMAPPEAREFFECT;
 		}
 	}
 
@@ -414,8 +414,8 @@ public class Special_3Manager : MonoBehaviour
 		if (CheckFlgs())
 		{
 			bInitializ = true;
-//			State = State_Special3.BALLRIDE;
-			State = State_Special3.BAGPIPE;
+			State = State_Special3.BALLRIDE;
+//			State = State_Special3.BAGPIPE;
 		}
 	}
 
@@ -579,7 +579,7 @@ public class Special_3Manager : MonoBehaviour
 	// カメラ敵の肩越しに移動
 	private void Fin()
 	{
-		if (bInitializ && bSkip)
+		if (bInitializ && bSkip && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.MovieFinish();
 			bInitializ = false;

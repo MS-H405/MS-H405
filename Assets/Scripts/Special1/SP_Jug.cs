@@ -11,7 +11,7 @@ public class SP_Jug : MonoBehaviour
 	Vector3 THROW_OFFSET = new Vector3(0.0f, 1.0f, 0.7f);	// プレイヤーの座標(足元)から、展開ピンのオフセット値
 	float WAIT_TIME = 0.4f;		// ピン展開までの待ち時間
 	float MOVE_TIME = 1.0f;		// ピンの展開時間
-	float ENEMY_DIS = 8.0f;		// 展開されたピンが静止する、敵からの距離	5
+	//float ENEMY_DIS = 8.0f;		// 展開されたピンが静止する、敵からの距離	5
 	float GOENEMY_TIME = 0.6f;	// ピンの突撃時間
 
 	int MAX_BIGPIN = 2;				// 大きいピンは2本
@@ -56,6 +56,8 @@ public class SP_Jug : MonoBehaviour
 
 	// 音関係
 	bool bSE_SmallAttack = true;
+
+	[SerializeField] float ENEMY_DIS = 8.0f;		// 展開されたピンが静止する、敵からの距離	5
 
 	#endregion
 
@@ -263,7 +265,10 @@ public class SP_Jug : MonoBehaviour
 					MainCameraObj.GetComponent<Special_3Camera>().shakeCamera();
 
 				// 敵スタン
-				EnemyObj.GetComponent<SP_Enemy>().Stan();
+				if (EnemyObj.GetComponent<SP_Enemy>())
+					EnemyObj.GetComponent<SP_Enemy>().Stan();
+				else if (EnemyObj.GetComponent<SP3_Enemy>())
+					EnemyObj.GetComponent<SP3_Enemy>().Stan();
 
 				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_Blast);
 			

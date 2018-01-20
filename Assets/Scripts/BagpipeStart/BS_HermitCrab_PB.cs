@@ -71,8 +71,6 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 	bool bRoarStart, bRoarStop, bRoarEnd, bRoarEffect;
 	bool bFade = true;
 
-	bool bSkip = true;
-
 	// Effekseer
 	private GameObject _EffekseerObj;
 	public GameObject EffekseerObj { get; set; }
@@ -113,12 +111,16 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 
 	public override void PrepareFrame(Playable playable, FrameData info)
 	{
-		// スキップ処理
-		if(Input.GetKeyDown(KeyCode.Return) && bSkip)
+		// スキップ
+		if (Input.GetKeyDown(KeyCode.Return) && bFade && !MovieManager.Instance.GetisMovideFade())
 		{
-			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_2);
-			bSkip = false;
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_2);	// シーン遷移
+			bFade = false;
 		}
+
+
+
+
 
 		switch(State)
 		{
@@ -362,12 +364,9 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 		fTime += Time.deltaTime;
 
 		// 処理を記述
-		if (fTime >= CON_FADE_TIME && bFade)
+		if (fTime >= CON_FADE_TIME && bFade && !MovieManager.Instance.GetisMovideFade())
 		{
-			// スキップされてたら処理しない
-			if(bSkip)
-				MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_2);
-
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_2);
 			bFade = false;
 		}
 	}

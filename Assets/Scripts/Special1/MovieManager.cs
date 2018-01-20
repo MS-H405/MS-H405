@@ -83,19 +83,24 @@ public class MovieManager : MonoBehaviour
 	// デバッグ用
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Alpha1))
+		if (Input.GetKeyDown(KeyCode.Alpha1) && !MovieManager.Instance.GetisMovideFade())
 		{
 			FadeStart(MOVIE_SCENE.TITLE);
 			Time.timeScale = 1.0f;
 		}
-		if (Input.GetKeyDown(KeyCode.Alpha2))
+		if (Input.GetKeyDown(KeyCode.Alpha2) && !MovieManager.Instance.GetisMovideFade())
 		{
 			FadeStart(MOVIE_SCENE.STAGE_1);
 			Time.timeScale = 1.0f;
 		}
-		if (Input.GetKeyDown(KeyCode.Alpha3))
+		if (Input.GetKeyDown(KeyCode.Alpha3) && !MovieManager.Instance.GetisMovideFade())
 		{
 			FadeStart(MOVIE_SCENE.STAGE_2);
+			Time.timeScale = 1.0f;
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha4) && !MovieManager.Instance.GetisMovideFade())
+		{
+			FadeStart(MOVIE_SCENE.STAGE_3);
 			Time.timeScale = 1.0f;
 		}
 	}
