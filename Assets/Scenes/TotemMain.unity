@@ -7940,6 +7940,57 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4e7095d321efb2b4497cc829b80dd4a5, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &591276552
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4186352493540912, guid: ff46db4f8f77ca94bb8241ed3eeb7b59, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186352493540912, guid: ff46db4f8f77ca94bb8241ed3eeb7b59, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186352493540912, guid: ff46db4f8f77ca94bb8241ed3eeb7b59, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -1.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186352493540912, guid: ff46db4f8f77ca94bb8241ed3eeb7b59, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186352493540912, guid: ff46db4f8f77ca94bb8241ed3eeb7b59, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186352493540912, guid: ff46db4f8f77ca94bb8241ed3eeb7b59, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186352493540912, guid: ff46db4f8f77ca94bb8241ed3eeb7b59, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186352493540912, guid: ff46db4f8f77ca94bb8241ed3eeb7b59, type: 2}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 114717057548104594, guid: ff46db4f8f77ca94bb8241ed3eeb7b59,
+        type: 2}
+      propertyPath: _lookAdjustment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1970379076254508, guid: ff46db4f8f77ca94bb8241ed3eeb7b59, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: ff46db4f8f77ca94bb8241ed3eeb7b59, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &651204451
 GameObject:
   m_ObjectHideFlags: 0
@@ -8162,7 +8213,7 @@ Prefab:
     - target: {fileID: 114429880413292132, guid: 48eaafd4238bda64aa7dd1041ccca91e,
         type: 2}
       propertyPath: vLookPosOffset.y
-      value: 0
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 48eaafd4238bda64aa7dd1041ccca91e, type: 2}
@@ -15895,6 +15946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pipeObj: {fileID: 1158869629}
+  _bagpipeSmokePrefab: {fileID: 0}
   _bagpipeFirePrefab: {fileID: 1765129736498618, guid: aa0f24491fe6ac3489e34e87808a17fe,
     type: 2}
 --- !u!114 &1317879611
@@ -16097,7 +16149,7 @@ Prefab:
     - target: {fileID: 114382591642984632, guid: 755f49747a0565d4ebd5ba678b15a9b2,
         type: 2}
       propertyPath: _isDebug
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114382591642984632, guid: 755f49747a0565d4ebd5ba678b15a9b2,
         type: 2}
