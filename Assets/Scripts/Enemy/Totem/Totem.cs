@@ -336,6 +336,7 @@ public class Totem : EnemyBase
     private IEnumerator ChildTotemPushUp()
     {
         float time = 0.0f;
+        EnemyManager.Instance.Active = false;
 
         // 子分の突き上げ処理
         for (int i = 0; i < _childTotemAmount; i++)

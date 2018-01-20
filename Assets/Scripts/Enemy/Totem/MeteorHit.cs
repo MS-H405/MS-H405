@@ -27,7 +27,7 @@ public class MeteorHit : MonoBehaviour
     private void Start ()
     {
         float meteorHeight = 15.0f;// - (2.0f * (2 - _index));
-        float endHeight = -1.0f - (2.0f * (2 - _index));
+        float endHeight = -1.0f - (2.4f * (2 - _index));
         float oldHeight = transform.position.y;
         CapsuleCollider col = GetComponent<CapsuleCollider>();
         EffekseerEmitter meteorEffect = GetComponentInChildren<EffekseerEmitter>();
