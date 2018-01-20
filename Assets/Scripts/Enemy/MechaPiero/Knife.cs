@@ -35,6 +35,7 @@ public class Knife : MonoBehaviour
         // TODO : とりあえず一瞬で向く
         transform.LookAt(PlayerManager.Instance.Player.transform.position + new Vector3(0, 1.0f, 0));
         transform.localEulerAngles += new Vector3(0,0,90);
+        GetComponentInChildren<EffekseerEmitter>().Play();
 
         float time = 0.0f;
         while(time < 0.5f)
@@ -110,14 +111,11 @@ public class Knife : MonoBehaviour
                 return;
 
             GameEffectManager.Instance.Play("PinAttack", transform.position);
-            //Destroy(gameObject);
         }
         if (col.tag == "Field")
         {
             GameEffectManager.Instance.Play("KnifeStick", transform.position + transform.forward);
             _isEnd = true;
-            //GameEffectManager.Instance.Play("KnifeLose", transform.position + transform.forward);
-            //Destroy(gameObject);
         }
     }
 
