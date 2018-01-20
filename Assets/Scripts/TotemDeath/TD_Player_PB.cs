@@ -9,6 +9,7 @@ public class TD_Player_PB : PlayableBehaviour
 	#region 定数
 
 	const float CON_WIN_TIME = 13.0f;		// 勝利モーションに切り替える時間
+	const float CON_EFFECT_FIN_TIME = 14.5f;		// キラキラエフェクトを止める時間
 
 	#endregion
 
@@ -21,6 +22,14 @@ public class TD_Player_PB : PlayableBehaviour
 
 	float fTime = 0.0f;
 	bool bWin = true;
+
+
+
+
+	private GameObject _EffectObj_1;
+	public GameObject EffectObj_1 { get; set; }
+	private GameObject _EffectObj_2;
+	public GameObject EffectObj_2 { get; set; }
 
 	#endregion
 
@@ -55,6 +64,14 @@ public class TD_Player_PB : PlayableBehaviour
 		{
 			animator.SetBool("bWin", true);
 			bWin = false;
+
+			EffectObj_1.GetComponent<ParticleSystem>().Play();	// 腕からきらきらエフェクトを出す
+			EffectObj_2.GetComponent<ParticleSystem>().Play();	// 腕からきらきらエフェクトを出す
+		}
+		else if(fTime >= CON_EFFECT_FIN_TIME)
+		{
+			EffectObj_1.GetComponent<ParticleSystem>().Stop();	// エフェクトを止める
+			EffectObj_2.GetComponent<ParticleSystem>().Stop();	// エフェクトを止める
 		}
 	}
 }
