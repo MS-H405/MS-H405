@@ -29,7 +29,8 @@ public class MS_Enemy_PB : PlayableBehaviour
 	const float CON_BACKJAMP_TIME = 1.0f;		// 後方ジャンプモーションを開始してから、玉に着地するまでの時間
 	readonly Vector3 CON_BACKJAMP_START_POS = new Vector3(0.0f, 0.0f, 0.0f);	// 開始点
 	readonly Vector3 CON_BACKJAMP_MIDDLE_POS = new Vector3(0.0f, 10.0f, 3.5f);	// ベジエ曲線の制御点
-	readonly Vector3 CON_BACKJAMP_END_POS = new Vector3(0.0f, 4.19f, 7.0f);			// 終了点
+	//readonly Vector3 CON_BACKJAMP_END_POS = new Vector3(0.0f, 4.19f, 7.0f);			// 終了点	玉の拡大率3.0
+	readonly Vector3 CON_BACKJAMP_END_POS = new Vector3(0.0f, 3.49f, 7.0f);			// 終了点		玉の拡大率2.5
 
 	const float CON_POSE_TIME = 1.0f;			// 玉に着地してから、決めポーズモーションを開始するまでの時間
 
