@@ -75,11 +75,22 @@ public class BD_Player_PB : PlayableBehaviour
 			cs_SetEffekseerObject.NewEffect(3);		// 炎みたいなエフェクト
 			bEffect = false;
 		}
-		else if (fTime >= CON_FADE_TIME && bFade)
+		else if (fTime >= CON_FADE_TIME && bFade && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);
 			bFade = false;
 		}
+
+
+		// スキップ
+		if (Input.GetKeyDown(KeyCode.Return) && bFade && !MovieManager.Instance.GetisMovideFade())
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);	// シーン遷移
+			bFade = false;
+		}
+
+
+
 
 		//if (!bFade)
 		//    return;

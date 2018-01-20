@@ -150,6 +150,13 @@ public class MS_Enemy_PB : PlayableBehaviour
 				Fin();
 				break;
 		}
+
+		// スキップ
+		if(Input.GetKeyDown(KeyCode.Return) && bFade && !MovieManager.Instance.GetisMovideFade())
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_3);	// シーン遷移
+			bFade = false;
+		}
 	}
 
 
@@ -312,7 +319,7 @@ public class MS_Enemy_PB : PlayableBehaviour
 		{
 			_ballAnimator.speed = 1.0f;		// 玉回転
 		}
-		if (fTime >= CON_FIN_TIME && bFade)
+		if (fTime >= CON_FIN_TIME && bFade && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_3);	// シーン遷移
 			bFade = false;

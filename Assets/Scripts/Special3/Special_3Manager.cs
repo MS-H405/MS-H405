@@ -167,7 +167,7 @@ public class Special_3Manager : MonoBehaviour
 		}
 
 		// スキップ処理
-		if (Input.GetKeyDown(KeyCode.Return) && bSkip)
+		if (Input.GetKeyDown(KeyCode.Return) && bSkip && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.MovieFinish();
 			bSkip = false;
@@ -579,7 +579,7 @@ public class Special_3Manager : MonoBehaviour
 	// カメラ敵の肩越しに移動
 	private void Fin()
 	{
-		if (bInitializ && bSkip)
+		if (bInitializ && bSkip && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.MovieFinish();
 			bInitializ = false;
