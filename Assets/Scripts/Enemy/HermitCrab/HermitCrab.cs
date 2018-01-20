@@ -460,14 +460,26 @@ public class HermitCrab : EnemyBase
         // 回転
         time = 0.0f;
         _bodyAttackCollider.enabled = true;
-        while (time < 3.0f)
-        {
-            if(PlayerManager.Instance.IsGround)
-            {
-                targetPos = Vector3.Lerp(startPos, PlayerManager.Instance.GetVerticalPos(startPos), 0.7f);
-            }
 
-            transform.position = Vector3.Lerp(startPos, targetPos, time / 3.0f);
+        var chaseDisposable = new SingleAssignmentDisposable();
+        chaseDisposable.Disposable = this.UpdateAsObservable()
+            .Subscribe(_ =>
+            {
+                if (PlayerManager.Instance.IsGround && !PlayerManager.Instance.Player.IsDamage)
+                {
+                    time = 0.0f;
+                    startPos = transform.position;
+                    targetPos = Vector3.Lerp(startPos, PlayerManager.Instance.GetVerticalPos(startPos), 0.7f);
+                }
+                else
+                {
+                    chaseDisposable.Dispose();
+                }
+            });
+
+        while (time < 2.0f)
+        {
+            transform.position += (targetPos - startPos) * (Time.deltaTime / 2.0f);
             transform.eulerAngles += new Vector3(0, 360 * Time.deltaTime, 0);
             time += Time.deltaTime;
 
