@@ -40,8 +40,7 @@ public class FireTrap : MonoBehaviour
         Vector3 temp = transform.position;
         temp.y = 0.0f;
         transform.position = temp;
-
-        //
+        
         ParticleSystem flame = transform.Find("Flame").GetComponent<ParticleSystem>();
         float flameInitSize = flame.startSize;
         ParticleSystem secondaryFlame = transform.Find("SecondaryFlame").GetComponent<ParticleSystem>();
@@ -90,6 +89,7 @@ public class FireTrap : MonoBehaviour
                 }
                 obj.GetComponent<EnemyBase>().Damage(1, "Bagpipe");
                 _life = 0.25f;
+                GetComponent<SphereCollider>().enabled = false;
             }
         }
         else
@@ -103,6 +103,7 @@ public class FireTrap : MonoBehaviour
                     return;
 
                 _life = 0.25f;
+                GetComponent<SphereCollider>().enabled = false;
             }
         }
     }
