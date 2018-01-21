@@ -15,15 +15,17 @@ public class Bagpipe : MonoBehaviour
 {
     #region define
 
-    private readonly int MaxFireAmount = 10;
+    private float FireInterval = 6.0f;
 
     #endregion
 
     #region variable
 
-    static public int _nowFireAmount = 0;
+    private float _nowFireInterval = 0.0f;
+    public bool IsOn { get { return _nowFireInterval <= 0.0f; } }
 
     [SerializeField] GameObject _pipeObj = null;
+    [SerializeField] GameObject _bagpipeSmokePrefab = null;
     [SerializeField] GameObject _bagpipeFirePrefab = null;
     private Animator _animator = null;
 
@@ -38,13 +40,25 @@ public class Bagpipe : MonoBehaviour
     /// </summary>
     public void Action()
     {
-        if (_nowFireAmount >= MaxFireAmount)
-            return;
+        if (_nowFireInterval > 0.0f)
+        {
+            GameObject smoke = Instantiate(_bagpipeSmokePrefab, transform.position, transform.rotation);
+            smoke.transform.LookAt(transform.position + transform.up - (transform.forward / 5.0f));
+            smoke.transform.position = _pipeObj.transform.position + new Vector3(-0.2f, 0.6f, -0.2f);
+            smoke.transform.SetParent(_pipeObj.transform);
+        }
+        else
+        {
+            GameObject fire = Instantiate(_bagpipeFirePrefab, transform.position, transform.rotation);
+            fire.transform.LookAt(transform.position + transform.up - (transform.forward / 5.0f));
+            fire.transform.position = _pipeObj.transform.position + new Vector3(-0.2f, 0.7f, -0.3f);
 
-        GameObject bag = Instantiate(_bagpipeFirePrefab, transform.position, transform.rotation);
-        bag.transform.LookAt(transform.position + transform.up - (transform.forward / 5.0f));
-        bag.transform.position = _pipeObj.transform.position + new Vector3(-0.2f, 0.7f, -0.3f);
-        _nowFireAmount++;
+            fire = Instantiate(_bagpipeFirePrefab, transform.position, transform.rotation);
+            fire.transform.LookAt(transform.position + transform.up + (transform.forward / 5.0f));
+            fire.transform.position = _pipeObj.transform.position + new Vector3(-0.2f, 0.7f, -0.3f);
+
+            _nowFireInterval = FireInterval;
+        }
     }
 
     /// <summary>
@@ -87,6 +101,17 @@ public class Bagpipe : MonoBehaviour
         _pipeObj.SetActive(false);
         _animator = GetComponent<Animator>();
         _fireEffect = _pipeObj.transform.parent.Find("PipeFire").GetComponent<EffekseerEmitter>();
+    }
+
+    /// <summary>
+    /// 更新処理
+    /// </summary>
+    private void Update()
+    {
+        if (_nowFireInterval <= 0.0f)
+            return;
+
+        _nowFireInterval -= Time.deltaTime;
     }
 
     #endregion

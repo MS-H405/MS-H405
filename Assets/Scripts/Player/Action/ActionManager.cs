@@ -74,7 +74,6 @@ public class ActionManager : MonoBehaviour
         else
         {
             ChangeAction();
-            OnAtack();
         }
     }
 
@@ -148,6 +147,11 @@ public class ActionManager : MonoBehaviour
         switch (_nowAction)
         {
             case eActionType.Juggling:
+                if (JugglingAtack.NowJugglingAmount >= 3 || !JugglingAtack.IsPlay)
+                    return;
+
+                GameObject jug = Instantiate(_jugglingPrefab, transform.position, transform.rotation);
+                jug.GetComponent<JugglingAtack>().Run(EnemyManager.Instance.BossEnemy, -1);
                 break;
 
             case eActionType.RideBall:
@@ -158,6 +162,7 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case eActionType.TotemJump:
+                StaticCoroutine.Instance.StartStaticCoroutine(_totemJump.Run());
                 break;
 
             case eActionType.Bagpipe:
@@ -174,7 +179,7 @@ public class ActionManager : MonoBehaviour
     /// </summary> 
     private void OnAtack()
     {
-        switch(_nowAction)
+        switch (_nowAction)
         {
             case eActionType.Juggling:
                 if (JugglingAtack.NowJugglingAmount >= 3 || !JugglingAtack.IsPlay)

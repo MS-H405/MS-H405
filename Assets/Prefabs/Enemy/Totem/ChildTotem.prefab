@@ -360,8 +360,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1018863130373854}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 6.66, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 3.29, y: 0, z: 0}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 4060613423526410}
   - {fileID: 4073576234203064}
@@ -668,7 +668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cce44994a3715248932c07d1c65005b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _oneBlockSize: 2
+  _oneBlockSize: 2.4
   _appearEffectName: TS_totem_appear
 --- !u!114 &114572844278089670
 MonoBehaviour:
@@ -751,10 +751,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.7053444
+  m_Radius: 0.7776991
   m_Height: 2.2561874
   m_Direction: 1
-  m_Center: {x: 0, y: 5.0830593, z: -0}
+  m_Center: {x: 0, y: 5.0830593, z: 0}
 --- !u!136 &136155992661320444
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -764,7 +764,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.7536585
+  m_Radius: 0.7776991
   m_Height: 2.2252645
   m_Direction: 1
   m_Center: {x: 0, y: 2.8613663, z: 0}
@@ -777,7 +777,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.7149783
+  m_Radius: 0.7776991
   m_Height: 2.1774888
   m_Direction: 1
   m_Center: {x: 0, y: 1.100162, z: 0}

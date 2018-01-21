@@ -441,7 +441,7 @@ public class RideBallMove : PlayerMove
             if (!_isGround || _nowAcceForward == 0.0f)
                 return;
 
-            Debug.Log("Attack : " + _nowAcceForward);
+            //Debug.Log("Attack : " + _nowAcceForward);
             // ダメージ処理がある場合はダメージ処理
             if (_nowAcceForward >= _speed_Sec)
             {

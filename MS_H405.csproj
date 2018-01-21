@@ -231,6 +231,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Resources\Effect\Effect_N\Scripts\EffectRotation.cs" />
+    <Compile Include="Assets\Scripts\BagpipeDeath\BD_HermitCrab_PA.cs" />
+    <Compile Include="Assets\Scripts\BagpipeDeath\BD_HermitCrab_PB.cs" />
+    <Compile Include="Assets\Scripts\BagpipeDeath\BD_Player_PA.cs" />
+    <Compile Include="Assets\Scripts\BagpipeDeath\BD_Player_PB.cs" />
     <Compile Include="Assets\Scripts\BagpipeStart\BS_Fire.cs" />
     <Compile Include="Assets\Scripts\BagpipeStart\BS_HermitCrab_PA.cs" />
     <Compile Include="Assets\Scripts\BagpipeStart\BS_HermitCrab_PB.cs" />
@@ -240,8 +245,17 @@
     <Compile Include="Assets\Scripts\Enemy\EnemyBase.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\HermitCrab\FireAtack.cs" />
+    <Compile Include="Assets\Scripts\Enemy\HermitCrab\FireTrap.cs" />
     <Compile Include="Assets\Scripts\Enemy\HermitCrab\HermitCrab.cs" />
+    <Compile Include="Assets\Scripts\Enemy\HermitCrab\HermitCrabRunSmoke.cs" />
+    <Compile Include="Assets\Scripts\Enemy\MechaPiero\Knife.cs" />
+    <Compile Include="Assets\Scripts\Enemy\MechaPiero\KnifeManager.cs" />
+    <Compile Include="Assets\Scripts\Enemy\MechaPiero\MechaPiero.cs" />
+    <Compile Include="Assets\Scripts\Enemy\MechaPiero\MechaPieroLaser.cs" />
+    <Compile Include="Assets\Scripts\Enemy\MechaPiero\Needle.cs" />
+    <Compile Include="Assets\Scripts\Enemy\MechaPiero\NeedleManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\Totem\ChildTotem.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Totem\MeteorHit.cs" />
     <Compile Include="Assets\Scripts\Enemy\Totem\Totem.cs" />
     <Compile Include="Assets\Scripts\GameCamera\GameCamera.cs" />
     <Compile Include="Assets\Scripts\GameCamera\GameCamera_Sub.cs" />
@@ -250,11 +264,22 @@
     <Compile Include="Assets\Scripts\GameMain\GameOver.cs" />
     <Compile Include="Assets\Scripts\GameMain\GameStart.cs" />
     <Compile Include="Assets\Scripts\GameMain\GameStartAutoScaler.cs" />
+    <Compile Include="Assets\Scripts\GameMain\LifeDanger.cs" />
+    <Compile Include="Assets\Scripts\GameMain\LockOn.cs" />
     <Compile Include="Assets\Scripts\GameMain\TimeManager.cs" />
+    <Compile Include="Assets\Scripts\MechaDeath\MD_Player_PA.cs" />
+    <Compile Include="Assets\Scripts\MechaDeath\MD_Player_PB.cs" />
+    <Compile Include="Assets\Scripts\MechaStart\MS_Enemy_PA.cs" />
+    <Compile Include="Assets\Scripts\MechaStart\MS_Enemy_PB.cs" />
+    <Compile Include="Assets\Scripts\MechaStart\MS_Light_PA.cs" />
+    <Compile Include="Assets\Scripts\MechaStart\MS_Light_PB.cs" />
+    <Compile Include="Assets\Scripts\MechaStart\MS_NeedleManager.cs" />
     <Compile Include="Assets\Scripts\Player\Action\ActionManager.cs" />
-    <Compile Include="Assets\Scripts\Player\Action\BagpipeFire.cs" />
-    <Compile Include="Assets\Scripts\Player\Action\JugglingAtack.cs" />
-    <Compile Include="Assets\Scripts\Player\Action\JugglingReloader.cs" />
+    <Compile Include="Assets\Scripts\Player\Action\Bagpipe.cs" />
+    <Compile Include="Assets\Scripts\Player\Action\Juggling\JugglingAirEffect.cs" />
+    <Compile Include="Assets\Scripts\Player\Action\Juggling\JugglingAtack.cs" />
+    <Compile Include="Assets\Scripts\Player\Action\Juggling\JugglingDropEffect.cs" />
+    <Compile Include="Assets\Scripts\Player\Action\Juggling\JugglingReloader.cs" />
     <Compile Include="Assets\Scripts\Player\Action\RideBallMove.cs" />
     <Compile Include="Assets\Scripts\Player\Action\TotemJump.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
@@ -262,8 +287,12 @@
     <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\Player\UI\AtackIcon\AtackIcon.cs" />
     <Compile Include="Assets\Scripts\Player\UI\AtackIcon\AtackIconManager.cs" />
+    <Compile Include="Assets\Scripts\Player\UI\AtackIcon\BagpipeIcon.cs" />
     <Compile Include="Assets\Scripts\Player\UI\AtackIcon\JugglingIcon.cs" />
+    <Compile Include="Assets\Scripts\Player\UI\AtackIcon\LRpush.cs" />
+    <Compile Include="Assets\Scripts\Player\UI\AtackIcon\SpecialIconEffect.cs" />
     <Compile Include="Assets\Scripts\Player\UI\Life\PlayerLifeManager.cs" />
+    <Compile Include="Assets\Scripts\Special1\BgmStarter_Tatsuo.cs" />
     <Compile Include="Assets\Scripts\Special1\MovieFade.cs" />
     <Compile Include="Assets\Scripts\Special1\MovieManager.cs" />
     <Compile Include="Assets\Scripts\Special1\SetEffekseerObject.cs" />
@@ -276,16 +305,26 @@
     <Compile Include="Assets\Scripts\Special1\Special_1Manager.cs" />
     <Compile Include="Assets\Scripts\Special1\Special_1Player.cs" />
     <Compile Include="Assets\Scripts\Special1\Special_1PlayerMotion.cs" />
+    <Compile Include="Assets\Scripts\Special2\Special_2Ball.cs" />
     <Compile Include="Assets\Scripts\Special2\Special_2Camera.cs" />
     <Compile Include="Assets\Scripts\Special2\Special_2Manager.cs" />
     <Compile Include="Assets\Scripts\Special2\Special_2Player.cs" />
     <Compile Include="Assets\Scripts\Special2\Special_2PlayerMotion.cs" />
     <Compile Include="Assets\Scripts\Special2\Special_2Totem.cs" />
+    <Compile Include="Assets\Scripts\Special3\SP3_Enemy.cs" />
+    <Compile Include="Assets\Scripts\Special3\Special_3BagpipeFire.cs" />
+    <Compile Include="Assets\Scripts\Special3\Special_3BossTama.cs" />
+    <Compile Include="Assets\Scripts\Special3\Special_3Camera.cs" />
+    <Compile Include="Assets\Scripts\Special3\Special_3Manager.cs" />
+    <Compile Include="Assets\Scripts\Special3\Special_3Player.cs" />
+    <Compile Include="Assets\Scripts\Special3\Special_3PlayerMotion.cs" />
+    <Compile Include="Assets\Scripts\Special3\Special_3Totem.cs" />
     <Compile Include="Assets\Scripts\Stage\StageData.cs" />
     <Compile Include="Assets\Scripts\StageMove\Airplane.cs" />
     <Compile Include="Assets\Scripts\Test\Bora\TestEffecseer.cs" />
     <Compile Include="Assets\Scripts\Test\Tatsuo\TatsuoTest_Enemy.cs" />
     <Compile Include="Assets\Scripts\Test\Tatsuo\TatsuoTest_Sound.cs" />
+    <Compile Include="Assets\Scripts\Title\BackGroundScroll.cs" />
     <Compile Include="Assets\Scripts\Title\PushStart.cs" />
     <Compile Include="Assets\Scripts\TotemDeath\TD_Effect_PA.cs" />
     <Compile Include="Assets\Scripts\TotemDeath\TD_Effect_PB.cs" />
@@ -312,13 +351,17 @@
     <Compile Include="Assets\Scripts\Utility\FixHeight.cs" />
     <Compile Include="Assets\Scripts\Utility\FixHeightParticle.cs" />
     <Compile Include="Assets\Scripts\Utility\FixRot.cs" />
+    <Compile Include="Assets\Scripts\Utility\FreezeRotation.cs" />
     <Compile Include="Assets\Scripts\Utility\GameSetting.cs" />
     <Compile Include="Assets\Scripts\Utility\GetAllChildren.cs" />
     <Compile Include="Assets\Scripts\Utility\ManualRotation.cs" />
+    <Compile Include="Assets\Scripts\Utility\MovieSoundManager.cs" />
+    <Compile Include="Assets\Scripts\Utility\PlayOnEmit.cs" />
     <Compile Include="Assets\Scripts\Utility\ShakeCamera.cs" />
     <Compile Include="Assets\Scripts\Utility\SingletonMonoBehaviour.cs" />
     <Compile Include="Assets\Scripts\Utility\SortingLayer.cs" />
     <Compile Include="Assets\Scripts\Utility\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\Utility\SpotLightLockOn.cs" />
     <Compile Include="Assets\Scripts\Utility\StaticCoroutine.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -395,7 +438,18 @@
     <None Include="Assets\Plugins\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
     <None Include="Assets\Plugins\UETools\Magic_Particle_Effects\Readme.txt" />
     <None Include="Assets\Plugins\UniRx\ReadMe.txt" />
+    <None Include="Assets\Shader\Sprites-Kamihubuki.shader" />
     <None Include="Assets\Shader\Standard_Custom.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\LightShaftsGuidelines.txt" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\ColorFilter.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\Coord.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\Depth.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\DepthBreaks.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\FinalInterpolation.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\InterpolateAlongRays.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\Raymarch.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\SamplePositions.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\Shared.cginc" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

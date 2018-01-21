@@ -47,7 +47,6 @@ public class Totem : EnemyBase
     private float _fallHeight = 50.0f;
 
     // 演出用変数
-    private ShakeCamera _shakeCamera = null;
     [SerializeField] string _appearEffectName = "TS_boss_appear";
     List<ManualRotation> _totemHeadList = new List<ManualRotation>();
     private EffekseerEmitter _totemLaser = null;
@@ -336,6 +335,7 @@ public class Totem : EnemyBase
     private IEnumerator ChildTotemPushUp()
     {
         float time = 0.0f;
+        EnemyManager.Instance.Active = false;
 
         // 子分の突き上げ処理
         for (int i = 0; i < _childTotemAmount; i++)
@@ -344,7 +344,7 @@ public class Totem : EnemyBase
             StaticCoroutine.Instance.StartStaticCoroutine(_childTotemList[i].PushUp(_oneBlockUpSpeed));
 
             time = 0.0f;
-            _shakeCamera.Shake();
+            _shakeCamera.Shake(0.02f);
             while (time < (_oneBlockUpSpeed * 3.0f) * 0.75f)
             {
                 time += Time.deltaTime;
@@ -395,7 +395,7 @@ public class Totem : EnemyBase
         }
 
         // 子分を潜らせる
-        _shakeCamera.Shake();
+        _shakeCamera.Shake(0.02f);
         for (int i = 0; i < _childTotemAmount; i++)
         {
             StaticCoroutine.Instance.StartStaticCoroutine(_childTotemList[i].Dive(_oneBlockUpSpeed));
@@ -419,7 +419,7 @@ public class Totem : EnemyBase
     private IEnumerator SpecialAtack()
     {
         // 子分に特殊攻撃の実行を通知
-        _shakeCamera.Shake();
+        _shakeCamera.Shake(0.02f);
         for (int i = 0; i < _childTotemAmount; i++)
         {
             _childTotemList[i].gameObject.SetActive(true);
@@ -475,6 +475,7 @@ public class Totem : EnemyBase
             {
                 _animator.speed = 0.0f;
                 _totemLaserCol.enabled = true;
+                _shakeCamera.Shake(0.045f, 0.00045f);
                 disposable.Dispose();
             });
 

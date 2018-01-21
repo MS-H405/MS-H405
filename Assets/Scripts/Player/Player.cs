@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     private Animator _animator = null;
     [SerializeField] float _backPower = 75.0f;
     [SerializeField] float _upPower = 200.0f;
+    private ShakeCamera _shakeCamera = null;
 
     #endregion
 
@@ -52,6 +53,7 @@ public class Player : MonoBehaviour
         DamageStan(power);
         _animator.SetTrigger("Damage");
         PlayerLifeManager.Instance.DamageEffect();
+        _shakeCamera.Shake(0,02f);
 
         if (isDebug)
         {
@@ -167,6 +169,7 @@ public class Player : MonoBehaviour
         _playerMove = GetComponent<PlayerMove>();
         _rideBallMove = GetComponent<RideBallMove>();
         _rigidBody = GetComponent<Rigidbody>();
+        _shakeCamera = Camera.main.GetComponent<ShakeCamera>();
     }
 
     /// <summary> 
@@ -177,8 +180,26 @@ public class Player : MonoBehaviour
         // PlayerInputのUpdate
         EnemyBase enemyBase = EnemyManager.Instance.BossEnemy.GetComponent<EnemyBase>();
         this.UpdateAsObservable()
+            .Where(_ => _hp > 0)
             .Subscribe(_ =>
             {
+                // 行動スロットの切り替えは常時可能
+                if (!enemyBase.IsStan)
+                {
+                    // 武器スロット右回り
+                    if (Input.GetButtonDown("Right") && AtackIconManager.Instance.IsChange)
+                    {
+                        _actionManager.ChangeSelect(true);
+                        AtackIconManager.Instance.Rot(true);
+                    }
+                    // 武器スロット左回り
+                    else if (Input.GetButtonDown("Left") && AtackIconManager.Instance.IsChange)
+                    {
+                        _actionManager.ChangeSelect(false);
+                        AtackIconManager.Instance.Rot(false);
+                    }
+                }
+
                 // 入力を受け付けてよいかを判定
                 if (!IsInput)
                     return;
@@ -210,18 +231,6 @@ public class Player : MonoBehaviour
                         {
                             _actionManager.Cancel();
                         }
-                    }
-                    // 武器スロット右回り
-                    if (Input.GetButtonDown("Right") && AtackIconManager.Instance.IsChange)
-                    {
-                        _actionManager.ChangeSelect(true);
-                        AtackIconManager.Instance.Rot(true);
-                    }
-                    // 武器スロット左回り
-                    else if (Input.GetButtonDown("Left") && AtackIconManager.Instance.IsChange)
-                    { 
-                        _actionManager.ChangeSelect(false);
-                        AtackIconManager.Instance.Rot(false);
                     }
                 }
             });
