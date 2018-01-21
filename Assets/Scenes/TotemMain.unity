@@ -679,7 +679,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 916279017
+  randomSeed: 1290093384
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -12238,7 +12238,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1136258791
+  randomSeed: -1840661143
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -16149,7 +16149,7 @@ Prefab:
     - target: {fileID: 114382591642984632, guid: 755f49747a0565d4ebd5ba678b15a9b2,
         type: 2}
       propertyPath: _isDebug
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114382591642984632, guid: 755f49747a0565d4ebd5ba678b15a9b2,
         type: 2}
