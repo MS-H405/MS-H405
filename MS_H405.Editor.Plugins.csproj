@@ -279,13 +279,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="MS_H405.csproj">
-      <Project>{1E0D2BDA-13E9-BF36-3C71-45B4C4FD3462}</Project>
-      <Name>MS_H405</Name>
-    </ProjectReference>
     <ProjectReference Include="MS_H405.Plugins.csproj">
       <Project>{CBD3DD3F-E762-4FB9-6CA7-55A0CB7B0768}</Project>
       <Name>MS_H405.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="MS_H405.csproj">
+      <Project>{1E0D2BDA-13E9-BF36-3C71-45B4C4FD3462}</Project>
+      <Name>MS_H405</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -353,6 +353,7 @@
     <Compile Include="Assets\Plugins\Standard Assets\Editor\ImageEffects\TonemappingEditor.cs" />
     <Compile Include="Assets\Plugins\Standard Assets\Editor\ImageEffects\VignetteAndChromaticAberrationEditor.cs" />
     <Compile Include="Assets\Plugins\TerrainStratumPainter\Editor\TerrainStratumPainter.cs" />
+    <Compile Include="Assets\Standard Assets\Effects\LightShafts\Editor\LightShaftsEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Cinemachine\ReleaseNotes.txt" />
@@ -428,7 +429,18 @@
     <None Include="Assets\Plugins\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
     <None Include="Assets\Plugins\UETools\Magic_Particle_Effects\Readme.txt" />
     <None Include="Assets\Plugins\UniRx\ReadMe.txt" />
+    <None Include="Assets\Shader\Sprites-Kamihubuki.shader" />
     <None Include="Assets\Shader\Standard_Custom.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\LightShaftsGuidelines.txt" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\ColorFilter.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\Coord.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\Depth.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\DepthBreaks.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\FinalInterpolation.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\InterpolateAlongRays.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\Raymarch.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\SamplePositions.shader" />
+    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\Shared.cginc" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
