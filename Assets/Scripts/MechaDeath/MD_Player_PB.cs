@@ -8,10 +8,17 @@ public class MD_Player_PB : PlayableBehaviour
 {
 	#region 定数
 
-	const float CON_WIN_TIME = 1.0f;		// 勝利モーションを始める時間	10
-	const float CON_WIN_EFFECT = 1.9f;		// プレイヤーの後ろに出てくる火みたいなエフェクトを発生させる時間	勝利モーション開始から0.8秒後
-	const float CON_KIRAKIRA_EFFECT = 2.4f;	// プレイヤーの後ろに出てくるキラキラしたエフェクト
-	const float CON_FADE_TIME = 10.0f;		// フェードし始めてもいい時間（シーン遷移は"キー入力されたら"だけど、この時間より前のキー入力は受け付けない）
+//	const float CON_WIN_TIME = 1.0f;		// 勝利モーションを始める時間	10
+//	const float CON_WIN_EFFECT = 1.9f;		// プレイヤーの後ろに出てくる火みたいなエフェクトを発生させる時間	勝利モーション開始から0.8秒後
+//	const float CON_KIRAKIRA_EFFECT = 2.4f;	// プレイヤーの後ろに出てくるキラキラしたエフェクト
+//	const float CON_FADE_TIME = 10.0f;		// フェードし始めてもいい時間（シーン遷移は"キー入力されたら"だけど、この時間より前のキー入力は受け付けない）
+
+	const float CON_WIN_TIME = 9.0f;		// 勝利モーションを始める時間	10
+	const float CON_ARMPARTICLE_STOP_TIME = 10.5f;	// キラキラエフェクトを止める時間
+	const float CON_WIN_EFFECT = 10.7f;		// プレイヤーの後ろに出てくる火みたいなエフェクトを発生させる時間	勝利モーション開始から0.8秒後
+	const float CON_KIRAKIRA_EFFECT = 11.4f;	// プレイヤーの後ろに出てくるキラキラしたエフェクト
+	const float CON_CONG_TIME = 12.0f;		// Congratulatinsを出す時間
+	const float CON_FADE_TIME = 17.0f;		// フェードし始めてもいい時間（シーン遷移は"キー入力されたら"だけど、この時間より前のキー入力は受け付けない）
 	
 	#endregion
 
@@ -27,6 +34,11 @@ public class MD_Player_PB : PlayableBehaviour
 	private GameObject _KirakiraObj;
 	public GameObject KirakiraObj { get; set; }
 
+	private GameObject _ArmParticleObj_1;
+	public GameObject ArmParticleObj_1 { get; set; }
+	private GameObject _ArmParticleObj_2;
+	public GameObject ArmParticleObj_2 { get; set; }
+
 	Animator animator;
 
 	float fTime = 0.0f;
@@ -34,6 +46,8 @@ public class MD_Player_PB : PlayableBehaviour
 	bool bEffect = true;
 	bool bKirakira = true;
 	bool bFade = true;
+	bool bKirakiraStop = true;
+	bool bCong = true;
 
 
 	// Effekseer
@@ -82,6 +96,9 @@ public class MD_Player_PB : PlayableBehaviour
 		{
 			animator.SetBool("bWin", true);
 			bWin = false;
+
+			ArmParticleObj_1.GetComponent<ParticleSystem>().Play();
+			ArmParticleObj_2.GetComponent<ParticleSystem>().Play();
 		}
 		else if (fTime >= CON_WIN_EFFECT && bEffect)
 		{
@@ -93,6 +110,17 @@ public class MD_Player_PB : PlayableBehaviour
 		{
 			KirakiraObj.GetComponent<ParticleSystem>().Play();		// キラキラエフェクト
 			bKirakira = false;
+		}
+		else if (fTime >= CON_ARMPARTICLE_STOP_TIME && bKirakiraStop)
+		{
+			ArmParticleObj_1.GetComponent<ParticleSystem>().Stop();	// 腕のパーティクルを止める
+			ArmParticleObj_2.GetComponent<ParticleSystem>().Stop();
+			bKirakiraStop = false;
+		}
+		else if (fTime >= CON_CONG_TIME && bCong)
+		{
+			cs_SetEffekseerObject.NewEffect(3);						// COngratulations
+			bCong = false;
 		}
 
 
