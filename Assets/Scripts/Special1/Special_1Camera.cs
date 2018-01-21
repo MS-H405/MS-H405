@@ -309,6 +309,7 @@ public class Special_1Camera : MonoBehaviour
 	// カメラ揺れる
 	public void shakeCamera()
 	{
+		cs_ShakeCamera.SetParam(0.04f, 0.002f);
 		cs_ShakeCamera.DontMoveShake();
 	}
 

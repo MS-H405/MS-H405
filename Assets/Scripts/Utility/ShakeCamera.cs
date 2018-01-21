@@ -40,6 +40,8 @@ public class ShakeCamera : MonoBehaviour
 			}
 
             fShakeIntensity -= fShakeDecay;
+			Debug.Log("fShakeIntensity : " + fShakeIntensity);
+			Debug.Log("fShakeDecay : " + fShakeDecay);
         }
     }
 
