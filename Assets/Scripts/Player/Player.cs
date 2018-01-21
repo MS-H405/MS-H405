@@ -283,27 +283,28 @@ public class Player : MonoBehaviour
     /// 地形との接地判定処理
     /// memo : Enterだと復帰しないバグが発生する恐れあり
     /// </summary>
-    private void OnCollisionEnter(Collision col)
+    private void OnCollisionStay(Collision col)
     {
         if (col.transform.tag == "Field")
         {
-            if(_hp <= 0)
-            {
-                // 死亡処理
-                GameOver.Instance.Run();
-                _rigidBody.isKinematic = true;
-                return;
-            }
-
             if (!_isDamage)
                 return;
 
             if (transform.position.y > 0.0f)
                 return;
 
-            /*var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             if (!stateInfo.IsName("Base.Down"))
-                return;*/
+                return;
+
+            if (_hp <= 0)
+            {
+                // 死亡処理
+                GameOver.Instance.Run();
+                _rigidBody.isKinematic = true;
+                _animator.ResetTrigger("Return");
+                return;
+            }
 
             _animator.SetTrigger("Return");
         }
