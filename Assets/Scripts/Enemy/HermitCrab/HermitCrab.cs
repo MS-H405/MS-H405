@@ -458,6 +458,7 @@ public class HermitCrab : EnemyBase
         SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Bagpipe_Burst);
         Vector3 startPos = transform.position;
         Vector3 targetPos = Vector3.Lerp(startPos, PlayerManager.Instance.GetVerticalPos(startPos), 0.7f);
+        float speed = Vector3.Distance(startPos, targetPos) / 10.0f;
 
         // 回転
         time = 0.0f;
@@ -472,6 +473,7 @@ public class HermitCrab : EnemyBase
                     time = 0.0f;
                     startPos = transform.position;
                     targetPos = Vector3.Lerp(startPos, PlayerManager.Instance.GetVerticalPos(startPos), 0.7f);
+                    speed = Vector3.Distance(startPos, targetPos) / 10.0f;
                 }
                 else
                 {
@@ -479,9 +481,9 @@ public class HermitCrab : EnemyBase
                 }
             });
 
-        while (time < 2.0f)
+        while (time < speed)
         {
-            transform.position += (targetPos - startPos) * (Time.deltaTime / 2.0f);
+            transform.position += (targetPos - startPos) * (Time.deltaTime / speed);
             transform.eulerAngles += new Vector3(0, 360 * Time.deltaTime, 0);
             time += Time.deltaTime;
 
