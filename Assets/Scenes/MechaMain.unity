@@ -478,6 +478,19 @@ Prefab:
       propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4455810727847278, guid: 22ef5ae20c0e87e40a6234203c526865, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 54870697125074760, guid: 22ef5ae20c0e87e40a6234203c526865,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
+    - target: {fileID: 1606102200006718, guid: 22ef5ae20c0e87e40a6234203c526865, type: 2}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 22ef5ae20c0e87e40a6234203c526865, type: 2}
   m_IsPrefabParent: 0

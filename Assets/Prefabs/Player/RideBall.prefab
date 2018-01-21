@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33171958652372148}
   - component: {fileID: 23357997339004612}
   - component: {fileID: 135217668709963006}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: RideBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
