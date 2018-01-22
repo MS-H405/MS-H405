@@ -14365,7 +14365,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pipeObj: {fileID: 2109454872}
-  _bagpipeSmokePrefab: {fileID: 0}
+  _bagpipeSmokePrefab: {fileID: 1483679581598982, guid: 4d5bf3a85f4557d409726cfccf39f793,
+    type: 2}
   _bagpipeFirePrefab: {fileID: 1765129736498618, guid: aa0f24491fe6ac3489e34e87808a17fe,
     type: 2}
 --- !u!114 &1167196159
