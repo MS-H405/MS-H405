@@ -24,7 +24,7 @@ public class SpotLightLockOn : MonoBehaviour
 	{
 		foreach(Transform trans in SpotLightArray)
 		{
-			if(trans.gameObject.activeSelf)
+			if (trans.gameObject.activeSelf && trans != transform)		// このスクリプトがアタッチされているオブジェクトも入っっているので、それだけは処理しない
 				trans.LookAt(Target);
 		}
 	}
