@@ -273,11 +273,12 @@ public class MechaPiero : EnemyBase
         _animator.SetTrigger("Pointhing");
         _animator.SetBool("BallWalk", true);
         time = 0.0f;
-        while(time < 3.15f)
+        while (time < 3.15f)
         {
             time += Time.deltaTime;
             yield return null;
         }
+        _animator.speed = 0.0f;
 
         int count = 0;
         _assaultStopper.enabled = true;
@@ -340,10 +341,12 @@ public class MechaPiero : EnemyBase
                     time += Time.deltaTime / speed;
                     if (time > 1.0f) time = 1.0f;
                     transform.position += moveAmount * Time.deltaTime / speed;
+                    transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
                     yield return null;
                 }
 
                 // 倒れるアニメーション再生
+                _animator.speed = 1.0f;
                 _animator.SetBool("BallStan", true);
 
                 // 8秒のロス
@@ -363,15 +366,22 @@ public class MechaPiero : EnemyBase
                     yield return null;
                 }
 
-                // そのあと回転
+                // そのあと地団駄
+                time = 0.0f;
+                while (time < 1.5f)
+                {
+                    time += Time.deltaTime;
+                    yield return null;
+                }
+
+                _animator.SetTrigger("BallKick");
                 time = 0.0f;
                 while (time < 1.0f)
                 {
-                    time += Time.deltaTime / speed;
-                    if (time > 1.0f) time = 1.0f;
-                    transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
+                    time += Time.deltaTime;
                     yield return null;
                 }
+                _animator.speed = 0.0f;
 
                 _isRunaway = false;
             }
@@ -387,6 +397,11 @@ public class MechaPiero : EnemyBase
                     yield return null;
                 }
             }
+
+            /*while(PlayerManager.Instance.Player.IsDamage)
+            {
+                yield return null;
+            }*/
               
             count++;
         }
@@ -403,6 +418,7 @@ public class MechaPiero : EnemyBase
         }
 
         _isNext = true;
+        _animator.speed = 1.0f;
         _assaultStopper.enabled = false;
         _animator.SetBool("BallWalk", false);
         Debug.Log("RideBall");
@@ -426,7 +442,7 @@ public class MechaPiero : EnemyBase
         }
 
         // 実行処理
-        float life = 3.0f;
+        float life = 5.0f;
         _needleManager.Run(life);
         //_rideBallRot.ChangeSpeed(0.0f);
 
@@ -607,6 +623,20 @@ public class MechaPiero : EnemyBase
                 _ballAnimator.speed = 1.0f;  // 他でspeedを変更する箇所がある場合はspeed変更を関数化させ管理する
                 oldPos = transform.position;
             });
+    }
+
+    /// <summary>
+    /// 更新処理
+    /// </summary>
+    private new void Update()
+    {
+        base.Update();
+
+        // Debugコマンド
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            _isRunaway = true;
+        }
     }
 
     #endregion

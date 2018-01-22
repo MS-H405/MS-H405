@@ -20,6 +20,7 @@ public class Needle : MonoBehaviour
     #region variable
 
     private Vector3 _initLocalPos = Vector3.zero;
+    private EffekseerEmitter _needleEffect = null;
     //private bool _isAttack = false;
 
     #endregion
@@ -41,7 +42,8 @@ public class Needle : MonoBehaviour
         //_isAttack = true;
 
         time = 0.0f;
-        while (time < life)
+        _needleEffect.Play();
+        while (time < life - 2.0f)
         {
             time += Time.deltaTime;
             transform.position += transform.up * 20.0f * Time.deltaTime;
@@ -49,7 +51,8 @@ public class Needle : MonoBehaviour
         }
 
         //_isAttack = false;
-        transform.localPosition = Vector3.zero; 
+        _needleEffect.Stop();
+        transform.localPosition = Vector3.zero;
     }
 
     /// <summary>
@@ -87,6 +90,7 @@ public class Needle : MonoBehaviour
     private void Start ()
     {
         _initLocalPos = transform.localPosition;
+        _needleEffect = GetComponentInChildren<EffekseerEmitter>();
     }
 
     /// <summary>
