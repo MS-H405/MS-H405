@@ -56,6 +56,7 @@ public class Knife : MonoBehaviour
         }
 
         GetComponentInChildren<EffekseerEmitter>().Play();
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_KnifeShot);
 
         time = 0.0f;
         while(time < 0.5f)
@@ -139,10 +140,12 @@ public class Knife : MonoBehaviour
                 return;
 
             GameEffectManager.Instance.Play("NeedleLight", transform.position);
+            SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_KnifeHit);
         }
         if (col.tag == "Field")
         {
             GameEffectManager.Instance.Play("KnifeStick", transform.position + transform.forward * 3.0f);
+            SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_KnifeHit);
             _isEnd = true;
         }
     }

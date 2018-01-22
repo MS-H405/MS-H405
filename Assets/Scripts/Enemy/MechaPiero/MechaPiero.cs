@@ -207,6 +207,7 @@ public class MechaPiero : EnemyBase
         int initIndex = 4;
         Color startColor = new Color(1.0f, 69.0f / 255.0f, 0.0f);
         Color endColor = Color.red;
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_OverHeat);
 
         float time = 0.0f;
         while (time < 1.0f)
@@ -291,6 +292,7 @@ public class MechaPiero : EnemyBase
 
         _isBallPose = true;
         _animator.speed = 1.0f;
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Pause);
         float time = 0.0f;
         //while (time < 1.15f)
         while (time < 1.15f - 0.7f)
@@ -451,6 +453,7 @@ public class MechaPiero : EnemyBase
             time += Time.deltaTime;
             yield return null;
         }
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Pause);
         _animator.speed = 0.0f;
 
         int count = 0;
@@ -483,12 +486,14 @@ public class MechaPiero : EnemyBase
 
             // 方向転換まで待つ
             RideEffect(true);
+            SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.MechaPiero_BallMove);
             while (!isOutRange)
             {
                 transform.position += transform.forward * 15.0f * Time.deltaTime;
                 yield return null;
             }
             RideEffect(false);
+            SoundManager.Instance.StopBGM(SoundManager.eBgmValue.MechaPiero_BallMove);
 
             // 敵の方を向くための計算
             InitLookOnTarget(ref startRot, ref targetRot, ref speed, count == 4);
@@ -501,6 +506,7 @@ public class MechaPiero : EnemyBase
                 time = 0.0f;
                 speed = 2.0f;
                 _driftEffect.Play();
+                //SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Turn);
                 while (time < 1.0f)
                 {
                     speed *= 0.95f;
@@ -516,6 +522,7 @@ public class MechaPiero : EnemyBase
                 _animator.speed = 1.0f;
                 _animator.SetBool("BallStan", true);
                 _ballAnimator.gameObject.layer = LayerMask.NameToLayer("Default");
+                SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Explosion);
                 time = 0.0f;
                 while (time < 4.0f)
                 {
@@ -568,6 +575,7 @@ public class MechaPiero : EnemyBase
                 time = 0.0f;
                 speed = 2.0f;
                 _driftEffect.Play();
+                //SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Turn);
                 while (time < 1.0f)
                 {
                     speed *= 0.95f;
@@ -611,7 +619,10 @@ public class MechaPiero : EnemyBase
                 yield return null;
             }*/
 
-            StaticCoroutine.Instance.StartStaticCoroutine(BallPosePlay());
+            if (count < 5)
+            {
+                StaticCoroutine.Instance.StartStaticCoroutine(BallPosePlay());
+            }
 
             while (_isBallPose)
             {
@@ -653,6 +664,7 @@ public class MechaPiero : EnemyBase
             time += Time.deltaTime;
             yield return null;
         }
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_StampBall);
 
         // 実行処理
         float life = 5.0f;
@@ -682,7 +694,15 @@ public class MechaPiero : EnemyBase
         _ballAnimator.enabled = true;
         _ballAnimator.SetBool("Laser", true);
         time = 0.0f;
-        while(time < 3.0f)
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_OpenBall);
+        while (time < 1.8f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        //SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Cannon);
+        time = 0.0f;
+        while (time < 1.5f)
         {
             time += Time.deltaTime;
             yield return null;
@@ -696,9 +716,11 @@ public class MechaPiero : EnemyBase
             yield return null;
         }
         _eyeLight.Play();
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_EyesEffect);
 
         // 砲撃実行
         _laserEffect.Play();
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Chage);
         time = 0.0f;
         while(time < 4.0f)
         {
@@ -709,6 +731,7 @@ public class MechaPiero : EnemyBase
         // 当たり判定をON
         _laserCollider.enabled = true;
         _shakeCamera.Shake(0.045f, 0.00045f);
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Burst);
         time = 0.0f;
         while (time < 2.5f)
         {
@@ -738,12 +761,14 @@ public class MechaPiero : EnemyBase
 
         // トゲを生やす
         _needleManager.Reload();
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_NeedleForm);
         time = 0.0f;
         while (time < 0.6f)
         {
             time += Time.deltaTime;
             yield return null;
         }
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_NeedleFormEffect);
         _ballAnimator.SetBool("Laser", false);
 
         _isNext = true;

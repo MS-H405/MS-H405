@@ -38,6 +38,7 @@ public class SoundManager : MonoBehaviour {
         Bagpipe_Walk,
         Bagpipe_Burst,
         Enemy_Stan,
+        MechaPiero_BallMove,
         Max,
 	};
 	
@@ -77,7 +78,22 @@ public class SoundManager : MonoBehaviour {
         Totem_Beam,
         Player_BagpipeAppearance,
         Player_BagpipeSmoke,
-
+        MechaPiero_Burst,
+        MechaPiero_Cannon,
+        MechaPiero_Chage,
+        MechaPiero_Explosion,
+        MechaPiero_EyesEffect,
+        MechaPiero_KnifeForm,
+        MechaPiero_KnifeHit,
+        MechaPiero_KnifeShot,
+        MechaPiero_Needle,
+        MechaPiero_NeedleForm,
+        MechaPiero_NeedleFormEffect,
+        MechaPiero_OpenBall,
+        MechaPiero_OverHeat,
+        MechaPiero_Pause,
+        MechaPiero_StampBall,
+        MechaPiero_Turn,
         Max,
 	};
 

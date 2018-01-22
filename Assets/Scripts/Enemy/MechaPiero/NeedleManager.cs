@@ -33,9 +33,12 @@ public class NeedleManager : MonoBehaviour
     /// </summary>
     public void Run(float life)
     {
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_NeedleFormEffect);
+        bool isSound = true;
         foreach (Needle needle in _needleList)
         {
-            StaticCoroutine.Instance.StartCoroutine(needle.Run(life));
+            StaticCoroutine.Instance.StartCoroutine(needle.Run(life, isSound));
+            isSound = false;
         }
     }
 

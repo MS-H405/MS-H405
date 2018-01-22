@@ -30,6 +30,7 @@ public class KnifeManager : MonoBehaviour
     /// </summary>
     private IEnumerator Run()
     {
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_KnifeForm);
         float time = 0.0f;
         while(time < 1.0f)
         {
@@ -76,6 +77,7 @@ public class KnifeManager : MonoBehaviour
         }
 
         // 終了処理
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_KnifeForm);
         foreach (Knife knife in _knifeList)
         {
             StaticCoroutine.Instance.StartStaticCoroutine(knife.End());

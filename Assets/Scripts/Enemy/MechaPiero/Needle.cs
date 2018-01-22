@@ -30,7 +30,7 @@ public class Needle : MonoBehaviour
     /// <summary>
     /// トゲ飛ばし実行処理
     /// </summary>
-    public IEnumerator Run(float life)
+    public IEnumerator Run(float life, bool isSound)
     {
         float time = 0.0f;
         GameEffectManager.Instance.Play("NeedleLight", transform.position + transform.up);
@@ -43,6 +43,11 @@ public class Needle : MonoBehaviour
 
         time = 0.0f;
         _needleEffect.Play();
+        if (isSound)
+        {
+            SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Needle);
+        }
+
         while (time < life - 2.0f)
         {
             time += Time.deltaTime;
