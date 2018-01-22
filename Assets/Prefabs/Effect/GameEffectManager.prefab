@@ -455,7 +455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50091075b6bce714bbcd73abc4eee722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectName: GAME_bohun
+  effectName: GAME3_Knife_Appear
   playOnStart: 0
   loop: 0
 --- !u!114 &114393959903450962
@@ -469,7 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50091075b6bce714bbcd73abc4eee722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectName: GAME_bohun
+  effectName: GAME3_Knife_Appear
   playOnStart: 0
   loop: 0
 --- !u!114 &114628011938590124
@@ -525,7 +525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50091075b6bce714bbcd73abc4eee722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectName: GAME_bohun
+  effectName: GAME3_Knife_Hit
   playOnStart: 0
   loop: 0
 --- !u!114 &114679800139248570
@@ -578,7 +578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50091075b6bce714bbcd73abc4eee722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectName: GAME_PinHit
+  effectName: GAME3_NeedleAppear
   playOnStart: 0
   loop: 0
 --- !u!114 &114841946791325128
@@ -592,7 +592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50091075b6bce714bbcd73abc4eee722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectName: GAME_PinHit
+  effectName: GAME3_NeedleAppear
   playOnStart: 0
   loop: 0
 --- !u!114 &114948993531161370

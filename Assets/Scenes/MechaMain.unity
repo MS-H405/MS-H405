@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 834b3db958015eb499f24385a2cc9691, type: 2}
+  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3159424, g: 0, b: 0.47291684, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -8457,6 +8457,36 @@ Prefab:
       propertyPath: m_CurrentCamera
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114710956432280974, guid: a29ac1a68a42d224fb492b610d1ada8a,
+        type: 2}
+      propertyPath: Target
+      value: 
+      objectReference: {fileID: 469023203}
+    - target: {fileID: 108770915202161268, guid: a29ac1a68a42d224fb492b610d1ada8a,
+        type: 2}
+      propertyPath: m_Shadows.m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 108770915202161268, guid: a29ac1a68a42d224fb492b610d1ada8a,
+        type: 2}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 108971684706669290, guid: a29ac1a68a42d224fb492b610d1ada8a,
+        type: 2}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 108261658319009186, guid: a29ac1a68a42d224fb492b610d1ada8a,
+        type: 2}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 108261658319009186, guid: a29ac1a68a42d224fb492b610d1ada8a,
+        type: 2}
+      propertyPath: m_Shadows.m_Type
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a29ac1a68a42d224fb492b610d1ada8a, type: 2}
   m_IsPrefabParent: 0
@@ -8639,6 +8669,11 @@ Transform:
   m_Father: {fileID: 39625256}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &469023203 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4827755425713440, guid: 22ef5ae20c0e87e40a6234203c526865,
+    type: 2}
+  m_PrefabInternal: {fileID: 949678328}
 --- !u!1001 &476033323
 Prefab:
   m_ObjectHideFlags: 0
@@ -12905,6 +12940,19 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114717057548104594, guid: ff46db4f8f77ca94bb8241ed3eeb7b59,
+        type: 2}
+      propertyPath: _lookPosHeight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186352493540912, guid: ff46db4f8f77ca94bb8241ed3eeb7b59, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186352493540912, guid: ff46db4f8f77ca94bb8241ed3eeb7b59, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.025
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff46db4f8f77ca94bb8241ed3eeb7b59, type: 2}
   m_IsPrefabParent: 0
@@ -13477,6 +13525,20 @@ Prefab:
     - target: {fileID: 4827755425713440, guid: 22ef5ae20c0e87e40a6234203c526865, type: 2}
       propertyPath: m_RootOrder
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 198955238116514382, guid: 22ef5ae20c0e87e40a6234203c526865,
+        type: 2}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 198955238116514382, guid: 22ef5ae20c0e87e40a6234203c526865,
+        type: 2}
+      propertyPath: randomSeed
+      value: -1770832093
+      objectReference: {fileID: 0}
+    - target: {fileID: 4827755425713440, guid: 22ef5ae20c0e87e40a6234203c526865, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 22ef5ae20c0e87e40a6234203c526865, type: 2}
@@ -14581,7 +14643,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1945042019
+  randomSeed: 870965560
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -23002,7 +23064,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.27205884, g: 0.13602942, b: 0.2570487, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -23437,15 +23499,17 @@ Prefab:
       propertyPath: m_RootOrder
       value: 11
       objectReference: {fileID: 0}
-    - target: {fileID: 114376848537758984, guid: 402ee83a91180df48ab4a6d89df9db04,
-        type: 2}
-      propertyPath: effectName
-      value: GAME3_Knife_Appear
+    - target: {fileID: 4606651197685856, guid: 402ee83a91180df48ab4a6d89df9db04, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114393959903450962, guid: 402ee83a91180df48ab4a6d89df9db04,
-        type: 2}
-      propertyPath: effectName
-      value: GAME3_Knife_Appear
+    - target: {fileID: 4606651197685856, guid: 402ee83a91180df48ab4a6d89df9db04, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606651197685856, guid: 402ee83a91180df48ab4a6d89df9db04, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 402ee83a91180df48ab4a6d89df9db04, type: 2}
@@ -23599,7 +23663,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1152241324
+  randomSeed: 199791028
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -27304,7 +27368,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1105882612
+  randomSeed: 2004111824
   InitialModule:
     serializedVersion: 3
     enabled: 1
