@@ -33,7 +33,7 @@ public class Needle : MonoBehaviour
     public IEnumerator Run(float life)
     {
         float time = 0.0f;
-        GameEffectManager.Instance.Play("NeedleLight", transform.position);
+        GameEffectManager.Instance.Play("NeedleLight", transform.position + transform.up);
         while (time < 2.0f)
         {
             time += Time.deltaTime;
@@ -77,7 +77,7 @@ public class Needle : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
-        GameEffectManager.Instance.Play("NeedleLight", transform.position);
+        GameEffectManager.Instance.Play("NeedleLight", transform.position + transform.up);
     }
 
     #endregion

@@ -32,6 +32,7 @@ public class MechaPiero : EnemyBase
     private eAction _nowAction;             // 現在の行動を保持
     private bool _isNext = false;           // 次の行動へ行くか
 
+    private bool _isBallPose = false;       
     private bool _isRunaway = false;        // 熱暴走が起きる状態化を保持
 
     // 行動用変数
@@ -40,6 +41,9 @@ public class MechaPiero : EnemyBase
     private EffekseerEmitter _eyeLight = null;
 
     private Animator _ballAnimator = null;
+    private EffekseerEmitter _driftEffect = null;
+    private ParticleSystem[] _rideEffects = new ParticleSystem[2];
+
     private EffekseerEmitter _laserEffect = null;
     private CapsuleCollider _laserCollider = null;
     private BoxCollider _assaultStopper = null;     // 突進攻撃の方向回転開始の基準となるコリジョン
@@ -178,6 +182,112 @@ public class MechaPiero : EnemyBase
         // 熱暴走エフェクト
     }
 
+    /// <summary>
+    /// 玉乗りポーズ再生処理
+    /// </summary>
+    private IEnumerator BallPoseStay()
+    {
+        while (_isBallPose)
+        {
+            yield return null;
+        }
+
+        _isBallPose = true;
+        _animator.Play("BallWalk", 0, 0.0f);
+        _animator.speed = 1.0f;
+        float time = 0.0f;
+        //while (time < 1.15f)
+        while (time < 0.7f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        _animator.speed = 0.0f;
+        _assaultStopper.enabled = false;
+        _assaultStopper.enabled = true;
+        _isBallPose = false;
+    }
+    private IEnumerator BallPosePlay()
+    {
+        while (_isBallPose)
+        {
+            yield return null;
+        }
+
+        _isBallPose = true;
+        _animator.speed = 1.0f;
+        float time = 0.0f;
+        //while (time < 1.15f)
+        while (time < 1.15f - 0.7f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        _animator.speed = 0.0f;
+        _assaultStopper.enabled = false;
+        _assaultStopper.enabled = true;
+        _isBallPose = false;
+    }
+
+    /// <summary>
+    /// 玉乗りエフェクト処理
+    /// </summary>
+    private void RideEffect(bool isOn)
+    {
+        if (isOn)
+        {
+            int count = 0;
+            foreach (ParticleSystem effect in _rideEffects)
+            {
+                count++;
+                bool old = effect.loop;
+                effect.loop = true;
+
+                if (effect.loop == old)
+                    continue;
+
+                effect.Play();
+            }
+        }
+        else
+        {
+            foreach (ParticleSystem effect in _rideEffects)
+            {
+                effect.loop = false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// ロックオン準備処理
+    /// </summary>
+    private void InitLookOnTarget(ref Vector3 startRot, ref Vector3 targetRot, ref float speed, bool lookCenter)
+    {
+        startRot = transform.eulerAngles;
+        if (lookCenter)
+        {
+            Vector3 lookPos = Vector3.zero;
+            lookPos.y = transform.position.y;
+            transform.LookAt(lookPos);
+        }
+        else
+        {
+            transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
+        }
+        targetRot = transform.eulerAngles;
+        transform.eulerAngles = startRot;
+
+        if (targetRot.y - startRot.y > 180.0f)
+        {
+            targetRot.y -= 360.0f;
+        }
+        else if (targetRot.y - startRot.y < -180.0f)
+        {
+            targetRot.y += 360.0f;
+        }
+        speed = Mathf.Abs(startRot.y - targetRot.y) / 240.0f;
+    }
+
     #endregion
 
     #region action_method
@@ -244,24 +354,12 @@ public class MechaPiero : EnemyBase
         // 必要Player情報の取得
         float time = 0.0f;
         float speed = 0.0f;
+        Vector3 startRot = Vector3.zero;
+        Vector3 targetRot = Vector3.zero;
 
-        Vector3 startRot = transform.eulerAngles;
-        transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
-        Vector3 targetRot = transform.eulerAngles;
-        transform.eulerAngles = startRot;
-
-        // 無駄な回転量が出ないようにする
-        if (targetRot.y - startRot.y > 180.0f)
-        {
-            targetRot.y -= 360.0f;
-        }
-        else if (targetRot.y - startRot.y < -180.0f)
-        {
-            targetRot.y += 360.0f;
-        }
+        InitLookOnTarget(ref startRot, ref targetRot, ref speed, false);
 
         time = 0.0f;
-        speed = Mathf.Abs(startRot.y - targetRot.y) / 240.0f;
         while (time < 1.0f)
         {
             time += Time.deltaTime / speed;
@@ -270,10 +368,10 @@ public class MechaPiero : EnemyBase
             yield return null;
         }
 
-        _animator.SetTrigger("Pointhing");
+        //_animator.SetTrigger("Pointhing");
         _animator.SetBool("BallWalk", true);
         time = 0.0f;
-        while (time < 3.15f)
+        while (time < 1.15f)
         {
             time += Time.deltaTime;
             yield return null;
@@ -282,53 +380,43 @@ public class MechaPiero : EnemyBase
 
         int count = 0;
         _assaultStopper.enabled = true;
+        _ballAnimator.gameObject.layer = LayerMask.NameToLayer("PieroBall");
         while (count < 5)
         {
             // 外壁にぶつかるまで止めないよう設定
             bool isOutRange = false;
-            var disposable = new SingleAssignmentDisposable();
-            disposable.Disposable = this.OnTriggerEnterAsObservable()
+            var enterDisposable = new SingleAssignmentDisposable();
+            enterDisposable.Disposable = this.OnTriggerEnterAsObservable()
                 .Subscribe(col =>
                 {
                     if (col.gameObject.tag != "AutoRange")
                         return;
                     
                     isOutRange = true;
-                    disposable.Dispose();
+                    enterDisposable.Dispose();
                 });
-            
+            var exitDisposable = new SingleAssignmentDisposable();
+            exitDisposable.Disposable = this.OnTriggerExitAsObservable()
+                .Subscribe(col =>
+                {
+                    if (col.gameObject.tag != "AutoRange")
+                        return;
+
+                    isOutRange = false;
+                    exitDisposable.Dispose();
+                });
+
             // 方向転換まで待つ
+            RideEffect(true);
             while (!isOutRange)
             {
-                transform.position += transform.forward * 11.5f * Time.deltaTime;
+                transform.position += transform.forward * 15.0f * Time.deltaTime;
                 yield return null;
             }
+            RideEffect(false);
 
             // 敵の方を向くための計算
-            startRot = transform.eulerAngles;
-            if (count != 4)
-            {
-                transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
-            }
-            else
-            {
-                Vector3 lookPos = Vector3.zero;
-                lookPos.y = transform.position.y;
-                transform.LookAt(lookPos);
-            }
-            targetRot = transform.eulerAngles;
-            transform.eulerAngles = startRot;
-
-            if (targetRot.y - startRot.y > 180.0f)
-            {
-                targetRot.y -= 360.0f;
-            }
-            else if (targetRot.y - startRot.y < -180.0f)
-            {
-                targetRot.y += 360.0f;
-            }
-
-            speed = Mathf.Abs(startRot.y - targetRot.y) / 240.0f;
+            InitLookOnTarget(ref startRot, ref targetRot, ref speed, count == 4);
             Vector3 moveAmount = transform.forward * _assaultStopper.transform.localPosition.z;
 
             // 熱暴走の時の処理
@@ -336,24 +424,27 @@ public class MechaPiero : EnemyBase
             {
                 // 壁にぶつかる
                 time = 0.0f;
+                speed = 2.0f;
+                _driftEffect.Play();
                 while (time < 1.0f)
                 {
-                    time += Time.deltaTime / speed;
+                    speed *= 0.95f;
+                    time += Time.deltaTime * 1.5f;
                     if (time > 1.0f) time = 1.0f;
-                    transform.position += moveAmount * Time.deltaTime / speed;
+                    transform.position += moveAmount * Time.deltaTime * speed;
                     transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
                     yield return null;
                 }
+                _driftEffect.StopRoot();
 
                 // 倒れるアニメーション再生
                 _animator.speed = 1.0f;
                 _animator.SetBool("BallStan", true);
-
-                // 8秒のロス
+                _ballAnimator.gameObject.layer = LayerMask.NameToLayer("Default");
                 time = 0.0f;
-                while (time < 8.0f)
+                while (time < 4.0f)
                 {
-                    time += Time.deltaTime / speed;
+                    time += Time.deltaTime;
                     yield return null;
                 }
 
@@ -368,6 +459,7 @@ public class MechaPiero : EnemyBase
 
                 // そのあと地団駄
                 time = 0.0f;
+                _animator.speed = 2.0f;
                 while (time < 1.5f)
                 {
                     time += Time.deltaTime;
@@ -375,35 +467,80 @@ public class MechaPiero : EnemyBase
                 }
 
                 _animator.SetTrigger("BallKick");
+                // TODO : ここで再度Playerの方を向かせる
                 time = 0.0f;
-                while (time < 1.0f)
+                while (time < 1.0f / _animator.speed)
                 {
                     time += Time.deltaTime;
                     yield return null;
                 }
-                _animator.speed = 0.0f;
 
+                _animator.speed = 0.0f;
+                _ballAnimator.gameObject.layer = LayerMask.NameToLayer("PieroBall");
                 _isRunaway = false;
             }
             else
             {
+                if (count <= 3)
+                {
+                    StaticCoroutine.Instance.StartStaticCoroutine(BallPoseStay());
+                }
+                else
+                {
+                    _animator.speed = 1.0f;
+                }
                 time = 0.0f;
+                speed = 2.0f;
+                _driftEffect.Play();
                 while (time < 1.0f)
                 {
-                    time += Time.deltaTime / speed;
+                    speed *= 0.95f;
+                    time += Time.deltaTime;
                     if (time > 1.0f) time = 1.0f;
-                    transform.position += moveAmount * Time.deltaTime / speed;
+                    transform.position += moveAmount * Time.deltaTime * speed;
                     transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
                     yield return null;
                 }
+                _driftEffect.StopRoot();
+            }
+
+            while(_isBallPose)
+            {
+                yield return null;
+            }
+
+            _ballAnimator.gameObject.layer = LayerMask.NameToLayer("Default");
+            count++;
+
+            // 回転した結果、移動量が少ない場合中心に向かって進ませる
+            if (isOutRange && count < 4)
+            {
+                // 敵の方を向くための計算
+                InitLookOnTarget(ref startRot, ref targetRot, ref speed, true);
+                speed = Mathf.Abs(startRot.y - targetRot.y) / 120.0f;
+                
+                time = 0.0f;
+                while (time < 1.0f)
+                {
+                    time += Time.deltaTime;
+                    transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
+                    yield return null;
+                }
+
             }
 
             /*while(PlayerManager.Instance.Player.IsDamage)
             {
+                transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
                 yield return null;
             }*/
-              
-            count++;
+
+            StaticCoroutine.Instance.StartStaticCoroutine(BallPosePlay());
+
+            while (_isBallPose)
+            {
+                yield return null;
+            }
         }
 
         time = 0.0f;
@@ -525,7 +662,6 @@ public class MechaPiero : EnemyBase
 
         // トゲを生やす
         _needleManager.Reload();
-        Debug.Log("Reload");
         time = 0.0f;
         while (time < 0.6f)
         {
@@ -586,10 +722,14 @@ public class MechaPiero : EnemyBase
 
         List<GameObject> allChild = gameObject.GetAll();
         _needleManager = allChild.Where(_ => _.name.Contains("group1")).FirstOrDefault().GetComponent<NeedleManager>();
-        _eyeLight = allChild.Where(_ => _.name.Contains("Bossitem_pCylinder2")).FirstOrDefault().GetComponent<EffekseerEmitter>();
+        _eyeLight = allChild.Where(_ => _.name.Contains("Bossitem_pCylinder2")).FirstOrDefault().GetComponentInChildren<EffekseerEmitter>();
 
         _ballAnimator = transform.Find("RideBall").GetComponent<Animator>();
         _ballAnimator.speed = 0.0f;
+        _driftEffect = _ballAnimator.transform.Find("Drift").GetComponent<EffekseerEmitter>();
+        _rideEffects[0] = _ballAnimator.transform.Find("TamanoriEffect").GetComponent<ParticleSystem>();
+        _rideEffects[1] = _rideEffects[0].transform.GetChild(0).GetComponent<ParticleSystem>();
+
         _laserEffect = _ballAnimator.transform.Find("LaserAttack").GetComponent<EffekseerEmitter>();
         _laserCollider = _ballAnimator.transform.Find("LaserCollision").GetComponent<CapsuleCollider>();
         _laserCollider.enabled = false;
@@ -636,6 +776,10 @@ public class MechaPiero : EnemyBase
         if (Input.GetKeyDown(KeyCode.M))
         {
             _isRunaway = true;
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            _eyeLight.Play();
         }
     }
 

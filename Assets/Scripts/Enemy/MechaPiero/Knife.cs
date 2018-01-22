@@ -32,12 +32,32 @@ public class Knife : MonoBehaviour
     public IEnumerator Run()
     {
         // 敵の方を向く
-        // TODO : とりあえず一瞬で向く
+        Vector3 startRot = transform.eulerAngles;
         transform.LookAt(PlayerManager.Instance.Player.transform.position + new Vector3(0, 1.0f, 0));
-        transform.localEulerAngles += new Vector3(0,0,90);
-        GetComponentInChildren<EffekseerEmitter>().Play();
+        Vector3 targetRot = transform.eulerAngles + new Vector3(0, 0, 90);
+        transform.eulerAngles = startRot;
+
+        // 無駄な回転量が出ないようにする
+        if (targetRot.y - startRot.y > 180.0f)
+        {
+            targetRot.y -= 360.0f;
+        }
+        else if (targetRot.y - startRot.y < -180.0f)
+        {
+            targetRot.y += 360.0f;
+        }
 
         float time = 0.0f;
+        while (time < 1.0f)
+        {
+            time += Time.deltaTime * 4.0f;
+            transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
+            yield return null;
+        }
+
+        GetComponentInChildren<EffekseerEmitter>().Play();
+
+        time = 0.0f;
         while(time < 0.5f)
         {
             time += Time.deltaTime;
@@ -79,9 +99,17 @@ public class Knife : MonoBehaviour
     /// <summary>
     /// 終了処理
     /// </summary>
-    public void End()
+    public IEnumerator End()
     {
-        GameEffectManager.Instance.Play("KnifeLose", transform.position + transform.forward);
+        GameEffectManager.Instance.Play("KnifeLose", transform.position + (transform.forward * 2.0f));
+
+        float time = 0.0f;
+        while (time < 0.75f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
         Destroy(gameObject);
     }
 
@@ -110,11 +138,11 @@ public class Knife : MonoBehaviour
             if (!col.GetComponent<Player>().Damage())
                 return;
 
-            GameEffectManager.Instance.Play("PinAttack", transform.position);
+            GameEffectManager.Instance.Play("NeedleLight", transform.position);
         }
         if (col.tag == "Field")
         {
-            GameEffectManager.Instance.Play("KnifeStick", transform.position + transform.forward);
+            GameEffectManager.Instance.Play("KnifeStick", transform.position + transform.forward * 3.0f);
             _isEnd = true;
         }
     }

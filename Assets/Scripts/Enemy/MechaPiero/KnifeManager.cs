@@ -78,7 +78,14 @@ public class KnifeManager : MonoBehaviour
         // 終了処理
         foreach (Knife knife in _knifeList)
         {
-            knife.End();
+            StaticCoroutine.Instance.StartStaticCoroutine(knife.End());
+        }
+        
+        time = 0.0f;
+        while(time < 1.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
         }
 
         Destroy(gameObject);
@@ -110,6 +117,11 @@ public class KnifeManager : MonoBehaviour
                 StaticCoroutine.Instance.StartStaticCoroutine(End());
                 disposable.Dispose();
             });
+    }
+
+    private void Start()
+    {
+        transform.eulerAngles = EnemyManager.Instance.BossEnemy.transform.eulerAngles + new Vector3(0, 180, 0);
     }
 
     #endregion

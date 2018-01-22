@@ -237,6 +237,19 @@ public class EnemyBase : MonoBehaviour
     }
 
     /// <summary>
+    /// スクリプト停止時処理
+    /// </summary>
+    private void OnDisable()
+    {
+        int index = 0;
+        foreach (Material mat in _matList)
+        {
+            mat.color = _initColorList[index];
+            index++;
+        }
+    }
+
+    /// <summary>
     /// 破棄処理
     /// </summary>
     private void OnDestroy()
