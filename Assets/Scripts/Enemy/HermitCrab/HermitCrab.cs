@@ -133,14 +133,21 @@ public class HermitCrab : EnemyBase
                     return eAction.Wait;
                 }
                
-                if (_nearTime > 5.0f)
+                if (_nearTime > 2.5f)
                 {
                     _nearTime = 0.0f;
-                    return eAction.RollAtack;
+                    if (Random.Range(0, 2) == 0)
+                    {
+                        return eAction.RollAtack;
+                    }
+                    else
+                    {
+                        return eAction.RollFire;
+                    }
                 }
 
                 int rand = Random.Range(0, 5);
-                if (rand != 0)
+                if (rand < 2)
                 {
                     return eAction.Assault;
                 }
