@@ -374,7 +374,6 @@ public class HermitCrab : EnemyBase
         }
 
         _rightScissors.enabled = true;
-        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_Roll);
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
 
         time = 0.0f;
@@ -384,6 +383,7 @@ public class HermitCrab : EnemyBase
             yield return null;
         }
         _shakeCamera.Shake();
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_Roll);
         Instantiate(_rollAttackEffect, transform.position, _rollAttackEffect.transform.rotation);
 
         time = 0.0f;
