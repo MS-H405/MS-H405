@@ -38,9 +38,13 @@ public class LockOn : MonoBehaviour
             {
                 transform.position = EnemyManager.Instance.BossEnemy.transform.position + gameCamera.LookPosOffset + new Vector3(0,_lookPosHeight,0);
                 distance = Vector3.Distance(transform.position, gameCamera.transform.position);
+
+                float oldAngle = transform.eulerAngles.z;
                 transform.LookAt(gameCamera.transform.position);
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, oldAngle);
+
                 transform.position += transform.forward * _lookAdjustment;
-                transform.localScale = initScale * distance / 3.0f;
+                transform.localScale = initScale * distance * distance / 20.0f;
             });
 
         this.ObserveEveryValueChanged(_ => EnemyManager.Instance.BossEnemy)
