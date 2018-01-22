@@ -74,6 +74,7 @@ public class RideBallMove : PlayerMove
         if (_animator.GetBool("BallWalk"))
         {
             SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Player_BallWalk);
+            SoundManager.Instance.ChangeVolumeBGM(SoundManager.eBgmValue.Player_BallWalk, _animator.speed / 3.0f);
         }
         else
         {

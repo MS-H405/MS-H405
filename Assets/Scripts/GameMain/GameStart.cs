@@ -67,11 +67,14 @@ public class GameStart : MonoBehaviour
             cameraMono.enabled = false;
         }
 
+        var playDisposable = new SingleAssignmentDisposable();
+        playDisposable.Disposable = 
         this.ObserveEveryValueChanged(_ => MovieManager.Instance.GetisMovideFade() || Time.unscaledDeltaTime > Rimit)
             .Where(_ => !MovieManager.Instance.GetisMovideFade() && Time.unscaledDeltaTime <= Rimit)
             .Subscribe(_ =>
             {
                 GetComponent<EffekseerEmitter>().Play();
+                SoundManager.Instance.PlaySE(SoundManager.eSeValue.UI_ShowTime);
 
                 float time = 0.0f;
                 this.UpdateAsObservable()
@@ -98,6 +101,8 @@ public class GameStart : MonoBehaviour
                         }
                         Destroy(gameObject);
                     });
+
+                playDisposable.Dispose();
             });
     }
 

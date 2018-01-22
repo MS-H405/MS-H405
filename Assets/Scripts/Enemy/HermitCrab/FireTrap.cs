@@ -40,6 +40,7 @@ public class FireTrap : MonoBehaviour
         Vector3 temp = transform.position;
         temp.y = 0.0f;
         transform.position = temp;
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_FireExplosion);
 
         ParticleSystem flame = transform.Find("Flame").GetComponent<ParticleSystem>();
         float flameInitSize = flame.startSize;

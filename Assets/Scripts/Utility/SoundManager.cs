@@ -67,7 +67,7 @@ public class SoundManager : MonoBehaviour {
         Player_Wind,            // 未実装
         Player_Bofun,
         Bagpipe_Burst,
-        Bagpipe_FireExplosion,  // 未実装
+        Bagpipe_FireExplosion,
         Bagpipe_FireShot,
         Bagpipe_Roll,
         Bagpipe_Scissor,
@@ -75,6 +75,9 @@ public class SoundManager : MonoBehaviour {
         Player_TotemJump,
         Player_Landing,
         Totem_Beam,
+        Player_BagpipeAppearance,
+        Player_BagpipeSmoke,
+
         Max,
 	};
 
@@ -94,7 +97,8 @@ public class SoundManager : MonoBehaviour {
 	[SerializeField] AudioClip[] SE;		// SE
 	[SerializeField] AudioClip[] Voice;		// 音声
 
-	void Awake() {
+	void Awake()
+    {
 		GameObject[] obj = GameObject.FindGameObjectsWithTag("SoundManager");
 		if (obj.Length > 1) {
 			// 既に存在しているなら削除
@@ -132,7 +136,8 @@ public class SoundManager : MonoBehaviour {
 		volume.Init();
 	}
 		
-	void Update() {
+	void Update()
+    {
 		// ミュート設定
 		/*foreach (AudioSource source in BGMsource) {
 			source.mute = volume.Mute;
@@ -249,8 +254,23 @@ public class SoundManager : MonoBehaviour {
 		}
 	}
 
-	// 指定したBGMは再生中なのか 
-	public bool NowOnBGM(eBgmValue i) {
+    public void ChangeVolumeBGM(eBgmValue i, float volume)
+    {
+        int index = (int)i;
+        if (0 > index || BGM.Length <= index)
+            return;
+
+        foreach (AudioSource source in BGMsource)
+        {
+            if (source.clip != BGM[index])
+                continue;
+
+            source.volume = volume;
+        }
+    }
+
+    // 指定したBGMは再生中なのか 
+    public bool NowOnBGM(eBgmValue i) {
 		int index = (int)i; 
 		if (0 > index || BGM.Length <= index) {
 			return false;

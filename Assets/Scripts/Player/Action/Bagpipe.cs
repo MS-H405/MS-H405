@@ -46,6 +46,7 @@ public class Bagpipe : MonoBehaviour
             smoke.transform.LookAt(transform.position + transform.up - (transform.forward / 5.0f));
             smoke.transform.position = _pipeObj.transform.position + new Vector3(-0.2f, 0.6f, -0.2f);
             smoke.transform.SetParent(_pipeObj.transform);
+            SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_BagpipeSmoke);
         }
         else
         {
@@ -58,6 +59,7 @@ public class Bagpipe : MonoBehaviour
             fire.transform.position = _pipeObj.transform.position + new Vector3(-0.2f, 0.7f, -0.3f);
 
             _nowFireInterval = FireInterval;
+            SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_FireShot);
         }
     }
 
@@ -69,6 +71,7 @@ public class Bagpipe : MonoBehaviour
         _fireEffect.Play();
         _animator.SetBool("Pipe", isRun);
         StaticCoroutine.Instance.StartStaticCoroutine(RunActive(isRun));
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_BagpipeAppearance);
     }
 
     private IEnumerator RunActive(bool isRun)
