@@ -31,6 +31,7 @@ public class ActionManager : MonoBehaviour
     private bool _isAction = false;                     // 現在何か行動中かどうか
     private eActionType _nowAction = eActionType.Max;   // 現在行動中のアクション番号
     public eActionType NowAction { get { return _nowAction; } }
+    private eActionType _oldAction = eActionType.Max;
     private Animator _animator = null;
 
     private eActionType _nowSelect = 0;                 // 0.ジャグリング, 1.玉乗り, 2.トーテムジャンプ, 3.バグパイプ
@@ -109,6 +110,7 @@ public class ActionManager : MonoBehaviour
                 break;
         }
 
+        _oldAction = _nowAction;
         _nowAction = eActionType.Max;
     }
 
@@ -142,8 +144,15 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     public void ChangeAction()
     {
+        if (_oldAction == eActionType.RideBall || _oldAction == eActionType.Bagpipe)
+        {
+            _oldAction = eActionType.Max;
+            return;
+        }
+
         _isAction = true;
         _nowAction = _nowSelect;
+
         switch (_nowAction)
         {
             case eActionType.Juggling:
