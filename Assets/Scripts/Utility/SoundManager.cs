@@ -72,6 +72,9 @@ public class SoundManager : MonoBehaviour {
         Bagpipe_Roll,
         Bagpipe_Scissor,
         UI_hikouki,
+        Player_TotemJump,
+        Player_Landing,
+        Totem_Beam,
         Max,
 	};
 
