@@ -32,8 +32,9 @@ public class MechaPiero : EnemyBase
     private eAction _nowAction;             // 現在の行動を保持
     private bool _isNext = false;           // 次の行動へ行くか
 
-    private bool _isBallPose = false;       
+    private bool _isBallPose = false;
     private bool _isRunaway = false;        // 熱暴走が起きる状態化を保持
+    private bool _isStopRunaway = false;    // 熱暴走を解除する通知用フラグ
 
     // 行動用変数
     [SerializeField] GameObject _knifePrefab = null;
@@ -116,13 +117,22 @@ public class MechaPiero : EnemyBase
                     {
                         return eAction.CannonAttack;
                     }
+                    return eAction.Wait;
                 }
 
-                return eAction.Wait;
-                //return eAction.KnifeAttack;     // 突進攻撃
-                //return eAction.RideBall;        // その場でファイアー
-                //return eAction.ThornsAttack;    // 回転攻撃
-                //return eAction.CannonAttack;    // 回転してファイアー
+                int rand = Random.Range(0, 5);
+                if (rand < 2)
+                {
+                    return eAction.RideBall;        // 50%
+                }
+                else if (rand < 3)
+                {
+                    return eAction.KnifeAttack;     // 25%
+                }
+                else
+                {
+                    return eAction.ThornsAttack;    // 25%
+                }
 
             case eAction.KnifeAttack:
                 return eAction.Wait;
@@ -176,10 +186,75 @@ public class MechaPiero : EnemyBase
     protected override IEnumerator DamageEffectUnique(string colTag)
     {
         if (colTag != "Bagpipe")
-            yield break; ;
+            yield break;
 
-        _isRunaway = true;
+        if (_nowAction != eAction.RideBall)
+            yield break;
+
+        if (_isRunaway)
+            yield break;
+
         // 熱暴走エフェクト
+        _isRunaway = true;
+        StaticCoroutine.Instance.StartStaticCoroutine(RunRunaway());
+    }
+
+    /// <summary>
+    /// 熱暴走エフェクト実行処理
+    /// </summary>
+    private IEnumerator RunRunaway()
+    {
+        int initIndex = 4;
+        Color startColor = new Color(1.0f, 69.0f / 255.0f, 0.0f);
+        Color endColor = Color.red;
+
+        float time = 0.0f;
+        while (time < 1.0f)
+        {
+            time += Time.deltaTime * 5.0f;
+            for (int i = initIndex; i < _matList.Count; i++)
+            {
+                _matList[i].color = Color.Lerp(_initColorList[i], startColor, time);
+            }
+            yield return null;
+        }
+
+        while (!_isStopRunaway)
+        {
+            time = 0.0f;
+            while (time < 1.0f)
+            {
+                time += Time.deltaTime * 5.0f;
+                for(int i = initIndex; i < _matList.Count; i++)
+                {
+                    _matList[i].color = Color.Lerp(/*_initColorList[i]*/startColor, endColor, time);
+                }
+                yield return null;
+            }
+
+            time = 0.0f;
+            while (time < 1.0f)
+            {
+                time += Time.deltaTime * 5.0f;
+                for (int i = initIndex; i < _matList.Count; i++)
+                {
+                    _matList[i].color = Color.Lerp(endColor, /*_initColorList[i]*/startColor, time);
+                }
+                yield return null;
+            }
+        }
+
+        time = 0.0f;
+        while (time < 1.0f)
+        {
+            time += Time.deltaTime * 5.0f;
+            for (int i = initIndex; i < _matList.Count; i++)
+            {
+                _matList[i].color = Color.Lerp(startColor, _initColorList[i], time);
+            }
+            yield return null;
+        }
+        _isStopRunaway = false;
     }
 
     /// <summary>
@@ -449,6 +524,7 @@ public class MechaPiero : EnemyBase
                 }
 
                 // 復帰アニメーション再生
+                _isStopRunaway = true;
                 _animator.SetBool("BallStan", false);
                 time = 0.0f;
                 while(time < 2.0f)
@@ -476,8 +552,8 @@ public class MechaPiero : EnemyBase
                 }
 
                 _animator.speed = 0.0f;
-                _ballAnimator.gameObject.layer = LayerMask.NameToLayer("PieroBall");
                 _isRunaway = false;
+                _ballAnimator.gameObject.layer = LayerMask.NameToLayer("PieroBall");
             }
             else
             {
@@ -783,9 +859,10 @@ public class MechaPiero : EnemyBase
         base.Update();
 
         // Debugコマンド
-        if (Input.GetKeyDown(KeyCode.M))
-        {
+        if (Input.GetKeyDown(KeyCode.M) && _nowAction == eAction.RideBall && !_isRunaway)
+        { 
             _isRunaway = true;
+            StaticCoroutine.Instance.StartStaticCoroutine(RunRunaway());
         }
         if (Input.GetKeyDown(KeyCode.N))
         {

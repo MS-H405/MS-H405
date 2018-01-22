@@ -27,8 +27,8 @@ public class EnemyBase : MonoBehaviour
 
     protected Animator _animator = null;
     private bool _isDamage = false;
-    [SerializeField] List<Material> _matList = new List<Material>();
-    private List<Color> _initColorList = new List<Color>();
+    [SerializeField] protected List<Material> _matList = new List<Material>();
+    protected List<Color> _initColorList = new List<Color>();
     protected ShakeCamera _shakeCamera = null;    // 画ぶれカメラ
 
     #endregion
