@@ -231,6 +231,10 @@ public class Player : MonoBehaviour
                         {
                             _actionManager.Cancel();
                         }
+                        if (_actionManager.NowAction == ActionManager.eActionType.Bagpipe)
+                        {
+                            _actionManager.Cancel();
+                        }
                     }
                 }
             });
