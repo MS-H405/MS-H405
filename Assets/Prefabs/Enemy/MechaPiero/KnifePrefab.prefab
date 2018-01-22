@@ -469,6 +469,7 @@ GameObject:
   - component: {fileID: 4720367491432956}
   - component: {fileID: 54866901335449916}
   - component: {fileID: 114972697821710196}
+  - component: {fileID: 114515409563592020}
   m_Layer: 0
   m_Name: Knife
   m_TagString: Untagged
@@ -1709,6 +1710,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e7dbe851821fbb448dcffb04928ccbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114515409563592020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1854493535011248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50091075b6bce714bbcd73abc4eee722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectName: GAME3_Knife_Throw
+  playOnStart: 0
+  loop: 0
 --- !u!114 &114535805504406558
 MonoBehaviour:
   m_ObjectHideFlags: 1

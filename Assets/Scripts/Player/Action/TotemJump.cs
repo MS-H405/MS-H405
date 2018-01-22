@@ -80,6 +80,7 @@ public class TotemJump : MonoBehaviour
         _playerMove.ChangeSpeed(1.5f);
         _rigidBody.AddForce(new Vector3(0, _addUpPower, 0) + (transform.forward * _addForwardPower));
         GameEffectManager.Instance.Play("PinAttack", transform.position);
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_TotemJump);
 
         GameObject bossEnemy = EnemyManager.Instance.BossEnemy.gameObject;
         var enemyDistanceDisposable = new SingleAssignmentDisposable();
@@ -116,6 +117,7 @@ public class TotemJump : MonoBehaviour
             {
                 _animator.SetBool("Jump", false);
                 _playerCollider.enabled = true;
+                SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_Landing);
                 jumpDisposable.Dispose();
             });
 

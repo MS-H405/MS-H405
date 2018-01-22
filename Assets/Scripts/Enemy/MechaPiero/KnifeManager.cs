@@ -31,7 +31,19 @@ public class KnifeManager : MonoBehaviour
     private IEnumerator Run()
     {
         float time = 0.0f;
-        while(time < 2.0f)
+        while(time < 1.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        foreach (Knife knife in _knifeList)
+        {
+            knife.gameObject.SetActive(true);
+        }
+
+        time = 0.0f;
+        while (time < 1.0f)
         {
             time += Time.deltaTime;
             yield return null;

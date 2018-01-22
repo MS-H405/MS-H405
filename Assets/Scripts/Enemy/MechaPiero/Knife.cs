@@ -67,7 +67,7 @@ public class Knife : MonoBehaviour
         GameEffectManager.Instance.Play("KnifeStart", transform.position + (transform.forward * 2.0f));
 
         float time = 0.0f;
-        while(time < 0.25f)
+        while(time < 0.75f)
         {
             time += Time.deltaTime;
             yield return null;
