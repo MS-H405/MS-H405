@@ -600,7 +600,7 @@ public class MechaPiero : EnemyBase
     private IEnumerator CannonAttack()
     {
         float time = 0.0f;
-        IEnumerator lookEnumerator = StaticCoroutine.Instance.StartStaticCoroutine(LookPlayer(45.0f));
+        IEnumerator lookEnumerator = StaticCoroutine.Instance.StartStaticCoroutine(LookPlayer(200.0f));
 
         // 砲台を出す
         _ballAnimator.enabled = true;
@@ -698,12 +698,22 @@ public class MechaPiero : EnemyBase
                 targetRot.y += 360.0f;
             }
 
-            float speed = Mathf.Abs(startRot.y - targetRot.y) / magni;
+            float initDistance = Vector3.Distance(transform.position, PlayerManager.Instance.GetVerticalPos(transform.position));
+            float speed = Mathf.Abs(startRot.y - targetRot.y) / (magni / initDistance);
+            //Debug.Log("Distance : " + initDistance + ", Speed : " + (magni / initDistance));
             while (time < 1.0f)
             {
                 time += Time.deltaTime / speed;
                 if (time > 1.0f) time = 1.0f;
                 transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
+
+                // 距離感に大きな変化があった場合、スピードを見直す
+                float distance = Vector3.Distance(transform.position, PlayerManager.Instance.GetVerticalPos(transform.position));
+                if (Mathf.Abs(distance - initDistance) > 1.0f)
+                {
+                    //Debug.Log("距離見直し");
+                    break;
+                }
                 yield return null;
             }
         }
