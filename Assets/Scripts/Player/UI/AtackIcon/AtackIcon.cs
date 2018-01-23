@@ -31,6 +31,7 @@ public class AtackIcon : MonoBehaviour
     // 演出用
     private Image _image = null;
     private Sprite _defaultSprite = null;
+    public Sprite IconSprite { get { return _image.sprite; } }
 
     #endregion
 
@@ -55,6 +56,53 @@ public class AtackIcon : MonoBehaviour
             time += Time.deltaTime / speed;
             transform.localScale = Vector3.Lerp(startSize, endSize, time);
             yield return null;
+        }
+    }
+
+    /// <summary>
+    /// 通常エフェクト実行処理
+    /// </summary>
+    public void Select()
+    {
+        StaticCoroutine.Instance.StartStaticCoroutine(RunSelect());
+    }
+    private IEnumerator RunSelect()
+    {
+        bool isUp = true;
+
+        float amount = 0.0f;
+        const float maxAmount = 0.2f;
+        const float speed = 0.1f;
+        Vector3 initScale = transform.localScale;
+
+        while (true)
+        {
+            if (isUp)
+            {
+                amount += maxAmount * Time.deltaTime / speed;
+                transform.localScale += new Vector3(maxAmount, maxAmount, maxAmount) * Time.deltaTime / speed;
+
+                if (amount >= maxAmount)
+                {
+                    isUp = false;
+                    transform.localScale = initScale + new Vector3(maxAmount, maxAmount, maxAmount);
+                }
+
+                yield return null;
+            }
+            else
+            {
+                amount -= maxAmount * Time.deltaTime / speed;
+                transform.localScale -= new Vector3(maxAmount, maxAmount, maxAmount) * Time.deltaTime / speed;
+
+                if (amount <= 0.0f)
+                {
+                    transform.localScale = initScale;
+                    yield break;
+                }
+
+                yield return null;
+            }
         }
     }
 

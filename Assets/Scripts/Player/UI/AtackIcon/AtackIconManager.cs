@@ -29,7 +29,7 @@ public class AtackIconManager : SingletonMonoBehaviour<AtackIconManager>
     private AtackIcon[] _atackIconList = new AtackIcon[IconAmount];
 
     public Sprite SpecialIconSprite { get; private set; }
-    [SerializeField] GameObject _specialIconEffect = null;
+    [SerializeField] IconEffect _iconEffect = null;
 
     #endregion
 
@@ -47,6 +47,17 @@ public class AtackIconManager : SingletonMonoBehaviour<AtackIconManager>
         }
 
         StaticCoroutine.Instance.StartStaticCoroutine(RotRun(rotAmount));
+    }
+
+    /// <summary>
+    /// アクション選択処理
+    /// </summary>
+    public void Select()
+    {
+        _atackIconList[(int)_nowAction    ].Select();
+        _atackIconList[(int)_nowAction + 4].Select();
+
+        //_iconEffect.Run(false, _atackIconList[(int)_nowAction].IconSprite);
     }
 
     private IEnumerator RotRun(float rotAmount)
@@ -138,7 +149,7 @@ public class AtackIconManager : SingletonMonoBehaviour<AtackIconManager>
         this.ObserveEveryValueChanged(_ => enemyBase.IsStan)
             .Subscribe(_ =>
             {
-                _specialIconEffect.SetActive(enemyBase.IsStan);
+                _iconEffect.Run(enemyBase.IsStan, null);
                 _atackIconList[(int)_nowAction    ].ChangeSpecialIcon(enemyBase.IsStan);
                 _atackIconList[(int)_nowAction + 4].ChangeSpecialIcon(enemyBase.IsStan);
             });
