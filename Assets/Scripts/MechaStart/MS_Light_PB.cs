@@ -79,16 +79,23 @@ public class MS_Light_PB : PlayableBehaviour
 		{
 			TransformArray[0].gameObject.SetActive(true);	// 親オブジェクト
 			TransformArray[1].gameObject.SetActive(true);	// ライト1
+
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.MS_LighUp);	// ライト点灯
+
 			b1 = false;
 		}
 		else if (b2 && fTime >= CON_LIGHT2)
 		{
 			TransformArray[2].gameObject.SetActive(true);	// ライト2
+
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.MS_LighUp);	// ライト点灯
 			b2 = false;
 		}
 		else if (b3 && fTime >= CON_LIGHT3)
 		{
 			TransformArray[3].gameObject.SetActive(true);	// ライト3
+
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.MS_LighUp);	// ライト点灯
 			b3 = false;
 		}
 	}
