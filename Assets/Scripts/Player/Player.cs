@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
 
     #region variable
 
-    private int _hp = 0;
+    [SerializeField] int _hp = 0;
     private ActionManager _actionManager = null;
     private PlayerMove _playerMove = null;
     private RideBallMove _rideBallMove = null;
@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     [SerializeField] float _backPower = 75.0f;
     [SerializeField] float _upPower = 200.0f;
     private ShakeCamera _shakeCamera = null;
+    private bool _isReturn = false;
 
     #endregion
 
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour
         _animator.SetTrigger("Damage");
         PlayerLifeManager.Instance.DamageEffect();
         _shakeCamera.Shake(0,02f);
+        Debug.Log("Damage");
 
         if (isDebug)
         {
@@ -116,6 +118,7 @@ public class Player : MonoBehaviour
         }
 
         _isDamage = false;
+        _isReturn = false;
     }
 
     /// <summary>
@@ -292,6 +295,9 @@ public class Player : MonoBehaviour
     {
         if (col.transform.tag == "Field")
         {
+            if (_isReturn)
+                return;
+
             if (!_isDamage)
                 return;
 
@@ -308,10 +314,14 @@ public class Player : MonoBehaviour
                 GameOver.Instance.Run();
                 _rigidBody.isKinematic = true;
                 _animator.ResetTrigger("Return");
+                _isReturn = true;
+                Debug.Log("Death");
                 return;
             }
 
             _animator.SetTrigger("Return");
+            _isReturn = true;
+            Debug.Log("Return");
         }
     }
 

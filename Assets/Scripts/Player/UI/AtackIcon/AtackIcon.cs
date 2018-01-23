@@ -176,6 +176,17 @@ public class AtackIcon : MonoBehaviour
             return;
 
         // 使えないアイコンの処理
+        // TODO : Sprite自体を差し替え予定
+
+        if (_actionType == ActionManager.eActionType.TotemJump)
+        {
+            _image.sprite = Resources.Load<Sprite>("Sprite/GameUI/Icon_Yellow");
+        }
+        else
+        {
+            _image.sprite = Resources.Load<Sprite>("Sprite/GameUI/Icon_Red");
+        }
+
         _image.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
     }
 
