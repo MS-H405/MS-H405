@@ -35,6 +35,7 @@ public class MechaPiero : EnemyBase
     private bool _isBallPose = false;
     private bool _isRunaway = false;        // 熱暴走が起きる状態化を保持
     private bool _isStopRunaway = false;    // 熱暴走を解除する通知用フラグ
+    [SerializeField] GameObject _stanEffect = null;
 
     // 行動用変数
     [SerializeField] GameObject _knifePrefab = null;
@@ -197,6 +198,20 @@ public class MechaPiero : EnemyBase
         // 熱暴走エフェクト
         _isRunaway = true;
         StaticCoroutine.Instance.StartStaticCoroutine(RunRunaway());
+    }
+
+    /// <summary>
+    /// 各自のスタンエフェクト再生処理
+    /// </summary>
+    protected override IEnumerator StanEffectUnique()
+    {
+        _animator.speed = 1.0f;
+        SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Enemy_Stan);
+
+        GameObject stanEffect = Instantiate(_stanEffect, transform.position + new Vector3(0.0f, 3.25f, 0.0f), Quaternion.identity);
+        stanEffect.transform.SetParent(transform.Find("USER_20171210_1546:USER_20171210_1546:Character1_Reference").GetChild(0));
+
+        yield break;
     }
 
     /// <summary>
@@ -610,7 +625,6 @@ public class MechaPiero : EnemyBase
                     transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
                     yield return null;
                 }
-
             }
 
             /*while(PlayerManager.Instance.Player.IsDamage)
@@ -623,6 +637,10 @@ public class MechaPiero : EnemyBase
             {
                 StaticCoroutine.Instance.StartStaticCoroutine(BallPosePlay());
             }
+            else
+            {
+                _isStopRunaway = true;
+            }
 
             while (_isBallPose)
             {
@@ -634,7 +652,9 @@ public class MechaPiero : EnemyBase
         Vector3 startPos = transform.position;
         Vector3 endPos = Vector3.zero;
         endPos.y = transform.position.y;
-        while(time < 1.0f)
+        _animator.speed = 1.0f;
+        _animator.SetBool("BallWalk", false);
+        while (time < 1.0f)
         {
             time += Time.deltaTime / 2.0f;
             transform.position = Vector3.Lerp(startPos, endPos, time);
@@ -642,9 +662,8 @@ public class MechaPiero : EnemyBase
         }
 
         _isNext = true;
-        _animator.speed = 1.0f;
+        _isStopRunaway = true;
         _assaultStopper.enabled = false;
-        _animator.SetBool("BallWalk", false);
         Debug.Log("RideBall");
     }
 

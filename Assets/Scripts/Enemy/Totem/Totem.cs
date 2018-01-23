@@ -248,7 +248,6 @@ public class Totem : EnemyBase
         yield break;
     }
 
-
     #endregion
 
     #region action_method

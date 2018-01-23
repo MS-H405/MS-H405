@@ -53,6 +53,7 @@ public class HermitCrab : EnemyBase
 
     private EffekseerEmitter _defenseEffect = null;
     private EffekseerEmitter _invincibleEffect = null;
+    [SerializeField] GameObject _stanEffect = null;
 
     #endregion
 
@@ -597,6 +598,11 @@ public class HermitCrab : EnemyBase
         }
 
         _shakeCamera.Shake();
+
+        // ピヨピヨエフェクト
+        SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Enemy_Stan);
+        GameObject stanEffect = Instantiate(_stanEffect, transform.position + new Vector3(0.0f, 2.0f, -3.0f), Quaternion.identity);
+        stanEffect.transform.SetParent(transform);
     }
 
     #endregion
