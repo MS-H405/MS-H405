@@ -298,7 +298,7 @@ public class Totem : EnemyBase
 
             // 待機
             float waitTime = 0.0f;
-            while (waitTime < 7.5f)
+            while (waitTime < 2.0f * amount)
             {
                 waitTime += Time.deltaTime;
                 yield return null;
