@@ -233,7 +233,8 @@ public class TS_Boss_PB : PlayableBehaviour
 			animator.speed = 0.5f / CON_MOUTHMAX_TIME;			// 咆哮開始(口を開け始める)
 			bRoarStart = false;
 
-			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_TotemRoar);		// 咆哮効果音
+			//MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_TotemRoar);		// 咆哮効果音
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_Cry);		// 咆哮効果音
 		}
 		else if( (fTime >= CON_ROAR_START + CON_MOUTHMAX_TIME*1.8) && (fTime < CON_ROAR_END) )
 		{

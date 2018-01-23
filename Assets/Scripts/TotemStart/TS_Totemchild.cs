@@ -123,7 +123,7 @@ public class TS_Totemchild : MonoBehaviour
 			vEndPos = new Vector3(transform.position.x, CON_START_POSY, transform.position.z);
 			DiveObj.GetComponent<EffekseerEmitter>().Play();
 
-			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_TotemDive);
+			//MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_TotemDive);		// ここで鳴らすとくっそうるさい
 
 			bInit = false;
 		}

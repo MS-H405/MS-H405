@@ -142,6 +142,7 @@ public class BD_HermitCrab_PB : PlayableBehaviour
 			bInitializ = false;
 
 			cs_SetEffekseerObject.NewEffect(0);		// 咆哮エフェクト
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.BD_CryLast);
 		}
 
 		fTime += Time.deltaTime;
