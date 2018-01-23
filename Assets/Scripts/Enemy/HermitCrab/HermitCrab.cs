@@ -53,6 +53,7 @@ public class HermitCrab : EnemyBase
 
     private EffekseerEmitter _defenseEffect = null;
     private EffekseerEmitter _invincibleEffect = null;
+    [SerializeField] GameObject _stanEffect = null;
 
     #endregion
 
@@ -462,13 +463,13 @@ public class HermitCrab : EnemyBase
             yield return null;
         }
 
+        bool isEnd = false;
         SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Bagpipe_Burst);
         Vector3 startPos = transform.position;
         Vector3 targetPos = Vector3.Lerp(startPos, PlayerManager.Instance.GetVerticalPos(startPos), 0.7f);
         float speed = Vector3.Distance(startPos, targetPos) / 10.0f;
 
         // 回転
-        time = 0.0f;
         _bodyAttackCollider.enabled = true;
 
         var chaseDisposable = new SingleAssignmentDisposable();
@@ -484,15 +485,24 @@ public class HermitCrab : EnemyBase
                 }
                 else
                 {
+                    var autoRangeDisposable = new SingleAssignmentDisposable();
+                    autoRangeDisposable.Disposable = this.OnTriggerEnterAsObservable()
+                        .Subscribe(col =>
+                        {
+                            if (col.tag != "AutoRange")
+                                return;
+
+                            isEnd = true;
+                            autoRangeDisposable.Dispose();
+                        });
                     chaseDisposable.Dispose();
                 }
             });
 
-        while (time < speed)
+        while (!isEnd)
         {
             transform.position += (targetPos - startPos) * (Time.deltaTime / speed);
             transform.eulerAngles += new Vector3(0, 360 * Time.deltaTime, 0);
-            time += Time.deltaTime;
 
             foreach (ParticleSystem pipeFire in _pipeFireList)
             {
@@ -597,6 +607,11 @@ public class HermitCrab : EnemyBase
         }
 
         _shakeCamera.Shake();
+
+        // ピヨピヨエフェクト
+        SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Enemy_Stan);
+        GameObject stanEffect = Instantiate(_stanEffect, transform.position + new Vector3(0.0f, 2.0f, -3.0f), Quaternion.identity);
+        stanEffect.transform.SetParent(transform);
     }
 
     #endregion

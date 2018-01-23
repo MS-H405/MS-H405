@@ -161,6 +161,15 @@ public class JugglingAtack : MonoBehaviour
         dropEffect.transform.position += new Vector3(0.0f, 0.01f, 0.0f);
         Vector3 initEffectScale = dropEffect.transform.localScale;
 
+        if(atackTime < 0.25f)
+        {
+            atackTime = 0.25f;
+        }
+        else if(atackTime > 3.0f)
+        {
+            atackTime = 3.0f;
+        }
+
         // 跳ね返り処理
         BezierCurve.tBez bez = new BezierCurve.tBez();  // 曲線移動のためベジエ曲線を使用
         bez.start = transform.position;
@@ -203,7 +212,7 @@ public class JugglingAtack : MonoBehaviour
     /// ピンの後処理
     /// </summary>
     private void RunNext()
-    {        
+    {
         // キャッチ判定
         PinDestroy(!_isCatch);
         if (_isCatch)
@@ -340,8 +349,8 @@ public class JugglingAtack : MonoBehaviour
             SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_SlowHit);
             GameEffectManager.Instance.Play("PinAttack", transform.position);
             var collider = GetComponentInChildren<CapsuleCollider>();
-            collider.radius *= 5.0f;
-            collider.height *= 2.0f;
+            collider.radius *= 3.0f;
+            collider.height *= 1.25f;
             return;
         }
 
@@ -351,8 +360,8 @@ public class JugglingAtack : MonoBehaviour
             SoundManager.Instance.PlaySE(SoundManager.eSeValue.Player_SlowHit);
             GameEffectManager.Instance.Play("PinAttack", transform.position);
             var collider = GetComponentInChildren<CapsuleCollider>();
-            collider.radius *= 5.0f;
-            collider.height *= 2.0f;
+            collider.radius *= 3.0f;
+            collider.height *= 1.25f;
         }
 
         // Field外に行ってしまったら跳ね返す

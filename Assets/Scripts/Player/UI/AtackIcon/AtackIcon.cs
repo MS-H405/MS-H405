@@ -31,6 +31,7 @@ public class AtackIcon : MonoBehaviour
     // 演出用
     private Image _image = null;
     private Sprite _defaultSprite = null;
+    public Sprite IconSprite { get { return _image.sprite; } }
 
     #endregion
 
@@ -128,6 +129,15 @@ public class AtackIcon : MonoBehaviour
             return;
 
         // 使えないアイコンの処理
+        if (_actionType == ActionManager.eActionType.TotemJump)
+        {
+            _image.sprite = Resources.Load<Sprite>("Sprite/GameUI/Icon_Yellow");
+        }
+        else
+        {
+            _image.sprite = Resources.Load<Sprite>("Sprite/GameUI/Icon_Red");
+        }
+
         _image.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
     }
 

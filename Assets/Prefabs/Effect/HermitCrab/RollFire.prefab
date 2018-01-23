@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b4c1a29424b61647bf3e4aa934c2736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isPlayer: 0
 --- !u!198 &198087610690789908
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -3804,7 +3805,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 100
+    maxNumParticles: 1000
     size3D: 0
     rotation3D: 0
     gravityModifier:

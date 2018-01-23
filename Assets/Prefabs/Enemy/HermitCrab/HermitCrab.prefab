@@ -2878,8 +2878,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 3, z: 5}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 3.4800873, y: 3, z: 5}
+  m_Center: {x: -0.0395859, y: 1.2095409e-11, z: -5.343016e-12}
 --- !u!65 &65527958606294914
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2902,8 +2902,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 5, z: 6}
-  m_Center: {x: 1.24, y: 2.5, z: -1}
+  m_Size: {x: 3.5470836, y: 4.999999, z: 6}
+  m_Center: {x: 1.305426, y: 2.4999995, z: -1.0000006}
 --- !u!95 &95248908291066756
 Animator:
   serializedVersion: 3
@@ -3008,6 +3008,8 @@ MonoBehaviour:
   _chargeFireEffect: {fileID: 1518979216470646, guid: 8c1cc3c729da28e4e80852c775139866,
     type: 2}
   _rollFireEffect: {fileID: 1397142912161464, guid: 8329e55125ed4714a81727f52226ac6b,
+    type: 2}
+  _stanEffect: {fileID: 1293750889377812, guid: 2eb025a34a2cd7440a63be3182b575d2,
     type: 2}
 --- !u!114 &114889647766931152
 MonoBehaviour:
@@ -3184,7 +3186,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1507956696
+  randomSeed: 653358022
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3336,8 +3338,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 6
-      minScalar: 2
+      scalar: 9
+      minScalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3744,7 +3746,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15
+      scalar: 25
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -6501,7 +6503,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2011136495
+  randomSeed: 1573451620
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6653,8 +6655,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 6
-      minScalar: 2
+      scalar: 9
+      minScalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -7061,7 +7063,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15
+      scalar: 25
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -9818,7 +9820,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -921714722
+  randomSeed: -624252361
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -9970,8 +9972,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 6
-      minScalar: 2
+      scalar: 9
+      minScalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10378,7 +10380,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15
+      scalar: 25
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -13135,7 +13137,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2002508588
+  randomSeed: 1869882765
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -13287,8 +13289,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 6
-      minScalar: 2
+      scalar: 9
+      minScalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -13695,7 +13697,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15
+      scalar: 25
       minScalar: 10
       maxCurve:
         serializedVersion: 2

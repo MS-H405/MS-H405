@@ -65,15 +65,18 @@ public class Knife : MonoBehaviour
             yield return null;
         }
 
+        time = 2.5f;
         var disposable = new SingleAssignmentDisposable();
         disposable.Disposable = this.UpdateAsObservable()
             .Subscribe(_ =>
             {
                 transform.position += transform.forward * 20.0f * Time.deltaTime;
+                time -= Time.deltaTime;
 
-                if (!_isEnd)
+                if (!_isEnd && time > 0.0f)
                     return;
 
+                _isEnd = true;
                 transform.position += transform.forward * 75.0f * Time.deltaTime;
                 disposable.Dispose();
             });
