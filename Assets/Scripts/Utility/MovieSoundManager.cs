@@ -58,6 +58,10 @@ public class MovieSoundManager : MonoBehaviour {
 		TS_TotemRoar,
 		TS_TotemDive,
 		TD_TotemSita,
+		MS_LighUp,			// 20
+		MS_Pause,
+		MS_NeedleForm,
+		MS_NeedleFormEffect,
 
 
 
@@ -421,6 +425,24 @@ public class MovieSoundManager : MonoBehaviour {
 			OldSE		= SE	= PlayerPrefs.GetFloat("SE", 1.0f);
 			OldVoice = Voice = 1.0f;
 			Mute = false;
+		}
+	}
+
+
+
+	// BGMの音量を変える
+	public void  ChangeVolumeBGM(eBgmValue i, float volume)
+	{
+		int index = (int)i;
+		if(0 > index || BGM.Length <= index)
+			return;
+
+		foreach(AudioSource source in BGMsource)
+		{
+			if(source.clip != BGM[index])
+				continue;
+
+			source.volume = volume;
 		}
 	}
 }

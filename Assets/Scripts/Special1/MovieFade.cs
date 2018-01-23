@@ -28,6 +28,8 @@ public class MovieFade : MonoBehaviour
 	bool bInit;
 	float fFirstAlpha;
 
+	_FADE_PATERN Fade_Patern;
+
 	public static MovieFade Instance
 	{
 		get
@@ -73,6 +75,12 @@ public class MovieFade : MonoBehaviour
 
 		//var endFrame = new WaitForEndOfFrame();
 
+		// 必殺技終了しか処理しない
+		if (Fade_Patern == _FADE_PATERN.WHITE)
+		{
+			MovieSoundManager.Instance.ChangeVolumeBGM(MovieSoundManager.eBgmValue.Special, 1.0f);	// とりあえず音を最大に
+		}
+
 		while (fAlpha - fFirstAlpha < 1.0f)
 		{
 			fAlpha += Time.deltaTime / fFadeTime;
@@ -83,6 +91,13 @@ public class MovieFade : MonoBehaviour
 			}
 
 			image.color = new Color(image.color.r, image.color.g, image.color.b, fAlpha - fFirstAlpha);
+
+			// 必殺技終了しか処理しない
+			if (Fade_Patern == _FADE_PATERN.WHITE)
+			{
+				MovieSoundManager.Instance.ChangeVolumeBGM(MovieSoundManager.eBgmValue.Special, 1 - image.color.a);	// BGM音をどんど小さく
+			}
+
 			yield return null;
 		}
 
@@ -93,7 +108,7 @@ public class MovieFade : MonoBehaviour
 
         if (MovieSoundManager.Instance)
         {
-            MovieSoundManager.Instance.StopBGM();
+            MovieSoundManager.Instance.StopBGM();		// BGM停止
             //MovieSoundManager.Instance.StopSE();
         }
 
@@ -113,6 +128,13 @@ public class MovieFade : MonoBehaviour
 
 		//var endFrame = new WaitForEndOfFrame();
 
+		// 必殺技開始しか処理しない
+		if(Fade_Patern == _FADE_PATERN.CUTIN)
+		{
+			MovieSoundManager.Instance.ChangeVolumeBGM(MovieSoundManager.eBgmValue.Special, 0.0f);
+			MovieSoundManager.Instance.PlayBGM(MovieSoundManager.eBgmValue.Special);					// BGM再生
+		}
+
 		while (fAlpha - fFirstAlpha < 1.0)
 		{
 			//fAlpha += Time.deltaTime / fFadeTime;
@@ -124,6 +146,14 @@ public class MovieFade : MonoBehaviour
 			}
 
 			image.color = new Color(image.color.r, image.color.g, image.color.b, 1 - fAlpha - fFirstAlpha);
+
+
+			// 必殺技開始しか処理しない
+			if (Fade_Patern == _FADE_PATERN.CUTIN)
+			{
+				MovieSoundManager.Instance.ChangeVolumeBGM(MovieSoundManager.eBgmValue.Special, fAlpha - fFirstAlpha);	// BGM音をどんどん大きく
+			}
+
 			yield return null;
 		}
 
@@ -140,6 +170,9 @@ public class MovieFade : MonoBehaviour
 	public Coroutine FadeOut(_FADE_PATERN fade, System.Action action)
 	{
 		float fSPTime = 0.0f;
+
+		// BGMの音量調整をするかどうかを決めるために、フェードパターンを記憶していく
+		Fade_Patern = fade;
 
 		if (fade == _FADE_PATERN.NORMAL)
 		{// 普通の黒フェード
@@ -164,6 +197,9 @@ public class MovieFade : MonoBehaviour
 	public Coroutine FadeIn(_FADE_PATERN fade, System.Action action)
 	{
 		float fSPTime = 0.0f;
+
+		// BGMの音量調整をするかどうかを決めるために、フェードパターンを記憶していく
+		Fade_Patern = fade;
 
 		if (fade == _FADE_PATERN.NORMAL)
 		{// 普通の黒フェード
