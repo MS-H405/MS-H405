@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4879826121586126}
   - component: {fileID: 114951814709682162}
   m_Layer: 0
-  m_Name: Fainting_Effect
+  m_Name: Fainting_Effect_Totem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
