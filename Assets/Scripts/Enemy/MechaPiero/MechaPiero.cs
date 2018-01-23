@@ -39,6 +39,7 @@ public class MechaPiero : EnemyBase
 
     // 行動用変数
     [SerializeField] GameObject _knifePrefab = null;
+    private EffekseerEmitter _knifeArmEffect = null;
     private NeedleManager _needleManager = null;
     private EffekseerEmitter _eyeLight = null;
 
@@ -417,7 +418,7 @@ public class MechaPiero : EnemyBase
             time += Time.deltaTime;
             yield return null;
         }
-
+        _animator.speed = 0.0f;
         GameObject obj = Instantiate(_knifePrefab, transform.position, Quaternion.identity);
         
         time = 0.0f;
@@ -426,6 +427,8 @@ public class MechaPiero : EnemyBase
             time += Time.deltaTime;
             yield return null;
         }
+        //_knifeArmEffect.Play();
+        _animator.speed = 1.0f;
 
         while (obj)
         {
@@ -433,6 +436,7 @@ public class MechaPiero : EnemyBase
         }
 
         _isNext = true;
+        //_knifeArmEffect.Stop();
         Debug.Log("KnifeAttack");
     }
 
@@ -854,6 +858,9 @@ public class MechaPiero : EnemyBase
         base.Awake();
 
         List<GameObject> allChild = gameObject.GetAll();
+   
+        _knifeArmEffect = transform.Find("RightHand").GetComponentInChildren<EffekseerEmitter>();
+
         _needleManager = allChild.Where(_ => _.name.Contains("group1")).FirstOrDefault().GetComponent<NeedleManager>();
         _eyeLight = allChild.Where(_ => _.name.Contains("Bossitem_pCylinder2")).FirstOrDefault().GetComponentInChildren<EffekseerEmitter>();
 
