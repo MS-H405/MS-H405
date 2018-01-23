@@ -68,6 +68,8 @@ public class MS_NeedleManager : MonoBehaviour
 				{
 					needle.GetComponent<EffekseerEmitter>().Play();
 				}
+
+				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.MS_NeedleFormEffect);
 				bEffect = false;
 			}
 

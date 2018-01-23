@@ -34,10 +34,12 @@ public class MS_Enemy_PB : PlayableBehaviour
 
 	const float CON_POSE_TIME = 1.0f;			// 玉に着地してから、決めポーズモーションを開始するまでの時間
 
-	const float CON_NEEDLE_TIME = 1.5f;			// 決めポーズモーションを開始してから、棘を出すまでの時間
+	const float CON_NEEDLE_TIME = 2.3f;			// 決めポーズモーションを開始してから、棘を出すまでの時間	1.5
 
 	const float CON_ROTATION_TIME = 0.3f;		// 棘を出してから、玉が回転し始めるまでの時間
 	const float CON_FIN_TIME = 1.4f;			// 棘を出してから、フェードを開始するまでの時間
+
+	const float CON_SE_PAUSE = 1.1f;			// 決めポーズモーションを開始してから、決めポーズの音を鳴らすまでの時間
 
 	#endregion
 
@@ -78,6 +80,13 @@ public class MS_Enemy_PB : PlayableBehaviour
 	Animator _ballAnimator;
 	MS_NeedleManager _needleManager;
 	float time;
+
+	#endregion
+
+	#region SE
+
+	bool bSE_Pause = false;
+	float fSETime = 0.0f;
 
 	#endregion
 
@@ -158,6 +167,8 @@ public class MS_Enemy_PB : PlayableBehaviour
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_3);	// シーン遷移
 			bFade = false;
 		}
+
+		SE_Pause();
 	}
 
 
@@ -280,6 +291,7 @@ public class MS_Enemy_PB : PlayableBehaviour
 		if (fTime >= CON_POSE_TIME)
 		{
 			animator.SetBool("bPose", true);	// 決めポーズモーション開始
+			bSE_Pause = true;					// 決めポーズ音を鳴らしにいく
 
 			State = STATE_MECHASTART.NEEDLE;
 			bInitialize = true;
@@ -324,6 +336,20 @@ public class MS_Enemy_PB : PlayableBehaviour
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_3);	// シーン遷移
 			bFade = false;
+		}
+	}
+
+	// 決めポーズ音を鳴らす
+	private void SE_Pause()
+	{
+		if(!bSE_Pause)
+			return;
+
+		fSETime += Time.deltaTime;
+		if(fSETime >= CON_SE_PAUSE)
+		{
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.MS_Pause);
+			bSE_Pause = false;
 		}
 	}
 
