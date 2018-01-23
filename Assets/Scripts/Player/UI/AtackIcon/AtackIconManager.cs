@@ -54,10 +54,7 @@ public class AtackIconManager : SingletonMonoBehaviour<AtackIconManager>
     /// </summary>
     public void Select()
     {
-        _atackIconList[(int)_nowAction    ].Select();
-        _atackIconList[(int)_nowAction + 4].Select();
-
-        //_iconEffect.Run(false, _atackIconList[(int)_nowAction].IconSprite);
+        _iconEffect.Run(false);
     }
 
     private IEnumerator RotRun(float rotAmount)
@@ -147,9 +144,10 @@ public class AtackIconManager : SingletonMonoBehaviour<AtackIconManager>
         // スタン状態の変更時の演出処理
         EnemyBase enemyBase = EnemyManager.Instance.BossEnemy.GetComponent<EnemyBase>();
         this.ObserveEveryValueChanged(_ => enemyBase.IsStan)
+            .Where(_ => enemyBase.IsStan)
             .Subscribe(_ =>
             {
-                _iconEffect.Run(enemyBase.IsStan, null);
+                _iconEffect.Run(enemyBase.IsStan);
                 _atackIconList[(int)_nowAction    ].ChangeSpecialIcon(enemyBase.IsStan);
                 _atackIconList[(int)_nowAction + 4].ChangeSpecialIcon(enemyBase.IsStan);
             });

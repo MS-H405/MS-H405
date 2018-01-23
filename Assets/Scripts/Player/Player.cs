@@ -226,7 +226,7 @@ public class Player : MonoBehaviour
                     if (Input.GetButtonDown("Atack"))
                     {
                         _actionManager.OnSelect();
-                        //AtackIconManager.Instance.Select();
+                        AtackIconManager.Instance.Select();
                     }
                     // 行動キャンセル
                     else if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetButtonDown("Cancel"))

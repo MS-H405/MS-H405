@@ -22,6 +22,9 @@ public class IconEffect : MonoBehaviour
     private Image _image = null;
     [SerializeField] float _speed = 0.5f;
 
+    private Sprite _normalSprite = null;
+    private Sprite _specialSprite = null;
+
     #endregion
 
     #region method
@@ -29,7 +32,7 @@ public class IconEffect : MonoBehaviour
     /// <summary>
     /// 実行処理
     /// </summary>
-    public void Run(bool isSpecial, Sprite sprite)
+    public void Run(bool isSpecial)
     {
         if (isSpecial)
         {
@@ -37,23 +40,26 @@ public class IconEffect : MonoBehaviour
         }
         else
         {
-            //StaticCoroutine.Instance.StartStaticCoroutine(RunNormal(sprite));
+            StaticCoroutine.Instance.StartStaticCoroutine(RunNormal());
         }
     }
 
     /// <summary>
     /// 通常エフェクト実行処理
     /// </summary>
-    private IEnumerator RunNormal(Sprite sprite)
+    private IEnumerator RunNormal()
     {
         bool isUp = true;
-        _image.sprite = sprite;
+        _image.sprite = _normalSprite;
+        float amount = 0.2f;
 
         while (true)
         {
             if (isUp)
             {
                 _image.color += new Color(0, 0, 0, 1) * Time.deltaTime / _speed;
+                transform.eulerAngles += new Vector3(0, 0, 180 * Time.deltaTime / _speed);
+                transform.localScale += new Vector3(amount, amount, 0.0f) * Time.deltaTime / _speed;
 
                 if (_image.color.a >= 1.0f)
                 {
@@ -65,9 +71,13 @@ public class IconEffect : MonoBehaviour
             else
             {
                 _image.color -= new Color(0, 0, 0, 1) * Time.deltaTime / _speed;
+                transform.eulerAngles += new Vector3(0, 0, 180 * Time.deltaTime / _speed);
+                transform.localScale -= new Vector3(amount, amount, 0.0f) * Time.deltaTime / _speed;
 
                 if (_image.color.a <= 0.0f)
                 {
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                    transform.localScale = new Vector3(2.25f, 2.25f, 0.0f);
                     yield break;
                 }
 
@@ -89,7 +99,7 @@ public class IconEffect : MonoBehaviour
         }
         
         bool isUp = true;
-        _image.sprite = Resources.Load<Sprite>("Sprite/GameUI/Special_Gold_Effect");
+        _image.sprite = _specialSprite;
 
         this.UpdateAsObservable()
             .Subscribe(_ =>
@@ -126,6 +136,8 @@ public class IconEffect : MonoBehaviour
     private void Start()
     {
         _image = GetComponent<Image>();
+        _normalSprite = Resources.Load<Sprite>("Sprite/GameUI/Icon_Select");
+        _specialSprite = Resources.Load<Sprite>("Sprite/GameUI/Special_Gold_Effect");
     }
 
     #endregion
