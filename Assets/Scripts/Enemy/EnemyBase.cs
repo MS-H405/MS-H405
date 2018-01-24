@@ -237,7 +237,7 @@ public class EnemyBase : MonoBehaviour
     protected void Update()
     {
         // DEBUG : デバッグコマンド 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && !IsStan)
         {
             IsStan = true;
             _animator.SetBool("Stan", true);

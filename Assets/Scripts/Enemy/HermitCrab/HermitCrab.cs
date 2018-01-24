@@ -217,6 +217,39 @@ public class HermitCrab : EnemyBase
         return null;
     }
 
+    /// <summary>
+    /// 各自のスタンエフェクト再生処理
+    /// </summary>
+    protected override IEnumerator StanEffectUnique()
+    {
+        _animator.speed = 1.0f;
+        IsInvincible = false;
+        
+        float time = 0.0f;
+        while (time < 0.75f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        GameEffectManager.Instance.Play("HermitStan", transform.position);
+
+        time = 0.0f;
+        while (time < 0.65f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        _shakeCamera.Shake();
+
+        // ピヨピヨエフェクト
+        SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Enemy_Stan);
+        GameObject stanEffect = Instantiate(_stanEffect, transform.position, Quaternion.identity);
+        stanEffect.transform.position += new Vector3(0.0f, 2.0f, 0.0f) + (transform.forward * 3.0f);
+        stanEffect.transform.SetParent(transform);
+    }
+
     #endregion
 
     #region action_method
@@ -586,35 +619,6 @@ public class HermitCrab : EnemyBase
     protected override void InvincibleEffect()
     {
         _invincibleEffect.Play();
-    }
-
-    /// <summary>
-    /// 各自のスタンエフェクト再生処理
-    /// </summary>
-    protected override IEnumerator StanEffectUnique()
-    {
-        float time = 0.0f;
-        while(time < 0.75f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        GameEffectManager.Instance.Play("HermitStan", transform.position);
-
-        time = 0.0f;
-        while (time < 0.75f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        _shakeCamera.Shake();
-
-        // ピヨピヨエフェクト
-        SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Enemy_Stan);
-        GameObject stanEffect = Instantiate(_stanEffect, transform.position + new Vector3(0.0f, 2.0f, -3.0f), Quaternion.identity);
-        stanEffect.transform.SetParent(transform);
     }
 
     #endregion

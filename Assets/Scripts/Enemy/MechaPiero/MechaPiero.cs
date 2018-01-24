@@ -81,6 +81,7 @@ public class MechaPiero : EnemyBase
                     while (IsStan)
                     {
                         // スタン演出
+                        _animator.speed = 1.0f;
                         yield return null;
                     }
 
@@ -214,6 +215,23 @@ public class MechaPiero : EnemyBase
         GameObject stanEffect = Instantiate(_stanEffect, transform.position, Quaternion.identity);
         stanEffect.transform.position += new Vector3(0.0f, 2.25f, 0.0f) - transform.forward * 0.9f;
         stanEffect.transform.SetParent(transform);
+
+        switch (_nowAction)
+        {
+            case eAction.KnifeAttack:
+                break;
+            case eAction.RideBall:
+                _driftEffect.StopRoot();
+                _ballRotEffect.StopRoot();
+                RideEffect(false);
+                break;
+            case eAction.ThornsAttack:
+                break;
+            case eAction.CannonAttack:
+                _laserEffect.Stop();
+                _laserCollider.enabled = false;
+                break;
+        }
 
         yield break;
     }
@@ -811,6 +829,7 @@ public class MechaPiero : EnemyBase
         }
 
         // トゲを生やす
+        _laserEffect.Stop();
         _needleManager.Reload();
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_NeedleForm);
         time = 0.0f;
