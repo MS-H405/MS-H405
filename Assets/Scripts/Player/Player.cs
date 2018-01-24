@@ -272,7 +272,7 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            _isDamage = !_isDamage;
+            IsInvincible = !_isDamage;
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
