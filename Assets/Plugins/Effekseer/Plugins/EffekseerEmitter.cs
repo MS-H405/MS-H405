@@ -205,7 +205,8 @@ public class EffekseerEmitter : MonoBehaviour
 	void OnDestroy()
 	{
 		Stop();
-	}
+        EffekseerSystem.ReleaseEffect(effectName);
+    }
 	
 	void Update()
 	{
@@ -223,5 +224,5 @@ public class EffekseerEmitter : MonoBehaviour
 		}
 	}
 
-	#endregion
+    #endregion
 }

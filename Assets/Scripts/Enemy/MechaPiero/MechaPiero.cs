@@ -124,15 +124,15 @@ public class MechaPiero : EnemyBase
                     return eAction.Wait;
                 }
 
-                return eAction.ThornsAttack;
+                //return eAction.ThornsAttack;
                 int rand = Random.Range(0, 100);
-                if (rand < 55)
+                if (rand < 50)
                 {
-                    return eAction.RideBall;        // 55%
+                    return eAction.KnifeAttack;   // 50%
                 }
                 else if (rand < 80)
                 {
-                    return eAction.KnifeAttack;     // 25%
+                    return eAction.RideBall;     // 30%
                 }
                 else
                 {
