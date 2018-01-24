@@ -414,10 +414,26 @@ public class MechaPiero : EnemyBase
     {
         _animator.SetTrigger("KnifeStart");
 
+        Vector3 startRot = transform.eulerAngles;
+        transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
+        Vector3 targetRot = transform.eulerAngles;
+        transform.eulerAngles = startRot;
+
+        // 無駄な回転量が出ないようにする
+        if (targetRot.y - startRot.y > 180.0f)
+        {
+            targetRot.y -= 360.0f;
+        }
+        else if (targetRot.y - startRot.y < -180.0f)
+        {
+            targetRot.y += 360.0f;
+        }
+
         float time = 0.0f;
         while (time < 1.5f)
         {
             time += Time.deltaTime;
+            transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
             yield return null;
         }
         _animator.speed = 0.0f;
@@ -678,6 +694,7 @@ public class MechaPiero : EnemyBase
         _isNext = true;
         _isStopRunaway = true;
         _assaultStopper.enabled = false;
+        _ballAnimator.gameObject.layer = LayerMask.NameToLayer("Default");
         SoundManager.Instance.StopBGMFadeOut(SoundManager.eBgmValue.MechaPiero_BallMove, 0.5f);
         _ballRotEffect.StopRoot();
         Debug.Log("RideBall");
@@ -804,6 +821,7 @@ public class MechaPiero : EnemyBase
         }
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_NeedleFormEffect);
         _ballAnimator.SetBool("Laser", false);
+        _ballAnimator.SetTrigger("ToIdle");
 
         _isNext = true;
         //_rideBallRot.ChangeSpeed(1.0f);
@@ -813,9 +831,8 @@ public class MechaPiero : EnemyBase
     /// <summary>
     /// キャノン攻撃攻撃
     /// </summary>
-    private IEnumerator LookPlayer()
+    private IEnumerator LookPlayer(float magni = 250.0f)
     {
-        const float magni = 250.0f;
         while (true)
         {
             float time = 0.0f;
