@@ -69,6 +69,15 @@ public class JugglingAtack : MonoBehaviour
         _atackSpeed = 10.0f * _commonAttackSpeed;
         if (mesh < 0)
         {
+            int value = _nowPinValue - 1;
+            if(_nowPinValue < 0)
+            {
+                _nowPinValue = 0;
+            }
+            else if (_nowPinValue >= _pinMesh.Length)
+            {
+                _nowPinValue = _pinMesh.Length - 1;
+            }
             transform.GetComponentInChildren<MeshFilter>().mesh = _pinMesh[_nowPinValue - 1];
             _myPinValue = _nowPinValue - 1;
         }
