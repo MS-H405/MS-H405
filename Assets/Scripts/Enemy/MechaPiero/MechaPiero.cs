@@ -122,7 +122,7 @@ public class MechaPiero : EnemyBase
                     }
                     return eAction.Wait;
                 }
-                return eAction.ThornsAttack;
+
                 int rand = Random.Range(0, 100);
                 if (rand < 55)
                 {
