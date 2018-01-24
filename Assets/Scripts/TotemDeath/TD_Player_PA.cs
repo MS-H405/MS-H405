@@ -10,6 +10,9 @@ public class TD_Player_PA : PlayableAsset
 	[SerializeField]	ExposedReference<GameObject> EffectObj_1;
 	[SerializeField]	ExposedReference<GameObject> EffectObj_2;
 
+	[SerializeField]	GameObject BossDeathObj;	// 技獲得UI
+
+
 	// Factory method that generates a playable based on this asset
 	public override Playable CreatePlayable(PlayableGraph graph, GameObject go)
 	{
@@ -19,6 +22,7 @@ public class TD_Player_PA : PlayableAsset
 		behaviour.PlayerObj = PlayerObj.Resolve(graph.GetResolver());
 		behaviour.EffectObj_1 = EffectObj_1.Resolve(graph.GetResolver());
 		behaviour.EffectObj_2 = EffectObj_2.Resolve(graph.GetResolver());
+		behaviour.BossDeathObj = BossDeathObj;
 
 		return ScriptPlayable<TD_Player_PB>.Create(graph, behaviour);
 	}

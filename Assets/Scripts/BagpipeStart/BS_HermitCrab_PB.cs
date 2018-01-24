@@ -49,6 +49,8 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 
 	const float CON_FADE_TIME = 0.3f;			// シーン遷移し始める時間
 
+	const float CON_SE_JAMP = 3.5f;		// ジャンプモーションに入ってからSEを鳴らすまでの時間
+
 	#endregion
 
 
@@ -75,6 +77,10 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 	private GameObject _EffekseerObj;
 	public GameObject EffekseerObj { get; set; }
 	SetEffekseerObject cs_SetEffekseerObject;
+
+	bool bSE_Jamp = false;
+	bool bSE_Jampd = false;
+	float fJampTime = 0.0f;
 
 	#endregion
 
@@ -156,6 +162,8 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 				Fin();
 				break;
 		}
+
+		SE_Jamp();
 	}
 
 
@@ -214,6 +222,8 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 			fWait = 0.0f;
 			bWait = true;
 			bInitializ = false;
+
+			bSE_Jamp = true;
 		}
 
 		// 待機
@@ -341,6 +351,10 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 		if(fTime > CON_ROAR_EFFECT && bRoarEffect)
 		{
 			cs_SetEffekseerObject.NewEffect(1);
+
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.BS_Volcano);
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.BS_Cry);
+
 			bRoarEffect = false;
 		}
 
@@ -368,6 +382,24 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_2);
 			bFade = false;
+		}
+	}
+
+	#endregion
+
+
+	#region 効果音
+
+	void SE_Jamp()
+	{
+		if(!bSE_Jamp || bSE_Jampd)
+			return;
+
+		fJampTime += Time.deltaTime;
+		if(fJampTime >= CON_SE_JAMP)
+		{
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.BS_Jamp);	// ヤドカリジャンプ音
+			bSE_Jampd = true;
 		}
 	}
 

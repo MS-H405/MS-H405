@@ -30,9 +30,9 @@ public class MovieSoundManager : MonoBehaviour {
 	
 	public enum eBgmValue {
 		Special = 0,
-		Totem,
-		HermitCrab,
-		Mecha,
+		TotemStart,
+		HermitCrabStart,
+		MechaStart,
 
         Max,
 	};
@@ -62,6 +62,14 @@ public class MovieSoundManager : MonoBehaviour {
 		MS_Pause,
 		MS_NeedleForm,
 		MS_NeedleFormEffect,
+		TS_ChildTurn,
+		BS_Walk,			// 25
+		BS_Jamp,
+		BS_Volcano,
+		BS_Cry,
+		BD_CryLast,
+		BS_SetUp,			// 30
+		TS_Cry,
 
 
 

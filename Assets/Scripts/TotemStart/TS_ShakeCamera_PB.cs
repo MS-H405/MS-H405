@@ -85,12 +85,12 @@ public class TS_ShakeCamera_PB : PlayableBehaviour
 		}
 		if (bUse[2] && fTime >= CON_CHILDSHAKE_SECOND_TIME)
 		{
-			cs_ShakeCamera.SetParam(0.02f, 0.0006f);	
+			cs_ShakeCamera.SetParam(0.02f, 0.001f);	
 			bUse[2] = false;
 		}
 		if (bUse[3] && fTime >= CON_BOSSSHAKE_TIME)
 		{
-			cs_ShakeCamera.SetParam(0.03f, 0.0005f);
+			cs_ShakeCamera.SetParam(0.02f, 0.0007f);
 			cs_ShakeCamera.DontMoveShake();
 			bUse[3] = false;
 		}

@@ -65,6 +65,9 @@ MonoBehaviour:
   MaxSyncVoicePlay: 1
   BGM:
   - {fileID: 8300000, guid: 223f61f0346d15745b86384251960859, type: 3}
+  - {fileID: 8300000, guid: b117e753369134c45a2d059bbf44b4ae, type: 3}
+  - {fileID: 8300000, guid: 490821e0a7361c447aab015aca59be53, type: 3}
+  - {fileID: 8300000, guid: 1247a5a0037d3bb469e26d68dcf1f1f6, type: 3}
   SE:
   - {fileID: 8300000, guid: 90a5197922930bf4981dd7150976a00a, type: 3}
   - {fileID: 8300000, guid: 4a1574cbb9dd90d45b74d6df8a9d5778, type: 3}
@@ -90,4 +93,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 01f550d40b1eb7948bcf4cfae451d363, type: 3}
   - {fileID: 8300000, guid: 66dc8f5844f467b4686f19802d4a8f04, type: 3}
   - {fileID: 8300000, guid: 188e94679d4937445b9aaeecf9e3c4dd, type: 3}
+  - {fileID: 8300000, guid: 94b5cd8bb0f1f0b4abfcaf434933323d, type: 3}
+  - {fileID: 8300000, guid: 34a4d82fb51a08f499099eb8736ebe1c, type: 3}
+  - {fileID: 8300000, guid: b86fcffc96bbcc748921deeab092e17c, type: 3}
+  - {fileID: 8300000, guid: cc61d03eae6d5ad48b467b3c8b0b0894, type: 3}
+  - {fileID: 8300000, guid: 2e343d04c184d5a42b90fbb51a83a091, type: 3}
+  - {fileID: 8300000, guid: 9ad88c04cd8ace94d8d5d9a62aa47f15, type: 3}
+  - {fileID: 8300000, guid: 4d05ec9a94e60934d94b80a41c9391c6, type: 3}
+  - {fileID: 8300000, guid: 68dc904b4d0107847b8382a75cbf7c71, type: 3}
   Voice: []

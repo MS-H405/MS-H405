@@ -42,6 +42,8 @@ MonoBehaviour:
   EffectObj_2:
     exposedName: f5a19a024ee49a848902a80923eb0bab
     defaultValue: {fileID: 0}
+  BossDeathObj: {fileID: 1767025518519596, guid: 158834aaecb2bf9488ac46bf326a11ef,
+    type: 2}
 --- !u!114 &114308084053938768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -440,7 +442,7 @@ MonoBehaviour:
     m_ClipIn: 0
     m_Asset: {fileID: 114648667119167708}
     m_UnderlyingAsset: {fileID: 114648667119167708}
-    m_Duration: 12.233333333333334
+    m_Duration: 37.233333333333334
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114673348577521456}
     m_EaseInDuration: 0
@@ -626,7 +628,7 @@ MonoBehaviour:
     m_ClipIn: 0
     m_Asset: {fileID: 114222394310312084}
     m_UnderlyingAsset: {fileID: 114222394310312084}
-    m_Duration: 25
+    m_Duration: 50
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114920577666383162}
     m_EaseInDuration: 0

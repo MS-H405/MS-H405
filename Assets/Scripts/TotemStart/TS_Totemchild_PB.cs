@@ -28,6 +28,9 @@ public class TS_Totemchild_PB : PlayableBehaviour
 	List<TS_Totemchild> TotemChildList = new List<TS_Totemchild>();	// スクリプトが長くなるからTransformも作っとく
 	float fTime;
 
+	bool bSE_Turn = true;
+	bool bSE_Dive = true;
+
 	#endregion
 
 
@@ -85,6 +88,11 @@ public class TS_Totemchild_PB : PlayableBehaviour
 		{
 			for (int i = 0; i < TotemChildList.Count; i++)
 				TotemChildList[i].LookAtBoss();
+			if(bSE_Turn)
+			{
+				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_ChildTurn);		// 子トーテムが振り向く音
+				bSE_Turn = false;
+			}
 		}
 
 
@@ -93,6 +101,12 @@ public class TS_Totemchild_PB : PlayableBehaviour
 		{
 			for (int i = 0; i < TotemChildList.Count; i++)
 				TotemChildList[i].Back();
+
+			if(bSE_Dive)
+			{
+				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_TotemDive);	// 潜る音
+				bSE_Dive = false;
+			}
 		}
 	}
 }

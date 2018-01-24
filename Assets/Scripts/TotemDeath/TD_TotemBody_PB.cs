@@ -14,7 +14,6 @@ public class TD_TotemBody_PB : PlayableBehaviour
 	const float CON_GRAY_TIME = 2.0f;			// 灰色になる時間
 	const float CON_OUT_START = 6.3f;			// 消え始める時間
 	const float CON_OUT_TIME = 2.5f;			// 消える時間
-	const float CON_FADE_TIME = 16.0f;			// フェードを開始する時間
 
 	const float CON_BLUR_END_TIME = 2.0f;		// ブラーを消す時間
 
@@ -38,8 +37,6 @@ public class TD_TotemBody_PB : PlayableBehaviour
 
 	float fTotemColor = 1.0f;		// マテリアルのカラー
 	float fTotemEmission = 0.0f;	// マテリアルのエミッション		α値を0.0にするのでは消えないので、こっちで白くして消す
-
-	bool bFade = true;
 
 	bool bBlurEnd = true;
 
@@ -81,14 +78,6 @@ public class TD_TotemBody_PB : PlayableBehaviour
 
 	public override void PrepareFrame(Playable playable, FrameData info)
 	{
-		// スキップ処理
-		if (Input.GetKeyDown(KeyCode.Return) && bFade && !MovieManager.Instance.GetisMovideFade())
-		{
-			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TOTEM_TO_YADOKARI);
-			bFade = false;
-		}
-
-
 		fTime += Time.deltaTime;
 		if(fTime > CON_MOUTHMAX_TIME)
 		{
@@ -96,14 +85,6 @@ public class TD_TotemBody_PB : PlayableBehaviour
 		}
 
 		SetColor();
-
-
-		// フェード
-		if (fTime > CON_FADE_TIME && bFade && !MovieManager.Instance.GetisMovideFade())
-		{
-			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TOTEM_TO_YADOKARI);
-			bFade = false;
-		}
 
 		// ブラーを消す
 		if(bBlurEnd && fTime >= CON_BLUR_END_TIME)

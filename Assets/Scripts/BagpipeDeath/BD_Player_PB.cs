@@ -11,7 +11,9 @@ public class BD_Player_PB : PlayableBehaviour
 	const float CON_WIN_TIME = 10.0f;		// 勝利モーションを始める時間
 	const float CON_EFFECT_FIN_TIME = 11.5f;// パーティクルを止める時間
 	const float CON_WIN_EFFECT = 11.8f;		// プレイヤーの後ろに出てくる火みたいなエフェクトを発生させる時間
-	const float CON_FADE_TIME = 14.0f;		// フェードを始める時間
+
+	const float CON_SKILLUI_TIME = 14.0f;		// 技獲得UIを出す時間
+	const float CON_FADE_TIME = 17.0f;			// シーン遷移入力の受付を開始する時間
 
 	#endregion
 
@@ -40,6 +42,9 @@ public class BD_Player_PB : PlayableBehaviour
 	private GameObject _EffectObj_2;
 	public GameObject EffectObj_2 { get; set; }
 
+	public GameObject BossDeathObj;		// 技獲得UI
+	bool bSkillUI = true;
+
 	#endregion
 
 
@@ -52,7 +57,12 @@ public class BD_Player_PB : PlayableBehaviour
 
 	public override void OnGraphStop(Playable playable)
 	{
-		
+		// 2400Frame(40秒)経ってもシーン遷移されないので、シーン遷移する
+		if (bFade && !MovieManager.Instance.GetisMovideFade())
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);
+			bFade = false;
+		}
 	}
 
 
@@ -85,11 +95,6 @@ public class BD_Player_PB : PlayableBehaviour
 			cs_SetEffekseerObject.NewEffect(3);		// 炎みたいなエフェクト
 			bEffect = false;
 		}
-		else if (fTime >= CON_FADE_TIME && bFade && !MovieManager.Instance.GetisMovideFade())
-		{
-			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);
-			bFade = false;
-		}
 		else if (fTime >= CON_EFFECT_FIN_TIME)
 		{
 			EffectObj_1.GetComponent<ParticleSystem>().Stop();	// エフェクトを止める
@@ -97,25 +102,27 @@ public class BD_Player_PB : PlayableBehaviour
 		}
 
 
-		// スキップ
-		if (Input.GetKeyDown(KeyCode.Return) && bFade && !MovieManager.Instance.GetisMovideFade())
+		// 技UI
+		if (fTime >= CON_SKILLUI_TIME && bSkillUI)
 		{
-			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);	// シーン遷移
+			MonoBehaviour.Instantiate(BossDeathObj);
+			bSkillUI = false;
+		}
+
+		// フェード
+		if (Input.GetButtonDown("Atack") && fTime > CON_FADE_TIME && bFade && !MovieManager.Instance.GetisMovideFade())
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);
 			bFade = false;
 		}
 
 
 
-
-		//if (!bFade)
-		//    return;
-
-		//fTime += Time.deltaTime;
-
-		//if(fTime > 5.0f)
-		//{
-		//    MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);
-		//    bFade = false;
-		//}
+		// スキップ
+	//	if (Input.GetKeyDown(KeyCode.Return) && bFade && !MovieManager.Instance.GetisMovideFade())
+	//	{
+	//		MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);	// シーン遷移
+	//		bFade = false;
+	//	}
 	}
 }
