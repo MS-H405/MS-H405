@@ -123,6 +123,7 @@ public class MechaPiero : EnemyBase
                     return eAction.Wait;
                 }
 
+                return eAction.ThornsAttack;
                 int rand = Random.Range(0, 100);
                 if (rand < 55)
                 {
@@ -546,12 +547,19 @@ public class MechaPiero : EnemyBase
                 _animator.SetBool("BallStan", true);
                 _ballAnimator.gameObject.layer = LayerMask.NameToLayer("Default");
                 SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Explosion);
+
+                GameObject stanEffect = Instantiate(_stanEffect, transform.position, Quaternion.identity);
+                stanEffect.transform.position += new Vector3(0.0f, 2.25f, 0.0f) - transform.forward * 0.9f;
+                stanEffect.transform.SetParent(transform);
+
                 time = 0.0f;
-                while (time < 4.0f)
+                while (time < 8.0f)
                 {
                     time += Time.deltaTime;
                     yield return null;
                 }
+
+                Destroy(stanEffect.gameObject);
 
                 // 復帰アニメーション再生
                 _isStopRunaway = true;
