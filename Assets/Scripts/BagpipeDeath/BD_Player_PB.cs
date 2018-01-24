@@ -119,10 +119,10 @@ public class BD_Player_PB : PlayableBehaviour
 
 
 		// スキップ
-	//	if (Input.GetKeyDown(KeyCode.Return) && bFade && !MovieManager.Instance.GetisMovideFade())
-	//	{
-	//		MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);	// シーン遷移
-	//		bFade = false;
-	//	}
+		if (Input.GetKeyDown(KeyCode.Return) && bFade && !MovieManager.Instance.GetisMovideFade())
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);	// シーン遷移
+			bFade = false;
+		}
 	}
 }
