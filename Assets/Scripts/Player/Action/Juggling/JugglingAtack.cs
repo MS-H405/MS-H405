@@ -336,6 +336,9 @@ public class JugglingAtack : MonoBehaviour
             if (!PlayerManager.Instance.CheckActionType(ActionManager.eActionType.Juggling))
                 return;
 
+            if (PlayerManager.Instance.Player.IsDamage)
+                return;
+
             _isCatch = true;
             transform.position = col.transform.position;
             transform.rotation = col.transform.rotation;
