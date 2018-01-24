@@ -122,7 +122,7 @@ public class MechaPiero : EnemyBase
                     }
                     return eAction.Wait;
                 }
-
+                return eAction.ThornsAttack;
                 int rand = Random.Range(0, 100);
                 if (rand < 55)
                 {
@@ -638,12 +638,6 @@ public class MechaPiero : EnemyBase
                 }
             }
 
-            /*while(PlayerManager.Instance.Player.IsDamage)
-            {
-                transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
-                yield return null;
-            }*/
-
             if (count < 5)
             {
                 StaticCoroutine.Instance.StartStaticCoroutine(BallPosePlay());
@@ -653,6 +647,7 @@ public class MechaPiero : EnemyBase
                 _isStopRunaway = true;
             }
 
+            _ballAnimator.gameObject.layer = LayerMask.NameToLayer("PieroBall");
             while (_isBallPose)
             {
                 yield return null;
@@ -754,7 +749,7 @@ public class MechaPiero : EnemyBase
         _laserEffect.Play();
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Chage);
         time = 0.0f;
-        while(time < 4.0f)
+        while(time < 3.0f)
         {
             time += Time.deltaTime;
             yield return null;
@@ -833,7 +828,6 @@ public class MechaPiero : EnemyBase
 
             float initDistance = Vector3.Distance(transform.position, PlayerManager.Instance.GetVerticalPos(transform.position));
             float speed = Mathf.Abs(startRot.y - targetRot.y) / (magni / initDistance);
-            //Debug.Log("Distance : " + initDistance + ", Speed : " + (magni / initDistance));
             while (time < 1.0f)
             {
                 time += Time.deltaTime / speed;
@@ -844,7 +838,6 @@ public class MechaPiero : EnemyBase
                 float distance = Vector3.Distance(transform.position, PlayerManager.Instance.GetVerticalPos(transform.position));
                 if (Mathf.Abs(distance - initDistance) > 1.0f)
                 {
-                    //Debug.Log("距離見直し");
                     break;
                 }
                 yield return null;
