@@ -281,11 +281,12 @@ public class HermitCrab : EnemyBase
         time = 0.0f;
         _animator.speed = 3.0f;
         speed = Vector3.Distance(startPos, targetPos) / 20.0f;
-        while (time < 0.6f)
+        float distance = Vector3.Distance(transform.position, targetPos);
+        while (distance > 5.0f)
         {
             time += Time.deltaTime / speed;
-            if (time > 0.6f) time = 0.6f;
             transform.position = Vector3.Lerp(startPos, targetPos, time);
+            distance = Vector3.Distance(transform.position, targetPos);
             yield return null;
         }
 
