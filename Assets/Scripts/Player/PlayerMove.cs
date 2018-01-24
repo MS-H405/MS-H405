@@ -33,6 +33,7 @@ public class PlayerMove : MonoBehaviour
 
     protected bool _isGround = false;    // 地面との接地判定
     public virtual bool IsInput { get { return _isGround; } }
+    private int _oldPlayerHp = 0;
 
     // animation用変数
     protected Animator _animator = null;
@@ -144,15 +145,31 @@ public class PlayerMove : MonoBehaviour
         get
         {
             if (!EnemyManager.Instance.BossEnemy)
+            {
+                _oldPlayerHp = PlayerManager.Instance.Player.HP;
                 return false;
+            }
 
-            if (PlayerManager.Instance.Player.IsDamage && !_animator.GetBool("Jump"))
+            if (_oldPlayerHp != PlayerManager.Instance.Player.HP)
+            {
+                _oldPlayerHp = PlayerManager.Instance.Player.HP;
                 return false;
+            }
 
             AnimatorStateInfo animStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            if (animStateInfo.IsName("JumpEnd") && !_animator.GetBool("Jump"))
+            if (animStateInfo.IsName("Down") || animStateInfo.IsName("Up"))
+            {
+                _oldPlayerHp = PlayerManager.Instance.Player.HP;
                 return false;
-            
+            }
+
+            if (animStateInfo.IsName("JumpEnd") && !_animator.GetBool("Jump"))
+            {
+                _oldPlayerHp = PlayerManager.Instance.Player.HP;
+                return false;
+            }
+
+            _oldPlayerHp = PlayerManager.Instance.Player.HP;
             return true;
         }
     }
@@ -168,12 +185,10 @@ public class PlayerMove : MonoBehaviour
             return;
         }
 
-        bool old = _runSmoke.loop;
-        _runSmoke.loop = true;
-
-        if (_runSmoke.loop == old)
+        if (_runSmoke.isPlaying)
             return;
 
+        _runSmoke.loop = true;
         _runSmoke.Play();
     }
 

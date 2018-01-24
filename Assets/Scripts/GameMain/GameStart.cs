@@ -67,13 +67,14 @@ public class GameStart : MonoBehaviour
             cameraMono.enabled = false;
         }
 
+        EffekseerEmitter _showTime = GetComponent<EffekseerEmitter>();
         var playDisposable = new SingleAssignmentDisposable();
         playDisposable.Disposable = 
         this.ObserveEveryValueChanged(_ => MovieManager.Instance.GetisMovideFade() || Time.unscaledDeltaTime > Rimit)
             .Where(_ => !MovieManager.Instance.GetisMovideFade() && Time.unscaledDeltaTime <= Rimit)
             .Subscribe(_ =>
             {
-                GetComponent<EffekseerEmitter>().Play();
+                _showTime.Play();
                 SoundManager.Instance.PlaySE(SoundManager.eSeValue.UI_ShowTime);
 
                 float time = 0.0f;
@@ -99,6 +100,7 @@ public class GameStart : MonoBehaviour
                         {
                             cameraMono.enabled = true;
                         }
+                        _showTime.Stop();
                         Destroy(gameObject);
                     });
 

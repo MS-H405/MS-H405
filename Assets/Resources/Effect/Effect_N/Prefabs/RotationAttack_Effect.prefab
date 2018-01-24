@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 691699327b00c614c90bdd81aa93b7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _destroyObj: {fileID: 0}
 --- !u!198 &198703662944624888
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -241,7 +242,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 25
+      scalar: 20
       minScalar: 1
       maxCurve:
         serializedVersion: 2
