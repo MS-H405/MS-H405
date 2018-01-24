@@ -217,6 +217,39 @@ public class HermitCrab : EnemyBase
         return null;
     }
 
+    /// <summary>
+    /// 各自のスタンエフェクト再生処理
+    /// </summary>
+    protected override IEnumerator StanEffectUnique()
+    {
+        _animator.speed = 1.0f;
+        IsInvincible = false;
+        
+        float time = 0.0f;
+        while (time < 0.75f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        GameEffectManager.Instance.Play("HermitStan", transform.position);
+
+        time = 0.0f;
+        while (time < 0.65f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        _shakeCamera.Shake();
+
+        // ピヨピヨエフェクト
+        SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Enemy_Stan);
+        GameObject stanEffect = Instantiate(_stanEffect, transform.position, Quaternion.identity);
+        stanEffect.transform.position += new Vector3(0.0f, 2.0f, 0.0f) + (transform.forward * 3.0f);
+        stanEffect.transform.SetParent(transform);
+    }
+
     #endregion
 
     #region action_method
@@ -281,11 +314,12 @@ public class HermitCrab : EnemyBase
         time = 0.0f;
         _animator.speed = 3.0f;
         speed = Vector3.Distance(startPos, targetPos) / 20.0f;
-        while (time < 0.6f)
+        float distance = Vector3.Distance(transform.position, targetPos);
+        while (distance > 5.0f)
         {
             time += Time.deltaTime / speed;
-            if (time > 0.6f) time = 0.6f;
             transform.position = Vector3.Lerp(startPos, targetPos, time);
+            distance = Vector3.Distance(transform.position, targetPos);
             yield return null;
         }
 
@@ -373,6 +407,7 @@ public class HermitCrab : EnemyBase
     {
         PlayDefenseEffect();
         _animator.SetTrigger("RollAttack");
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_ScissorsCharge);
 
         float time = 0.0f;
         while (time < 2.0f)
@@ -411,6 +446,7 @@ public class HermitCrab : EnemyBase
         PlayDefenseEffect();
         _animator.SetTrigger("ChargeFire");
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_Setup);
 
         Vector3 startRot = transform.eulerAngles;
         Vector3 targetRot = transform.eulerAngles;
@@ -519,7 +555,7 @@ public class HermitCrab : EnemyBase
         }
 
         _bodyAttackCollider.enabled = false;
-        SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Bagpipe_Burst);
+        SoundManager.Instance.StopBGMFadeOut(SoundManager.eBgmValue.Bagpipe_Burst);
         _animator.SetBool("RollFire", false);
     }
 
@@ -583,35 +619,6 @@ public class HermitCrab : EnemyBase
     protected override void InvincibleEffect()
     {
         _invincibleEffect.Play();
-    }
-
-    /// <summary>
-    /// 各自のスタンエフェクト再生処理
-    /// </summary>
-    protected override IEnumerator StanEffectUnique()
-    {
-        float time = 0.0f;
-        while(time < 0.75f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        GameEffectManager.Instance.Play("HermitStan", transform.position);
-
-        time = 0.0f;
-        while (time < 0.75f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        _shakeCamera.Shake();
-
-        // ピヨピヨエフェクト
-        SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.Enemy_Stan);
-        GameObject stanEffect = Instantiate(_stanEffect, transform.position + new Vector3(0.0f, 2.0f, -3.0f), Quaternion.identity);
-        stanEffect.transform.SetParent(transform);
     }
 
     #endregion

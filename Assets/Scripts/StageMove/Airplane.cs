@@ -13,10 +13,6 @@ using UniRx.Triggers;
   
 public class Airplane : MonoBehaviour
 {
-    #region define
-
-    #endregion
-
     #region variable
 
     [SerializeField] Transform _target = null;
@@ -25,20 +21,8 @@ public class Airplane : MonoBehaviour
 
     #endregion
 
-    #region method
-
-    #endregion
-
     #region unity_event
-
-    /// <summary>
-    /// 初期化処理
-    /// </summary>
-    private void Awake()
-    {
-
-    }
-
+    
     /// <summary>
     /// 更新前処理
     /// </summary>
@@ -89,7 +73,11 @@ public class Airplane : MonoBehaviour
     /// </summary>
     private void Update ()
     {
-
+        // スキップ
+        if (Input.GetButtonDown("Atack"))
+        {
+            MovieManager.Instance.FadeStart(nextScene);
+        }
     }
 
     #endregion
