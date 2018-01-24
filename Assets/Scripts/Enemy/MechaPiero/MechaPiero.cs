@@ -45,6 +45,7 @@ public class MechaPiero : EnemyBase
 
     private Animator _ballAnimator = null;
     private EffekseerEmitter _driftEffect = null;
+    private EffekseerEmitter _ballRotEffect = null;
     private ParticleSystem[] _rideEffects = new ParticleSystem[2];
 
     private EffekseerEmitter _laserEffect = null;
@@ -480,6 +481,7 @@ public class MechaPiero : EnemyBase
         _assaultStopper.enabled = true;
         _ballAnimator.gameObject.layer = LayerMask.NameToLayer("PieroBall");
         SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.MechaPiero_BallMove);
+        _ballRotEffect.Play();
         while (count < 5)
         {
             // 外壁にぶつかるまで止めないよう設定
@@ -537,6 +539,7 @@ public class MechaPiero : EnemyBase
                 }
                 _driftEffect.StopRoot();
                 SoundManager.Instance.StopBGM(SoundManager.eBgmValue.MechaPiero_BallMove);
+                _ballRotEffect.StopRoot();
 
                 // 倒れるアニメーション再生
                 _animator.speed = 1.0f;
@@ -582,6 +585,7 @@ public class MechaPiero : EnemyBase
                 _isRunaway = false;
                 _ballAnimator.gameObject.layer = LayerMask.NameToLayer("PieroBall");
                 SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.MechaPiero_BallMove);
+                _ballRotEffect.Play();
             }
             else
             {
@@ -671,6 +675,7 @@ public class MechaPiero : EnemyBase
         _isStopRunaway = true;
         _assaultStopper.enabled = false;
         SoundManager.Instance.StopBGM(SoundManager.eBgmValue.MechaPiero_BallMove);
+        _ballRotEffect.StopRoot();
         Debug.Log("RideBall");
     }
 
@@ -867,6 +872,7 @@ public class MechaPiero : EnemyBase
         _ballAnimator = transform.Find("RideBall").GetComponent<Animator>();
         _ballAnimator.speed = 0.0f;
         _driftEffect = _ballAnimator.transform.Find("Drift").GetComponent<EffekseerEmitter>();
+        _ballRotEffect = _ballAnimator.transform.Find("BallRot").GetComponent<EffekseerEmitter>();
         _rideEffects[0] = _ballAnimator.transform.Find("TamanoriEffect").GetComponent<ParticleSystem>();
         _rideEffects[1] = _rideEffects[0].transform.GetChild(0).GetComponent<ParticleSystem>();
 
