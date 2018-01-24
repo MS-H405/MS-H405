@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -8613,17 +8613,17 @@ Prefab:
     - target: {fileID: 108770915202161268, guid: a29ac1a68a42d224fb492b610d1ada8a,
         type: 2}
       propertyPath: m_Lightmapping
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 108971684706669290, guid: a29ac1a68a42d224fb492b610d1ada8a,
         type: 2}
       propertyPath: m_Lightmapping
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 108261658319009186, guid: a29ac1a68a42d224fb492b610d1ada8a,
         type: 2}
       propertyPath: m_Lightmapping
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 108261658319009186, guid: a29ac1a68a42d224fb492b610d1ada8a,
         type: 2}
@@ -9216,7 +9216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &541307392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9346,7 +9346,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2033888397
+  randomSeed: -400688120
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -22401,7 +22401,7 @@ Prefab:
     - target: {fileID: 114064299989390554, guid: 22ef5ae20c0e87e40a6234203c526865,
         type: 2}
       propertyPath: _isDebug
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1597944408699948, guid: 22ef5ae20c0e87e40a6234203c526865, type: 2}
       propertyPath: m_IsActive
@@ -27176,7 +27176,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
