@@ -515,7 +515,6 @@ public class MechaPiero : EnemyBase
         int count = 0;
         _assaultStopper.enabled = true;
         _ballAnimator.gameObject.layer = LayerMask.NameToLayer("PieroBall");
-        SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.MechaPiero_BallMove);
         _ballRotEffect.Play();
         while (count < 5)
         {
@@ -544,12 +543,14 @@ public class MechaPiero : EnemyBase
 
             // 方向転換まで待つ
             RideEffect(true);
+            SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.MechaPiero_BallMove);
             while (!isOutRange)
             {
                 transform.position += transform.forward * 15.0f * Time.deltaTime;
                 yield return null;
             }
             RideEffect(false);
+            SoundManager.Instance.StopBGMFadeOut(SoundManager.eBgmValue.MechaPiero_BallMove, 0.5f);
 
             // 敵の方を向くための計算
             InitLookOnTarget(ref startRot, ref targetRot, ref speed, count == 4);
@@ -626,7 +627,6 @@ public class MechaPiero : EnemyBase
                 _animator.speed = 0.0f;
                 _isRunaway = false;
                 _ballAnimator.gameObject.layer = LayerMask.NameToLayer("PieroBall");
-                SoundManager.Instance.PlayBGM(SoundManager.eBgmValue.MechaPiero_BallMove);
                 _ballRotEffect.Play();
             }
             else
