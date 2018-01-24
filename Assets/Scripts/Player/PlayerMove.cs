@@ -168,12 +168,10 @@ public class PlayerMove : MonoBehaviour
             return;
         }
 
-        bool old = _runSmoke.loop;
-        _runSmoke.loop = true;
-
-        if (_runSmoke.loop == old)
+        if (_runSmoke.isPlaying)
             return;
 
+        _runSmoke.loop = true;
         _runSmoke.Play();
     }
 
