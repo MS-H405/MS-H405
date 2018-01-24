@@ -2369,6 +2369,7 @@ GameObject:
   m_Component:
   - component: {fileID: 776640378}
   - component: {fileID: 776640379}
+  - component: {fileID: 776640380}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -2400,6 +2401,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &776640380
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 776640377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BindingMode: 1
+  m_FollowOffset: {x: 0, y: 3.61, z: -11.4}
+  m_XDamping: 1
+  m_YDamping: 1
+  m_ZDamping: 1
+  m_PitchDamping: 0
+  m_YawDamping: 0
+  m_RollDamping: 0
 --- !u!1 &778527320
 GameObject:
   m_ObjectHideFlags: 0
@@ -4293,6 +4313,7 @@ PlayableDirector:
     - 50b3fcf685c1d784197eb3eaddbafeaa: {fileID: 1032154766}
     - 53828c4f13918604a999279c563ef91d: {fileID: 0}
     - 3cfd9125dd14dee40aa5fcf8cb44a812: {fileID: 0}
+    - be72af96316055a40ac132b0c2392ce2: {fileID: 1032154766}
     - 3e337c5d84cf9a54bb4415ebe1abbf3f: {fileID: 1417565469}
     - 6e99e2c6631f08349b13c3df7cf5dc0e: {fileID: 1232444062}
     - bd4f0af8a2c70bb4ebab9f2245e695ed: {fileID: 0}
@@ -4817,7 +4838,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1417565467}
   m_LocalRotation: {x: 0.09523768, y: 0, z: 0, w: 0.99545455}
-  m_LocalPosition: {x: 0, y: 3.61, z: -11.4}
+  m_LocalPosition: {x: 0, y: 3.6099997, z: -11.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 776640378}
@@ -4841,7 +4862,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_Follow: {fileID: 1032154767}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 10
@@ -6393,6 +6414,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 114612657494896566, guid: 45978aba283a7424383af39c5153f347,
+        type: 2}
+      propertyPath: SE.Array.data[28]
+      value: 
+      objectReference: {fileID: 8300000, guid: faf6d75c02ca6124fb0dcb7737034bfb, type: 3}
+    - target: {fileID: 114612657494896566, guid: 45978aba283a7424383af39c5153f347,
+        type: 2}
+      propertyPath: SE.Array.data[29]
+      value: 
+      objectReference: {fileID: 8300000, guid: e48a2d9e4343fee4a89d0bc74bedd2dc, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 45978aba283a7424383af39c5153f347, type: 2}
   m_IsPrefabParent: 0

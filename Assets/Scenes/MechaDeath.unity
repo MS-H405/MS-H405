@@ -886,7 +886,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_Follow: {fileID: 1032154767}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 10
@@ -1019,6 +1019,7 @@ GameObject:
   m_Component:
   - component: {fileID: 149042145}
   - component: {fileID: 149042146}
+  - component: {fileID: 149042147}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -1050,6 +1051,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &149042147
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 149042144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BindingMode: 1
+  m_FollowOffset: {x: 0, y: 16.8, z: -44.1}
+  m_XDamping: 1
+  m_YDamping: 1
+  m_ZDamping: 1
+  m_PitchDamping: 0
+  m_YawDamping: 0
+  m_RollDamping: 0
 --- !u!1 &151206722
 GameObject:
   m_ObjectHideFlags: 0
@@ -5600,7 +5620,7 @@ MonoBehaviour:
   m_ShadowmapMode: 0
   m_Cameras:
   - {fileID: 268817840}
-  m_CurrentCamera: {fileID: 0}
+  m_CurrentCamera: {fileID: 268817840}
   m_Size: {x: 10, y: 10, z: 20}
   m_SpotNear: 0.05
   m_SpotFar: 1
@@ -8484,6 +8504,7 @@ PlayableDirector:
     - 50c92fc49aff4b44d9d5cb0429b9a2a2: {fileID: 689985271}
     - 8cb57d5eaf635324fb6887e97c2cc2a7: {fileID: 1176366963}
     - 91f267d5bf2cfe445ab3f38402d6dd62: {fileID: 58304258}
+    - 4ee3dc0fde572a04d918b8eb27b9225d: {fileID: 1032154766}
     - 70df8fbc83074e04b9e7298d54a654a0: {fileID: 0}
     - bb2f4a9d5c9f84346ad257775aa8cbb9: {fileID: 2091059303}
     - 9afbeba9a09d1f645b8a83faca6eaa03: {fileID: 0}
@@ -18818,7 +18839,7 @@ MonoBehaviour:
   m_ShadowmapMode: 0
   m_Cameras:
   - {fileID: 268817840}
-  m_CurrentCamera: {fileID: 0}
+  m_CurrentCamera: {fileID: 268817840}
   m_Size: {x: 10, y: 10, z: 20}
   m_SpotNear: 0.05
   m_SpotFar: 1
@@ -19750,7 +19771,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1895391578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 640, y: 360, z: 0}
+  m_LocalPosition: {x: 960, y: 540, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -21117,7 +21138,7 @@ MonoBehaviour:
   m_ShadowmapMode: 0
   m_Cameras:
   - {fileID: 268817840}
-  m_CurrentCamera: {fileID: 0}
+  m_CurrentCamera: {fileID: 268817840}
   m_Size: {x: 10, y: 10, z: 20}
   m_SpotNear: 0.05
   m_SpotFar: 1
