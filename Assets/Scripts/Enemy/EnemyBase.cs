@@ -74,6 +74,16 @@ public class EnemyBase : MonoBehaviour
     public void SpecialDamage()
     {
         _mainHp--;
+        StartCoroutine(StanRelease());
+    }
+    private IEnumerator StanRelease()
+    {
+        float time = 0.0f;
+        while(time < 1.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
         IsStan = false;
         _animator.SetBool("Stan", false);
     }
