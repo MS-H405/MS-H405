@@ -682,6 +682,26 @@ Prefab:
       propertyPath: _pipeObj
       value: 
       objectReference: {fileID: 1440111625}
+    - target: {fileID: 198883284207539212, guid: 3f10c2e77e7f16145ba057216472fff8,
+        type: 2}
+      propertyPath: ColorModule.gradient.maxGradient.key0.r
+      value: 0.18771626
+      objectReference: {fileID: 0}
+    - target: {fileID: 198883284207539212, guid: 3f10c2e77e7f16145ba057216472fff8,
+        type: 2}
+      propertyPath: ColorModule.gradient.maxGradient.key0.g
+      value: 0.45588237
+      objectReference: {fileID: 0}
+    - target: {fileID: 198883284207539212, guid: 3f10c2e77e7f16145ba057216472fff8,
+        type: 2}
+      propertyPath: ColorModule.gradient.maxGradient.key0.b
+      value: 0.21175873
+      objectReference: {fileID: 0}
+    - target: {fileID: 198883284207539212, guid: 3f10c2e77e7f16145ba057216472fff8,
+        type: 2}
+      propertyPath: randomSeed
+      value: -1966493743
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3f10c2e77e7f16145ba057216472fff8, type: 2}
   m_IsPrefabParent: 0
@@ -749,6 +769,11 @@ Prefab:
         type: 2}
       propertyPath: _oneBlockSize
       value: 3.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114382591642984632, guid: 755f49747a0565d4ebd5ba678b15a9b2,
+        type: 2}
+      propertyPath: _stanHP
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 755f49747a0565d4ebd5ba678b15a9b2, type: 2}

@@ -2675,6 +2675,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1896149885500376
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4223976631292282}
+  - component: {fileID: 114420445935631760}
+  m_Layer: 15
+  m_Name: BallRot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1900639933694974
 GameObject:
   m_ObjectHideFlags: 1
@@ -3641,6 +3657,19 @@ Transform:
   m_Father: {fileID: 4267540815305908}
   m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4223976631292282
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1896149885500376}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.71, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_Children: []
+  m_Father: {fileID: 4889438224604544}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4227847184081476
 Transform:
   m_ObjectHideFlags: 1
@@ -4223,13 +4252,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1597944408699948}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -0, y: 0.75, z: 1.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4889438224604544}
   m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4410878335334384
 Transform:
   m_ObjectHideFlags: 1
@@ -4776,7 +4805,7 @@ Transform:
   m_Children:
   - {fileID: 4908802152638516}
   m_Father: {fileID: 4889438224604544}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4635565304390682
 Transform:
@@ -5418,6 +5447,7 @@ Transform:
   - {fileID: 4648915498529896}
   - {fileID: 4455810727847278}
   - {fileID: 4027165501678584}
+  - {fileID: 4223976631292282}
   - {fileID: 4635108207575904}
   m_Father: {fileID: 4827755425713440}
   m_RootOrder: 5
@@ -6941,9 +6971,11 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 6073ce35e4fc94e4ea3f23ff707ccd92, type: 2}
   - {fileID: 2100000, guid: bc544d8a6514e6941ba0449fe7e18dec, type: 2}
   - {fileID: 2100000, guid: 0f74616b24f86c24493da8f2fe7ba4e9, type: 2}
-  - {fileID: 2100000, guid: 12f3608f3251fcb4c8d964b80843bf58, type: 2}
   - {fileID: 2100000, guid: 3663db3973efdbc408672de917e0b871, type: 2}
+  - {fileID: 2100000, guid: 12f3608f3251fcb4c8d964b80843bf58, type: 2}
   - {fileID: 2100000, guid: 4565dc5acc0e14e4fb6e92c6a987098a, type: 2}
+  _stanEffect: {fileID: 1293750889377812, guid: c46b9968ba626aa4bb76d6c4e5e3ce83,
+    type: 2}
   _knifePrefab: {fileID: 1625583532578098, guid: a555365c04694b14195637c1a622b727,
     type: 2}
 --- !u!114 &114121654003674812
@@ -6984,7 +7016,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50091075b6bce714bbcd73abc4eee722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectName: GAME_TotemLaser
+  effectName: GAME3_Laser
+  playOnStart: 0
+  loop: 0
+--- !u!114 &114420445935631760
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1896149885500376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50091075b6bce714bbcd73abc4eee722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectName: GAME3_Needle_Rotation
   playOnStart: 0
   loop: 0
 --- !u!114 &114520207366979700
@@ -11177,7 +11223,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 12
       minScalar: 10
       maxCurve:
         serializedVersion: 2
