@@ -39,6 +39,7 @@ public class SoundManager : MonoBehaviour {
         Bagpipe_Burst,
         Enemy_Stan,
         MechaPiero_BallMove,
+        MechaPiero,
         Max,
 	};
 	
@@ -94,6 +95,8 @@ public class SoundManager : MonoBehaviour {
         MechaPiero_Pause,
         MechaPiero_StampBall,
         MechaPiero_Turn,
+        Bagpipe_Setup,
+        Bagpipe_ScissorsCharge,
         Max,
 	};
 
@@ -151,31 +154,6 @@ public class SoundManager : MonoBehaviour {
 		// 音量の初期化
 		volume.Init();
 	}
-		
-	void Update()
-    {
-		// ミュート設定
-		/*foreach (AudioSource source in BGMsource) {
-			source.mute = volume.Mute;
-		}
-		foreach (AudioSource source in SEsources) {
-			source.mute = volume.Mute;
-		}
-		foreach (AudioSource source in VoiceSources) {
-			source.mute = volume.Mute;
-		}
-
-		// ボリューム設定
-		foreach (AudioSource source in BGMsource) {
-			source.volume = volume.SE;
-		}
-		foreach (AudioSource source in SEsources) {
-			source.volume = volume.SE;
-		}
-		foreach (AudioSource source in VoiceSources) {
-			source.volume = volume.Voice;
-		}*/
-	}
 
 	public bool PlayBGM(eBgmValue i) {
 		if (!bUseSound)
@@ -198,7 +176,8 @@ public class SoundManager : MonoBehaviour {
 			if (!source.clip) {
 				source.clip = BGM[index];
 				source.Play();
-				return true;
+                source.volume = 1.0f;
+                return true;
 			}
 		}
 
@@ -285,6 +264,50 @@ public class SoundManager : MonoBehaviour {
         }
     }
 
+    public void StopBGMFadOut(float speed = 1.0f)
+    {
+        // 全てのBGM用のAudioSouceを停止する
+        foreach (AudioSource source in BGMsource)
+        {
+            StartCoroutine(StopBGMFadeOutRoutine(source, speed));
+        }
+    }
+
+    public bool StopBGMFadeOut(eBgmValue i, float speed = 1.0f)
+    {
+        int index = (int)i;
+        if (0 > index || BGM.Length <= index)
+        {
+            return false;
+        }
+
+        // 再生中であれば止める
+        foreach (AudioSource source in BGMsource)
+        {
+            if (source.clip != BGM[index])
+                continue;
+
+            StartCoroutine(StopBGMFadeOutRoutine(source, speed));
+            return true;
+        }
+
+        return false;
+    }
+
+    private IEnumerator StopBGMFadeOutRoutine(AudioSource source, float speed)
+    {
+        float maxVolume = source.volume;
+
+        while(source && source.volume > 0.0f)
+        {
+            source.volume -= maxVolume * Time.deltaTime / speed;
+            yield return null;
+        }
+
+        source.clip = null;
+        source.Stop();
+    }
+
     // 指定したBGMは再生中なのか 
     public bool NowOnBGM(eBgmValue i) {
 		int index = (int)i; 
@@ -300,34 +323,6 @@ public class SoundManager : MonoBehaviour {
 		}
 
 		return false;
-	}
-
-	public void FadeOutVolume(float interval) {
-		StartCoroutine(FadeOut(interval));
-	}
-
-	public void FadeInVolume(float interval) {
-		StartCoroutine(FadeIn(interval));
-	}
-		
-	IEnumerator FadeOut(float interval) {
-		float time = 0.0f;
-		this.volume.OldBGM = this.volume.BGM;
-		while (time <= interval) {
-			this.volume.BGM = Mathf.Lerp(this.volume.OldBGM, 0.0f, time / interval);
-			time += Time.deltaTime;
-			yield return 0;
-		}
-	}
-		
-	IEnumerator FadeIn(float interval) {
-		float time = 0.0f;
-		float VolumeB = this.volume.BGM;
-		while (time <= interval) {
-			this.volume.BGM = Mathf.Lerp(VolumeB, this.volume.OldBGM, time / interval);
-			time += Time.deltaTime;
-			yield return 0;
-		}
 	}
 
     public bool PlaySE(eSeValue i)
@@ -348,6 +343,7 @@ public class SoundManager : MonoBehaviour {
             {
                 source.clip = SE[index];
                 source.Play();
+                source.volume = 1.0f;
                 return true;
             }
         }
@@ -420,7 +416,42 @@ public class SoundManager : MonoBehaviour {
         }
     }
 
-	public void PlayVoice(int index) {
+    public bool StopSEFadeOut(eSeValue i, float speed = 1.0f)
+    {
+        int index = (int)i;
+        if (0 > index || SE.Length <= index)
+        {
+            return false;
+        }
+
+        // 再生中であれば止める
+        foreach (AudioSource source in SEsources)
+        {
+            if (source.clip != SE[index])
+                continue;
+
+            StartCoroutine(StopSEFadeOutRoutine(source, speed));
+            return true;
+        }
+
+        return false;
+    }
+
+    private IEnumerator StopSEFadeOutRoutine(AudioSource source, float speed)
+    {
+        float maxVolume = source.volume;
+
+        while (source && source.volume > 0.0f)
+        {
+            source.volume -= maxVolume * Time.deltaTime / speed;
+            yield return null;
+        }
+
+        source.clip = null;
+        source.Stop();
+    }
+
+    public void PlayVoice(int index) {
 		if (0 > index || Voice.Length <= index) {
 			return;
 		}

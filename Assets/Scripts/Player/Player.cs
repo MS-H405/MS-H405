@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
         DamageStan(power);
         _animator.SetTrigger("Damage");
         PlayerLifeManager.Instance.DamageEffect();
-        _shakeCamera.Shake(0,02f);
+        _shakeCamera.Shake(0,035f);
         Debug.Log("Damage");
 
         if (isDebug)

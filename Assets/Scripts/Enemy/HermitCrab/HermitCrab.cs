@@ -373,6 +373,7 @@ public class HermitCrab : EnemyBase
     {
         PlayDefenseEffect();
         _animator.SetTrigger("RollAttack");
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_ScissorsCharge);
 
         float time = 0.0f;
         while (time < 2.0f)
@@ -411,6 +412,7 @@ public class HermitCrab : EnemyBase
         PlayDefenseEffect();
         _animator.SetTrigger("ChargeFire");
         StaticCoroutine.Instance.StartStaticCoroutine(ActionEndWait());
+        SoundManager.Instance.PlaySE(SoundManager.eSeValue.Bagpipe_Setup);
 
         Vector3 startRot = transform.eulerAngles;
         Vector3 targetRot = transform.eulerAngles;
@@ -519,7 +521,7 @@ public class HermitCrab : EnemyBase
         }
 
         _bodyAttackCollider.enabled = false;
-        SoundManager.Instance.StopBGM(SoundManager.eBgmValue.Bagpipe_Burst);
+        SoundManager.Instance.StopBGMFadeOut(SoundManager.eBgmValue.Bagpipe_Burst);
         _animator.SetBool("RollFire", false);
     }
 

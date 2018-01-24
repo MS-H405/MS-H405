@@ -123,18 +123,18 @@ public class MechaPiero : EnemyBase
                     return eAction.Wait;
                 }
 
-                int rand = Random.Range(0, 5);
-                if (rand < 2)
+                int rand = Random.Range(0, 100);
+                if (rand < 55)
                 {
-                    return eAction.RideBall;        // 50%
+                    return eAction.RideBall;        // 55%
                 }
-                else if (rand < 3)
+                else if (rand < 80)
                 {
                     return eAction.KnifeAttack;     // 25%
                 }
                 else
                 {
-                    return eAction.ThornsAttack;    // 25%
+                    return eAction.ThornsAttack;    // 20%
                 }
 
             case eAction.KnifeAttack:
@@ -527,7 +527,7 @@ public class MechaPiero : EnemyBase
                 time = 0.0f;
                 speed = 2.0f;
                 _driftEffect.Play();
-                //SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Turn);
+                SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Turn);
                 while (time < 1.0f)
                 {
                     speed *= 0.95f;
@@ -538,8 +538,8 @@ public class MechaPiero : EnemyBase
                     yield return null;
                 }
                 _driftEffect.StopRoot();
-                SoundManager.Instance.StopBGM(SoundManager.eBgmValue.MechaPiero_BallMove);
                 _ballRotEffect.StopRoot();
+                SoundManager.Instance.StopBGMFadeOut(SoundManager.eBgmValue.MechaPiero_BallMove, 0.5f);
 
                 // 倒れるアニメーション再生
                 _animator.speed = 1.0f;
@@ -600,7 +600,7 @@ public class MechaPiero : EnemyBase
                 time = 0.0f;
                 speed = 2.0f;
                 _driftEffect.Play();
-                //SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Turn);
+                SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Turn);
                 while (time < 1.0f)
                 {
                     speed *= 0.95f;
@@ -611,6 +611,7 @@ public class MechaPiero : EnemyBase
                     yield return null;
                 }
                 _driftEffect.StopRoot();
+                SoundManager.Instance.StopSEFadeOut(SoundManager.eSeValue.MechaPiero_Turn, 0.5f);
             }
 
             while(_isBallPose)
@@ -674,7 +675,7 @@ public class MechaPiero : EnemyBase
         _isNext = true;
         _isStopRunaway = true;
         _assaultStopper.enabled = false;
-        SoundManager.Instance.StopBGM(SoundManager.eBgmValue.MechaPiero_BallMove);
+        SoundManager.Instance.StopBGMFadeOut(SoundManager.eBgmValue.MechaPiero_BallMove, 0.5f);
         _ballRotEffect.StopRoot();
         Debug.Log("RideBall");
     }
