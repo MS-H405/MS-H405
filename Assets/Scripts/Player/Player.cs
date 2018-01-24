@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     #region variable
 
     [SerializeField] int _hp = 0;
+    public int HP { get { return _hp; } }
     private ActionManager _actionManager = null;
     private PlayerMove _playerMove = null;
     private RideBallMove _rideBallMove = null;
@@ -52,7 +53,8 @@ public class Player : MonoBehaviour
         _hp--;
         StaticCoroutine.Instance.StartStaticCoroutine(DamageWait());
         DamageStan(power);
-        _animator.SetTrigger("Damage");
+        //_animator.SetTrigger("Damage");
+        _animator.Play("Down", 0, 0.0f);
         PlayerLifeManager.Instance.DamageEffect();
         _shakeCamera.Shake(0,035f);
         Debug.Log("Damage");
