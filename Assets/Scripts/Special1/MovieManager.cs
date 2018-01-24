@@ -50,6 +50,12 @@ public class MovieManager : MonoBehaviour
 	bool bGoDeath;			// 死んで死亡シーンにいくのか、敵がまだ死んでいなくてゲームメインに戻るのか
 
 
+	MOVIE_SCENE NowScene;
+	MOVIE_SCENE OldScene;
+	public MOVIE_SCENE GetNowScene() { return NowScene; }
+	public MOVIE_SCENE GetOldScene() { return OldScene; }
+
+
 	public static MovieManager Instance
 	{
 		get
@@ -78,6 +84,78 @@ public class MovieManager : MonoBehaviour
 		}
 
 		DontDestroyOnLoad(this.gameObject);
+
+		#region 現在のシーンの設定
+
+		switch(SceneManager.GetActiveScene().name)
+		{
+			case "Title":
+				NowScene = MOVIE_SCENE.TITLE;
+				break;
+
+			case "TotemStart":
+				NowScene = MOVIE_SCENE.TOTEM_START;
+				break;
+
+			case "TotemMain":
+				NowScene = MOVIE_SCENE.STAGE_1;
+				break;
+
+			case "TotemDeath":
+				NowScene = MOVIE_SCENE.TOTEM_DEATH;
+				break;
+
+			case "BagpipeStart":
+				NowScene = MOVIE_SCENE.BAGPIPE_START;
+				break;
+
+			case "HermitCrabMain":
+				NowScene = MOVIE_SCENE.STAGE_2;
+				break;
+
+			case "BagpipeDeath":
+				NowScene = MOVIE_SCENE.BAGPIPE_DEATH;
+				break;
+
+			case "MechaStart":
+				NowScene = MOVIE_SCENE.MECHA_START;
+				break;
+
+			case "MechaMain":
+				NowScene = MOVIE_SCENE.STAGE_3;
+				break;
+
+			case "MechaDeath":
+				NowScene = MOVIE_SCENE.MECHA_DEATH;
+				break;
+
+			case "Special_1":
+				NowScene = MOVIE_SCENE.SPECIAL_1;
+				break;
+
+			case "Special_2":
+				NowScene = MOVIE_SCENE.SPECIAL_2;
+				break;
+
+			case "Special_3":
+				NowScene = MOVIE_SCENE.SPECIAL_3;
+				break;
+
+			case "InitToTotem":
+				NowScene = MOVIE_SCENE.INIT_TO_TOTEM;
+				break;
+
+			case "TotemToYadokari":
+				NowScene = MOVIE_SCENE.TOTEM_TO_YADOKARI;
+				break;
+
+			case "YadokariToMecha":
+				NowScene = MOVIE_SCENE.YADOKARI_TO_MECHA;
+				break;
+		}
+		OldScene = NowScene;
+
+		#endregion
 	}
 
 	// デバッグ用
@@ -192,6 +270,10 @@ public class MovieManager : MonoBehaviour
 	// 遷移先が必殺技シーン以外の時
 	private IEnumerator Col_SceneMove(MOVIE_SCENE scene)
 	{
+		// シーン保存
+		OldScene = NowScene;
+		NowScene = scene;
+
 		// フェードイン
 		bool bFadeIn = false;
 		MovieFade.Instance.FadeIn(MovieFade._FADE_PATERN.NORMAL, () =>
@@ -296,6 +378,10 @@ public class MovieManager : MonoBehaviour
 
 
 
+		// シーン保存
+		OldScene = NowScene;
+		NowScene = scene;
+
 		// フェードイン
 		bool bFadeIn = false;
 		MovieFade.Instance.FadeIn(MovieFade._FADE_PATERN.CUTIN, () =>
@@ -365,6 +451,10 @@ public class MovieManager : MonoBehaviour
 	// 必殺技シーン終わり
 	private IEnumerator Col_SpecialFinish()
 	{
+		// シーン保存
+		OldScene = NowScene;	// たぶんこれでいいはずだけど、
+		NowScene = OldScene;	// 敵が必殺技1回で死ぬ設定になっているからデバッグできてないです
+
 		// フェードイン
 		bool bFadeIn = false;
 		MovieFade.Instance.FadeIn(MovieFade._FADE_PATERN.WHITE, () =>
@@ -415,6 +505,10 @@ public class MovieManager : MonoBehaviour
 	// 必殺技が終わって、敵が死に、次のシーンに行く時
 	private IEnumerator Col_SpecialFinish_Next()
 	{
+		// シーン保存
+		OldScene = NowScene;
+		//NowScene = scene;		// 下のシーン読み込みで代入してる
+
 		// フェードイン
 		bool bFadeIn = false;
 		MovieFade.Instance.FadeIn(MovieFade._FADE_PATERN.WHITE, () =>
@@ -431,14 +525,17 @@ public class MovieManager : MonoBehaviour
 		{
 			case MOVIE_SCENE.SPECIAL_1:
 				SceneManager.LoadScene("TotemDeath");
+				NowScene = MOVIE_SCENE.TOTEM_DEATH;
 				break;
 
 			case MOVIE_SCENE.SPECIAL_2:
 				SceneManager.LoadScene("BagpipeDeath");
+				NowScene = MOVIE_SCENE.BAGPIPE_DEATH;
 				break;
 
 			case MOVIE_SCENE.SPECIAL_3:
 				SceneManager.LoadScene("MechaDeath");
+				NowScene = MOVIE_SCENE.MECHA_DEATH;
 				break;
 		}
 		#endregion

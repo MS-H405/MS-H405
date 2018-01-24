@@ -96,6 +96,9 @@ public class TD_Totem_PB : PlayableBehaviour
 		{
 			for (int i = 0; i < _TotemObjList.Count; i++)
 				GameObject.Destroy(_TotemObjList[i]);
+
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_BossFlush);	// 敵が消える音
+
 			bDestroy = false;
 		}
 	}

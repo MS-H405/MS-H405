@@ -82,6 +82,11 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 	bool bSE_Jampd = false;
 	float fJampTime = 0.0f;
 
+
+	private GameObject _ShakeCameraObj;
+	public GameObject ShakeCameraObj { get; set; }
+	ShakeCamera cs_ShakeCamera;
+
 	#endregion
 
 
@@ -94,6 +99,7 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 		transform.eulerAngles = CON_ROTATE_START_EULAR;
 
 		cs_SetEffekseerObject = EffekseerObj.GetComponent<SetEffekseerObject>();
+		cs_ShakeCamera = ShakeCameraObj.GetComponent<ShakeCamera>();
 	}
 
 
@@ -309,6 +315,10 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 
 			cs_SetEffekseerObject.NewEffect(0);
             MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_Blast);
+
+			// 画ぶれ
+			cs_ShakeCamera.SetParam(0.03f, 0.001f);
+			cs_ShakeCamera.DontMoveShake();
 		}
 	}
 

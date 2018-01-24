@@ -15,6 +15,9 @@ public class BD_Player_PB : PlayableBehaviour
 	const float CON_SKILLUI_TIME = 14.0f;		// 技獲得UIを出す時間
 	const float CON_FADE_TIME = 17.0f;			// シーン遷移入力の受付を開始する時間
 
+	const float CON_SE_SPLEARNING = 2.2f;	// 勝利モーションが始まってから、決めポーズSEを鳴らすまでの時間
+	const float CON_SE_WIN = 9.0f;			// 勝利SE鳴らす時間(勝利モーションに切り替える時間の2秒前)
+
 	#endregion
 
 
@@ -45,6 +48,10 @@ public class BD_Player_PB : PlayableBehaviour
 	public GameObject BossDeathObj;		// 技獲得UI
 	bool bSkillUI = true;
 
+
+	MovieSoundManager.tSE tSpecial_Learning;	// 決めポーズ
+	MovieSoundManager.tSE tWin;					// 勝利SE
+
 	#endregion
 
 
@@ -52,6 +59,13 @@ public class BD_Player_PB : PlayableBehaviour
 	{
 		animator = PlayerObj.GetComponent<Animator>();
 		cs_SetEffekseerObject = EffekseerObj.GetComponent<SetEffekseerObject>();
+
+		tSpecial_Learning.time = 0.0f;
+		tSpecial_Learning.bDo = false;
+		tSpecial_Learning.bDone = false;
+		tWin.time = 0.0f;
+		tWin.bDo = true;
+		tWin.bDone = false;
 	}
 
 
@@ -89,6 +103,8 @@ public class BD_Player_PB : PlayableBehaviour
 
 			EffectObj_1.GetComponent<ParticleSystem>().Play();	// 腕からきらきらエフェクトを出す
 			EffectObj_2.GetComponent<ParticleSystem>().Play();	// 腕からきらきらエフェクトを出す
+
+			tSpecial_Learning.bDo = true;	// 決めポーズ処理開始
 		}
 		else if (fTime >= CON_WIN_EFFECT && bEffect)
 		{
@@ -119,10 +135,38 @@ public class BD_Player_PB : PlayableBehaviour
 
 
 		// スキップ
-	//	if (Input.GetKeyDown(KeyCode.Return) && bFade && !MovieManager.Instance.GetisMovideFade())
-	//	{
-	//		MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);	// シーン遷移
-	//		bFade = false;
-	//	}
+		if (Input.GetKeyDown(KeyCode.Return) && bFade && !MovieManager.Instance.GetisMovideFade())
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);	// シーン遷移
+			bFade = false;
+		}
+
+		SE();
+	}
+
+	// SEを鳴らす
+	private void SE()
+	{
+		// 決めポーズ
+		if (tSpecial_Learning.bDo && !tSpecial_Learning.bDone)
+		{
+			tSpecial_Learning.time += Time.deltaTime;
+			if (tSpecial_Learning.time >= CON_SE_SPLEARNING)
+			{
+				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_Special_Learning);
+				tSpecial_Learning.bDone = true;
+			}
+		}
+
+		// 勝利SE
+		if (tWin.bDo && !tWin.bDone)
+		{
+			tWin.time += Time.deltaTime;
+			if (tWin.time >= CON_SE_WIN)
+			{
+				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_Win);
+				tWin.bDone = true;
+			}
+		}
 	}
 }

@@ -8,6 +8,7 @@ public class MovieSoundManager : MonoBehaviour {
 	/// 概要 : サウンド管理
 	/// Author : 大洞祥太が作ったのをパクった
 	/// </summary>
+	/// 
 
 	protected static MovieSoundManager instance;
 
@@ -25,6 +26,13 @@ public class MovieSoundManager : MonoBehaviour {
 		}
 	}
 
+	public struct tSE
+	{
+		public float time;	// 時間
+		public bool bDo;	// 処理中
+		public bool bDone;	// 再生したか
+	};
+
 	[SerializeField]
 	bool bUseSound = false;
 	
@@ -33,6 +41,7 @@ public class MovieSoundManager : MonoBehaviour {
 		TotemStart,
 		HermitCrabStart,
 		MechaStart,
+		MS_Thunder1,
 
         Max,
 	};
@@ -70,6 +79,15 @@ public class MovieSoundManager : MonoBehaviour {
 		BD_CryLast,
 		BS_SetUp,			// 30
 		TS_Cry,
+		TS_Special_Learning,
+		TS_Win,
+		TS_BossDeath,
+		TS_BossFlush,		// 35
+		MS_RollJamp,
+		MS_Stroke,
+		MS_Thunder2,
+		MD_Bomb,
+		MD_Cong,			// 40
 
 
 

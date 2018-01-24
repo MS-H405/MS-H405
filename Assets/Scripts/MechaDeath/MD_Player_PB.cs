@@ -19,6 +19,9 @@ public class MD_Player_PB : PlayableBehaviour
 	const float CON_KIRAKIRA_EFFECT = 11.4f;	// プレイヤーの後ろに出てくるキラキラしたエフェクト
 	const float CON_CONG_TIME = 12.0f;		// Congratulatinsを出す時間
 	const float CON_FADE_TIME = 17.0f;		// フェードし始めてもいい時間（シーン遷移は"キー入力されたら"だけど、この時間より前のキー入力は受け付けない）
+
+	const float CON_SE_SPLEARNING = 2.2f;	// 勝利モーションが始まってから、決めポーズSEを鳴らすまでの時間
+	const float CON_SE_WIN = 7.0f;			// 勝利SE鳴らす時間(勝利モーションに切り替える時間の2秒前)
 	
 	#endregion
 
@@ -55,6 +58,9 @@ public class MD_Player_PB : PlayableBehaviour
 	public GameObject EffekseerObj { get; set; }
 	SetEffekseerObject cs_SetEffekseerObject;
 
+	MovieSoundManager.tSE tSpecial_Learning;	// 決めポーズ
+	MovieSoundManager.tSE tWin;					// 勝利SE
+
 	#endregion
 
 
@@ -62,6 +68,13 @@ public class MD_Player_PB : PlayableBehaviour
 	{
 		animator = PlayerObj.GetComponent<Animator>();
 		cs_SetEffekseerObject = EffekseerObj.GetComponent<SetEffekseerObject>();
+
+		tSpecial_Learning.time = 0.0f;
+		tSpecial_Learning.bDo = false;
+		tSpecial_Learning.bDone = false;
+		tWin.time = 0.0f;
+		tWin.bDo = true;
+		tWin.bDone = false;
 	}
 
 
@@ -99,6 +112,8 @@ public class MD_Player_PB : PlayableBehaviour
 
 			ArmParticleObj_1.GetComponent<ParticleSystem>().Play();
 			ArmParticleObj_2.GetComponent<ParticleSystem>().Play();
+
+			tSpecial_Learning.bDo = true;
 		}
 		else if (fTime >= CON_WIN_EFFECT && bEffect)
 		{
@@ -120,6 +135,7 @@ public class MD_Player_PB : PlayableBehaviour
 		else if (fTime >= CON_CONG_TIME && bCong)
 		{
 			cs_SetEffekseerObject.NewEffect(3);						// COngratulations
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.MD_Cong);
 			bCong = false;
 		}
 
@@ -129,6 +145,34 @@ public class MD_Player_PB : PlayableBehaviour
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TITLE);
 			bFade = false;
+		}
+
+		SE();
+	}
+
+	// SEを鳴らす
+	private void SE()
+	{
+		// 決めポーズ
+		if (tSpecial_Learning.bDo && !tSpecial_Learning.bDone)
+		{
+			tSpecial_Learning.time += Time.deltaTime;
+			if (tSpecial_Learning.time >= CON_SE_SPLEARNING)
+			{
+				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_Special_Learning);
+				tSpecial_Learning.bDone = true;
+			}
+		}
+
+		// 勝利SE
+		if (tWin.bDo && !tWin.bDone)
+		{
+			tWin.time += Time.deltaTime;
+			if (tWin.time >= CON_SE_WIN)
+			{
+				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_Win);
+				tWin.bDone = true;
+			}
 		}
 	}
 }

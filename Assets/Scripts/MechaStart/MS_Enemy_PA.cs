@@ -10,6 +10,7 @@ public class MS_Enemy_PA : PlayableAsset
 	[SerializeField]	ExposedReference<GameObject> BallObj;
 	[SerializeField]	ExposedReference<GameObject> group1Obj;		// MS_NeedleManagerがついているオブジェクト
 	[SerializeField]	ExposedReference<GameObject> EffekseerObj;
+	[SerializeField]	ExposedReference<GameObject> ShakeCameraObj;
 
 	// Factory method that generates a playable based on this asset
 	public override Playable CreatePlayable(PlayableGraph graph, GameObject go)
@@ -20,6 +21,7 @@ public class MS_Enemy_PA : PlayableAsset
 		behaviour.BallObj = BallObj.Resolve(graph.GetResolver());
 		behaviour.group1Obj = group1Obj.Resolve(graph.GetResolver());
 		behaviour.EffekseerObj = EffekseerObj.Resolve(graph.GetResolver());
+		behaviour.ShakeCameraObj = ShakeCameraObj.Resolve(graph.GetResolver());
 
 		return ScriptPlayable<MS_Enemy_PB>.Create(graph, behaviour);
 	}

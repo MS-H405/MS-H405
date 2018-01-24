@@ -8,6 +8,7 @@ public class MD_BossPiero_PA : PlayableAsset
 {
 	[SerializeField]	ExposedReference<GameObject> EnemyObj;
 	[SerializeField]	ExposedReference<GameObject> EffekseerObj;
+	[SerializeField]	ExposedReference<GameObject> ShakeCameraObj;
 
 	// Factory method that generates a playable based on this asset
 	public override Playable CreatePlayable(PlayableGraph graph, GameObject go)
@@ -16,6 +17,7 @@ public class MD_BossPiero_PA : PlayableAsset
 
 		behaviour.EnemyObj = EnemyObj.Resolve(graph.GetResolver());
 		behaviour.EffekseerObj = EffekseerObj.Resolve(graph.GetResolver());
+		behaviour.ShakeCameraObj = ShakeCameraObj.Resolve(graph.GetResolver());
 
 		return ScriptPlayable<MD_BossPiero_PB>.Create(graph, behaviour);
 	}

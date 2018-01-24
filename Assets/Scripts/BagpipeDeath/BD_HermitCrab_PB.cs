@@ -172,6 +172,7 @@ public class BD_HermitCrab_PB : PlayableBehaviour
 		if (fWait > CON_FADE_WAIT && bWait)
 		{
 			cs_SetEffekseerObject.NewEffect(1);		// パワーアップエフェクト
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_BossDeath);	// 敵がパーティクルになる音
 
 			bWait = false;
 		}
@@ -210,6 +211,8 @@ public class BD_HermitCrab_PB : PlayableBehaviour
 		if (fTime >= CON_VANISH_TIME)
 		{
 			mat.color = Color.clear;	// 完全に透明にする
+
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_BossFlush);	// 敵が消える音
 
 			State = STATE_HERMITCRAB_DEATH.FIN;
 			bInitializ = true;
