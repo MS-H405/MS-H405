@@ -251,6 +251,8 @@ public class Player : MonoBehaviour
             .Subscribe(_ =>
             {
                 specialAura.SetActive(true);
+                _actionManager.Cancel();
+                PlayerManager.Instance.Player.IsInvincible = true;
             });
     }
 
