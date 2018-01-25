@@ -84,6 +84,11 @@ public class GameStart : MonoBehaviour
                         time += Time.deltaTime;
                         GameStartDeltaTime = Time.deltaTime;
 
+                        if(Input.GetKeyDown(KeyCode.Return))
+                        {
+                            time = _waitTime;
+                        }
+
                         if (time < _waitTime)
                             return;
 
