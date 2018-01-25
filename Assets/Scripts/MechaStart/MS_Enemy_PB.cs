@@ -39,7 +39,11 @@ public class MS_Enemy_PB : PlayableBehaviour
 	const float CON_ROTATION_TIME = 0.3f;		// 棘を出してから、玉が回転し始めるまでの時間
 	const float CON_FIN_TIME = 1.4f;			// 棘を出してから、フェードを開始するまでの時間
 
-	const float CON_SE_PAUSE = 1.1f;			// 決めポーズモーションを開始してから、決めポーズの音を鳴らすまでの時間
+	const float CON_SE_PAUSE = 1.5f;			// 決めポーズモーションを開始してから、決めポーズの音を鳴らすまでの時間
+
+	const float CON_SE_STROKE = 1.0f;			// ストロークエフェクトが始まってからピーを鳴らすまでの時間
+
+	const float CON_SHAKE_TIME = 0.2f;			// 雷が発生してから画ぶれが起こるまでの時間
 
 	#endregion
 
@@ -61,6 +65,11 @@ public class MS_Enemy_PB : PlayableBehaviour
 	private GameObject _EffekseerObj;
 	public GameObject EffekseerObj { get; set; }
 	SetEffekseerObject cs_SetEffekseerObject;
+
+	private GameObject _ShakeCameraObj;
+	public GameObject ShakeCameraObj { get; set; }
+	ShakeCamera cs_ShakeCamera;
+
 	#endregion
 
 	float fTime = 0.0f;
@@ -88,6 +97,9 @@ public class MS_Enemy_PB : PlayableBehaviour
 	bool bSE_Pause = false;
 	float fSETime = 0.0f;
 
+	MovieSoundManager.tSE tStroke;	// ピー
+	MovieSoundManager.tSE tShake;	// 画ぶれ　ちょうどいいから使う
+
 	#endregion
 
 	#endregion
@@ -109,6 +121,16 @@ public class MS_Enemy_PB : PlayableBehaviour
 		_ballAnimator = BallObj.GetComponent<Animator>();
 		_needleManager = group1Obj.GetComponent<MS_NeedleManager>();
 		_ballAnimator.speed = 0.0f;
+
+		// SE
+		cs_SetEffekseerObject = EffekseerObj.GetComponent<SetEffekseerObject>();
+		cs_ShakeCamera = ShakeCameraObj.GetComponent<ShakeCamera>();
+		tStroke.time = 0.0f;
+		tStroke.bDo = false;
+		tStroke.bDone = false;
+		tShake.time = 0.0f;
+		tShake.bDo = false;
+		tShake.bDone = false;
 	}
 
 	public override void OnGraphStop(Playable playable)
@@ -169,6 +191,7 @@ public class MS_Enemy_PB : PlayableBehaviour
 		}
 
 		SE_Pause();
+		SE();
 	}
 
 
@@ -190,6 +213,9 @@ public class MS_Enemy_PB : PlayableBehaviour
 		{
 			cs_SetEffekseerObject.NewEffect(0);		// ストロークエフェクト再生
 
+			MovieSoundManager.Instance.PlayBGM(MovieSoundManager.eBgmValue.MS_Thunder1);	// びりびり
+			tStroke.bDo = true;
+
 			State = STATE_MECHASTART.KAMINARI;
 			bInitialize = true;
 		}
@@ -208,6 +234,8 @@ public class MS_Enemy_PB : PlayableBehaviour
 		if (fTime > CON_KAMINARI_TIME)
 		{
 			cs_SetEffekseerObject.NewEffect(1);		// 雷再生
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.MS_Thunder2);
+			tShake.bDo = true;	// 画ぶれ処理開始
 
 			State = STATE_MECHASTART.DRAW;
 			bInitialize = true;
@@ -228,6 +256,8 @@ public class MS_Enemy_PB : PlayableBehaviour
 		{
 			cs_SetEffekseerObject.DeleteEffect(0);		// ストロークエフェクト削除
 			DrawEnemy(true);							// 敵表示
+
+			MovieSoundManager.Instance.StopBGM(MovieSoundManager.eBgmValue.MS_Thunder1);	// びりびり停止
 
 			State = STATE_MECHASTART.WAIT;
 			bInitialize = true;
@@ -264,6 +294,8 @@ public class MS_Enemy_PB : PlayableBehaviour
 			tBez.start = CON_BACKJAMP_START_POS;
 			tBez.middle = CON_BACKJAMP_MIDDLE_POS;
 			tBez.end = CON_BACKJAMP_END_POS;
+
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.MS_RollJamp);
 		}
 
 		tBez.time += Mathf.Clamp01(Time.deltaTime / CON_BACKJAMP_TIME);
@@ -272,6 +304,8 @@ public class MS_Enemy_PB : PlayableBehaviour
 		if (tBez.time >= 1.0f)
 		{
 			transform.position = CON_BACKJAMP_END_POS;
+
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_RideOn);
 
 			State = STATE_MECHASTART.POSE;
 			bInitialize = true;
@@ -350,6 +384,33 @@ public class MS_Enemy_PB : PlayableBehaviour
 		{
 			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.MS_Pause);
 			bSE_Pause = false;
+		}
+	}
+
+	// SEを鳴らす
+	private void SE()
+	{
+		// 決めポーズ
+		if (tStroke.bDo && !tStroke.bDone)
+		{
+			tStroke.time += Time.deltaTime;
+			if (tStroke.time >= CON_SE_STROKE)
+			{
+				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.MS_Stroke);
+				tStroke.bDone = true;
+			}
+		}
+
+		// 画ぶれ
+		if (tShake.bDo && !tShake.bDone)
+		{
+			tShake.time += Time.deltaTime;
+			if (tShake.time >= CON_SHAKE_TIME)
+			{
+				cs_ShakeCamera.SetParam(0.03f, 0.0015f);
+				cs_ShakeCamera.DontMoveShake();
+				tShake.bDone = true;
+			}
 		}
 	}
 

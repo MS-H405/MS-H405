@@ -108,6 +108,9 @@ public class TD_Effect_PB : PlayableBehaviour
 			cs_SetEffekseerObject.NewEffect(4);
 			cs_SetEffekseerObject.NewEffect(5);
 			cs_SetEffekseerObject.NewEffect(6);
+
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_BossDeath);	// 敵がパーティクルになる音
+				
 			bEffectList[4] = false;
 		}
 		if (bEffectList[5] && fTime >= CON_EFFECT_FLUSH)		// フラッシュ

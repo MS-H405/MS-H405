@@ -8,11 +8,21 @@ public class TD_Player_PB : PlayableBehaviour
 {
 	#region 定数
 
-	const float CON_WIN_TIME = 13.0f;		// 勝利モーションに切り替える時間
+	const float CON_WIN_TIME = 13.0f;			// 勝利モーションに切り替える時間
 	const float CON_EFFECT_FIN_TIME = 14.5f;		// キラキラエフェクトを止める時間
 
 	const float CON_SKILLUI_TIME = 16.0f;		// 技獲得UIを出す時間
 	const float CON_FADE_TIME = 19.0f;			// シーン遷移入力の受付を開始する時間
+
+	const float CON_SE_SPLEARNING = 2.2f;	// 勝利モーションが始まってから、決めポーズSEを鳴らすまでの時間
+	const float CON_SE_WIN = 11.0f;			// 勝利SE鳴らす時間(勝利モーションに切り替える時間の2秒前)
+
+	public struct tSE
+	{
+		public float time;	// 時間
+		public bool bDo;	// 処理中
+		public bool bDone;	// 再生したか
+	};
 
 	#endregion
 
@@ -39,11 +49,21 @@ public class TD_Player_PB : PlayableBehaviour
 
 	public GameObject BossDeathObj;		// 技獲得UI
 
+	tSE tSpecial_Learning;	// 決めポーズ
+	tSE tWin;				// 勝利SE
+
 	#endregion
 
 	public override void OnGraphStart(Playable playable)
 	{
 		animator = PlayerObj.GetComponent<Animator>();
+
+		tSpecial_Learning.time = 0.0f;
+		tSpecial_Learning.bDo = false;
+		tSpecial_Learning.bDone = false;
+		tWin.time = 0.0f;
+		tWin.bDo = true;
+		tWin.bDone = false;
 	}
 
 
@@ -89,6 +109,8 @@ public class TD_Player_PB : PlayableBehaviour
 
 			EffectObj_1.GetComponent<ParticleSystem>().Play();	// 腕からきらきらエフェクトを出す
 			EffectObj_2.GetComponent<ParticleSystem>().Play();	// 腕からきらきらエフェクトを出す
+
+			tSpecial_Learning.bDo = true;	// 決めポーズ処理開始
 		}
 		else if (fTime >= CON_EFFECT_FIN_TIME)
 		{
@@ -108,6 +130,35 @@ public class TD_Player_PB : PlayableBehaviour
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TOTEM_TO_YADOKARI);
 			bFade = false;
+		}
+
+
+		SE();
+	}
+
+	// SEを鳴らす
+	private void SE()
+	{
+		// 決めポーズ
+		if (tSpecial_Learning.bDo && !tSpecial_Learning.bDone)
+		{
+			tSpecial_Learning.time += Time.deltaTime;
+			if (tSpecial_Learning.time >= CON_SE_SPLEARNING)
+			{
+				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_Special_Learning);
+				tSpecial_Learning.bDone = true;
+			}
+		}
+
+		// 勝利SE
+		if (tWin.bDo && !tWin.bDone)
+		{
+			tWin.time += Time.deltaTime;
+			if (tWin.time >= CON_SE_WIN)
+			{
+				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_Win);
+				tWin.bDone = true;
+			}
 		}
 	}
 }
