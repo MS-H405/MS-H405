@@ -842,6 +842,13 @@ public class MechaPiero : EnemyBase
         _ballAnimator.SetBool("Laser", false);
         _ballAnimator.SetTrigger("ToIdle");
 
+        time = 0.0f;
+        while (time < 1.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
         _isNext = true;
         //_rideBallRot.ChangeSpeed(1.0f);
         Debug.Log("CannonAttack");

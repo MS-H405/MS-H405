@@ -75,13 +75,6 @@ public class Needle : MonoBehaviour
             yield return null;
         }
         transform.localPosition = _initLocalPos;
-
-        time = 0.0f;
-        while (time < 1.0f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
         GameEffectManager.Instance.Play("NeedleLight", transform.position + transform.up);
     }
 
