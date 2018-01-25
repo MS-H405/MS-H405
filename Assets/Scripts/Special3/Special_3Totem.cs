@@ -11,7 +11,7 @@ public class Special_3Totem : MonoBehaviour
 	readonly Vector3 CON_ROTATE = new Vector3(0.0f, 10.0f, 0.0f);		// 回転
 
 	const float CON_FIN = 0.5f;	// 割合がこれだけいったら、月終わりを待たずに、トーテム突きフェイズ終了
-	const float CON_EFFECT = 0.7f;	// 割合がこれだけいったら、エフェクトを出す
+	const float CON_EFFECT = 0.4f;	// 割合がこれだけいったら、エフェクトを出す
 
 	#endregion
 
@@ -64,9 +64,9 @@ public class Special_3Totem : MonoBehaviour
 		transform.localPosition = Vector3.Lerp(vStartPos, CON_END_POS, fParam);
 		PokeTotemObj.transform.localEulerAngles += CON_ROTATE;
 
-		// 次のフェイズに渡す(まだ動き続けるけど...)		←やっぱなし
-		//if(fParam >= CON_FIN && bFin)
-		if(fParam >= 1.0f && bFin)
+		// 次のフェイズに渡す(まだ動き続けるけど...)
+		if(fParam >= CON_FIN && bFin)
+		//if(fParam >= 1.0f && bFin)
 		{
 			bFin = false;
 			return true;

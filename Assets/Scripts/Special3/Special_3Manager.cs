@@ -167,7 +167,7 @@ public class Special_3Manager : MonoBehaviour
 		}
 
 		// スキップ処理
-		if (Input.GetKeyDown(KeyCode.Return) && bSkip && !MovieManager.Instance.GetisMovideFade())
+		if (Input.GetButtonDown("Atack") && bSkip && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.MovieFinish();
 			bSkip = false;
