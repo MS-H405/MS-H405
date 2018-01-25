@@ -9336,11 +9336,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 11
       objectReference: {fileID: 0}
-    - target: {fileID: 114823421082624772, guid: 293a01e4f1721034d88f25b9522c7062,
-        type: 2}
-      propertyPath: bUseSound
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 293a01e4f1721034d88f25b9522c7062, type: 2}
   m_IsPrefabParent: 0
@@ -32835,7 +32830,7 @@ Prefab:
     - target: {fileID: 114064299989390554, guid: 22ef5ae20c0e87e40a6234203c526865,
         type: 2}
       propertyPath: _isDebug
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1597944408699948, guid: 22ef5ae20c0e87e40a6234203c526865, type: 2}
       propertyPath: m_IsActive
@@ -32868,6 +32863,11 @@ Prefab:
     - target: {fileID: 114520207366979700, guid: 22ef5ae20c0e87e40a6234203c526865,
         type: 2}
       propertyPath: playOnStart
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114520207366979700, guid: 22ef5ae20c0e87e40a6234203c526865,
+        type: 2}
+      propertyPath: loop
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
