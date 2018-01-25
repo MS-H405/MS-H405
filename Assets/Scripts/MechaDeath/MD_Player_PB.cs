@@ -80,12 +80,7 @@ public class MD_Player_PB : PlayableBehaviour
 
 	public override void OnGraphStop(Playable playable)
 	{
-		// 1800Frame(30秒)経ってもシーン遷移されないので、シーン遷移する
-		if (bFade && !MovieManager.Instance.GetisMovideFade())
-		{
-			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TITLE);
-			bFade = false;
-		}
+
 	}
 
 
