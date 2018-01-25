@@ -151,27 +151,27 @@ public class TS_Totemchild : MonoBehaviour
 		switch(transform.name)
 		{
 			case "TS_TotemChild1":
-				transform.position = new Vector3(-5.25f, 0.0f, -1.97f);
+				transform.position = new Vector3(-7.34f, 0.0f, -1.5f);
 				transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
 				break;
 
 			case "TS_TotemChild2":
-				transform.position = new Vector3(-2.97f, 0.0f, 2.78f);
+				transform.position = new Vector3(-5.0f, 0.0f, 6.0f);
 				transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
 				break;
 
 			case "TS_TotemChild3":
-				transform.position = new Vector3(1.58f, 0.0f, 4.6f);
+				transform.position = new Vector3(2.7f, 0.0f, 7.7f);
 				transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
 				break;
 
 			case "TS_TotemChild4":
-				transform.position = new Vector3(3.93f, 0.0f, 1.21f);
+				transform.position = new Vector3(7.1f, 0.0f, 4.48f);
 				transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
 				break;
 
 			case "TS_TotemChild5":
-				transform.position = new Vector3(5.62f, 0.0f, -1.69f);
+				transform.position = new Vector3(7.84f, 0.0f, -1.52f);
 				transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
 				break;
 		}

@@ -22,6 +22,8 @@ public class MD_Player_PB : PlayableBehaviour
 
 	const float CON_SE_SPLEARNING = 2.2f;	// 勝利モーションが始まってから、決めポーズSEを鳴らすまでの時間
 	const float CON_SE_WIN = 7.0f;			// 勝利SE鳴らす時間(勝利モーションに切り替える時間の2秒前)
+
+	const float CON_LAST = 50.0f;			// 自動でシーン遷移する時間
 	
 	#endregion
 
@@ -80,12 +82,7 @@ public class MD_Player_PB : PlayableBehaviour
 
 	public override void OnGraphStop(Playable playable)
 	{
-		// 1800Frame(30秒)経ってもシーン遷移されないので、シーン遷移する
-		if (bFade && !MovieManager.Instance.GetisMovideFade())
-		{
-			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TITLE);
-			bFade = false;
-		}
+		
 	}
 
 
@@ -148,6 +145,13 @@ public class MD_Player_PB : PlayableBehaviour
 		}
 
 		SE();
+
+		// 1800Frame(30秒)経ってもシーン遷移されないので、シーン遷移する
+		if (fTime >= CON_LAST && bFade && !MovieManager.Instance.GetisMovideFade())
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TITLE);
+			bFade = false;
+		}
 	}
 
 	// SEを鳴らす
