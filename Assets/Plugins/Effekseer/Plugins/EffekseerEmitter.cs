@@ -41,16 +41,21 @@ public class EffekseerEmitter : MonoBehaviour
 	/// 最後にPlayされたハンドル
 	/// </summary>
 	private EffekseerHandle? handle;
-	
-	/// <summary xml:lang="en">
-	/// Plays the effect.
-	/// <param name="name">Effect name</param>
-	/// </summary>
-	/// <summary xml:lang="ja">
-	/// エフェクトを再生
-	/// <param name="name">エフェクト名</param>
-	/// </summary>
-	public void Play(string name)
+
+    /// <summary>
+    /// シーン終了判定
+    /// </summary>
+    private bool isQuit = false;
+
+    /// <summary xml:lang="en">
+    /// Plays the effect.
+    /// <param name="name">Effect name</param>
+    /// </summary>
+    /// <summary xml:lang="ja">
+    /// エフェクトを再生
+    /// <param name="name">エフェクト名</param>
+    /// </summary>
+    public void Play(string name)
 	{
 		effectName = name;
 		Play();
@@ -201,10 +206,21 @@ public class EffekseerEmitter : MonoBehaviour
 			}
 		}
 	}
-	
-	void OnDestroy()
+
+    private void OnApplicationQuit()
+    {
+        isQuit = true;
+    }
+
+    void OnDestroy()
 	{
 		Stop();
+
+        if (isQuit)
+        {
+            return;
+        }
+
         EffekseerSystem.ReleaseEffect(effectName);
     }
 	

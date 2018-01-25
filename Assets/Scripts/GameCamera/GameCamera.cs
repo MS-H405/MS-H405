@@ -68,7 +68,7 @@ public class GameCamera : MonoBehaviour
 		CameraMode = _CameraMode.LOCKON;							// 最初はロックオン
 
 		rot = new Vector2(Mathf.PI * 1.5f, Mathf.PI * 0.25f);		// カメラの初期角度
-		vLookAtPos = EnemyManager.Instance.BossEnemy.transform.position + vLookPosOffset + vLookPosOffset + vLookPosOffset;
+		vLookAtPos = EnemyManager.Instance.BossEnemyIgnoreActive.transform.position + vLookPosOffset + vLookPosOffset + vLookPosOffset;
 		
 		cs_GameCamera_Sub = SubCameraObj.GetComponent<GameCamera_Sub>();	// 俯瞰→通常時のスクリーン座標計算用カメラ
 		SubCameraObj.SetActive(false);										// 重さ軽減のため

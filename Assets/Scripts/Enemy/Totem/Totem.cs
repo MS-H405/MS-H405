@@ -596,6 +596,7 @@ public class Totem : EnemyBase
     private void Start()
     {
         // 行動開始
+        EnemyManager.Instance.Active = false;
         StaticCoroutine.Instance.StartStaticCoroutine(Run());
 
         // アニメーション処理
