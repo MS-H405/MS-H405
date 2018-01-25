@@ -82,6 +82,8 @@ public class PlayerMove : MonoBehaviour
         if (!_isGround || IsAction)
             return;
 
+        bool already = _moveAmount != Vector3.zero;
+
         switch (dir)
         {
             case eDirection.Forward:
@@ -96,6 +98,11 @@ public class PlayerMove : MonoBehaviour
             case eDirection.Left:
                 _moveAmount -= transform.right * _speed_Sec;
                 break;
+        }
+
+        if(already)
+        {
+            _moveAmount *= 0.66f;
         }
     }
 
