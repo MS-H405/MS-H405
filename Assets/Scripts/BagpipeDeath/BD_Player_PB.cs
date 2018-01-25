@@ -140,7 +140,6 @@ public class BD_Player_PB : PlayableBehaviour
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);	// シーン遷移
 			bFade = false;
 		}
-
 		SE();
 	}
 

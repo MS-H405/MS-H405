@@ -81,6 +81,7 @@ public class MechaPiero : EnemyBase
                     while (IsStan)
                     {
                         // スタン演出
+                        _animator.speed = 1.0f;
                         yield return null;
                     }
 
@@ -123,18 +124,19 @@ public class MechaPiero : EnemyBase
                     return eAction.Wait;
                 }
 
-                int rand = Random.Range(0, 5);
-                if (rand < 2)
+                return eAction.ThornsAttack;
+                int rand = Random.Range(0, 100);
+                if (rand < 55)
                 {
-                    return eAction.RideBall;        // 50%
+                    return eAction.RideBall;        // 55%
                 }
-                else if (rand < 3)
+                else if (rand < 80)
                 {
                     return eAction.KnifeAttack;     // 25%
                 }
                 else
                 {
-                    return eAction.ThornsAttack;    // 25%
+                    return eAction.ThornsAttack;    // 20%
                 }
 
             case eAction.KnifeAttack:
@@ -213,6 +215,23 @@ public class MechaPiero : EnemyBase
         GameObject stanEffect = Instantiate(_stanEffect, transform.position, Quaternion.identity);
         stanEffect.transform.position += new Vector3(0.0f, 2.25f, 0.0f) - transform.forward * 0.9f;
         stanEffect.transform.SetParent(transform);
+
+        switch (_nowAction)
+        {
+            case eAction.KnifeAttack:
+                break;
+            case eAction.RideBall:
+                _driftEffect.StopRoot();
+                _ballRotEffect.StopRoot();
+                RideEffect(false);
+                break;
+            case eAction.ThornsAttack:
+                break;
+            case eAction.CannonAttack:
+                _laserEffect.Stop();
+                _laserCollider.enabled = false;
+                break;
+        }
 
         yield break;
     }
@@ -413,10 +432,26 @@ public class MechaPiero : EnemyBase
     {
         _animator.SetTrigger("KnifeStart");
 
+        Vector3 startRot = transform.eulerAngles;
+        transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
+        Vector3 targetRot = transform.eulerAngles;
+        transform.eulerAngles = startRot;
+
+        // 無駄な回転量が出ないようにする
+        if (targetRot.y - startRot.y > 180.0f)
+        {
+            targetRot.y -= 360.0f;
+        }
+        else if (targetRot.y - startRot.y < -180.0f)
+        {
+            targetRot.y += 360.0f;
+        }
+
         float time = 0.0f;
         while (time < 1.5f)
         {
             time += Time.deltaTime;
+            transform.eulerAngles = Vector3.Lerp(startRot, targetRot, time);
             yield return null;
         }
         _animator.speed = 0.0f;
@@ -527,7 +562,7 @@ public class MechaPiero : EnemyBase
                 time = 0.0f;
                 speed = 2.0f;
                 _driftEffect.Play();
-                //SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Turn);
+                SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Turn);
                 while (time < 1.0f)
                 {
                     speed *= 0.95f;
@@ -538,20 +573,27 @@ public class MechaPiero : EnemyBase
                     yield return null;
                 }
                 _driftEffect.StopRoot();
-                SoundManager.Instance.StopBGM(SoundManager.eBgmValue.MechaPiero_BallMove);
                 _ballRotEffect.StopRoot();
+                SoundManager.Instance.StopBGMFadeOut(SoundManager.eBgmValue.MechaPiero_BallMove, 0.5f);
 
                 // 倒れるアニメーション再生
                 _animator.speed = 1.0f;
                 _animator.SetBool("BallStan", true);
                 _ballAnimator.gameObject.layer = LayerMask.NameToLayer("Default");
                 SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Explosion);
+
+                GameObject stanEffect = Instantiate(_stanEffect, transform.position, Quaternion.identity);
+                stanEffect.transform.position += new Vector3(0.0f, 2.25f, 0.0f) - transform.forward * 0.9f;
+                stanEffect.transform.SetParent(transform);
+
                 time = 0.0f;
-                while (time < 4.0f)
+                while (time < 8.0f)
                 {
                     time += Time.deltaTime;
                     yield return null;
                 }
+
+                Destroy(stanEffect.gameObject);
 
                 // 復帰アニメーション再生
                 _isStopRunaway = true;
@@ -600,7 +642,7 @@ public class MechaPiero : EnemyBase
                 time = 0.0f;
                 speed = 2.0f;
                 _driftEffect.Play();
-                //SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Turn);
+                SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Turn);
                 while (time < 1.0f)
                 {
                     speed *= 0.95f;
@@ -611,6 +653,7 @@ public class MechaPiero : EnemyBase
                     yield return null;
                 }
                 _driftEffect.StopRoot();
+                SoundManager.Instance.StopSEFadeOut(SoundManager.eSeValue.MechaPiero_Turn, 0.5f);
             }
 
             while(_isBallPose)
@@ -637,12 +680,6 @@ public class MechaPiero : EnemyBase
                 }
             }
 
-            /*while(PlayerManager.Instance.Player.IsDamage)
-            {
-                transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
-                yield return null;
-            }*/
-
             if (count < 5)
             {
                 StaticCoroutine.Instance.StartStaticCoroutine(BallPosePlay());
@@ -652,6 +689,7 @@ public class MechaPiero : EnemyBase
                 _isStopRunaway = true;
             }
 
+            _ballAnimator.gameObject.layer = LayerMask.NameToLayer("PieroBall");
             while (_isBallPose)
             {
                 yield return null;
@@ -674,7 +712,8 @@ public class MechaPiero : EnemyBase
         _isNext = true;
         _isStopRunaway = true;
         _assaultStopper.enabled = false;
-        SoundManager.Instance.StopBGM(SoundManager.eBgmValue.MechaPiero_BallMove);
+        _ballAnimator.gameObject.layer = LayerMask.NameToLayer("Default");
+        SoundManager.Instance.StopBGMFadeOut(SoundManager.eBgmValue.MechaPiero_BallMove, 0.5f);
         _ballRotEffect.StopRoot();
         Debug.Log("RideBall");
     }
@@ -753,7 +792,7 @@ public class MechaPiero : EnemyBase
         _laserEffect.Play();
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_Chage);
         time = 0.0f;
-        while(time < 4.0f)
+        while(time < 3.0f)
         {
             time += Time.deltaTime;
             yield return null;
@@ -790,6 +829,7 @@ public class MechaPiero : EnemyBase
         }
 
         // トゲを生やす
+        _laserEffect.Stop();
         _needleManager.Reload();
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_NeedleForm);
         time = 0.0f;
@@ -800,6 +840,7 @@ public class MechaPiero : EnemyBase
         }
         SoundManager.Instance.PlaySE(SoundManager.eSeValue.MechaPiero_NeedleFormEffect);
         _ballAnimator.SetBool("Laser", false);
+        _ballAnimator.SetTrigger("ToIdle");
 
         _isNext = true;
         //_rideBallRot.ChangeSpeed(1.0f);
@@ -809,9 +850,8 @@ public class MechaPiero : EnemyBase
     /// <summary>
     /// キャノン攻撃攻撃
     /// </summary>
-    private IEnumerator LookPlayer()
+    private IEnumerator LookPlayer(float magni = 250.0f)
     {
-        const float magni = 250.0f;
         while (true)
         {
             float time = 0.0f;
@@ -832,7 +872,6 @@ public class MechaPiero : EnemyBase
 
             float initDistance = Vector3.Distance(transform.position, PlayerManager.Instance.GetVerticalPos(transform.position));
             float speed = Mathf.Abs(startRot.y - targetRot.y) / (magni / initDistance);
-            //Debug.Log("Distance : " + initDistance + ", Speed : " + (magni / initDistance));
             while (time < 1.0f)
             {
                 time += Time.deltaTime / speed;
@@ -843,7 +882,6 @@ public class MechaPiero : EnemyBase
                 float distance = Vector3.Distance(transform.position, PlayerManager.Instance.GetVerticalPos(transform.position));
                 if (Mathf.Abs(distance - initDistance) > 1.0f)
                 {
-                    //Debug.Log("距離見直し");
                     break;
                 }
                 yield return null;

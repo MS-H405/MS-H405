@@ -64,18 +64,18 @@ inline void FixHalfTexelOffset(inout float2 uv)
 
 v2f vert (appdata_img v)
 {
-	v2f o;
+	v2f o = UNITY_INITIALIZE_OUTPUT(v2f, o);
 	o.pos = v.vertex;
 
-	//#if defined(FRUSTUM_SHAFTS)
+	#if defined(FRUSTUM_SHAFTS)
 		o.pos = UnityObjectToClipPos (v.vertex);
 		o.uv = o.pos.xyw;
 		FixFlip(o.uv.y);
-	/*#else
+	#else
 		FixFlip(o.pos.y);
 		o.uv.xy = v.texcoord;
 		FixHalfTexelOffset(o.uv.xy);
-	#endif*/
+	#endif
 
 	return o;
 }

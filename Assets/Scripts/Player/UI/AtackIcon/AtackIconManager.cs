@@ -147,9 +147,9 @@ public class AtackIconManager : SingletonMonoBehaviour<AtackIconManager>
             .Where(_ => enemyBase.IsStan)
             .Subscribe(_ =>
             {
-                _iconEffect.Run(enemyBase.IsStan);
-                _atackIconList[(int)_nowAction    ].ChangeSpecialIcon(enemyBase.IsStan);
-                _atackIconList[(int)_nowAction + 4].ChangeSpecialIcon(enemyBase.IsStan);
+                _iconEffect.Run(true);
+                _atackIconList[(int)_nowAction    ].ChangeSpecialIcon(true);
+                _atackIconList[(int)_nowAction + 4].ChangeSpecialIcon(true);
             });
     }
 

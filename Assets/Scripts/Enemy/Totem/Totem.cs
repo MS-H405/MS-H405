@@ -245,6 +245,14 @@ public class Totem : EnemyBase
         GameObject stanEffect = Instantiate(_stanEffect, transform.position + new Vector3(0, 9, 0), Quaternion.identity);
         stanEffect.transform.SetParent(_totemHeadList[0].transform);
 
+        if(_action == eAction.WindAttack)
+        {
+            _totemLaser.Stop();
+            _totemLaserCol.enabled = false;
+            //_animator.
+        }
+        _animator.Play("Stan", 0, 0.0f);
+
         yield break;
     }
 
