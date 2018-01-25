@@ -26,7 +26,7 @@ public class Special_2Camera : MonoBehaviour
 	const float CON_GOENEMY_FOLLOWRATE = 0.05f;		// 敵突撃時の注視点の追従率
 	const float CON_SHOULDER_FOLLOWRATE = 0.1f;		// 敵の肩越しにいるときの追従率
 
-	const float CON_TOTEMEFFCT_TIME = 0.4f;			// カメラがバビロンエフェクト表示用の位置まで行ってから、エフェクトが表示されるまでの時間
+	const float CON_TOTEMEFFCT_TIME = 0.2f;			// カメラがバビロンエフェクト表示用の位置まで行ってから、エフェクトが表示されるまでの時間
 
 	#endregion
 
