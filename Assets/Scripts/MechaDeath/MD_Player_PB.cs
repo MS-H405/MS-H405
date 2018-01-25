@@ -72,8 +72,8 @@ public class MD_Player_PB : PlayableBehaviour
 		tSpecial_Learning.time = 0.0f;
 		tSpecial_Learning.bDo = false;
 		tSpecial_Learning.bDone = false;
-		tWin.time = 0.0f;
-		tWin.bDo = true;
+        tWin.time = 0.0f;
+        tWin.bDo = true;
 		tWin.bDone = false;
 	}
 

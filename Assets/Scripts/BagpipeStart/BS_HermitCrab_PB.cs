@@ -317,7 +317,7 @@ public class BS_HermitCrab_PB : PlayableBehaviour
             MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_Blast);
 
 			// 画ぶれ
-			cs_ShakeCamera.SetParam(0.03f, 0.001f);
+			cs_ShakeCamera.SetParam(0.06f, 0.002f);
 			cs_ShakeCamera.DontMoveShake();
 		}
 	}

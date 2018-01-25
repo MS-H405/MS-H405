@@ -29,6 +29,8 @@ public class BD_HermitCrab_PB : PlayableBehaviour
 
 	const float CON_VANISH_TIME = 2.2f;		// 消えるまでの時間
 
+    const float CON_SHAKE_TIME = 1.2f;      // 咆哮モーションが始まってから揺らすまでの時間
+
 	#endregion
 
 
@@ -53,17 +55,27 @@ public class BD_HermitCrab_PB : PlayableBehaviour
 	private GameObject _EffekseerObj;
 	public GameObject EffekseerObj { get; set; }
 	SetEffekseerObject cs_SetEffekseerObject;
+    private GameObject _ShakeCameraObj;
+    public GameObject ShakeCameraObj { get; set; }
+    ShakeCamera cs_ShakeCamera;
 
-	#endregion
+    MovieSoundManager.tSE tShake;
+
+    #endregion
 
 
-	public override void OnGraphStart(Playable playable)
+    public override void OnGraphStart(Playable playable)
 	{
 		transform = HermitCrabObj.GetComponent<Transform>();
 		cs_SetEffekseerObject = EffekseerObj.GetComponent<SetEffekseerObject>();
+        cs_ShakeCamera = ShakeCameraObj.GetComponent<ShakeCamera>();
 
-		mat.color = Color.white;
-	}
+        mat.color = Color.white;
+
+        tShake.time = 0.0f;
+        tShake.bDo = false;
+        tShake.bDone = false;
+    }
 
 
 	public override void OnGraphStop(Playable playable)
@@ -109,6 +121,8 @@ public class BD_HermitCrab_PB : PlayableBehaviour
 			case STATE_HERMITCRAB_DEATH.FIN:
 				break;
 		}
+
+        SE();
 	}
 
 
@@ -143,6 +157,7 @@ public class BD_HermitCrab_PB : PlayableBehaviour
 
 			cs_SetEffekseerObject.NewEffect(0);		// 咆哮エフェクト
 			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.BD_CryLast);
+            tShake.bDo = true;  // 咆哮揺れ処理開始
 		}
 
 		fTime += Time.deltaTime;
@@ -217,7 +232,26 @@ public class BD_HermitCrab_PB : PlayableBehaviour
 			State = STATE_HERMITCRAB_DEATH.FIN;
 			bInitializ = true;
 		}
-	}
+    }
 
-	#endregion
+    // SEを鳴らす
+    private void SE()
+    {
+        // 決めポーズ
+        if (tShake.bDo && !tShake.bDone)
+        {
+            tShake.time += Time.deltaTime;
+            if (tShake.time >= CON_SHAKE_TIME)
+            {
+                // 画ぶれ
+                cs_ShakeCamera.SetParam(0.03f, 0.002f);
+                cs_ShakeCamera.DontMoveShake();
+                tShake.bDone = true;
+
+                Debug.Log(123567);
+            }
+        }
+    }
+
+    #endregion
 }

@@ -81,7 +81,7 @@ public class MD_BossPiero_PB : PlayableBehaviour
 			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.MD_Bomb);
 
 			// 画ぶれ
-			cs_ShakeCamera.SetParam(0.03f, 0.002f);
+			cs_ShakeCamera.SetParam(0.06f, 0.002f);
 			cs_ShakeCamera.DontMoveShake();
 
 			bFlgs[1] = false;
