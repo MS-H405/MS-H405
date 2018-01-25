@@ -32830,7 +32830,7 @@ Prefab:
     - target: {fileID: 114064299989390554, guid: 22ef5ae20c0e87e40a6234203c526865,
         type: 2}
       propertyPath: _isDebug
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1597944408699948, guid: 22ef5ae20c0e87e40a6234203c526865, type: 2}
       propertyPath: m_IsActive
