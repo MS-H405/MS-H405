@@ -41,6 +41,8 @@ public class ChildTotem : MonoBehaviour
     /// </summary>
     public IEnumerator PushUp(float speed)
     {
+        _isLook = true;
+
         // ランダムな位置に移動
         transform.position = RandomPos(-_oneBlockSize * (HeadAmount + 1.0f)); 
         transform.LookAt(PlayerManager.Instance.GetVerticalPos(transform.position));
@@ -68,6 +70,8 @@ public class ChildTotem : MonoBehaviour
             yield return null;
         }
         _isAtack = false;
+
+        _isLook = false;
     }
 
     /// <summary>
@@ -201,7 +205,6 @@ public class ChildTotem : MonoBehaviour
             _totemHeadList[i].transform.localPosition = initPos[i];
             _totemHeadList[i].transform.localEulerAngles = Vector3.zero;
         }
-        _isLook = true;
         _rigidbody.velocity = Vector3.zero;
         transform.position = new Vector3(1000,0,0);
         gameObject.SetActive(false);
