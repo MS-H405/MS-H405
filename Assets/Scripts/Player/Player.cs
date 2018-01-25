@@ -175,6 +175,9 @@ public class Player : MonoBehaviour
         _rideBallMove = GetComponent<RideBallMove>();
         _rigidBody = GetComponent<Rigidbody>();
         _shakeCamera = Camera.main.GetComponent<ShakeCamera>();
+
+        // プレゼン仕様
+        IsInvincible = true;
     }
 
     /// <summary> 
@@ -264,18 +267,18 @@ public class Player : MonoBehaviour
     private void Update()
     {
         // DEBUG : デバッグコマンド
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Damage();
-        }
-        else if (Input.GetKeyDown(KeyCode.X))
-        {
-            Damage(1.0f, true);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            IsInvincible = !_isDamage;
-        }
+        //if (Input.GetKeyDown(KeyCode.Z))
+        //{
+        //    Damage();
+        //}
+        //else if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    Damage(1.0f, true);
+        //}
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    IsInvincible = !_isDamage;
+        //}
         if (Input.GetKeyDown(KeyCode.E))
         {
             if(Time.timeScale >= 1.0f)

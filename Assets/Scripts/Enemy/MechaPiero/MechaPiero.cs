@@ -109,7 +109,8 @@ public class MechaPiero : EnemyBase
                     {
                         return eAction.KnifeAttack;
                     }
-                    if (Input.GetKey(KeyCode.J))
+                    if (Input.GetButton("Debug7"))
+                    //if (Input.GetKey(KeyCode.J))
                     {
                         return eAction.RideBall;
                     }
@@ -123,8 +124,7 @@ public class MechaPiero : EnemyBase
                     }
                     return eAction.Wait;
                 }
-
-                //return eAction.ThornsAttack;
+                
                 int rand = Random.Range(0, 100);
                 if (rand < 50)
                 {

@@ -6,8 +6,8 @@ public class Special_2Totem : MonoBehaviour
 {
 	#region 定数
 
-	const float CON_POKE_TIME = 0.5f;		// 突き出す時間
-	readonly Vector3 CON_END_POS = new Vector3(0.0f, 2.5f, -112.5f);	// 突き終わりの座標(ローカル)
+	const float CON_POKE_TIME = 0.35f;		// 突き出す時間
+	readonly Vector3 CON_END_POS = new Vector3(0.0f, 2.5f, -114.0f);	// 突き終わりの座標(ローカル)
 	readonly Vector3 CON_ROTATE = new Vector3(0.0f, 10.0f, 0.0f);		// 回転
 
 	const float CON_FIN = 0.5f;	// 割合がこれだけいったら、月終わりを待たずに、トーテム突きフェイズ終了

@@ -64,7 +64,7 @@ public class HermitCrab : EnemyBase
     /// </summary>
     private IEnumerator Run()
     {
-        _nowAction = eAction.LeftAttack;
+        _nowAction = eAction.Wait;
         eAction oldAction = _nowAction;
         while (true)
         {
@@ -107,7 +107,8 @@ public class HermitCrab : EnemyBase
                 // --- DEBUG ---
                 if (_isDebug)
                 {
-                    if (Input.GetKey(KeyCode.H))
+                    if (Input.GetButton("Debug7"))
+                    //if (Input.GetKey(KeyCode.H))
                     {
                         return eAction.Assault;
                     }
@@ -119,7 +120,8 @@ public class HermitCrab : EnemyBase
                     {
                         return eAction.ChargeFire;
                     }
-                    if (Input.GetKey(KeyCode.L))
+                    if (Input.GetButton("Debug8"))
+                    //if (Input.GetKey(KeyCode.L))
                     {
                         return eAction.RollFire;
                     }
@@ -165,10 +167,12 @@ public class HermitCrab : EnemyBase
                 return (eAction)Random.Range(2, 4); // 左or右攻撃か回転攻撃を出す
 
             case eAction.RightAttack:
-                return eAction.Wait;
+                return eAction.RollAtack;
+                //return eAction.Wait;
 
             case eAction.LeftAttack:
-                return eAction.Wait;
+                return eAction.RollAtack;
+                //return eAction.Wait;
 
             case eAction.RollAtack:
                 return eAction.Wait;

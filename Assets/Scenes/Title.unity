@@ -995,3 +995,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed_Sec: 0.75
+--- !u!1 &2126962988 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1412492717007370, guid: 45978aba283a7424383af39c5153f347,
+    type: 2}
+  m_PrefabInternal: {fileID: 322303435}
+--- !u!114 &2126962989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2126962988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c688dbb422ea61418537ce434e5e64a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

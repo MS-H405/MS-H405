@@ -88,6 +88,7 @@ public class MovieSoundManager : MonoBehaviour {
 		MS_Thunder2,
 		MD_Bomb,
 		MD_Cong,			// 40
+        MD_Win2,
 
 
 
@@ -342,8 +343,33 @@ public class MovieSoundManager : MonoBehaviour {
 
         return false;
     }
+    public bool PlaySE(eSeValue i, float time)
+    {
+        if (!bUseSound)
+            return false;
 
-	public void PauseSE(bool bPause) {
+        int index = (int)i;
+        if (0 > index || SE.Length <= index)
+        {
+            return false;
+        }
+
+        // 再生中で無いAudioSouceで鳴らす
+        foreach (AudioSource source in SEsources)
+        {
+            if (!source.isPlaying)
+            {
+                source.clip = SE[index];
+                source.time = time;
+                source.Play();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void PauseSE(bool bPause) {
 		if (bPause) {
 			foreach (AudioSource source in SEsources) {
                 source.Pause(); 

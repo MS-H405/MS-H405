@@ -13,15 +13,15 @@ public class MD_Player_PB : PlayableBehaviour
 //	const float CON_KIRAKIRA_EFFECT = 2.4f;	// プレイヤーの後ろに出てくるキラキラしたエフェクト
 //	const float CON_FADE_TIME = 10.0f;		// フェードし始めてもいい時間（シーン遷移は"キー入力されたら"だけど、この時間より前のキー入力は受け付けない）
 
-	const float CON_WIN_TIME = 9.0f;		// 勝利モーションを始める時間	10
-	const float CON_ARMPARTICLE_STOP_TIME = 10.5f;	// キラキラエフェクトを止める時間
-	const float CON_WIN_EFFECT = 10.7f;		// プレイヤーの後ろに出てくる火みたいなエフェクトを発生させる時間	勝利モーション開始から0.8秒後
-	const float CON_KIRAKIRA_EFFECT = 11.4f;	// プレイヤーの後ろに出てくるキラキラしたエフェクト
-	const float CON_CONG_TIME = 12.0f;		// Congratulatinsを出す時間
-	const float CON_FADE_TIME = 17.0f;		// フェードし始めてもいい時間（シーン遷移は"キー入力されたら"だけど、この時間より前のキー入力は受け付けない）
+	const float CON_WIN_TIME = 2.5f;		// 勝利モーションを始める時間	10
+	const float CON_ARMPARTICLE_STOP_TIME = 4.0f;	// キラキラエフェクトを止める時間
+	const float CON_WIN_EFFECT = 4.2f;		// プレイヤーの後ろに出てくる火みたいなエフェクトを発生させる時間	勝利モーション開始から0.8秒後
+	const float CON_KIRAKIRA_EFFECT = 4.9f;	// プレイヤーの後ろに出てくるキラキラしたエフェクト
+	const float CON_CONG_TIME = 5.5f;		// Congratulatinsを出す時間
+	const float CON_FADE_TIME = 10.5f;		// フェードし始めてもいい時間（シーン遷移は"キー入力されたら"だけど、この時間より前のキー入力は受け付けない）
 
-	const float CON_SE_SPLEARNING = 2.2f;	// 勝利モーションが始まってから、決めポーズSEを鳴らすまでの時間
-	const float CON_SE_WIN = 7.0f;			// 勝利SE鳴らす時間(勝利モーションに切り替える時間の2秒前)
+	const float CON_SE_SPLEARNING = 1.7f;	// 勝利モーションが始まってから、決めポーズSEを鳴らすまでの時間
+	const float CON_SE_WIN = 0.5f;			// 勝利SE鳴らす時間(勝利モーションに切り替える時間の2秒前)
 	
 	#endregion
 
@@ -103,7 +103,10 @@ public class MD_Player_PB : PlayableBehaviour
 
 	public override void PrepareFrame(Playable playable, FrameData info)
 	{
-		fTime += Time.deltaTime;
+        if(Input.GetKeyDown(KeyCode.T))
+            MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_Win, 2.0f);
+
+        fTime += Time.deltaTime;
 
 		if(fTime >= CON_WIN_TIME && bWin)
 		{
@@ -170,7 +173,7 @@ public class MD_Player_PB : PlayableBehaviour
 			tWin.time += Time.deltaTime;
 			if (tWin.time >= CON_SE_WIN)
 			{
-				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_Win);
+				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.MD_Win2);
 				tWin.bDone = true;
 			}
 		}

@@ -111,4 +111,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c6a3c10277e29764882a606f7920f442, type: 3}
   - {fileID: 8300000, guid: 3e760b02ebb351048929ad3e100c4644, type: 3}
   - {fileID: 8300000, guid: d00f85a5152fcce4394a8e2de09ea687, type: 3}
+  - {fileID: 8300000, guid: 2fccc4c4af125c247b9c87b8d2667f28, type: 3}
   Voice: []

@@ -14,7 +14,7 @@ public class MovieFade : MonoBehaviour
 		WHITE		// ゆっくり白フェード。必殺技終わるとき
 	}
 
-	const float NORMAL_FADE_TIME = 1.0f;		// 普通の黒フェードの時間。始まりのイン・アウト、終わりのイン・アウトも全部この時間
+	const float NORMAL_FADE_TIME = 0.5f;		// 普通の黒フェードの時間。始まりのイン・アウト、終わりのイン・アウトも全部この時間
 	const float CUTIN_FADE_TIME = 0.4f;			// 必殺技始まりのフェード時間。フェードイン・アウト両方ともこの時間
 	const float WHITE_FADE_TIME = 0.8f;			// 必殺技終わりの白フェード時間。フェードイン・アウト両方ともこの時間
 

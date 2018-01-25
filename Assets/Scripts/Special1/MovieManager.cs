@@ -175,13 +175,26 @@ public class MovieManager : MonoBehaviour
 		{
 			FadeStart(MOVIE_SCENE.STAGE_2);
 			Time.timeScale = 1.0f;
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha4) && !MovieManager.Instance.GetisMovideFade())
-		{
-			FadeStart(MOVIE_SCENE.STAGE_3);
-			Time.timeScale = 1.0f;
-		}
-	}
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4) && !MovieManager.Instance.GetisMovideFade())
+        {
+            FadeStart(MOVIE_SCENE.STAGE_3);
+            Time.timeScale = 1.0f;
+        }
+        if (Input.GetButton("Debug10") && !MovieManager.Instance.GetisMovideFade())
+        //if (Input.GetKeyDown(KeyCode.Alpha5) && !MovieManager.Instance.GetisMovideFade())
+        {
+            FadeStart(MOVIE_SCENE.MECHA_DEATH);
+            Time.timeScale = 1.0f;
+            SoundManager.Instance.StopSE();
+        }
+        if (Input.GetButton("Debug9") && !MovieManager.Instance.GetisMovideFade())
+        {
+            FadeStart(MOVIE_SCENE.STAGE_2);
+            Time.timeScale = 1.0f;
+            SoundManager.Instance.StopSE();
+        }
+    }
 
 
 	// フェード中かどうかを返す
@@ -520,31 +533,36 @@ public class MovieManager : MonoBehaviour
 		while (!bFadeIn)
 			yield return null;
 
-		#region シーンを読み込む
-		switch (NowSpecial)
-		{
-			case MOVIE_SCENE.SPECIAL_1:
-				SceneManager.LoadScene("TotemDeath");
-				NowScene = MOVIE_SCENE.TOTEM_DEATH;
-				break;
+        #region シーンを読み込む
+        //switch (NowSpecial)
+        //{
+        //	case MOVIE_SCENE.SPECIAL_1:
+        //		SceneManager.LoadScene("TotemDeath");
+        //		NowScene = MOVIE_SCENE.TOTEM_DEATH;
+        //		break;
+        //
+        //	case MOVIE_SCENE.SPECIAL_2:
+        //		SceneManager.LoadScene("BagpipeDeath");
+        //		NowScene = MOVIE_SCENE.BAGPIPE_DEATH;
+        //		break;
+        //
+        //	case MOVIE_SCENE.SPECIAL_3:
+        //		SceneManager.LoadScene("MechaDeath");
+        //		NowScene = MOVIE_SCENE.MECHA_DEATH;
+        //		break;
+        //}
 
-			case MOVIE_SCENE.SPECIAL_2:
-				SceneManager.LoadScene("BagpipeDeath");
-				NowScene = MOVIE_SCENE.BAGPIPE_DEATH;
-				break;
+        //SceneManager.LoadScene("HermitCrabMain");
+        SceneManager.LoadScene("MechaMain");
+        NowScene = MOVIE_SCENE.STAGE_2;
 
-			case MOVIE_SCENE.SPECIAL_3:
-				SceneManager.LoadScene("MechaDeath");
-				NowScene = MOVIE_SCENE.MECHA_DEATH;
-				break;
-		}
-		#endregion
+        #endregion
 
-		// audiolistenerが2個あるって言われないように、1フレーム待つ
-		//yield return null;
+        // audiolistenerが2個あるって言われないように、1フレーム待つ
+        //yield return null;
 
-		// ロード時間とりあえず今回は時間で判定
-		bInit = true;
+        // ロード時間とりあえず今回は時間で判定
+        bInit = true;
 		fTime = 0.0f;
 		fFirstTime = 0.0f;
 		while (fTime - fFirstTime < 0.2f)
