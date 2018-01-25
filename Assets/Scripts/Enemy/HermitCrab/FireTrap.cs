@@ -88,7 +88,7 @@ public class FireTrap : MonoBehaviour
                 {
                     obj = obj.transform.parent.gameObject;
                 }
-                obj.GetComponent<EnemyBase>().Damage(1, "Bagpipe");
+                obj.GetComponent<EnemyBase>().Damage(2, "Bagpipe");
                 _life = 0.25f;
                 GetComponent<SphereCollider>().enabled = false;
             }

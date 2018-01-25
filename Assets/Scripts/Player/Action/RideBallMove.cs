@@ -453,7 +453,7 @@ public class RideBallMove : PlayerMove
                 }
 
                 // 最高速の場合のみ3ダメージ
-                obj.GetComponent<EnemyBase>().Damage(_nowAcceForward >= (MaxAcceleration * DeceRate - 0.1f) ? 3 : 1);
+                obj.GetComponent<EnemyBase>().Damage(_nowAcceForward >= (MaxAcceleration * DeceRate - 0.1f) ? 4 : 2);
             }
 
             ReflectBall(col.contacts[0].point, _nowAcceForward >= _speed_Sec);

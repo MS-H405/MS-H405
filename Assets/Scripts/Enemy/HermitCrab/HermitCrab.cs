@@ -674,7 +674,7 @@ public class HermitCrab : EnemyBase
     {
         base.Update();
 
-        float distance = Vector3.Distance(transform.position, PlayerManager.Instance.Player.transform.position);
+        float distance = Vector3.Distance(transform.position, PlayerManager.Instance.GetVerticalPos(transform.position));
         if(distance <= NearRange)
         {
             _nearTime += Time.deltaTime;
@@ -697,7 +697,7 @@ public class HermitCrab : EnemyBase
     /// <summary>
     /// 当たり判定
     /// </summary>
-    private void OnTriggerEnter(Collider col)
+    private void OnTriggerStay(Collider col)
     {
         if (col.tag == "Player")
         {

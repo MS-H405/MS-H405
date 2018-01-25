@@ -43,7 +43,7 @@ public class FireAtack : MonoBehaviour
                 {
                     obj = obj.transform.parent.gameObject;
                 }
-                obj.GetComponent<EnemyBase>().Damage();
+                obj.GetComponent<EnemyBase>().Damage(3);
                 transform.GetComponent<SphereCollider>().enabled = false;
             }
         }
@@ -66,7 +66,7 @@ public class FireAtack : MonoBehaviour
                 {
                     obj = obj.transform.parent.gameObject;
                 }
-                obj.GetComponent<EnemyBase>().Damage();
+                obj.GetComponent<EnemyBase>().Damage(3);
                 transform.GetComponent<SphereCollider>().enabled = false;
             }
         }
