@@ -8,6 +8,7 @@ public class BS_HermitCrab_PA : PlayableAsset
 {
 	[SerializeField]	ExposedReference<GameObject> HermitCrabObj;
 	[SerializeField]	ExposedReference<GameObject> EffekseerObj;
+	[SerializeField]	ExposedReference<GameObject> ShakeCameraObj;
 
 	// Factory method that generates a playable based on this asset
 	public override Playable CreatePlayable(PlayableGraph graph, GameObject go)
@@ -16,6 +17,8 @@ public class BS_HermitCrab_PA : PlayableAsset
 
 		behaviour.HermitCrabObj = HermitCrabObj.Resolve(graph.GetResolver());
 		behaviour.EffekseerObj = EffekseerObj.Resolve(graph.GetResolver());
+		behaviour.EffekseerObj = EffekseerObj.Resolve(graph.GetResolver());
+		behaviour.ShakeCameraObj = ShakeCameraObj.Resolve(graph.GetResolver());
 
 		return ScriptPlayable<BS_HermitCrab_PB>.Create(graph, behaviour);
 	}

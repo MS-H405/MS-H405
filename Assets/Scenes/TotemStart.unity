@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -2949,7 +2949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 3.99, y: 4.489, z: -10.615}
+  m_FollowOffset: {x: 3.99, y: 5.55, z: -14.79}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -4339,7 +4339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: -3.21, y: 4.49, z: -10.48}
+  m_FollowOffset: {x: -3.21, y: 5.55, z: -14.79}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -4465,52 +4465,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.111989826, y: -0.021677196, z: 0.13947523}
     m_Extent: {x: 0.87205505, y: 0.38389432, z: 0.92598593}
   m_DirtyAABB: 0
---- !u!1 &1159516154
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1159516155}
-  - component: {fileID: 1159516156}
-  m_Layer: 0
-  m_Name: Effekseer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1159516155
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1159516154}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1159516156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1159516154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24b5d8f75b10eea43a1920923605013a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  drawInSceneView: 1
-  effectInstances: 8192
-  maxSquares: 8192
-  isRightHandledCoordinateSystem: 0
-  soundInstances: 16
-  enableDistortion: 1
 --- !u!1 &1159569088
 GameObject:
   m_ObjectHideFlags: 0
@@ -5186,7 +5140,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1297478267}
   m_LocalRotation: {x: 0.11987694, y: -0, z: -0, w: 0.9927888}
-  m_LocalPosition: {x: 3.99, y: 4.489, z: -10.615}
+  m_LocalPosition: {x: 3.99, y: 5.55, z: -14.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 707115275}
@@ -5635,7 +5589,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1403741927}
   m_LocalRotation: {x: 0.11987694, y: 0, z: 0, w: 0.9927888}
-  m_LocalPosition: {x: -3.21, y: 4.49, z: -10.48}
+  m_LocalPosition: {x: -3.21, y: 5.55, z: -14.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1142651257}

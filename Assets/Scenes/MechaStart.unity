@@ -2060,7 +2060,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_Follow: {fileID: 1032154767}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 10
@@ -6620,6 +6620,7 @@ PlayableDirector:
     - ec1a38b498b676748a470d2371d690a4: {fileID: 1185642579}
     - eec4775241e84804899e14564e79be76: {fileID: 0}
     - 4be190d8ad4a1e84eabdbdf80af8decc: {fileID: 0}
+    - 01bfc4472c1abdb49bb1f50646f074ff: {fileID: 1032154766}
     - c43c0550cc1b0b149a438410c058b8d9: {fileID: 0}
     - 44057478498ef3245a1a6d999d781203: {fileID: 0}
     - a6da460fff04b0e4eba41995bf242ae9: {fileID: 0}
@@ -6705,10 +6706,6 @@ Prefab:
     - target: {fileID: 4550240709405430, guid: 45978aba283a7424383af39c5153f347, type: 2}
       propertyPath: m_RootOrder
       value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 1412492717007370, guid: 45978aba283a7424383af39c5153f347, type: 2}
-      propertyPath: m_Name
-      value: MovieSoundManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 45978aba283a7424383af39c5153f347, type: 2}
@@ -9474,11 +9471,11 @@ Prefab:
       objectReference: {fileID: 268817840}
     - target: {fileID: 1463052258731484, guid: cab1452e5aa64624b91359e0fafd0480, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1816673313818870, guid: cab1452e5aa64624b91359e0fafd0480, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 108841993091951394, guid: cab1452e5aa64624b91359e0fafd0480,
         type: 2}
@@ -9497,11 +9494,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1308967250936100, guid: cab1452e5aa64624b91359e0fafd0480, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1901025310616558, guid: cab1452e5aa64624b91359e0fafd0480, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cab1452e5aa64624b91359e0fafd0480, type: 2}
@@ -9515,6 +9512,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1784736106}
   - component: {fileID: 1784736107}
+  - component: {fileID: 1784736108}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -9546,6 +9544,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1784736108
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1784736105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BindingMode: 1
+  m_FollowOffset: {x: 0, y: 2.05, z: -6.35}
+  m_XDamping: 1
+  m_YDamping: 1
+  m_ZDamping: 1
+  m_PitchDamping: 0
+  m_YawDamping: 0
+  m_RollDamping: 0
 --- !u!1 &1787109615
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,6 +29,10 @@ public class MD_BossPiero_PB : PlayableBehaviour
 	public GameObject EffekseerObj { get; set; }
 	SetEffekseerObject cs_SetEffekseerObject;
 
+	private GameObject _ShakeCameraObj;
+	public GameObject ShakeCameraObj { get; set; }
+	ShakeCamera cs_ShakeCamera;
+
 	#endregion
 
 
@@ -38,6 +42,9 @@ public class MD_BossPiero_PB : PlayableBehaviour
 
 		for(int i = 0 ; i < bFlgs.GetLength(0) ; i ++)
 			bFlgs[i] = true;
+
+		cs_SetEffekseerObject = EffekseerObj.GetComponent<SetEffekseerObject>();
+		cs_ShakeCamera = ShakeCameraObj.GetComponent<ShakeCamera>();
 	}
 
 
@@ -71,6 +78,12 @@ public class MD_BossPiero_PB : PlayableBehaviour
 		else if (fTime >= CON_BOMB_TIME && bFlgs[1])			// 爆発
 		{
 			cs_SetEffekseerObject.NewEffect(2);
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.MD_Bomb);
+
+			// 画ぶれ
+			cs_ShakeCamera.SetParam(0.03f, 0.002f);
+			cs_ShakeCamera.DontMoveShake();
+
 			bFlgs[1] = false;
 		}
 		else if (fTime >= CON_DELETE_TIME && bFlgs[2])			// 消す

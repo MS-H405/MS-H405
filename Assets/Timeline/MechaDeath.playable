@@ -650,6 +650,9 @@ MonoBehaviour:
   EffekseerObj:
     exposedName: 8cb57d5eaf635324fb6887e97c2cc2a7
     defaultValue: {fileID: 0}
+  ShakeCameraObj:
+    exposedName: 4ee3dc0fde572a04d918b8eb27b9225d
+    defaultValue: {fileID: 0}
 --- !u!114 &114814893661727692
 MonoBehaviour:
   m_ObjectHideFlags: 1
