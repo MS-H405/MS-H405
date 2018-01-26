@@ -88,7 +88,11 @@ public class Knife : MonoBehaviour
     public IEnumerator Init()
     {
         transform.GetChild(0).gameObject.SetActive(false);
-        GameEffectManager.Instance.Play("KnifeStart", transform.position + (transform.forward * 2.0f));
+
+        if (name.Contains("Center") || name.Contains("L3") || name.Contains("R3"))
+        {
+            GameEffectManager.Instance.Play("KnifeStart", transform.position + (transform.forward * 2.0f));
+        }
 
         float time = 0.0f;
         while(time < 0.75f)
