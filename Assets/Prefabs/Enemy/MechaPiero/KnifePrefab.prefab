@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 114972697821710196}
   - component: {fileID: 114515409563592020}
   m_Layer: 0
-  m_Name: Knife
+  m_Name: Knife_Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
