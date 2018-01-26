@@ -272,6 +272,23 @@ Prefab:
       propertyPath: _stanHP
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 4380438271181054, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 3.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380438271181054, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -1.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380438271181054, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 136587119447872994, guid: 2319cba2d4e57b94c93a62695797afbb,
+        type: 2}
+      propertyPath: m_Radius
+      value: 3.25
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 135466952479016528, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 2319cba2d4e57b94c93a62695797afbb, type: 2}
