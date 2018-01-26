@@ -518,13 +518,13 @@ public class HermitCrab : EnemyBase
                     startPos = transform.position;
                     targetPos = Vector3.Lerp(startPos, PlayerManager.Instance.GetVerticalPos(startPos), 0.7f);
 
-                    if(Vector3.Distance(startPos,targetPos) < 1.0f)
+                    /*if(Vector3.Distance(startPos,targetPos) < 1.0f)
                     {
                         Vector3 nowAngle = transform.eulerAngles;
                         transform.LookAt(PlayerManager.Instance.Player.transform.position);
                         targetPos = startPos + transform.forward;
                         transform.eulerAngles = nowAngle;
-                    }
+                    }*/
 
                     speed = Vector3.Distance(startPos, targetPos) / 10.0f;
                 }
