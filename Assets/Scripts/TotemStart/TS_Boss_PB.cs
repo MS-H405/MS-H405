@@ -139,7 +139,7 @@ public class TS_Boss_PB : PlayableBehaviour
 		}
 
 		// スキップ処理
-		if (Input.GetButtonDown("Atack") && bFade && !MovieManager.Instance.GetisMovideFade())
+		if (Input.GetButtonDown("Cancel") && bFade && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_1);
 			bFade = false;

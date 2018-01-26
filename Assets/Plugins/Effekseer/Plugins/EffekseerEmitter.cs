@@ -1,4 +1,4 @@
-using UnityEngine;
+    using UnityEngine;
 using System;
 using System.Collections;
 
@@ -45,7 +45,7 @@ public class EffekseerEmitter : MonoBehaviour
     /// <summary>
     /// シーン終了判定
     /// </summary>
-    private bool isQuit = false;
+    //private bool isQuit = false;
 
     /// <summary xml:lang="en">
     /// Plays the effect.
@@ -207,21 +207,21 @@ public class EffekseerEmitter : MonoBehaviour
 		}
 	}
 
-    private void OnApplicationQuit()
+   /* private void OnApplicationQuit()
     {
         isQuit = true;
-    }
+    }*/
 
     void OnDestroy()
 	{
 		Stop();
 
-        if (isQuit)
+        /*if (isQuit)
         {
             return;
         }
 
-        EffekseerSystem.ReleaseEffect(effectName);
+        EffekseerSystem.ReleaseEffect(effectName);*/
     }
 	
 	void Update()

@@ -38,7 +38,7 @@ public class HermitCrab : EnemyBase
     private bool _isNext = false;       // 次の行動へ行くか
     private float _nearTime = 0.0f;     // Playerが近くにいる時の継続時間
     
-    private SphereCollider _bodyAttackCollider = null;
+    private CapsuleCollider _bodyAttackCollider = null;
 
     // 行動用変数
     private BoxCollider _leftScissors  = null;
@@ -655,7 +655,7 @@ public class HermitCrab : EnemyBase
         }
 
         // ボディ攻撃判定の初期化
-        _bodyAttackCollider = GetComponent<SphereCollider>();
+        _bodyAttackCollider = GetComponent<CapsuleCollider>();
         _bodyAttackCollider.enabled = false;
     }
 

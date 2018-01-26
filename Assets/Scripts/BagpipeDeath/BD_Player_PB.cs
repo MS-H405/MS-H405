@@ -123,16 +123,16 @@ public class BD_Player_PB : PlayableBehaviour
 		}
 
 		// フェード
-		if (Input.GetButtonDown("Atack") && fTime > CON_FADE_TIME && bFade && !MovieManager.Instance.GetisMovideFade())
-		{
-			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);
-			bFade = false;
-		}
+		//if (Input.GetButtonDown("Cancel") && fTime > CON_FADE_TIME && bFade && !MovieManager.Instance.GetisMovideFade())
+		//{
+		//	MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);
+		//	bFade = false;
+		//}
 
 
 
 		// スキップ
-		if (Input.GetKeyDown(KeyCode.Return) && bFade && !MovieManager.Instance.GetisMovideFade())
+		if (Input.GetButtonDown("Cancel") && bFade && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);	// シーン遷移
 			bFade = false;

@@ -77,16 +77,6 @@ public class Special_3Manager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		// ----- デバッグ -----
-
-		if (Input.GetKeyDown(KeyCode.S))
-		{
-			// キャンバスにエフェクト出現
-		}
-
-
-		// --------------------
-
 		switch(State)
 		{
 			case State_Special3.JUG_EXPANSION:
@@ -167,7 +157,7 @@ public class Special_3Manager : MonoBehaviour
 		}
 
 		// スキップ処理
-		if (Input.GetButtonDown("Atack") && bSkip && !MovieManager.Instance.GetisMovideFade())
+		if (Input.GetButtonDown("Cancel") && bSkip && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.MovieFinish();
 			bSkip = false;
