@@ -224,7 +224,7 @@ public class JugglingAtack : MonoBehaviour
     {
         // キャッチ判定
         PinDestroy(!_isCatch);
-        if (_isCatch)
+        if (_isCatch && !PlayerManager.Instance.Player.IsDamage)
         {
             // 速度アップ
             if (_commonAttackSpeed < MaxAttackSpeed)
@@ -272,7 +272,7 @@ public class JugglingAtack : MonoBehaviour
     /// </summary>
     private void PinDestroy(bool isReload)
     {
-        if (isReload)
+        if (isReload && !PlayerManager.Instance.Player.IsDamage)
         {
             JugglingReloader.Instance.Reload();
         }
