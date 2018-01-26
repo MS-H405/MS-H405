@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4550240709405430}
   - component: {fileID: 114612657494896566}
+  - component: {fileID: 114541912939385224}
   m_Layer: 0
   m_Name: MovieSoundManager
   m_TagString: MovieSoundManager
@@ -40,6 +41,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114541912939385224
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1412492717007370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c688dbb422ea61418537ce434e5e64a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114612657494896566
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,7 +92,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bdfc75ffaabdcf146aba715611db07f3, type: 3}
   - {fileID: 8300000, guid: 56a9800623cc02e49a6d876fadfa0071, type: 3}
   - {fileID: 8300000, guid: c5f4011a2963dea48a10f043971287e2, type: 3}
-  - {fileID: 8300000, guid: 5dbd3c010bb83a04a86f5f1c29a94a7a, type: 3}
+  - {fileID: 8300000, guid: dc95653afc1fae94284913499b5ab82d, type: 3}
   - {fileID: 8300000, guid: bb8e03527fc734744bb4a2041d63ba7e, type: 3}
   - {fileID: 8300000, guid: c7e8565417e5cc248a7de6276396632f, type: 3}
   - {fileID: 8300000, guid: e6eb5632d24874a42b46b39b6ab5278a, type: 3}
@@ -91,12 +103,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3201bb06fd6db07468b2c8faa7d4f5a5, type: 3}
   - {fileID: 8300000, guid: 92e66b57de563834d93d9954aa48dd49, type: 3}
   - {fileID: 8300000, guid: 9e27c0abb98967948892b7b49ac7a608, type: 3}
-  - {fileID: 8300000, guid: 01f550d40b1eb7948bcf4cfae451d363, type: 3}
-  - {fileID: 8300000, guid: 66dc8f5844f467b4686f19802d4a8f04, type: 3}
+  - {fileID: 8300000, guid: ace026d332939e24f8f15adc7f9dd3c5, type: 3}
+  - {fileID: 8300000, guid: 5751bfea3e0fbcf4c9d8894d9e7f1f6a, type: 3}
   - {fileID: 8300000, guid: 188e94679d4937445b9aaeecf9e3c4dd, type: 3}
   - {fileID: 8300000, guid: 94b5cd8bb0f1f0b4abfcaf434933323d, type: 3}
   - {fileID: 8300000, guid: 34a4d82fb51a08f499099eb8736ebe1c, type: 3}
-  - {fileID: 8300000, guid: b86fcffc96bbcc748921deeab092e17c, type: 3}
+  - {fileID: 8300000, guid: 6f14ed126f74fce4db32f02e6f66f101, type: 3}
   - {fileID: 8300000, guid: cc61d03eae6d5ad48b467b3c8b0b0894, type: 3}
   - {fileID: 8300000, guid: 2e343d04c184d5a42b90fbb51a83a091, type: 3}
   - {fileID: 8300000, guid: 9ad88c04cd8ace94d8d5d9a62aa47f15, type: 3}
@@ -111,4 +123,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c6a3c10277e29764882a606f7920f442, type: 3}
   - {fileID: 8300000, guid: 3e760b02ebb351048929ad3e100c4644, type: 3}
   - {fileID: 8300000, guid: d00f85a5152fcce4394a8e2de09ea687, type: 3}
+  - {fileID: 8300000, guid: 2fccc4c4af125c247b9c87b8d2667f28, type: 3}
   Voice: []
