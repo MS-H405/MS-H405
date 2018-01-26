@@ -74,7 +74,7 @@ public class Airplane : MonoBehaviour
     private void Update ()
     {
         // スキップ
-        if (Input.GetButtonDown("Atack"))
+		if (Input.GetButtonDown("Atack") || Input.GetKeyDown(KeyCode.Backspace) || Input.GetButtonDown("Skip"))
         {
             MovieManager.Instance.FadeStart(nextScene);
         }

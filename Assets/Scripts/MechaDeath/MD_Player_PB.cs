@@ -138,7 +138,7 @@ public class MD_Player_PB : PlayableBehaviour
 
 
 		// 特定の時間を過ぎて(演出を全部見せたいから)、キー入力されたら、シーン遷移
-		if (fTime >= CON_FADE_TIME && Input.GetButtonDown("Cancel") && bFade && !MovieManager.Instance.GetisMovideFade())
+		if (fTime >= CON_FADE_TIME && Input.GetButtonDown("Skip") && bFade && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TITLE);
 			bFade = false;
@@ -151,6 +151,12 @@ public class MD_Player_PB : PlayableBehaviour
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TITLE);
 			bFade = false;
+		}
+
+		// 強制シーン遷移
+		if (Input.GetKeyDown(KeyCode.Backspace) && !MovieManager.Instance.GetisMovideFade())
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TITLE);
 		}
 	}
 

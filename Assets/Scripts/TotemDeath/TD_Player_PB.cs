@@ -90,7 +90,7 @@ public class TD_Player_PB : PlayableBehaviour
 	public override void PrepareFrame(Playable playable, FrameData info)
 	{
 		// スキップ処理
-		if (Input.GetButtonDown("Cancel") && bFade && !MovieManager.Instance.GetisMovideFade())
+		if ((Input.GetKeyDown(KeyCode.Backspace) || (Input.GetButtonDown("Skip"))) && bFade && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TOTEM_TO_YADOKARI);
 			bFade = false;

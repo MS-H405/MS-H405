@@ -109,7 +109,7 @@ public class Special_1Manager : MonoBehaviour
 		}
 
 		// スキップ処理
-		if (Input.GetButtonDown("Cancel") && bSkip && !MovieManager.Instance.GetisMovideFade())
+		if ((Input.GetKeyDown(KeyCode.Backspace) || (Input.GetButtonDown("Skip"))) && bSkip && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.MovieFinish();
 			bSkip = false;

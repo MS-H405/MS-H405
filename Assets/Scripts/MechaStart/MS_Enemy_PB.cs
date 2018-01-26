@@ -184,7 +184,7 @@ public class MS_Enemy_PB : PlayableBehaviour
 		}
 
 		// スキップ
-		if (Input.GetButtonDown("Cancel") && bFade && !MovieManager.Instance.GetisMovideFade())
+		if ((Input.GetKeyDown(KeyCode.Backspace) || (Input.GetButtonDown("Skip"))) && bFade && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_3);	// シーン遷移
 			bFade = false;

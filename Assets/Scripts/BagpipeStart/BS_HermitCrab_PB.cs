@@ -124,7 +124,7 @@ public class BS_HermitCrab_PB : PlayableBehaviour
 	public override void PrepareFrame(Playable playable, FrameData info)
 	{
 		// スキップ
-		if (Input.GetButtonDown("Cancel") && bFade && !MovieManager.Instance.GetisMovideFade())
+		if ((Input.GetKeyDown(KeyCode.Backspace) || (Input.GetButtonDown("Skip"))) && bFade && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.STAGE_2);	// シーン遷移
 			bFade = false;

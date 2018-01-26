@@ -132,7 +132,7 @@ public class BD_Player_PB : PlayableBehaviour
 
 
 		// スキップ
-		if (Input.GetButtonDown("Cancel") && bFade && !MovieManager.Instance.GetisMovideFade())
+		if ((Input.GetKeyDown(KeyCode.Backspace) || (Input.GetButtonDown("Skip"))) && bFade && !MovieManager.Instance.GetisMovideFade())
 		{
 			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.YADOKARI_TO_MECHA);	// シーン遷移
 			bFade = false;
