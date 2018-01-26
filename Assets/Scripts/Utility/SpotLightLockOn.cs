@@ -22,6 +22,9 @@ public class SpotLightLockOn : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		if(Target == null)
+			return;
+
 		foreach(Transform trans in SpotLightArray)
 		{
 			if (trans.gameObject.activeSelf && trans != transform)		// このスクリプトがアタッチされているオブジェクトも入っっているので、それだけは処理しない

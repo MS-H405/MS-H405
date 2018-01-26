@@ -17,6 +17,8 @@ public class TD_Player_PB : PlayableBehaviour
 	const float CON_SE_SPLEARNING = 2.2f;	// 勝利モーションが始まってから、決めポーズSEを鳴らすまでの時間
 	const float CON_SE_WIN = 11.0f;			// 勝利SE鳴らす時間(勝利モーションに切り替える時間の2秒前)
 
+	const float CON_LAST = 40.0f;			// 自動でシーン遷移する時間
+
 	public struct tSE
 	{
 		public float time;	// 時間
@@ -69,12 +71,7 @@ public class TD_Player_PB : PlayableBehaviour
 
 	public override void OnGraphStop(Playable playable)
 	{
-		// 3000Frame(50秒)経ってもシーン遷移されないので、シーン遷移する
-		if (bFade && !MovieManager.Instance.GetisMovideFade())
-		{
-			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TOTEM_TO_YADOKARI);
-			bFade = false;
-		}
+
 	}
 
 
@@ -134,6 +131,14 @@ public class TD_Player_PB : PlayableBehaviour
 
 
 		SE();
+
+
+		// 2400Frame(40秒)経ってもシーン遷移されないので、シーン遷移する
+		if (fTime >= CON_LAST && bFade && !MovieManager.Instance.GetisMovideFade())
+		{
+			MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.TOTEM_TO_YADOKARI);
+			bFade = false;
+		}
 	}
 
 	// SEを鳴らす

@@ -63,8 +63,8 @@ public class PushStart : MonoBehaviour
             }
         }
 
-        // ゲームパッドのインプットに対応する
-        if(Input.GetButtonDown("Atack"))
+        // TODO : ゲームパッドのインプットに対応する
+		if (( Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Atack") ) && !MovieManager.Instance.GetisMovideFade())
         {
             SoundManager.Instance.PlaySE(SoundManager.eSeValue.UI_PushButton);
             MovieManager.Instance.FadeStart(MovieManager.MOVIE_SCENE.INIT_TO_TOTEM);

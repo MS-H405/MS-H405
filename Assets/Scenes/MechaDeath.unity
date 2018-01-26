@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3159424, g: 0, b: 0.47291684, a: 1}
+  m_IndirectSpecularColor: {r: 0.3158208, g: 0, b: 0.472345, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1857,8 +1857,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 268817837}
-  m_LocalRotation: {x: 0.05005454, y: 0, z: 0, w: 0.9987465}
-  m_LocalPosition: {x: 0, y: 3.7, z: 26.42}
+  m_LocalRotation: {x: 0.21753497, y: -0.5068174, z: 0.13390692, w: 0.8233369}
+  m_LocalPosition: {x: 4.74, y: 6.59, z: -2.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5620,7 +5620,7 @@ MonoBehaviour:
   m_ShadowmapMode: 0
   m_Cameras:
   - {fileID: 268817840}
-  m_CurrentCamera: {fileID: 268817840}
+  m_CurrentCamera: {fileID: 0}
   m_Size: {x: 10, y: 10, z: 20}
   m_SpotNear: 0.05
   m_SpotFar: 1
@@ -6604,7 +6604,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 990109787}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 15.3}
+  m_LocalPosition: {x: 0, y: -11.2, z: 31.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 854190943}
@@ -18783,7 +18783,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1778764171}
   m_LocalRotation: {x: 0.33740214, y: -0.6214176, z: 0.33740214, w: 0.6214176}
-  m_LocalPosition: {x: 13, y: 20, z: 0}
+  m_LocalPosition: {x: 3.7, y: 18.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 990109789}
@@ -18839,7 +18839,7 @@ MonoBehaviour:
   m_ShadowmapMode: 0
   m_Cameras:
   - {fileID: 268817840}
-  m_CurrentCamera: {fileID: 268817840}
+  m_CurrentCamera: {fileID: 0}
   m_Size: {x: 10, y: 10, z: 20}
   m_SpotNear: 0.05
   m_SpotFar: 1
@@ -21082,7 +21082,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2010516779}
   m_LocalRotation: {x: 0.6214175, y: -0.3374022, z: 0.6214175, w: 0.3374022}
-  m_LocalPosition: {x: -13, y: 20, z: 0}
+  m_LocalPosition: {x: -3.7, y: 18.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 990109789}
@@ -21138,7 +21138,7 @@ MonoBehaviour:
   m_ShadowmapMode: 0
   m_Cameras:
   - {fileID: 268817840}
-  m_CurrentCamera: {fileID: 268817840}
+  m_CurrentCamera: {fileID: 0}
   m_Size: {x: 10, y: 10, z: 20}
   m_SpotNear: 0.05
   m_SpotFar: 1

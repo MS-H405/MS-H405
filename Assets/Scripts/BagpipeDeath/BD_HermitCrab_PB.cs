@@ -247,8 +247,6 @@ public class BD_HermitCrab_PB : PlayableBehaviour
                 cs_ShakeCamera.SetParam(0.03f, 0.002f);
                 cs_ShakeCamera.DontMoveShake();
                 tShake.bDone = true;
-
-                Debug.Log(123567);
             }
         }
     }
