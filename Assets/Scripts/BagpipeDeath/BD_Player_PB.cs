@@ -17,6 +17,7 @@ public class BD_Player_PB : PlayableBehaviour
 
 	const float CON_SE_SPLEARNING = 2.2f;	// 勝利モーションが始まってから、決めポーズSEを鳴らすまでの時間
 	const float CON_SE_WIN = 9.0f;			// 勝利SE鳴らす時間(勝利モーションに切り替える時間の2秒前)
+	const float CON_SE_DRAIN = 8.5f;		// パーティクル吸収SE鳴らす時間
 
 	const float CON_LAST = 40.0f;			// 自動でシーン遷移する時間
 
@@ -53,6 +54,7 @@ public class BD_Player_PB : PlayableBehaviour
 
 	MovieSoundManager.tSE tSpecial_Learning;	// 決めポーズ
 	MovieSoundManager.tSE tWin;					// 勝利SE
+	MovieSoundManager.tSE tDrain;				// パーティクル吸収
 
 	#endregion
 
@@ -68,6 +70,9 @@ public class BD_Player_PB : PlayableBehaviour
 		tWin.time = 0.0f;
 		tWin.bDo = true;
 		tWin.bDone = false;
+		tDrain.time = 0.0f;
+		tDrain.bDo = true;
+		tDrain.bDone = false;
 	}
 
 
@@ -170,6 +175,17 @@ public class BD_Player_PB : PlayableBehaviour
 			{
 				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TS_Win);
 				tWin.bDone = true;
+			}
+		}
+
+		// パーティクル吸収SE
+		if (tDrain.bDo && !tDrain.bDone)
+		{
+			tDrain.time += Time.deltaTime;
+			if (tDrain.time >= CON_SE_DRAIN)
+			{
+				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.TD_Drain);
+				tDrain.bDone = true;
 			}
 		}
 	}

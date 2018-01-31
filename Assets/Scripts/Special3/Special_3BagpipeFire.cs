@@ -61,6 +61,7 @@ public class Special_3BagpipeFire : MonoBehaviour
 			if (bInitialize)
 			{
 				SP_BagpipeObj.gameObject.GetComponent<EffekseerEmitter>().Play();	// 火の玉エフェクト再生
+				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_Bagpipe);	// 火の玉メラメラ音
 
 				bInitialize = false;
 			}
@@ -78,6 +79,9 @@ public class Special_3BagpipeFire : MonoBehaviour
 
 				//Destroy(SP_BagpipeObj.gameObject);						// Destroyで消すと、消え方が不自然なので変更
 				SP_BagpipeObj.gameObject.GetComponent<EffekseerEmitter>().StopRoot();	// 火の玉エフェクト停止
+
+				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_BagpipeHit);	// 火の玉着弾音
+				MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_FireRoad);		// 火の道の音
 				break;
 			}
 

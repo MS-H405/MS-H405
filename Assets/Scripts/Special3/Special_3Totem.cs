@@ -49,9 +49,6 @@ public class Special_3Totem : MonoBehaviour
 		if(bInit)
 		{
 			PokeTotemObj.SetActive(true);
-
-			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_TotemAttack);		// トーテム突き出し音
-
 			bInit = false;
 		}
 
@@ -76,6 +73,7 @@ public class Special_3Totem : MonoBehaviour
 		{
 			SetEffekseerObj.GetComponent<SetEffekseerObject>().NewEffect(10);	// 玉発射
 			SetEffekseerObj.GetComponent<SetEffekseerObject>().NewEffect(14);	// 玉着火エフェクト
+			MovieSoundManager.Instance.PlaySE(MovieSoundManager.eSeValue.SP_TotemAttack2);		// トーテム突き出し音
 			bEffect = false;
 		}
 
