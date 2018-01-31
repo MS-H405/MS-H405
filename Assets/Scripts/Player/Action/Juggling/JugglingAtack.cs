@@ -118,6 +118,15 @@ public class JugglingAtack : MonoBehaviour
         while (animStateInfo.IsName("Base.Idle") || animStateInfo.IsName("Base.Walk"))
         {
             animStateInfo = PlayerManager.Instance.Anim.GetCurrentAnimatorStateInfo(0);
+
+            if (PlayerManager.Instance.Player.IsDamage)
+            {
+                _isPlay = true;
+                PinDestroy(false);
+                Destroy(gameObject);
+                yield break;
+            }
+
             yield return null;
         }
         while (animStateInfo.normalizedTime <= 0.7f)
@@ -126,7 +135,9 @@ public class JugglingAtack : MonoBehaviour
 
             if(PlayerManager.Instance.DamageAnimation())
             {
+                _isPlay = true;
                 PinDestroy(false);
+                Destroy(gameObject);
                 yield break;
             }
 

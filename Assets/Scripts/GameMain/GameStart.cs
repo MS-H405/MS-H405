@@ -35,15 +35,15 @@ public class GameStart : MonoBehaviour
     /// <summary>
     /// 初期化処理
     /// </summary>
-    private void Awake()
+    /*private void Awake()
     {
-        Time.timeScale = 0.0f;
-    }
+        //Time.timeScale = 0.0f;
+    }*/
 
     /// <summary>
     /// 更新前処理
     /// </summary>
-    private void Start ()
+    private void Awake ()
     {
         // PlayerとEnemyを停止
         Time.timeScale = 1.0f;
@@ -66,12 +66,12 @@ public class GameStart : MonoBehaviour
         {
             cameraMono.enabled = false;
         }
-
+        
         EffekseerEmitter _showTime = GetComponent<EffekseerEmitter>();
         var playDisposable = new SingleAssignmentDisposable();
         playDisposable.Disposable = 
-        this.ObserveEveryValueChanged(_ => MovieManager.Instance.GetisMovideFade() || Time.unscaledDeltaTime > Rimit)
-            .Where(_ => !MovieManager.Instance.GetisMovideFade() && Time.unscaledDeltaTime <= Rimit)
+        this.UpdateAsObservable()// ObserveEveryValueChanged(_ => MovieManager.Instance.GetisMovideFade() || Time.unscaledDeltaTime > Rimit)
+            .Where(_ => !MovieManager.Instance.GetisMovideFade()) //&& Time.unscaledDeltaTime <= Rimit)
             .Subscribe(_ =>
             {
                 _showTime.Play();
@@ -84,7 +84,7 @@ public class GameStart : MonoBehaviour
                         time += Time.deltaTime;
                         GameStartDeltaTime = Time.deltaTime;
 
-                        if(Input.GetButtonDown("Atack"))
+                        if(Input.GetButtonDown("Cancel"))
                         {
                             time = _waitTime;
                         }

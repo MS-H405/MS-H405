@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
     private ShakeCamera _shakeCamera = null;
     private bool _isReturn = false;
 
+    private bool _isSpecial = false;
+
     #endregion
 
     #region method  
@@ -215,6 +217,9 @@ public class Player : MonoBehaviour
 
                 if (enemyBase.IsStan)
                 {
+                    if (!_isSpecial)
+                        return;
+
                     // 必殺技実行
                     if(Input.GetButtonDown("Atack"))
                     {
@@ -255,6 +260,26 @@ public class Player : MonoBehaviour
                 specialAura.SetActive(true);
                 _actionManager.Cancel();
                 PlayerManager.Instance.Player.IsInvincible = true;
+            });
+
+        this.ObserveEveryValueChanged(_ => enemyBase.IsStan)
+            .Where(_ => enemyBase.IsStan)
+            .Subscribe(_ =>
+            {
+                float time = 0.0f;
+                var specialDisposable = new SingleAssignmentDisposable();
+                specialDisposable.Disposable = this.UpdateAsObservable()
+                .Subscribe(x =>
+                {
+                    time += Time.deltaTime;
+
+                    if (time < 1.0f)
+                        return;
+
+                    _isSpecial = true;
+                    specialDisposable.Dispose();
+                });
+
             });
     }
 

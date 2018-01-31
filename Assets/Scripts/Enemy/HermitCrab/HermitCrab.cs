@@ -137,7 +137,7 @@ public class HermitCrab : EnemyBase
                 if (_nearTime > 2.5f)
                 {
                     _nearTime = 0.0f;
-                    if (Random.Range(0, 2) == 0)
+                    if (Random.Range(0, 6) != 0)
                     {
                         return eAction.RollAtack;
                     }
@@ -147,12 +147,12 @@ public class HermitCrab : EnemyBase
                     }
                 }
 
-                int rand = Random.Range(0, 5);
-                if (rand < 2)
+                int rand = Random.Range(0, 7);
+                if (rand < 4)
                 {
                     return eAction.Assault;
                 }
-                else if (rand < 3)
+                else if (rand < 5)
                 {
                     return eAction.ChargeFire;
                 }
@@ -262,7 +262,7 @@ public class HermitCrab : EnemyBase
         _animator.SetBool("Walk", false);
 
         float time = 0.0f;
-        float waitTime = _isDebug ? 0.1f : Random.Range(1.0f, 5.0f);
+        float waitTime = _isDebug ? 0.1f : Random.Range(2.0f, 6.0f);
         while (time < waitTime)
         {
             time += Time.deltaTime;
